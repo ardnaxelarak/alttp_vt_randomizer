@@ -144,7 +144,9 @@ return [
             'assured' => 'Assured',
             'vanilla' => 'Vanilla',
             'swordless' => 'Swordless',
+            'bombs' => 'Bombs Only',
         ],
+        'bombs_warning' => 'This setting is still in development. Use at your own risk.',
     ],
     'item_pool' => [
         'title' => 'Item Pool',

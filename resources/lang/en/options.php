@@ -518,6 +518,32 @@ return [
                             . '</ul>',
                     ],
                 ],
+                [
+                    'header' => __('randomizer.weapons.options.bombs'),
+                    'content' => [
+                        'All swords are replaced with bomb upgrades, and bombs are now the only weapon. Multiple changes have been made for this to work:',
+                        '<ul>'
+                            . '<li>Link has an infinite supply of bombs.</li>'
+                            . '<li>Bombs initially deal the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage, with the fourth upgrade dealing damage equal to golden sword spin attacks.</li>'
+                            . '<li>All bosses (including Ganon) can now be damaged by bombs of the appropriate level.</li>'
+                            . '<li>All other weapons do no damage in most cases, except for the following:'
+                                . '<ul>'
+                                    . '<li>Red eyegores and mimics must still be killed with the bow.</li>'
+                                    . '<li>Freezors must still be killed with either the fire rod or Bombos.</li>'
+                                    . '<li>Kholdstare\'s initial phase still requires either the fire rod or Bombos.</li>'
+                                    . '<li>Trinexx\'s side heads still require the appropriate rod to make them vulnerable, but the rod will not damage them further.</li>'
+                                    . '<li>Hookshot and boomerang can still stun enemies, but will never damage enemies.</li>'
+                                    . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
+                                    . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
+                                . '</ul>'
+                            . '<li>The bat barrier outside Aghanim’s Tower can now be broken with the Hammer.</li>'
+                            . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
+                            . '<li>Ether and Bombos tablets require the Hammer and the Book of Mudora.</li>'
+                            . '<li>Medallions can only be used to open Misery Mire and Turtle Rock, or to progress through Ice Palace. They only work where their emblems indicate.</li>'
+                            . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
+                        . '</ul>',
+                    ],
+                ],
             ],
         ],
         'enemy_health' => [

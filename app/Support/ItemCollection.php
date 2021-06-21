@@ -401,7 +401,7 @@ class ItemCollection extends Collection
     public function canMeltThings(World $world)
     {
         return $this->has('FireRod')
-            || ($this->has('Bombos') && ($world->config('mode.weapons') === 'swordless' || $this->hasSword()));
+            || ($this->has('Bombos') && ($world->restrictedSwords() || $this->hasSword()));
     }
 
     /**
@@ -583,7 +583,8 @@ class ItemCollection extends Collection
             || $this->canShootArrows($world)
             || $this->has('Hammer')
             || $this->has('FireRod')
-            || $world->config('ignoreCanKillEscapeThings', false);
+            || $world->config('ignoreCanKillEscapeThings', false)
+            || $world->config('mode.weapons') === 'bombs';
     }
 
     /**
@@ -604,7 +605,8 @@ class ItemCollection extends Collection
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
             || $this->canShootArrows($world)
             || $this->has('Hammer')
-            || $this->has('FireRod');
+            || $this->has('FireRod')
+            || $world->config('mode.weapons') === 'bombs';
     }
 
     /**
@@ -666,6 +668,37 @@ class ItemCollection extends Collection
                     || $this->has('MasterSword')
                     || $this->has('L3Sword')
                     || $this->has('L4Sword');
+        }
+    }
+
+    /**
+     * Requirements for having a certain level of bombs, for bomb-only mode
+     *
+     * @param int $min_level minimum level of bombs
+     *
+     * @return bool
+     */
+    public function hasBombLevel(int $min_level)
+    {
+        switch ($min_level) {
+            case 4:
+                return $this->has('ProgressiveBombs', 3)
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
+            case 3:
+                return $this->has('ProgressiveBombs', 2)
+                    || $this->has('L3Bombs')
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
+            case 2:
+                return $this->has('ProgressiveBombs')
+                    || $this->has('L2Bombs')
+                    || $this->has('L3Bombs')
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
+            case 1:
+            default:
+                return true;
         }
     }
 

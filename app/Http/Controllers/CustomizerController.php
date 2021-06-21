@@ -205,6 +205,8 @@ class CustomizerController extends Controller
                 }
                 if ($world->config('mode.weapons') === 'swordless' && $place_item instanceof Item\Sword) {
                     $place_item = Item::get('TwentyRupees2', $world);
+                } elseif ($world->config('mode.weapons') === 'bombs' && $place_item instanceof Item\Sword) {
+                    $place_item = Item::get('ProgressiveBombs', $world);
                 }
                 $locations[$decoded_location]->setItem($place_item);
             }
@@ -221,6 +223,8 @@ class CustomizerController extends Controller
                 $place_item = Item::get($item, $world);
                 if ($world->config('mode.weapons') === 'swordless' && $place_item instanceof Item\Sword) {
                     $place_item = Item::get('TwentyRupees2', $world);
+                } elseif ($world->config('mode.weapons') === 'bombs' && $place_item instanceof Item\Sword) {
+                    $place_item = Item::get('ProgressiveBombs', $world);
                 }
                 $world->addPreCollectedItem($place_item);
             } catch (Exception $e) {

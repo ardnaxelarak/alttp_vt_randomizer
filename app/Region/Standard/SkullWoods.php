@@ -79,19 +79,11 @@ class SkullWoods extends Region
      */
     public function canPlaceBoss(Boss $boss, string $level = 'top'): bool
     {
-        if (
-            $this->name != "Ice Palace" && $this->world->config('mode.weapons') == 'swordless'
-            && $boss->getName() == 'Kholdstare'
-        ) {
-            return false;
+        if (parent::canPlaceBoss($boss, $level)) {
+          return $boss->getName() !== "Trinexx";
+        } else {
+          return false;
         }
-
-        return !in_array($boss->getName(), [
-            "Agahnim",
-            "Agahnim2",
-            "Ganon",
-            "Trinexx",
-        ]);
     }
 
     /**
@@ -124,7 +116,7 @@ class SkullWoods extends Region
             return $this->canEnter($locations, $items)
                 && $items->has('MoonPearl')
                 && $items->has('FireRod')
-                && ($this->world->config('mode.weapons') == 'swordless' || $items->hasSword())
+                && ($this->world->restrictedSwords() || $items->hasSword())
                 && $items->has('KeyD3', 3)
                 && $this->boss->canBeat($items, $locations)
                 && (!$this->world->config('region.wildCompasses', false) || $items->has('CompassD3') || $this->locations["Skull Woods - Boss"]->hasItem(Item::get('CompassD3', $this->world)))
@@ -147,7 +139,8 @@ class SkullWoods extends Region
         $this->can_enter = function ($locations, $items) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->config('mode.weapons') === 'swordless' || $items->hasSword()) && $items->hasHealth(7) && $items->hasABottle()))
+                    || (($this->world->restrictedSwords() || $items->hasSword())
+                        && $items->hasHealth(7) && $items->hasABottle()))
                 && ($this->world->config('canDungeonRevive', false) || $items->has('MoonPearl')
                     || (($items->hasABottle() && $this->world->config('canOWYBA', false))
                         || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))))

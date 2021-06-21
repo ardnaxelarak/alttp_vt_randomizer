@@ -70,15 +70,16 @@ class Boss
                 return $items->hasSword() || $items->has('Hammer') || $items->canShootArrows($world)
                     || $items->has('Boomerang') || $items->has('RedBoomerang')
                     || ($items->canExtendMagic($world, 4) && ($items->has('FireRod') || $items->has('IceRod')))
-                    || ($items->canExtendMagic($world, 2) && ($items->has('CaneOfByrna') || $items->has('CaneOfSomaria')));
+                    || ($items->canExtendMagic($world, 2) && ($items->has('CaneOfByrna') || $items->has('CaneOfSomaria')))
+                    || $world->config('mode.weapons') === 'bombs';
             }),
             new static("Lanmolas", "Lanmola", function ($locations, $items) use ($world) {
                 return $items->hasSword() || $items->has('Hammer')
                     || $items->canShootArrows($world) || $items->has('FireRod') || $items->has('IceRod')
-                    || $items->has('CaneOfByrna') || $items->has('CaneOfSomaria');
+                    || $items->has('CaneOfByrna') || $items->has('CaneOfSomaria') || $world->config('mode.weapons') === 'bombs';
             }),
-            new static("Moldorm", "Moldorm", function ($locations, $items) {
-                return $items->hasSword() || $items->has('Hammer');
+            new static("Moldorm", "Moldorm", function ($locations, $items) use ($world) {
+                return $items->hasSword() || $items->has('Hammer') || $world->config('mode.weapons') === 'bombs';
             }),
             new static("Agahnim", "Agahnim", function ($locations, $items) {
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');
@@ -86,42 +87,61 @@ class Boss
             new static("Helmasaur King", "Helmasaur", function ($locations, $items) use ($world) {
                 return ($items->canBombThings() || $items->has('Hammer'))
                     && ($items->hasSword(2) || $items->canShootArrows($world)
-                        || ($world->config('itemPlacement') !== 'basic' && $items->hasSword()));
+                        || ($world->config('itemPlacement') !== 'basic' && $items->hasSword()))
+                        || ($world->config('mode.weapons') === 'bombs' && $items->hasBombLevel(2));
             }),
             new static("Arrghus", "Arrghus", function ($locations, $items) use ($world) {
-                return ($world->config('itemPlacement') !== 'basic' || $world->config('mode.weapons') === 'swordless' || $items->hasSword(2))
-                    && $items->has('Hookshot') && ($items->has('Hammer') || $items->hasSword()
-                        || (($items->canExtendMagic($world, 2) || $items->canShootArrows($world)) && ($items->has('FireRod') || $items->has('IceRod'))));
+                return ($world->config('itemPlacement') !== 'basic'
+                        || $world->restrictedSwords() || $items->hasSword(2))
+                    && $items->has('Hookshot')
+                    && ($items->has('Hammer') || $items->hasSword() || $world->config('mode.weapons') === 'bombs'
+                        || (($items->canExtendMagic($world, 2) || $items->canShootArrows($world))
+                            && ($items->has('FireRod') || $items->has('IceRod'))))
+                    && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(2));
             }),
             new static("Mothula", "Mothula", function ($locations, $items) use ($world) {
-                return ($world->config('itemPlacement') !== 'basic' || $items->hasSword(2) || ($items->canExtendMagic($world, 2) && $items->has('FireRod')))
-                    && ($items->hasSword() || $items->has('Hammer')
+                return ($world->config('itemPlacement') !== 'basic' || $world->config('mode.weapons') === 'bombs'
+                        || $items->hasSword(2) || ($items->canExtendMagic($world, 2) && $items->has('FireRod')))
+                    && ($items->hasSword() || $items->has('Hammer') || $world->config('mode.weapons') === 'bombs'
                         || ($items->canExtendMagic($world, 2) && ($items->has('FireRod') || $items->has('CaneOfSomaria')
                             || $items->has('CaneOfByrna')))
                         || $items->canGetGoodBee());
             }),
             new static("Blind", "Blind", function ($locations, $items) use ($world) {
-                return ($world->config('itemPlacement') !== 'basic' || $world->config('mode.weapons') === 'swordless' || ($items->hasSword() && ($items->has('Cape') || $items->has('CaneOfByrna'))))
-                    && ($items->hasSword() || $items->has('Hammer')
+                return ($world->config('itemPlacement') !== 'basic' || $world->restrictedSwords()
+                        || ($items->hasSword() && ($items->has('Cape') || $items->has('CaneOfByrna'))))
+                    && ($items->hasSword() || $items->has('Hammer') || $world->config('mode.weapons') === 'bombs'
                         || $items->has('CaneOfSomaria') || $items->has('CaneOfByrna'));
             }),
             new static("Kholdstare", "Kholdstare", function ($locations, $items) use ($world) {
                 return ($world->config('itemPlacement') !== 'basic' || $items->hasSword(2) || ($items->canExtendMagic($world, 3) && $items->has('FireRod'))
-                    || ($items->has('Bombos') && ($world->config('mode.weapons') === 'swordless' || $items->hasSword()) && $items->canExtendMagic($world, 2) && $items->has('FireRod')))
-                    && $items->canMeltThings($world) && ($items->has('Hammer') || $items->hasSword()
+                        || ($items->has('Bombos') && ($world->restrictedSwords() || $items->hasSword()) && $items->canExtendMagic($world, 2) && $items->has('FireRod')))
+                    && $items->canMeltThings($world)
+                    && ($items->has('Hammer') || $items->hasSword()
                         || ($items->canExtendMagic($world, 3) && $items->has('FireRod'))
-                        || ($items->canExtendMagic($world, 2) && $items->has('FireRod') && $items->has('Bombos') && $world->config('mode.weapons') === 'swordless'));
+                        || ($items->canExtendMagic($world, 2) && $items->has('FireRod') && $items->has('Bombos')
+                            && $world->restrictedSwords())
+                        || $world->config('mode.weapons') === 'bombs')
+                    && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(2));
             }),
             new static("Vitreous", "Vitreous", function ($locations, $items) use ($world) {
-                return ($world->config('itemPlacement') !== 'basic' || $items->hasSword(2) || $items->canShootArrows($world))
-                    && ($items->has('Hammer') || $items->hasSword() || $items->canShootArrows($world));
+                return ($world->config('itemPlacement') !== 'basic' || $items->hasSword(2)
+                        || $items->canShootArrows($world) || $world->config('mode.weapons') === 'bombs')
+                    && ($items->has('Hammer') || $items->hasSword() || $items->canShootArrows($world)
+                        || $world->config('mode.weapons') === 'bombs')
+                    && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(2));
             }),
             new static("Trinexx", "Trinexx", function ($locations, $items) use ($world) {
                 return $items->has('FireRod') && $items->has('IceRod')
-                    && ($world->config('itemPlacement') !== 'basic' || $world->config('mode.weapons') === 'swordless' || $items->hasSword(3) || ($items->canExtendMagic($world, 2) && $items->hasSword(2)))
+                    && ($world->config('itemPlacement') !== 'basic'
+                        || $world->restrictedSwords()
+                        || $items->hasSword(3) || ($items->canExtendMagic($world, 2) && $items->hasSword(2)))
                     && ($items->hasSword(3) || $items->has('Hammer')
                         || ($items->canExtendMagic($world, 2) && $items->hasSword(2))
-                        || ($items->canExtendMagic($world, 4) && $items->hasSword()));
+                        || ($items->canExtendMagic($world, 4) && $items->hasSword())
+                        || $world->config('mode.weapons') === 'bombs')
+                    && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(3)
+                        || ($items->canExtendMagic($world, 2) && $items->hasBombLevel(2)));
             }),
             new static("Agahnim2", "Agahnim2", function ($locations, $items) {
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');

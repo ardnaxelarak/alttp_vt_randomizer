@@ -174,22 +174,25 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
             }
 
             return ($items->has('MoonPearl')
-                || ($this->world->config('canBunnyRevive', false)
-                    && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
-                    && $items->hasABottle()) || (     // Invis Ganon fight sounds fun for logic :)
-                    $this->world->config('canSuperBunny', false)
-                    && $this->world->config('canDungeonRevive', false) // Just so it's not in logic for everyone. Don't care, just think it's better like this.
-                    && $this->world->getRegion('Ganons Tower')->canEnter($locations, $items) //Bunny Beam Storage from GT
-                    && $items->has('CaneOfSomaria')
-                    && $items->has('MagicMirror')
-                    && $items->hasABottle() // Magic should be easily fine, but it's easy to miss when Invisible, even with lamp. FRod when Requires a bunch of Bottles anyway.
-                )) && ($items->has('DefeatAgahnim2')
-                || $this->world->config('goal') === 'fast_ganon')
-                && (!$this->world->config('region.requireBetterBow', false)
-                    || $items->canShootArrows($this->world, 2)) && (
-                    ($this->world->config('mode.weapons') == 'swordless'
-                        && $items->has('Hammer') && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                    || ($this->world->config('canBunnyRevive', false)
+                        && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
+                        && $items->hasABottle()) || (     // Invis Ganon fight sounds fun for logic :)
+                        $this->world->config('canSuperBunny', false)
+                        && $this->world->config('canDungeonRevive', false) // Just so it's not in logic for everyone. Don't care, just think it's better like this.
+                        && $this->world->getRegion('Ganons Tower')->canEnter($locations, $items) //Bunny Beam Storage from GT
+                        && $items->has('CaneOfSomaria')
+                        && $items->has('MagicMirror')
+                        && $items->hasABottle())) // Magic should be easily fine, but it's easy to miss when Invisible, even with lamp. FRod when Requires a bunch of Bottles anyway.
+                && ($items->has('DefeatAgahnim2') || $this->world->config('goal') === 'fast_ganon')
+                && (!$this->world->config('region.requireBetterBow', false) || $items->canShootArrows($this->world, 2))
+                && (
+                    ($this->world->config('mode.weapons') == 'swordless' && $items->has('Hammer')
+                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
                             || ($items->has('FireRod') && ($items->canExtendMagic($this->world, 1)
+                                && $items->has('MoonPearl')) || $items->canExtendMagic($this->world, 4)))) 
+                    || ($this->world->config('mode.weapons') == 'bombs' && $items->hasBombLevel(3)
+                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                            || ($items->has('FireRod') && ($items->canExtendMagic($this->world, 2)
                                 && $items->has('MoonPearl')) || $items->canExtendMagic($this->world, 4)))) 
                     || (!$this->world->config('region.requireBetterSword', false)
                         && ($items->hasSword(2)
@@ -197,12 +200,12 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                                 || ($items->has('FireRod')
                                     && ($items->canExtendMagic($this->world, 3)
                                         && $items->has('MoonPearl')) ||
-                                    $items->canExtendMagic($this->world, 4))))) || ($items->hasSword(3)
+                                    $items->canExtendMagic($this->world, 4)))))
+                    || ($items->hasSword(3)
                         && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
                             || ($items->has('FireRod')
-                                && ($items->canExtendMagic($this->world, 2)
-                                    && $items->has('MoonPearl')) ||
-                                $items->canExtendMagic($this->world, 3)))));
+                                && ($items->canExtendMagic($this->world, 2) && $items->has('MoonPearl'))
+                                    || $items->canExtendMagic($this->world, 3)))));
         });
 
         $this->can_enter = function ($locations, $items) {

@@ -160,9 +160,9 @@ class East extends Region\Standard\LightWorld\DeathMountain\East
 
         $this->locations["Ether Tablet"]->setRequirements(function ($locations, $items) {
             return $items->has('BookOfMudora')
-                && (($this->world->config('mode.weapons') == 'swordless'
-                    && $items->has('Hammer'))
-                    || $items->hasSword(2)) && (($items->has('MoonPearl')
+                && (($this->world->restrictedSwords() && $items->has('Hammer'))
+                    || $items->hasSword(2))
+                && (($items->has('MoonPearl')
                     && ($items->has('Hammer')
                     || ($this->world->config('canBootsClip', false)
                         && $items->has('PegasusBoots')) || ($this->world->config('canSuperSpeed', false)

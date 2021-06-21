@@ -134,7 +134,8 @@ class IcePalace extends Region
         $this->can_enter = function ($locations, $items) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->config('mode.weapons') === 'swordless' || $items->hasSword(2)) && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
+                    || (($this->world->restrictedSwords() || $items->hasSword(2))
+                        && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && ($items->canMeltThings($this->world) || $this->world->config('canOneFrameClipUW', false))
                 && ((($items->has('MoonPearl') || $this->world->config('canDungeonRevive', false))
                     && ($items->has('Flippers') || $this->world->config('canFakeFlipper', false))

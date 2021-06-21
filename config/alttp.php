@@ -266,6 +266,7 @@ return [
                 'assured' => 'Assured',
                 'vanilla' => 'Vanilla',
                 'swordless' => 'Swordless',
+                'bombs' => 'Bombs Only',
             ],
             'item_pool' => [
                 'normal' => 'Normal',

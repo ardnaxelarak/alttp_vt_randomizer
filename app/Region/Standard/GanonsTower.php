@@ -147,40 +147,25 @@ class GanonsTower extends Region
      */
     public function canPlaceBoss(Boss $boss, string $level = 'top'): bool
     {
-        if (
-            $this->name != "Ice Palace" && $this->world->config('mode.weapons') == 'swordless'
-            && $boss->getName() == 'Kholdstare'
-        ) {
+        if (parent::canPlaceBoss($boss, $level)) {
+            if ($level == 'top') {
+                return !in_array($boss->getName(), [
+                    "Armos Knights",
+                    "Arrghus",
+                    "Blind",
+                    "Lanmolas",
+                    "Trinexx",
+                ]);
+            }
+
+            if ($level == 'middle') {
+                return $boss->getName() !== 'Blind';
+            }
+
+            return true;
+        } else {
             return false;
         }
-
-        if ($level == 'top') {
-            return !in_array($boss->getName(), [
-                "Agahnim",
-                "Agahnim2",
-                "Armos Knights",
-                "Arrghus",
-                "Blind",
-                "Ganon",
-                "Lanmolas",
-                "Trinexx",
-            ]);
-        }
-
-        if ($level == 'middle') {
-            return !in_array($boss->getName(), [
-                "Agahnim",
-                "Agahnim2",
-                "Blind",
-                "Ganon",
-            ]);
-        }
-
-        return !in_array($boss->getName(), [
-            "Agahnim",
-            "Agahnim2",
-            "Ganon",
-        ]);
     }
 
     /**
@@ -395,7 +380,8 @@ class GanonsTower extends Region
         $this->can_enter = function ($locations, $items) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->config('mode.weapons') === 'swordless' || $items->hasSword(2)) && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
+                    || (($this->world->restrictedSwords() || $items->hasSword(2))
+                        && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && ((($items->has('MoonPearl') || ($this->world->config('canOWYBA', false) && $items->hasABottle()))
                     && (((($items->has('Crystal1')
                         + $items->has('Crystal2')

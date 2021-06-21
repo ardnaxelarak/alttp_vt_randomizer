@@ -198,6 +198,11 @@
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.enemy_health.title') }}: {{ $t(enemyHealth.name) }}</div>
             </div>
+            <div
+              v-if="weapons.value === 'bombs'"
+              class="logic-warning text-danger"
+              v-html="$t('randomizer.weapons.bombs_warning')"
+            />
             <div class="row" v-if="editable">
               <div class="col-xl-4 col-lg-6 my-1">
                 <Select

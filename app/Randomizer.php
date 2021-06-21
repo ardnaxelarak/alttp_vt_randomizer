@@ -168,6 +168,7 @@ class Randomizer implements RandomizerContract
         $nice_items_bottles = [];
         $nice_items_health = [];
         $nice_items_armors = [];
+        $nice_items_bombs = [];
         foreach ($advancement_items as $key => $item) {
             if ($item == Item::get('SilverArrowUpgrade', $world)) {
                 $nice_items[] = $item;
@@ -184,6 +185,10 @@ class Randomizer implements RandomizerContract
                 unset($advancement_items[$key]);
                 continue;
             }
+            if ($item instanceof Item\SwordBomb) {
+                $nice_items_bombs[] = $item;
+                unset($advancement_items[$key]);
+            }
         }
         // and from the nice items as well
         foreach ($nice_items as $key => $item) {
@@ -198,6 +203,10 @@ class Randomizer implements RandomizerContract
             if ($item instanceof Item\Armor) {
                 unset($nice_items[$key]);
                 $nice_items_armors[] = $item;
+            }
+            if ($item instanceof Item\SwordBomb) {
+                unset($nice_items[$key]);
+                $nice_items_bombs[] = $item;
             }
         }
         foreach ($trash_items as $key => $item) {
@@ -232,6 +241,16 @@ class Randomizer implements RandomizerContract
                     }
                 }
             }
+        } elseif ($world->config('mode.weapons') === 'bombs') {
+            // put L-2 bombs in
+            if (count($nice_items_bombs)) {
+                array_push($advancement_items, array_pop($nice_items_bombs));
+            }
+            // put L-3 bombs in
+            if (count($nice_items_bombs)) {
+                array_push($advancement_items, array_pop($nice_items_bombs));
+            }
+            $nice_items = array_merge($nice_items, $nice_items_bombs);
         } elseif ($world->config('mode.weapons') === 'vanilla') {
             $uncle_sword = Item::get('UncleSword', $world)->setTarget(array_pop($nice_items_swords));
             $world->getLocation("Link's Uncle")->setItem($uncle_sword);
@@ -370,13 +389,13 @@ class Randomizer implements RandomizerContract
             ['Ganons Tower', 'bottom'],
         ];
 
-        if ($world->config('mode.weapons') == 'swordless') {
+        if (in_array($world->config('mode.weapons'), ['swordless', 'bombs'])) {
             array_splice($boss_locations, 9, 1); // remove Ice Palace
             $world->getRegion('Ice Palace')->setBoss(Boss::get("Kholdstare", $world));
         }
 
         $placeable_bosses = Boss::all($world)->filter(function ($boss) use ($world) {
-            if ($world->config('mode.weapons') == 'swordless' && $boss->getName() == "Kholdstare") {
+            if (in_array($world->config('mode.weapons'), ['swordless', 'bombs']) && $boss->getName() == "Kholdstare") {
                 return false;
             }
             return !in_array($boss->getName(), [
@@ -723,7 +742,7 @@ class Randomizer implements RandomizerContract
 
             $old_man->setActive(true);
             $old_man->setShopkeeper('old_man');
-            $old_man->addInventory(0, (in_array($world->config('mode.weapons'), ['swordless', 'vanilla'])) ? Item::get('ThreeHundredRupees', $world)
+            $old_man->addInventory(0, (in_array($world->config('mode.weapons'), ['swordless', 'bombs', 'vanilla'])) ? Item::get('ThreeHundredRupees', $world)
                 : Item::get('ProgressiveSword', $world), 0);
         }
 
