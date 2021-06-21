@@ -755,11 +755,14 @@ class Randomizer implements RandomizerContract
             $shop->setActive(true);
             if ($world->config('rom.rupeeBow', false)) {
                 $shop->addInventory(0, Item::get('ShopArrow', $world), 80);
+                $inventory = $shop->getInventory();
+                if (array_key_exists(2, $inventory) && $inventory[2]['item'] instanceof Item\Arrow) {
+                    $shop->addInventory(2, Item::get('TenBombs', $world), 50);
+                }
             }
             if ($world->config('rom.genericKeys', false)) {
                 $shop->addInventory(1, Item::get('ShopKey', $world), 100);
             }
-            $shop->addInventory(2, Item::get('TenBombs', $world), 50);
         });
 
         if ($world->config('rom.rupeeBow', false)) {
@@ -771,6 +774,17 @@ class Randomizer implements RandomizerContract
                     $dw_shop->addInventory((int) $slot, Item::get('ShopArrow', $world), 80);
                 }
             }
+        }
+
+        if ($world->config('mode.weapons') === 'bombs') {
+            $shops->each(function ($shop) use ($world) {
+                foreach ($shop->getInventory() as $slot => $data) {
+                    if ($data['item'] instanceof Item\Bomb) {
+                        $shop->addInventory((int) $slot, Item::get('Nothing', $world), 0);
+                        $shop->setActive(true);
+                    }
+                }
+            });
         }
 
         if (in_array($world->config('rom.HardMode', 0), [1, 2, 3])) {
