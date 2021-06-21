@@ -226,7 +226,7 @@ return [
                                     . '<li>The first Progressive Bow only shoots Wooden Arrows.</li>'
                                     . '<li>The second Progressive Bow can shoot Wooden Arrows and Silver Arrows.</li>'
                                     . '<li>However neither Bow can be used until a Rupee Quiver has been purchased.</li>'
-                                    . '<li>The Rupee Quiver costs 80 rupees and only appears in one randomly chosen shop!</li>'
+                                    . '<li>The Rupee Quiver costs 80 rupees and appears in five randomly chosen shops.</li>'
                                     . '<li>Each Wooden Arrow costs 10 rupees and each Silver Arrow costs 50 rupees.</li>'
                                     . '</ul>',
                             ],
@@ -234,7 +234,7 @@ return [
                         [
                             'header' => 'Shops',
                             'content' => [
-                                'Five shops out of a possible nine will be randomly chosen to contain new stock. This does not include the Bomb Shop or the Potion Shop. One of these shops will contain the Rupee Quiver at a price of 80 rupees. Additionally, small keys will be available in multiple shops for a price of 100 rupees and there is no limit on how many may be purchased.',
+                                'Five shops out of a possible nine will be randomly chosen to contain new stock. This does not include the Bomb Shop or the Potion Shop. These shops will contain the Rupee Quiver at a price of 80 rupees, and small keys at a price of 100 rupees. There is no limit on how many small keys may be purchased.',
                             ],
                         ],
                         [
