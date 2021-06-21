@@ -721,6 +721,7 @@ class Randomizer implements RandomizerContract
             !$world->config('rom.genericKeys', false)
             && !$world->config('rom.rupeeBow', false)
             && !$world->config('region.takeAnys', false)
+            && $world->config('mode.weapons') !== 'bombs'
         ) {
             return;
         }
@@ -770,18 +771,18 @@ class Randomizer implements RandomizerContract
                     $dw_shop->addInventory((int) $slot, Item::get('ShopArrow', $world), 80);
                 }
             }
+        }
 
-            switch ($world->config('rom.HardMode', 0)) {
-                case 1:
-                case 2:
-                case 3:
-                    $world->getShop("Capacity Upgrade")->clearInventory();
-
-                    break;
-                default:
-                    $world->getShop("Capacity Upgrade")->clearInventory()
-                        ->addInventory(0, Item::get('BombUpgrade5', $world), 100, 7);
-            }
+        if (in_array($world->config('rom.HardMode', 0), [1, 2, 3])) {
+            $world->getShop("Capacity Upgrade")->clearInventory();
+        } else if ($world->config('rom.rupeeBow', false) && $world->config('mode.weapons') === 'bombs') {
+            $world->getShop("Capacity Upgrade")->clearInventory();
+        } else if ($world->config('rom.rupeeBow', false)) {
+            $world->getShop("Capacity Upgrade")->clearInventory()
+                ->addInventory(0, Item::get('BombUpgrade5', $world), 100, 7);
+        } else if ($world->config('mode.weapons') === 'bombs') {
+            $world->getShop("Capacity Upgrade")->clearInventory()
+                ->addInventory(0, Item::get('ArrowUpgrade5', $world), 100, 7);
         }
     }
 
@@ -957,7 +958,9 @@ class Randomizer implements RandomizerContract
 
         $progressive_bow_locations = $world->getLocationsWithItem(Item::get('ProgressiveBow', $world))->randomCollection(2);
 
-        if ($progressive_bow_locations->count() >= 2 && $world->config('item.overflow.count.Bow', 2) >= 2) {
+        if ($world->config('mode.weapons') === 'bombs') {
+            $world->setText('ganon_phase_3_silvers', "Explosives!\nMy one true\nweakness!");
+        } elseif ($progressive_bow_locations->count() >= 2 && $world->config('item.overflow.count.Bow', 2) >= 2) {
             $first_location = $progressive_bow_locations->pop();
             switch ($first_location->getRegion()->getName()) {
                 case "Ganons Tower":
