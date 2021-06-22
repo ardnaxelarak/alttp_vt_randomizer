@@ -126,6 +126,12 @@ class Zora extends Npc
                 return "fireworks for sale";
             case 'TenBombs':
                 return "boom boom for sale";
+            case 'L2Bombs':
+            case 'L3Bombs':
+            case 'L4Bombs':
+            case 'L5Bombs':
+            case 'ProgressiveBombs':
+                return "better booms for sale";
             case 'Mushroom':
                 return "legal drugs for sale";
             case 'Bottle':

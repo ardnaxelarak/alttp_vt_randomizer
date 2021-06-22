@@ -112,6 +112,11 @@ class Uncle extends Location
             case 'Bomb':
             case 'ThreeBombs':
             case 'TenBombs':
+            case 'L2Bombs':
+            case 'L3Bombs':
+            case 'L4Bombs':
+            case 'L5Bombs':
+            case 'ProgressiveBombs':
                 return "your uncle believes";
             case 'Mushroom':
                 return "your uncle deals drugs";
