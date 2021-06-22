@@ -219,6 +219,19 @@ export default {
         if (state.item_pool.value === "crowd_control") {
           commit("setItemPool", "expert");
         }
+        if (state.weapons.value === "bombs") {
+          commit("setWeapons", "swordless");
+        }
+      }
+    },
+    setWeapons({ commit, state }, value) {
+      commit("setWeapons", value);
+
+      if (
+        state.weapons.value === "bombs" &&
+        state.entrance_shuffle.value !== "none"
+      ) {
+        commit("setEntranceShuffle", "none");
       }
     },
     setItemPool({ commit, state }, value) {

@@ -399,6 +399,7 @@ export default {
       "setGanonOpen",
       "setWorldState",
       "setEntranceShuffle",
+      "setWeapons",
       "setItemPool"
     ]),
     ...mapMutations("randomizer", [
@@ -407,7 +408,6 @@ export default {
       "setBossShuffle",
       "setEnemyShuffle",
       "setHints",
-      "setWeapons",
       "setItemFunctionality",
       "setEnemyDamage",
       "setEnemyHealth"
