@@ -938,6 +938,7 @@ abstract class World
             'world_id' => $this->id,
             'crystals_ganon' => $this->config('crystals.ganon'),
             'crystals_tower' => $this->config('crystals.tower'),
+            'ganon_item' => $this->config('ganon_item'),
             'tournament' => $this->config('tournament', false),
             'size' => 2,
             'hints' => $this->config('spoil.Hints'),
@@ -1058,6 +1059,7 @@ abstract class World
 
         $rom->setTowerCrystalRequirement($this->config('crystals.tower', 7));
         $rom->setGanonCrystalRequirement($this->config('crystals.ganon', 7));
+        $rom->setGanonItem($this->config('ganon_item', 'default'));
 
         // testing features
         $rom->setGenericKeys($this->config('rom.genericKeys', false));

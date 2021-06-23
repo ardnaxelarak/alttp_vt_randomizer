@@ -21,6 +21,7 @@ export default {
       goal: [],
       tower_open: [],
       ganon_open: [],
+      ganon_item: [],
       world_state: [],
       entrance_shuffle: [],
       boss_shuffle: [],
@@ -73,6 +74,7 @@ export default {
         goals,
         tower_open,
         ganon_open,
+        ganon_item,
         world_state,
         entrance_shuffle,
         boss_shuffle,
@@ -96,6 +98,7 @@ export default {
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
       state.options.ganon_open = asMulti(ganon_open, "ganon_open");
+      state.options.ganon_item = asMulti(ganon_item, "ganon_item");
       state.options.world_state = asMulti(world_state, "world_state");
       state.options.entrance_shuffle = asMulti(
         entrance_shuffle,

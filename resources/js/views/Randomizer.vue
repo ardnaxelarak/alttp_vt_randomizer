@@ -87,36 +87,46 @@
           <div class="card-body">
             <div class="row" v-if="!editable">
               <div
-                class="col-xl-4 col-lg-6 my-1"
+                class="col-xl-6 col-lg-6 my-1"
               >{{ $t('randomizer.goal.title') }}: {{ $t(goal.name) }}</div>
               <div
-                class="col-xl-4 col-lg-6 my-1"
+                class="col-xl-6 col-lg-6 my-1"
               >{{ $t('randomizer.tower_open.title') }}: {{ $t(towerOpen.name) }}</div>
               <div
-                class="col-xl-4 col-lg-6 my-1"
+                class="col-xl-6 col-lg-6 my-1"
               >{{ $t('randomizer.ganon_open.title') }}: {{ $t(ganonOpen.name) }}</div>
+              <div
+                class="col-xl-6 col-lg-6 my-1"
+              >{{ $t('randomizer.ganon_item.title') }}: {{ $t(ganonOpen.name) }}</div>
             </div>
             <div class="row" v-if="editable">
-              <div class="col-xl-4 col-lg-6 my-1">
+              <div class="col-xl-6 col-lg-6 my-1">
                 <Select
                   :value="goal"
                   @input="setGoal"
                   :options="optionsGoal"
                 >{{ $t('randomizer.goal.title') }}</Select>
               </div>
-              <div class="col-xl-4 col-lg-6 my-1">
+              <div class="col-xl-6 col-lg-6 my-1">
                 <Select
                   :value="towerOpen"
                   @input="setTowerOpen"
                   :options="optionsTowerOpen"
                 >{{ $t('randomizer.tower_open.title') }}</Select>
               </div>
-              <div class="col-xl-4 col-lg-6 my-1">
+              <div class="col-xl-6 col-lg-6 my-1">
                 <Select
                   :value="ganonOpen"
                   @input="setGanonOpen"
                   :options="optionsGanonOpen"
                 >{{ $t('randomizer.ganon_open.title') }}</Select>
+              </div>
+              <div class="col-xl-6 col-lg-6 my-1">
+                <Select
+                  :value="ganonItem"
+                  @input="setGanonItem"
+                  :options="optionsGanonItem"
+                >{{ $t('randomizer.ganon_item.title') }}</Select>
               </div>
             </div>
           </div>
@@ -397,6 +407,7 @@ export default {
       "setDungeonItems",
       "setGoal",
       "setGanonOpen",
+      "setGanonItem",
       "setWorldState",
       "setEntranceShuffle",
       "setWeapons",
@@ -459,6 +470,7 @@ export default {
                 ganon: this.ganonOpen.value,
                 tower: this.towerOpen.value
               },
+              ganon_item: this.ganonItem.value,
               mode: this.worldState.value,
               entrances: this.entranceShuffle.value,
               hints: this.hints.value,
@@ -584,6 +596,8 @@ export default {
       towerOpen: state => state.tower_open,
       optionsGanonOpen: state => state.options.ganon_open,
       ganonOpen: state => state.ganon_open,
+      optionsGanonItem: state => state.options.ganon_item,
+      ganonItem: state => state.ganon_item,
       optionsWorldState: state => state.options.world_state,
       worldState: state => state.world_state,
       optionsEntranceShuffle: state => state.options.entrance_shuffle,

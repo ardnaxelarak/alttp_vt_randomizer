@@ -12,8 +12,8 @@ use Log;
  */
 class Rom
 {
-    const BUILD = '2021-06-21';
-    const HASH = '8efccb29d3ee9fb227f81b529a9ec929';
+    const BUILD = '2021-06-22';
+    const HASH = 'a51de7b5972c394e7b138218edfa0dd5';
     const SIZE = 2097152;
 
     private $tmp_file;
@@ -2870,6 +2870,38 @@ class Rom
     public function setGanonCrystalRequirement(int $crystals = 7): self
     {
         $this->write(0x18005F, pack('C', max(min($crystals, 7), 0)));
+
+        return $this;
+    }
+
+    /**
+     * Set the Ganon item vulnerability requirement
+     *
+     * @param string $item
+     *
+     * @return $this
+     */
+    public function setGanonItem(string $item = 'default'): self
+    {
+        $itemMap = [
+            'default' => 0x00,
+            'arrow' => 0x01,
+            'boomerang' => 0x02,
+            'hookshot' => 0x03,
+            'bomb' => 0x04,
+            'powder' => 0x05,
+            'fire_rod' => 0x06,
+            'ice_rod' => 0x07,
+            'bombos' => 0x08,
+            'ether' => 0x09,
+            'quake' => 0x0A,
+            'hammer' => 0x0C,
+            'bee' => 0x10,
+            'somaria' => 0x11,
+            'byrna' => 0x12,
+        ];
+        $value = array_key_exists($item, $itemMap) ? $itemMap[$item] : 0x00;
+        $this->write(0x18002E, pack('C', $value));
 
         return $this;
     }

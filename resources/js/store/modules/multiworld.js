@@ -60,6 +60,7 @@ export default {
               dispatch("load", [worldId, "goal", "setGoal"]),
               dispatch("load", [worldId, "tower_open", "setTowerOpen"]),
               dispatch("load", [worldId, "ganon_open", "setGanonOpen"]),
+              dispatch("load", [worldId, "ganon_item", "setGanonItem"]),
               dispatch("load", [worldId, "world_state", "setWorldState"]),
               dispatch("load", [
                 worldId,
@@ -120,6 +121,10 @@ export default {
         commit("setGanonOpen", {
           worldId,
           value: state.preset_map[preset.value]["ganon_open"]
+        });
+        commit("setGanonItem", {
+          worldId,
+          value: state.preset_map[preset.value]["ganon_item"]
         });
         commit("setWorldState", {
           worldId,
@@ -228,6 +233,16 @@ export default {
         commit("setGoal", { worldId, value: "ganon" });
       }
     },
+    setGanonItem({ commit, state }, { worldId, value }) {
+      commit("setGanonItem", { worldId, value });
+
+      if (
+        state.worlds[worldId].ganon_item.value !== "default" &&
+        state.worlds[worldId].entrance_shuffle.value !== "none"
+      ) {
+        commit("setEntranceShuffle", { worldId, value: "none" });
+      }
+    },
     setWorldState({ commit }, { worldId, value }) {
       commit("setWorldState", { worldId, value });
     },
@@ -256,6 +271,10 @@ export default {
         ) {
           commit("setDungeonItems", { worldId, value: "standard" });
         }
+
+        if (state.worlds[worldId].ganon_item.value !== "default") {
+          commit("setGanonItem", { worldId, value: "default" });
+        }
       }
     },
     setItemPool({ commit, state }, { worldId, value }) {
@@ -281,6 +300,7 @@ export default {
         goals,
         tower_open,
         ganon_open,
+        ganon_item,
         world_state,
         entrance_shuffle,
         boss_shuffle,
@@ -304,6 +324,7 @@ export default {
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
       state.options.ganon_open = asMulti(ganon_open, "ganon_open");
+      state.options.ganon_item = asMulti(ganon_item, "ganon_item");
       state.options.world_state = asMulti(world_state, "world_state");
       state.options.entrance_shuffle = asMulti(
         entrance_shuffle,
@@ -377,6 +398,13 @@ export default {
       }
       state.worlds[worldId].ganon_open = value;
       localforage.setItem(`multiworld.${worldId}.ganon_open`, value);
+    },
+    setGanonItem(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.ganon_item.find(o => o.value === value);
+      }
+      state.worlds[worldId].ganon_item = value;
+      localforage.setItem(`multiworld.${worldId}.ganon_item`, value);
     },
     setWorldState(state, { worldId, value }) {
       if (typeof value === "string") {

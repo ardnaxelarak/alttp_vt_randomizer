@@ -972,47 +972,89 @@ class Randomizer implements RandomizerContract
 
         $progressive_bow_locations = $world->getLocationsWithItem(Item::get('ProgressiveBow', $world))->randomCollection(2);
 
-        if ($world->config('mode.weapons') === 'bombs') {
+        $ganon_item = $world->config('ganon_item', 'default');
+        if ($ganon_item === 'default') {
+          if ($world->config('mode.weapons') === 'bombs') {
+            $ganon_item = 'bomb';
+          } else {
+            $ganon_item = 'arrow';
+          }
+        }
+
+        if ($ganon_item === 'arrow') {
+            if ($progressive_bow_locations->count() >= 2 && $world->config('item.overflow.count.Bow', 2) >= 2) {
+                $first_location = $progressive_bow_locations->pop();
+                switch ($first_location->getRegion()->getName()) {
+                    case "Ganons Tower":
+                        $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\nMy tower?");
+                        break;
+                    default:
+                        $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\n" . $first_location->getRegion()->getName());
+                }
+                // Progressive Bow Alternate
+                $first_location->setItem(new Item\Bow('ProgressiveBow', [0x65], $world));
+
+                $second_location = $progressive_bow_locations->pop();
+                switch ($second_location->getRegion()->getName()) {
+                    case "Ganons Tower":
+                        $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\nMy tower?");
+                        break;
+                    default:
+                        $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\n" . $second_location->getRegion()->getName());
+                }
+            } elseif ($silver_arrows_location) {
+                switch ($silver_arrows_location->getRegion()->getName()) {
+                    case "Ganons Tower":
+                        $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\nMy tower?");
+                        $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\nMy tower?");
+                        break;
+                    default:
+                        $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\n" . $silver_arrows_location->getRegion()->getName());
+                        $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\n" . $silver_arrows_location->getRegion()->getName());
+                }
+            } else {
+                $fake_silvers_hint = Arr::first(fy_shuffle($strings['ganon_phase_3_no_silvers']));
+                if ($world->config('item.pool', 'normal') === 'crowd_control') {
+                    $fake_silvers_hint = "Chat said no\nto Silvers.\nIt's over Hero";
+                }
+
+                $world->setText('ganon_phase_3_no_silvers', $fake_silvers_hint);
+                $world->setText('ganon_phase_3_no_silvers_alt', $fake_silvers_hint);
+            }
+        } else if ($ganon_item === 'bomb') {
             $world->setText('ganon_phase_3_no_bow', "You can't best\nme without\nexplosives!");
             $world->setText('ganon_phase_3_silvers', "Explosives!\nMy one true\nweakness!");
-        } elseif ($progressive_bow_locations->count() >= 2 && $world->config('item.overflow.count.Bow', 2) >= 2) {
-            $first_location = $progressive_bow_locations->pop();
-            switch ($first_location->getRegion()->getName()) {
-                case "Ganons Tower":
-                    $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\nMy tower?");
-                    break;
-                default:
-                    $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\n" . $first_location->getRegion()->getName());
-            }
-            // Progressive Bow Alternate
-            $first_location->setItem(new Item\Bow('ProgressiveBow', [0x65], $world));
-
-            $second_location = $progressive_bow_locations->pop();
-            switch ($second_location->getRegion()->getName()) {
-                case "Ganons Tower":
-                    $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\nMy tower?");
-                    break;
-                default:
-                    $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\n" . $second_location->getRegion()->getName());
-            }
-        } elseif ($silver_arrows_location) {
-            switch ($silver_arrows_location->getRegion()->getName()) {
-                case "Ganons Tower":
-                    $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\nMy tower?");
-                    $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\nMy tower?");
-                    break;
-                default:
-                    $world->setText('ganon_phase_3_no_silvers', "Did you find\nthe arrows in\n" . $silver_arrows_location->getRegion()->getName());
-                    $world->setText('ganon_phase_3_no_silvers_alt', "Did you find\nthe arrows in\n" . $silver_arrows_location->getRegion()->getName());
-            }
+        } else if ($ganon_item === 'bee') {
+            $world->setText('ganon_phase_3_no_bow', "You can't best\nme without\na bee!");
+            $world->setText('ganon_phase_3_silvers', "Oh no! A bee!\nMy one true\nweakness!");
         } else {
-            $fake_silvers_hint = Arr::first(fy_shuffle($strings['ganon_phase_3_no_silvers']));
-            if ($world->config('item.pool', 'normal') === 'crowd_control') {
-                $fake_silvers_hint = "Chat said no\nto Silvers.\nIt's over Hero";
+            $name_table = [
+                'boomerang' => ['a boomerang', 'a boomerang', 'RedBoomerang'],
+                'hookshot' => ['a hookshot', 'a hookshot', 'Hookshot'],
+                'powder' => ['the powder', 'powder', 'Powder'],
+                'fire_rod' => ['the fire rod', 'the fire rod', 'FireRod'],
+                'ice_rod' => ['the ice rod', 'the ice rod', 'IceRod'],
+                'bombos' => ['bombos', 'bombos', 'Bombos'],
+                'ether' => ['ether', 'ether', 'Ether'],
+                'quake' => ['quake', 'quake', 'Quake'],
+                'hammer' => ['a hammer', 'a hammer', 'Hammer'],
+                'somaria' => ['somaria', 'somaria', 'CaneOfSomaria'],
+                'byrna' => ['byrna', 'byrna', 'CaneOfByrna'],
+            ];
+            $location = $world->getLocationsWithItem(Item::get($name_table[$ganon_item][2], $world))->first();
+            $none_text = $name_table[$ganon_item][0];
+            $have_text = $name_table[$ganon_item][1];
+            if (strlen($have_text) <= 6) {
+                $have_text = 'Oh no! ' . $have_text;
             }
-
-            $world->setText('ganon_phase_3_no_silvers', $fake_silvers_hint);
-            $world->setText('ganon_phase_3_no_silvers_alt', $fake_silvers_hint);
+            switch ($location->getRegion()->getName()) {
+                case "Ganons Tower":
+                    $world->setText('ganon_phase_3_no_bow', "Did you find\n" . $none_text . " in\nMy tower?");
+                    break;
+                default:
+                    $world->setText('ganon_phase_3_no_bow', "Did you find\n" . $none_text . " in\n" . $location->getRegion()->getName());
+            }
+            $world->setText('ganon_phase_3_silvers', $have_text . "!\nMy one true\nweakness!");
         }
 
         if ($world->config('crystals.tower') < 7) {

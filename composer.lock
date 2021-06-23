@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60dd150f96ae6357685ca23711829305",
+    "content-hash": "0d83f40b01f287daf719de96bcf20a1b",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.184.6",
+            "version": "3.184.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0b7187c96ced465d400ad9427157e05ddee68edc"
+                "reference": "d5d5fe5fdfca6c7a56f2f8364d09c3100d5c2149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0b7187c96ced465d400ad9427157e05ddee68edc",
-                "reference": "0b7187c96ced465d400ad9427157e05ddee68edc",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d5d5fe5fdfca6c7a56f2f8364d09c3100d5c2149",
+                "reference": "d5d5fe5fdfca6c7a56f2f8364d09c3100d5c2149",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.184.6"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.184.7"
             },
-            "time": "2021-06-17T18:24:56+00:00"
+            "time": "2021-06-21T18:37:16+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -291,16 +291,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "1.11.3",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "3bb5588cec00a0268829cc4a518490df6741af9d"
+                "reference": "c9622c6820d3ede1e2315a6a377ea1076e421d88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/3bb5588cec00a0268829cc4a518490df6741af9d",
-                "reference": "3bb5588cec00a0268829cc4a518490df6741af9d",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/c9622c6820d3ede1e2315a6a377ea1076e421d88",
+                "reference": "c9622c6820d3ede1e2315a6a377ea1076e421d88",
                 "shasum": ""
             },
             "require": {
@@ -370,7 +370,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/cache/issues",
-                "source": "https://github.com/doctrine/cache/tree/1.11.3"
+                "source": "https://github.com/doctrine/cache/tree/2.0.3"
             },
             "funding": [
                 {
@@ -386,35 +386,36 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-25T09:01:55+00:00"
+            "time": "2021-05-25T09:43:04+00:00"
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.13.1",
+            "version": "2.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "c800380457948e65bbd30ba92cc17cda108bf8c9"
+                "reference": "8dd39d2ead4409ce652fd4f02621060f009ea5e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c800380457948e65bbd30ba92cc17cda108bf8c9",
-                "reference": "c800380457948e65bbd30ba92cc17cda108bf8c9",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8dd39d2ead4409ce652fd4f02621060f009ea5e4",
+                "reference": "8dd39d2ead4409ce652fd4f02621060f009ea5e4",
                 "shasum": ""
             },
             "require": {
-                "doctrine/cache": "^1.0",
+                "doctrine/cache": "^1.0|^2.0",
                 "doctrine/deprecations": "^0.5.3",
                 "doctrine/event-manager": "^1.0",
                 "ext-pdo": "*",
                 "php": "^7.1 || ^8"
             },
             "require-dev": {
-                "doctrine/coding-standard": "8.2.0",
+                "doctrine/coding-standard": "9.0.0",
                 "jetbrains/phpstorm-stubs": "2020.2",
                 "phpstan/phpstan": "0.12.81",
-                "phpunit/phpunit": "^7.5.20|^8.5|9.5.0",
+                "phpunit/phpunit": "^7.5.20|^8.5|9.5.5",
                 "squizlabs/php_codesniffer": "3.6.0",
+                "symfony/cache": "^4.4",
                 "symfony/console": "^2.0.5|^3.0|^4.0|^5.0",
                 "vimeo/psalm": "4.6.4"
             },
@@ -477,7 +478,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/2.13.1"
+                "source": "https://github.com/doctrine/dbal/tree/2.13.2"
             },
             "funding": [
                 {
@@ -493,7 +494,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-17T17:30:19+00:00"
+            "time": "2021-06-18T21:48:39+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1682,16 +1683,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.20.28",
+            "version": "v6.20.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "cfe27531db3d25ed4373c0610258922bdd37728b"
+                "reference": "00fa9c04aed10d68481f5757b89da0e6798f53b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/cfe27531db3d25ed4373c0610258922bdd37728b",
-                "reference": "cfe27531db3d25ed4373c0610258922bdd37728b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/00fa9c04aed10d68481f5757b89da0e6798f53b3",
+                "reference": "00fa9c04aed10d68481f5757b89da0e6798f53b3",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1832,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-06-15T13:57:49+00:00"
+            "time": "2021-06-22T13:41:06+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -7293,7 +7294,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "a5622cbf5e4726444b9a2220044e4b8004411139"
+                "reference": "3ff84c15a9337039da478e5f73f8768a86386eb7"
             },
             "type": "library"
         }
@@ -10925,7 +10926,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-11-30T07:30:19+00:00"
         },
         {

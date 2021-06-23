@@ -41,6 +41,7 @@ class SendPatchToDisk implements ShouldQueue
         $spoiler = Arr::except(json_decode($this->seed->spoiler, true), [
             'meta.crystals_ganon',
             'meta.crystals_tower',
+            'meta.ganon_item',
         ]);
 
         if ($spoiler['meta']['tournament'] ?? false) {

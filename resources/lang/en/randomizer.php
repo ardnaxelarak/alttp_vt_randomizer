@@ -90,6 +90,27 @@ return [
             'random' => 'Random'
         ],
     ],
+    'ganon_item' => [
+        'title' => 'Ganon Vulnerability Item',
+        'options' => [
+            'default' => 'Default',
+            'random' => 'Random',
+            'arrow' => 'Silver Arrows',
+            'boomerang' => 'Boomerang',
+            'hookshot' => 'Hookshot',
+            'bomb' => 'Bombs',
+            'powder' => 'Magic Powder',
+            'fire_rod' => 'Fire Rod',
+            'ice_rod' => 'Ice Rod',
+            'bombos' => 'Bombos',
+            'ether' => 'Ether',
+            'quake' => 'Quake',
+            'hammer' => 'Hammer',
+            'bee' => 'Bee',
+            'somaria' => 'Cane of Somaria',
+            'byrna' => 'Cane of Byrna'
+        ],
+    ],
     'gameplay' => [
         'title' => 'Gameplay',
     ],

@@ -32,6 +32,10 @@ export default {
     value: "7",
     name: "randomizer.ganon_open.options.7"
   },
+  ganon_item: {
+    value: "default",
+    name: "randomizer.ganon_item.options.default"
+  },
   world_state: {
     value: "open",
     name: "randomizer.world_state.options.open"

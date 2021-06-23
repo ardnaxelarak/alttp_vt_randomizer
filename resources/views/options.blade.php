@@ -92,6 +92,14 @@
                 @endforeach
             </div>
 
+            <a class="anchor" id="ganon_item"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ganon_item.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.ganon_item.content') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            </div>
+
         </div>
     </div>
 
