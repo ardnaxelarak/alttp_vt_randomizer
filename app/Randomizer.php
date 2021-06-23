@@ -973,6 +973,7 @@ class Randomizer implements RandomizerContract
         $progressive_bow_locations = $world->getLocationsWithItem(Item::get('ProgressiveBow', $world))->randomCollection(2);
 
         if ($world->config('mode.weapons') === 'bombs') {
+            $world->setText('ganon_phase_3_no_bow', "You can't best\nme without\nexplosives!");
             $world->setText('ganon_phase_3_silvers', "Explosives!\nMy one true\nweakness!");
         } elseif ($progressive_bow_locations->count() >= 2 && $world->config('item.overflow.count.Bow', 2) >= 2) {
             $first_location = $progressive_bow_locations->pop();
