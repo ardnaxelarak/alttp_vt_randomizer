@@ -168,11 +168,11 @@ abstract class World
                 $this->config['item.count.TwentyRupees2'] = 4;
         }
 
-        $this->config['region.requireBetterBow'] = false;
+        $this->config['region.requireGanonVulnerability'] = false;
         $this->config['region.requireBetterSword'] = false;
 
         if ($this->config('itemPlacement') === 'basic') {
-            $this->config['region.requireBetterBow'] = true;
+            $this->config['region.requireGanonVulnerability'] = true;
             $this->config['region.requireBetterSword'] = true;
         }
 
@@ -185,10 +185,13 @@ abstract class World
                 $this->config['rom.HardMode'] = 1;
         }
 
-        // In swordless mode silvers are 100% required
-        if ($this->config('mode.weapons') === 'swordless') {
-            $this->config['region.requireBetterBow'] = true;
-            $this->config['item.overflow.count.Bow'] = 2;
+        // In swordless modes ganon vulnerability item is 100% required
+        if ($this->restrictedSwords()) {
+            $this->config['region.requireGanonVulnerability'] = true;
+            if (($this->config('ganon_item', 'default') === 'default' && $this->config('mode.weapons', 'randomized') !== 'bombs')
+                    || $this->config['ganon_item'] === 'arrow') {
+                $this->config['item.overflow.count.Bow'] = 2;
+            }
         }
 
         if ($this->config('itemPlacement') === 'basic') {

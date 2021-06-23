@@ -184,7 +184,7 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                         && $items->has('MagicMirror')
                         && $items->hasABottle())) // Magic should be easily fine, but it's easy to miss when Invisible, even with lamp. FRod when Requires a bunch of Bottles anyway.
                 && ($items->has('DefeatAgahnim2') || $this->world->config('goal') === 'fast_ganon')
-                && (!$this->world->config('region.requireBetterBow', false) || $items->canShootArrows($this->world, 2))
+                && (!$this->world->config('region.requireGanonVulnerability', false) || $items->canHitStunnedGanon($this->world))
                 && (
                     ($this->world->config('mode.weapons') == 'swordless' && $items->has('Hammer')
                         && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))

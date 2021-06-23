@@ -216,7 +216,7 @@ class NorthEast extends Region
 
             return ($items->has('MoonPearl') || ($this->world->config('canOWYBA', false) && $items->hasABottle()))
                 && ($items->has('DefeatAgahnim2') || $this->world->config('goal') === 'fast_ganon')
-                && (!$this->world->config('region.requireBetterBow', false) || $items->canShootArrows($this->world, 2))
+                && (!$this->world->config('region.requireGanonVulnerability', false) || $items->canHitStunnedGanon($this->world))
                 && (
                     ($this->world->config('mode.weapons') == 'swordless' && $items->has('Hammer')
                         && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))

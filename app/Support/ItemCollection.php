@@ -494,6 +494,57 @@ class ItemCollection extends Collection
     }
 
     /**
+     * Requirements for damaging stunned Ganon
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function canHitStunnedGanon(World $world)
+    {
+        $ganon_item = $world->config('ganon_item', 'default');
+        if ($ganon_item === 'default') {
+          if ($world->config('mode.weapons') === 'bombs') {
+            $ganon_item = 'bomb';
+          } else {
+            $ganon_item = 'arrow';
+          }
+        }
+        
+        switch ($ganon_item) {
+            case 'boomerang':
+                return $this->has('Boomerang') || $this->has('RedBoomerang');
+            case 'hookshot':
+                return $this->has('Hookshot');
+            case 'bomb':
+                return true;
+            case 'powder':
+                return $this->has('Powder');
+            case 'fire_rod':
+                return $this->has('FireRod');
+            case 'ice_rod':
+                return $this->has('IceRod');
+            case 'bombos':
+                return $this->has('Bombos') && $this->hasSword();
+            case 'ether':
+                return $this->has('Ether') && $this->hasSword();
+            case 'quake':
+                return $this->has('Quake') && $this->hasSword();
+            case 'hammer':
+                return $this->has('Hammer');
+            case 'bee':
+                return $this->hasABottle() && $this->canGetGoodBee();
+            case 'somaria':
+                return $this->has('CaneOfSomaria');
+            case 'byrna':
+                return $this->has('CaneOfByrna');
+            case 'arrow':
+            default:
+                return $this->canShootArrows($world, 2);
+        }
+    }
+
+    /**
      * Requirements for blocking lasers
      *
      * @return bool
