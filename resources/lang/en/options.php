@@ -173,6 +173,12 @@ return [
                 'This settings lets you choose the number of crystals required to make Ganon vulnerable to your attacks. If 0 is chosen then he can be beaten as soon as you can reach him! If Random is chosen then there will be a sign on the Pyramid informing you of how many crystals are required. In Inverted this sign will be outside Hyrule Castle accordingly.',
             ],
         ],
+        'ganon_item' => [
+            'header' => __('randomizer.ganon_item.title'),
+            'content' => [
+                'This settings lets you choose what item Ganon will be weak to in his last phase. Regardless of what item is selected, Ganon will require four hits from that item to be defeated in that manner. Ganon can still be defeated without this item using sword spins as usual. In swordless modes, the item will always be in the item pool, and the selected item cannot be any of the medallions, as you will be unable to use them. If you select Random they will be excluded from the pool, and if chosen explicitly generation should fail.',
+            ],
+        ],
         'world_state' => [
             'header' => __('randomizer.world_state.title'),
             'sections' => [
