@@ -401,7 +401,7 @@ class ItemCollection extends Collection
     public function canMeltThings(World $world)
     {
         return $this->has('FireRod')
-            || ($this->has('Bombos') && ($world->restrictedSwords() || $this->hasSword()));
+            || ($this->has('Bombos') && ($world->restrictedMedallions() || $this->canUseMedallions($world)));
     }
 
     /**
@@ -494,6 +494,18 @@ class ItemCollection extends Collection
     }
 
     /**
+     * Requirements for using a medallion at a place without an icon
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function canUseMedallions(World $world)
+    {
+        return $this->hasSword() || $world->config('mode.weapons') === 'bombs';
+    }
+
+    /**
      * Requirements for damaging stunned Ganon
      *
      * @param \ALttP\World  $world  world to check items against
@@ -525,11 +537,11 @@ class ItemCollection extends Collection
             case 'ice_rod':
                 return $this->has('IceRod');
             case 'bombos':
-                return $this->has('Bombos') && $this->hasSword();
+                return $this->has('Bombos') && $this->canUseMedallions($world);
             case 'ether':
-                return $this->has('Ether') && $this->hasSword();
+                return $this->has('Ether') && $this->canUseMedallions($world);
             case 'quake':
-                return $this->has('Quake') && $this->hasSword();
+                return $this->has('Quake') && $this->canUseMedallions($world);
             case 'hammer':
                 return $this->has('Hammer');
             case 'bee':

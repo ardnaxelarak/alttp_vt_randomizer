@@ -115,12 +115,13 @@ class Boss
             }),
             new static("Kholdstare", "Kholdstare", function ($locations, $items) use ($world) {
                 return ($world->config('itemPlacement') !== 'basic' || $items->hasSword(2) || ($items->canExtendMagic($world, 3) && $items->has('FireRod'))
-                        || ($items->has('Bombos') && ($world->restrictedSwords() || $items->hasSword()) && $items->canExtendMagic($world, 2) && $items->has('FireRod')))
+                        || ($items->has('Bombos') && ($world->restrictedMedallions() || $items->canUseMedallions($world))
+                            && $items->canExtendMagic($world, 2) && $items->has('FireRod')))
                     && $items->canMeltThings($world)
                     && ($items->has('Hammer') || $items->hasSword()
                         || ($items->canExtendMagic($world, 3) && $items->has('FireRod'))
-                        || ($items->canExtendMagic($world, 2) && $items->has('FireRod') && $items->has('Bombos')
-                            && $world->restrictedSwords())
+                        || ($items->canExtendMagic($world, 2) && $items->has('FireRod')
+                            && $items->has('Bombos') && ($world->restrictedMedallions() || $items->canUseMedallions($world)))
                         || $world->config('mode.weapons') === 'bombs')
                     && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(2));
             }),

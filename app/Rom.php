@@ -12,8 +12,8 @@ use Log;
  */
 class Rom
 {
-    const BUILD = '2021-06-24';
-    const HASH = 'edebfbd6fba03304e831e562f6827b74';
+    const BUILD = '2021-06-26';
+    const HASH = 'e5cdf75595f3244f9feedc00a6f6404b';
     const SIZE = 2097152;
 
     private $tmp_file;
@@ -2620,7 +2620,7 @@ class Rom
         $this->write(0x18002F, pack('C*', $enable ? 0x03 : 0x00)); // Special Bombs
         $this->write(0x180040, pack('C*', $enable ? 0x01 : 0x00)); // Open Curtains
         $this->write(0x18004D, pack('C*', $enable ? 0x22 : 0x00)); // Always infinite bombs
-        $this->write(0x180041, pack('C*', $enable ? 0x01 : 0x00)); // Swordless Medallions
+        $this->write(0x180041, pack('C*', $enable ? 0x02 : 0x00)); // Swordless Medallions
         $this->write(0x180043, pack('C*', $enable ? 0xFF : 0x00)); // set Link's starting sword 0xFF is taken sword
 
         // since we have infinite bombs, let's get rid of bomb drops

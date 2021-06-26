@@ -393,6 +393,17 @@ abstract class World
     }
 
     /**
+     * Get whether the world has restricted access to using medallions
+     *
+     * @return bool
+     */
+    public function restrictedMedallions()
+    {
+        $medallion_modes = ['swordless'];
+        return in_array($this->config('mode.weapons'), $medallion_modes);
+    }
+
+    /**
      * Get a region by Key name
      *
      * @param string $name Name of region to return

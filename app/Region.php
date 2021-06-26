@@ -97,7 +97,7 @@ class Region
      */
     public function canPlaceBoss(Boss $boss, string $level = 'top'): bool
     {
-        if ($this->name != "Ice Palace" && $this->world->restrictedSwords() && $boss->getName() == 'Kholdstare') {
+        if ($this->name != "Ice Palace" && $this->world->restrictedMedallions() && $boss->getName() == 'Kholdstare') {
             return false;
         }
 
