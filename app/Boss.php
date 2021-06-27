@@ -105,7 +105,7 @@ class Boss
                     && ($items->hasSword() || $items->has('Hammer') || $world->config('mode.weapons') === 'bombs'
                         || ($items->canExtendMagic($world, 2) && ($items->has('FireRod') || $items->has('CaneOfSomaria')
                             || $items->has('CaneOfByrna')))
-                        || $items->canGetGoodBee());
+                        || $items->canGetGoodBee($world));
             }),
             new static("Blind", "Blind", function ($locations, $items) use ($world) {
                 return ($world->config('itemPlacement') !== 'basic' || $world->restrictedSwords()

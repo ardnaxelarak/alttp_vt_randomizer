@@ -545,7 +545,7 @@ class ItemCollection extends Collection
             case 'hammer':
                 return $this->has('Hammer');
             case 'bee':
-                return $this->hasABottle() && $this->canGetGoodBee();
+                return $this->hasABottle() && $this->canGetGoodBee($world);
             case 'somaria':
                 return $this->has('CaneOfSomaria');
             case 'byrna':
@@ -685,14 +685,16 @@ class ItemCollection extends Collection
     /**
      * Requirements for catching a Golden Bee
      *
+     * @param \ALttP\World  $world  world to check items against
+     *
      * @return bool
      */
-    public function canGetGoodBee()
+    public function canGetGoodBee(World $world)
     {
         return $this->has('BugCatchingNet')
             && $this->hasABottle()
             && ($this->has('PegasusBoots')
-                || ($this->hasSword() && $this->has('Quake')));
+                || ($this->canUseMedallions($world) && $this->has('Quake')));
     }
 
     /**

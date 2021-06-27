@@ -545,7 +545,7 @@ return [
                             . '<li>The bat barrier outside Aghanim’s Tower can now be broken with the Hammer.</li>'
                             . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
                             . '<li>Ether and Bombos tablets require the Hammer and the Book of Mudora.</li>'
-                            . '<li>Medallions can only be used to open Misery Mire and Turtle Rock, or to progress through Ice Palace. They only work where their emblems indicate.</li>'
+                            . '<li>Medallions can always be used instead of requiring a sword.</li>'
                             . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
                         . '</ul>',
                     ],

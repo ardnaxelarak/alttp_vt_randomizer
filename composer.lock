@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82562eebc6ae46176d60cef144625f6a",
+    "content-hash": "81d6929f10bf5e1af9e54f8a3ee1ac3d",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -7296,7 +7296,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "8da5c1aa311a8b3020549512b960610da1e0a66b"
+                "reference": "c28a859f51d6e0a11a59ff8e64f9579d2e87b52d"
             },
             "type": "library"
         }
