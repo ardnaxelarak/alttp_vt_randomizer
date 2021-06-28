@@ -197,10 +197,12 @@ class SettingsController extends Controller
      */
     public function rom(): array
     {
-        return [
-            'rom_hash' => Rom::HASH,
-            'base_file' => sprintf('/bps/%s.bps', Rom::HASH),
-        ];
+        return collect(Rom::BUILD_INFO)->map(function ($info) {
+            return [
+                'rom_hash' => $info['HASH'],
+                'base_file' => sprintf('/bps/%s.bps', $info['HASH']),
+            ];
+        })->toArray();
     }
 
     /**

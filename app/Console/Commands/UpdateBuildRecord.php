@@ -12,12 +12,16 @@ use Symfony\Component\Process\Process;
 
 class UpdateBuildRecord extends Command
 {
+    const BRANCHES = [
+        'base' => 'z3/randomizer',
+    ];
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'alttp:updatebuildrecord {file?} {build?}';
+    protected $signature = 'alttp:updatebuildrecord {branch?} {file?} {build?}';
 
     /**
      * The console command description.
@@ -34,12 +38,35 @@ class UpdateBuildRecord extends Command
     public function handle()
     {
         $romFile = $this->argument('file');
+        $build_date = $this->argument('build');
+        $branch = $this->argument('branch');
 
+        if ($romFile === null && $branch === null) {
+            foreach (static::BRANCHES as $branch => $repo) {
+                if (!is_null($result = $this->update(null, $build_date, $branch))) {
+                    return $result;
+                }
+            }
+        } else if ($branch === null) {
+            return 101;
+        } else {
+            if (!is_null($result = $this->update($romFile, $build_date, $branch))) {
+                return $result;
+            }
+        }
+
+        $this->info(sprintf('record updated'));
+    }
+
+    private function update(string $romFile = null, string $build_date = null, string $branch)
+    {
         if (!is_string($romFile) && $romFile !== null) {
             $this->error('argument not string');
 
             return 101;
         }
+
+        $repo = static::BRANCHES[$branch];
 
         if ($romFile === null) {
             $romFile = tempnam(sys_get_temp_dir(), __CLASS__);
@@ -56,9 +83,9 @@ class UpdateBuildRecord extends Command
             $proc = new Process([
                 base_path("bin/asar/$system/asar"),
                 '--fix-checksum=off',
-                base_path('vendor/z3/randomizer/LTTP_RND_GeneralBugfixes.asm'),
+                base_path("vendor/$repo/LTTP_RND_GeneralBugfixes.asm"),
                 $romFile,
-            ], base_path("vendor/z3/randomizer"));
+            ], base_path("vendor/$repo"));
 
             Log::debug($proc->getCommandLine());
 
@@ -75,12 +102,10 @@ class UpdateBuildRecord extends Command
             }
         }
 
-        $build_date = $this->argument('build');
-
         if (!$build_date) {
             $git_log = new Process(
                 ['git', 'log', '-1','--format=%cd', '--date=short'],
-                base_path("vendor/z3/randomizer"));
+                base_path("vendor/$repo"));
 
             $git_log->run();
 
@@ -97,6 +122,7 @@ class UpdateBuildRecord extends Command
 
         $build = Build::firstOrNew([
             'build' => $build_date,
+            'branch' => $branch,
         ]);
         $build->hash =  hash_file('md5', $romFile);
         $build->patch = '[]';
@@ -119,23 +145,23 @@ class UpdateBuildRecord extends Command
             return 201;
         }
 
-        $this->updateRomClassFile($build);
-
-        $this->info(sprintf('record updated'));
+        $this->updateRomClassFile($branch, $build);
     }
 
     /**
      * Update the constants in ROM class.
      *
+     * @param string  $branch  branch of build to update
      * @param \ALttP\Build  $build  Build to update to
      *
      * @return void
      */
-    private function updateRomClassFile(Build $build): void
+    private function updateRomClassFile(string $branch, Build $build): void
     {
+        $quoted_branch = preg_quote($branch, "/");
         file_put_contents(app_path('Rom.php'), preg_replace(
-            ["/const BUILD = '[\w-]*';/", "/const HASH = '\w*';/"],
-            ["const BUILD = '$build->build';", "const HASH = '$build->hash';"],
+            "/'$quoted_branch' \=\> \['BUILD' \=\> '[\w-]*', 'HASH' \=\> '\w*'/",
+            "'$branch' => ['BUILD' => '$build->build', 'HASH' => '$build->hash'",
             file_get_contents(app_path('Rom.php'))
         ));
     }

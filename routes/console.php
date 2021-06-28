@@ -70,14 +70,14 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'enemizer.potShuffle' => 'off',
             ]);
 
-            $rom = new Rom(config('alttp.base_rom'));
-            $rom->applyPatchFile(Rom::getJsonPatchLocation());
-
             if ($world->config('entrances') !== 'none') {
                 $rand = new EntranceRandomizer([$world]);
             } else {
                 $rand = new Randomizer([$world]);
             }
+
+            $rom = new Rom(config('alttp.base_rom'));
+            $rom->applyPatchFile(Rom::getJsonPatchLocation($world));
 
             $rand->randomize();
             $world->writeToRom($rom, true);

@@ -164,14 +164,14 @@ class RandomizerController extends Controller
             'enemizer.potShuffle' => $request->input('enemizer.pot_shuffle', 'off'),
         ]);
 
-        $rom = new Rom(config('alttp.base_rom'));
-        $rom->applyPatchFile(Rom::getJsonPatchLocation());
-
         if ($world->config('entrances') !== 'none') {
             $rand = new EntranceRandomizer([$world]);
         } else {
             $rand = new Randomizer([$world]);
         }
+
+        $rom = new Rom(config('alttp.base_rom'));
+        $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
 
         $rand->randomize();
         $world->writeToRom($rom, $save);
@@ -194,7 +194,7 @@ class RandomizerController extends Controller
         if ($world->isEnemized()) {
             $patch = $rom->getWriteLog();
             $en = new Enemizer($world, $patch);
-            $en->randomize();
+            $en->randomize($world->config('branch'));
             $en->writeToRom($rom);
         }
 
@@ -216,7 +216,7 @@ class RandomizerController extends Controller
             'generated' => $world->getSeedRecord()->created_at ? $world->getSeedRecord()->created_at->toIso8601String() : now()->toIso8601String(),
             'seed' => $world->getSeedRecord(),
             'size' => $spoiler['meta']['size'] ?? 2,
-            'current_rom_hash' => Rom::HASH,
+            'current_rom_hash' => Rom::BUILD_INFO[$world->config('branch')]['HASH'],
         ];
     }
 }

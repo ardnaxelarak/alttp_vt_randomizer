@@ -46,7 +46,7 @@ Route::get('daily', static function () {
 Route::get('h/{hash}', static function ($hash) {
     $seed = ALttP\Seed::where('hash', $hash)->first();
     if ($seed) {
-        $build = ALttP\Build::where('build', $seed->build)->first();
+        $build = ALttP\Build::where('branch', $seed->branch)->where('build', $seed->build)->first();
         if (!$build) {
             abort(404);
         }

@@ -379,6 +379,18 @@ abstract class World
     }
 
     /**
+     * Set branch of base rom to be used in this world
+     *
+     * @param string $branch branch of base rom to use
+     *
+     * @return void
+     */
+    public function setBranch(string $branch)
+    {
+        $this->config['branch'] = $branch;
+    }
+
+    /**
      * Get a region by Key name
      *
      * @param string $name Name of region to return
@@ -897,7 +909,7 @@ abstract class World
             'accessibility' => $this->config('accessibility'),
             'rom_mode' => $this->config('rom.logicMode', $this->config('logic')),
             'goal' => $this->config('goal'),
-            'build' => Rom::BUILD,
+            'build' => Rom::BUILD_INFO[$this->config['branch']]['BUILD'],
             'mode' => $this->config('mode.state'),
             'weapons' => $this->config('mode.weapons'),
             'world_id' => $this->id,
@@ -1342,7 +1354,8 @@ abstract class World
     {
         $this->seed->logic = Randomizer::LOGIC;
         $this->seed->game_mode = $this->config['logic'];
-        $this->seed->build = Rom::BUILD;
+        $this->seed->branch = $this->config['branch'];
+        $this->seed->build = Rom::BUILD_INFO[$this->config['branch']]['BUILD'];
         $this->seed->save();
 
         return $this->seed->hash;

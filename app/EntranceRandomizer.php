@@ -48,6 +48,7 @@ class EntranceRandomizer implements RandomizerContract
 	public function __construct(array $worlds)
 	{
 		$this->world = reset($worlds);
+		$this->world->setBranch('base');
 
 		if (!$this->world instanceof World) {
 			throw new \OutOfBoundsException;

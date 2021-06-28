@@ -244,10 +244,10 @@ class CustomizerController extends Controller
             }
         }
 
-        $rom = new Rom(config('alttp.base_rom'));
-        $rom->applyPatchFile(Rom::getJsonPatchLocation());
-
         $rand = new Randomizer([$world]);
+
+        $rom = new Rom(config('alttp.base_rom'));
+        $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
 
         $rand->randomize();
 
@@ -273,7 +273,7 @@ class CustomizerController extends Controller
         if ($world->isEnemized()) {
             $patch = $rom->getWriteLog();
             $en = new Enemizer($world, $patch);
-            $en->randomize();
+            $en->randomize($world->config('branch'));
             $en->writeToRom($rom);
         }
 

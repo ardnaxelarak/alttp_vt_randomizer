@@ -51,11 +51,12 @@ class Enemizer
      *
      * @throws \Exception
      *
+     * @param string  $branch  branch of base rom to use
      * @param int  $rng_seed  seed for enemizer
      *
      * @return $this
      */
-    public function randomize(int $rng_seed = null)
+    public function randomize(string $branch, int $rng_seed = null)
     {
         $rng_seed = $rng_seed ?: random_int(1, 999999999); // cryptographic pRNG for seeding
         $this->rng_seed = $rng_seed % 1000000000;
@@ -73,7 +74,7 @@ class Enemizer
             '--seed',
             $this->rng_seed,
             '--base',
-            Rom::getJsonPatchLocation(),
+            Rom::getJsonPatchLocation($branch),
             '--randomizer',
             $this->randomizer_patch,
             '--enemizer',

@@ -115,13 +115,15 @@ class Randomize extends Command
             $rom = new Rom($this->argument('input_file'));
             $hash = $hasher->encode((int) (microtime(true) * 1000));
 
-            if (!$this->option('skip-md5') && !$rom->checkMD5()) {
+            $branch = 'z3/randomizer';
+
+            if (!$this->option('skip-md5') && !$rom->checkMD5($branch)) {
                 $rom->resize();
 
-                $rom->applyPatch($this->resetPatch());
+                $rom->applyPatch($this->resetPatch($branch));
             }
 
-            if (!$this->option('skip-md5') && !$rom->checkMD5()) {
+            if (!$this->option('skip-md5') && !$rom->checkMD5($branch)) {
                 $this->error('MD5 check failed :(');
                 return 3;
             }
@@ -232,18 +234,20 @@ class Randomize extends Command
     /**
      * Apply base patch to ROM file.
      *
+     * @param string $branch  branch of base rom to use
+     *
      * @throws \Exception when base patch has no content.
      *
      * @return array
      */
-    protected function resetPatch()
+    protected function resetPatch(string $branch)
     {
         if ($this->reset_patch) {
             return $this->reset_patch;
         }
 
-        if (is_readable(Rom::getJsonPatchLocation())) {
-            $file_contents = file_get_contents(Rom::getJsonPatchLocation());
+        if (is_readable(Rom::getJsonPatchLocation($branch))) {
+            $file_contents = file_get_contents(Rom::getJsonPatchLocation($branch));
 
             if ($file_contents === false) {
                 throw new \Exception('base patch not readable');

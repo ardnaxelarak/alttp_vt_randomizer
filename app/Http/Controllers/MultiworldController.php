@@ -110,7 +110,7 @@ class MultiworldController extends Controller
 
         foreach ($spoiler as $worldId => $worldSpoiler) {
             $rom = new Rom(config('alttp.base_rom'));
-            $rom->applyPatchFile(Rom::getJsonPatchLocation());
+            $rom->applyPatchFile(Rom::getJsonPatchLocation($worlds[$worldId]->config('branch')));
 
             $worlds->get($worldId)->writeToRom($rom, false);
 

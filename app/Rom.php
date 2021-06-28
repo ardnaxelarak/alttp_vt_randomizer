@@ -12,8 +12,9 @@ use Log;
  */
 class Rom
 {
-    const BUILD = '2021-06-14';
-    const HASH = 'ecca7473031de4b4e1d9994874a3e80c';
+    const BUILD_INFO = [
+        'base' => ['BUILD' => '2021-06-14', 'HASH' => 'ecca7473031de4b4e1d9994874a3e80c'],
+    ];
     const SIZE = 2097152;
 
     private $tmp_file;
@@ -29,12 +30,13 @@ class Rom
      *
      * @return Build
      */
-    public static function saveBuild(array $patch, $build = null, $hash = null): Build
+    public static function saveBuild(array $patch, $build = null, $hash = null, string $branch): Build
     {
         $build = Build::firstOrNew([
-            'build' => $build ?? static::BUILD,
+            'build' => $build ?? static::BUILD_INFO[$branch]['BUILD'],
+            'branch' => $branch,
         ]);
-        $build->hash = $hash ?? static::HASH;
+        $build->hash = $hash ?? static::BUILD_INFO[$branch]['HASH'];
         $build->patch = json_encode($patch);
         $build->save();
 
@@ -42,13 +44,15 @@ class Rom
     }
 
     /**
-     * Get the location of the current json patch.
+     * Get the location of the current json patch for a specified branch.
+     *
+     * @param string $branch branch of build to locate
      *
      * @return string
      */
-    public static function getJsonPatchLocation(): string
+    public static function getJsonPatchLocation(string $branch): string
     {
-        return storage_path(sprintf('patches/%s.json', self::HASH));
+        return storage_path(sprintf('patches/%s.json', self::BUILD_INFO[$branch]['HASH']));
     }
 
     /**
@@ -99,11 +103,13 @@ class Rom
     /**
      * Check to see if this ROM matches base randomizer ROM.
      *
+     * @param string $branch branch of build to verify against
+     *
      * @return bool
      */
-    public function checkMD5(): bool
+    public function checkMD5(string $branch): bool
     {
-        return $this->getMD5() === static::HASH;
+        return $this->getMD5() === static::BUILD_INFO[$branch]['HASH'];
     }
 
     /**

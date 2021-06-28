@@ -54,6 +54,8 @@ class Randomizer implements RandomizerContract
                     Item::get('ArrowUpgrade10', $world),
                 ]));
             }
+
+            $world->setBranch('base');
         }
         $this->worlds = $worlds;
     }

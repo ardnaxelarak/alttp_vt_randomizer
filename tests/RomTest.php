@@ -24,7 +24,7 @@ class RomTest extends TestCase
 
     public function testSaveBuild()
     {
-        $build = Rom::saveBuild([]);
+        $build = Rom::saveBuild([], null, null, 'base');
 
         $this->assertNotNull($build);
     }
@@ -58,7 +58,7 @@ class RomTest extends TestCase
 
     public function testCheckMD5WithNoBaseFile()
     {
-        $this->assertFalse($this->rom->checkMD5());
+        $this->assertFalse($this->rom->checkMD5('base'));
     }
 
     public function testUpdateChecksum()
