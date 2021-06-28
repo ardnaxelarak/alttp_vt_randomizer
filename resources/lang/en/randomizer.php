@@ -6,6 +6,8 @@ return [
         'customize' => 'Customize',
         'options' => [
             'default' => 'Default',
+            'bomb_only' => 'Bomb-Only',
+            'random_ganon' => 'Random Ganon Item',
             'beginner' => 'Beginner',
             'veetorp' => 'OWG (Veetorp’s Favorite)',
             'crosskeys' => 'Crosskeys',
@@ -165,9 +167,9 @@ return [
             'assured' => 'Assured',
             'vanilla' => 'Vanilla',
             'swordless' => 'Swordless',
-            'bombs' => 'Bombs Only',
+            'bombs' => 'Bomb-Only',
         ],
-        'bombs_warning' => 'This setting is still in development. Use at your own risk.',
+        'bombs_warning' => 'Bomb-Only mode is still in development. Use at your own risk.',
     ],
     'item_pool' => [
         'title' => 'Item Pool',
