@@ -63,9 +63,9 @@
         "name": "z3/randomizer_ow",
         "version": "31.0.9",
         "source": {
-          "url": "https://github.com/codemann8/z3randomizer",
+          "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "b9193d2fbf1607192c2104e5c4afd168a69fb8ad"
+          "reference": "b8dc86d7c58ea0d43c034ff09d84d671e2acc02c"
         }
       }
     },
@@ -109,9 +109,9 @@
         "name": "z3/overworldrandomizer",
         "version": "0.1.6.1",
         "source": {
-          "url": "https://github.com/codemann8/ALttPDoorRandomizer",
+          "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
           "type": "git",
-          "reference": "a4e3ed1e4f69a41bcd99512d3e53ca416de728b1"
+          "reference": "078ea13cac2cdbf9e53d76ee7ffb9e560bf2f5cf"
         }
       }
     }
