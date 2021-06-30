@@ -48,8 +48,7 @@
                 v-for="(item, location) in value"
                 :key="location"
                 class="spoil-item-location"
-                :class="{ 'bg-info text-light': item == search.value
-								|| location == search_location.value }"
+                :class="{ 'bg-info text-light': item == search.value || location == search_location.value }"
               >
                 <td>{{ location.indexOf(':') === -1 ? location : location.split(':')[0] }}</td>
                 <td v-if="item.indexOf(':') !== -1" class="item">
@@ -300,10 +299,8 @@ export default {
     regions: vm => {
       let regions = {};
       for (let name in vm.rom.spoiler) {
-        console.log(name);
-        console.log(vm.rom.spoiler[name]);
         if (
-          ["meta", "playthrough", "Entrances", "paths", "Shops", "Overworld", "Doors", "Lobbies", "DoorTypes"].indexOf(
+          ["meta", "playthrough", "Entrances", "Starting Inventory", "paths", "Shops", "Overworld", "Doors", "Lobbies", "DoorTypes"].indexOf(
             name
           ) === -1
         ) {
@@ -313,7 +310,7 @@ export default {
       return regions;
     },
     shops: vm => {
-      const match = /([\w\s()+]+)(\s*—\s*(\d+))/;
+      const match = /([\w\s()+]+)(\s*—\s*(\d+))?/;
       return typeof vm.rom.spoiler.Shops !== "undefined"
         ? vm.rom.spoiler.Shops.map(shop => {
             let returnObject = { ...shop };
@@ -376,7 +373,7 @@ export default {
       if (!spoiler) {
         return false;
       }
-      if (typeof vm.rom.spoiler.Entrances !== "undefined") {
+      if (typeof vm.rom.spoiler.Entrances !== "undefined" && typeof vm.rom.spoiler.Doors === "undefined") {
         Object.keys(spoiler).forEach(sphere => {
           Object.keys(spoiler[sphere]).forEach(location => {
             playthrough.push({
@@ -440,7 +437,12 @@ export default {
             "Entrances",
             "paths",
             "Shops",
-            "Bosses"
+            "Bosses",
+            "Overworld",
+            "Doors",
+            "DoorTypes",
+            "Lobbies",
+            "Starting Inventory",
           ].indexOf(name) === -1
         ) {
           Object.keys(vm.rom.spoiler[name]).forEach(location => {

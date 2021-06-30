@@ -46,9 +46,9 @@
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.accessibility.title') }}: {{ $t(accessibility.name) }}</div>
-            <div
-              class="col-xl-4 col-lg-6 my-1"
-            >{{ $t('randomizer.drop_shuffle.title') }}: {{ $t(dropShuffle.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.drop_shuffle.title') }}: {{ $t(dropShuffle.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.shopsanity.title') }}: {{ $t(shopsanity.name) }}</div>
@@ -117,7 +117,7 @@
               >{{ $t('randomizer.ganon_open.title') }}: {{ $t(ganonOpen.name) }}</div>
               <div
                 class="col-xl-6 col-lg-6 my-1"
-              >{{ $t('randomizer.ganon_item.title') }}: {{ $t(ganonOpen.name) }}</div>
+              >{{ $t('randomizer.ganon_item.title') }}: {{ $t(ganonItem.name) }}</div>
             </div>
             <div class="row" v-if="editable">
               <div class="col-xl-6 col-lg-6 my-1">
@@ -598,7 +598,8 @@ export default {
                     response.data.current_rom_hash != this.current_rom_hash
                   ) {
                     // The base ROM has been updated.
-                    window.location.reload(true);
+                    // window.location.reload(true);
+                    window.location.assign(`/h/${this.rom.hash}`);
                   }
                   if (
                     this.rom.shuffle ||
