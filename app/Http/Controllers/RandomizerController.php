@@ -188,8 +188,12 @@ class RandomizerController extends Controller
         $rand->randomize();
         $world->writeToRom($rom, $save);
 
+        $processSpoiler = false;
+
         // Entrance rando and overworld rando are responsible for verifying winnability of themselves
+        // and generating their own full spoilers
         if ($rand instanceof ALttP\Randomizer) {
+            $processSpoiler = true;
             $worlds = new WorldCollection($rand->getWorlds());
 
             if (!$worlds->isWinnable()) {
@@ -202,7 +206,7 @@ class RandomizerController extends Controller
             'entry_crystals_tower' => $request->input('crystals.tower', '7'),
             'ganon_vulnerability_item' => $request->input('ganon_item', 'default'),
             'worlds' => 1,
-        ]));
+        ]), $processSpoiler);
 
         if ($world->isEnemized()) {
             $patch = $rom->getWriteLog();

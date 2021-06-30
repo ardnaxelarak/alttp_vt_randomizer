@@ -609,6 +609,7 @@ export default {
                     this.rom.allowQuickSwap = true;
                   }
                   this.gameLoaded = true;
+                  console.log(response.data.spoiler);
                   EventBus.$emit("gameLoaded", this.rom);
                   resolve({ rom: this.rom, patch: response.data.patch });
                 }.bind(this)

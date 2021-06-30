@@ -887,12 +887,13 @@ abstract class World
      * Get the current spoiler for this seed.
      *
      * @param array  $meta  passthrough data to add to meta
+     * @param bool  $process  whether to fill in playthrough/shop data
      *
      * @return array
      */
-    public function getSpoiler(array $meta = []): array
+    public function getSpoiler(array $meta = [], bool $process = false): array
     {
-        if ($this->config('entrances') === 'none') {
+        if ($process) {
             if (count($this->pre_collected_items)) {
                 $i = 0;
                 foreach ($this->pre_collected_items as $item) {

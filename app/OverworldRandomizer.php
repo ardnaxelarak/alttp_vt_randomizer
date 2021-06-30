@@ -136,6 +136,7 @@ class OverworldRandomizer implements RandomizerContract
 			[
 				'python3',
 				'DungeonRandomizer.py',
+				'--enemizercli=',
 				'--mode',
 				$mode,
 				'--logic',

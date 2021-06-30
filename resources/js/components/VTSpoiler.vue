@@ -34,7 +34,7 @@
           :key="section"
           :name="section"
           :count="Object.values(value).filter(item => item == search.value).length
-						+ Object.keys(value).filter(location => location == search_location.value).length"
+          + Object.keys(value).filter(location => location == search_location.value).length"
         >
           <table class="table table-striped table-sm">
             <thead>
@@ -91,8 +91,8 @@
           key="shops"
           name="Shops"
           :count="Object.values(shops).filter((item) => {
-						return search !== '' && [item.item_0, item.item_1, item.item_2].indexOf(search.value) !== -1;
-					}).length"
+            return search !== '' && [item.item_0, item.item_1, item.item_2].indexOf(search.value) !== -1;
+          }).length"
         >
           <table class="table table-striped table-sm">
             <thead>
@@ -118,7 +118,7 @@
                     {{ row.item_0.item }}
                     <span
                       v-if="row.item_0 && row.item_0.price"
-                    >({{ row.item_0.price }})</span>
+                    > - {{ row.item_0.price }}</span>
                   </span>
                 </td>
                 <td class="item">
@@ -126,7 +126,7 @@
                     {{ row.item_1.item }}
                     <span
                       v-if="row.item_1 && row.item_1.price"
-                    >({{ row.item_1.price }})</span>
+                    > - {{ row.item_1.price }}</span>
                   </span>
                 </td>
                 <td class="item">
@@ -134,7 +134,7 @@
                     {{ row.item_2.item }}
                     <span
                       v-if="row.item_2 && row.item_2.price"
-                    >({{ row.item_2.price }})</span>
+                    > - {{ row.item_2.price }}</span>
                   </span>
                 </td>
               </tr>
@@ -151,7 +151,7 @@
             <thead>
               <tr>
                 <th class="col-auto">Sphere</th>
-                <th v-if="!entrances" class="col-auto">Region</th>
+                <th v-if="playthrough_show_regions" class="col-auto">Region</th>
                 <th class="col-auto">Location</th>
                 <th class="col-auto">Item</th>
               </tr>
@@ -164,7 +164,7 @@
                 :class="{ 'bg-info text-light': row.item == search.value }"
               >
                 <td>{{ row.sphere }}</td>
-                <td v-if="!entrances">{{ row.region }}</td>
+                <td v-if="playthrough_show_regions">{{ row.region }}</td>
                 <td>{{ row.location }}</td>
                 <td v-if="row.item.indexOf(':') !== -1" class="item">
                   {{ $te('item["' + row.item.split(':')[0] + '"]') ? $t('item["' + row.item.split(':')[0] + '"]') : row.item.split(':')[0] }}
@@ -220,6 +220,46 @@
                 <td>{{ row.entrance }}</td>
                 <td>{{ row.direction == 'both' ? '↔' : '→' }}</td>
                 <td>{{ row.exit }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+        <tab v-if="lobbies" key="lobbies" name="Lobbies">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th class="col-auto">Lobby</th>
+                <th class="col-auto">Door</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="row in lobbies"
+                :key="row.lobby_name + row.door_name"
+                class="spoil-item-location"
+              >
+                <td>{{ row.lobby_name }}</td>
+                <td>{{ row.door_name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+        <tab v-if="door_types" key="door_types" name="DoorTypes">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th class="col-auto">Door</th>
+                <th class="col-auto">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="row in door_types"
+                :key="row.doorNames + row.type"
+                class="spoil-item-location"
+              >
+                <td>{{ row.doorNames }}</td>
+                <td>{{ row.type }}</td>
               </tr>
             </tbody>
           </table>
@@ -353,19 +393,32 @@ export default {
         : false;
     },
     entrances: vm => {
-      return typeof vm.rom.spoiler.Entrances !== "undefined"
+      return vm.rom.spoiler.Entrances && vm.rom.spoiler.Entrances.length > 0
         ? vm.rom.spoiler.Entrances
         : false;
     },
     doors: vm => {
-      return typeof vm.rom.spoiler.Doors !== "undefined"
+      return vm.rom.spoiler.Doors && vm.rom.spoiler.Doors.length > 0
         ? vm.rom.spoiler.Doors
         : false;
     },
     overworld: vm => {
-      return typeof vm.rom.spoiler.Overworld !== "undefined"
+      return vm.rom.spoiler.Overworld && vm.rom.spoiler.Overworld.length > 0
         ? vm.rom.spoiler.Overworld
         : false;
+    },
+    lobbies: vm => {
+      return vm.rom.spoiler.Lobbies && vm.rom.spoiler.Lobbies.length > 0
+        ? vm.rom.spoiler.Lobbies
+        : false;
+    },
+    door_types: vm => {
+      return vm.rom.spoiler.DoorTypes && vm.rom.spoiler.DoorTypes.length > 0
+        ? vm.rom.spoiler.DoorTypes
+        : false;
+    },
+    playthrough_show_regions: vm => {
+      return typeof vm.rom.spoiler.Entrances === "undefined";
     },
     playthrough: vm => {
       let playthrough = [];
@@ -373,7 +426,7 @@ export default {
       if (!spoiler) {
         return false;
       }
-      if (typeof vm.rom.spoiler.Entrances !== "undefined" && typeof vm.rom.spoiler.Doors === "undefined") {
+      if (typeof vm.rom.spoiler.Entrances !== "undefined") {
         Object.keys(spoiler).forEach(sphere => {
           Object.keys(spoiler[sphere]).forEach(location => {
             playthrough.push({
