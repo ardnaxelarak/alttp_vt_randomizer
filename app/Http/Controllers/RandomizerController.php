@@ -6,8 +6,10 @@ use ALttP\Enemizer;
 use ALttP\EntranceRandomizer;
 use ALttP\Http\Requests\CreateRandomizedGame;
 use ALttP\Jobs\SendPatchToDisk;
+use ALttP\OverworldRandomizer;
 use ALttP\Randomizer;
 use ALttP\Rom;
+use ALttP\Support\RandomizerSelector;
 use ALttP\Support\WorldCollection;
 use ALttP\World;
 use Exception;
@@ -16,6 +18,7 @@ use HTMLPurifier_Config;
 use HTMLPurifier;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Log;
 
 class RandomizerController extends Controller
 {
@@ -80,6 +83,7 @@ class RandomizerController extends Controller
 
             return response()->json($return_payload);
         } catch (Exception $exception) {
+            Log::warning($exception);
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($exception);
             }
@@ -143,11 +147,18 @@ class RandomizerController extends Controller
         $world = World::factory($request->input('mode', 'standard'), [
             'itemPlacement' => $request->input('item_placement', 'basic'),
             'dungeonItems' => $request->input('dungeon_items', 'standard'),
+            'dropShuffle' => $request->input('drop_shuffle', 'off'),
             'accessibility' => $request->input('accessibility', 'items'),
             'goal' => $request->input('goal', 'ganon'),
             'crystals.ganon' => $crystals_ganon,
             'crystals.tower' => $crystals_tower,
             'entrances' => $request->input('entrances', 'none'),
+            'doors.shuffle' => $request->input('doors.shuffle', 'vanilla'),
+            'doors.intensity' => $request->input('doors.intensity', '1'),
+            'overworld.shuffle' => $request->input('overworld.shuffle', 'vanilla'),
+            'overworld.swap' => $request->input('overworld.swap', 'vanilla'),
+            'overworld.keepSimilar' => $request->input('overworld.keep_similar', 'off'),
+            'shopsanity' => $request->input('shopsanity', 'off'),
             'mode.weapons' => $request->input('weapons', 'randomized'),
             'tournament' => $request->input('tournament', false),
             'spoilers' => $spoilers,
@@ -164,11 +175,7 @@ class RandomizerController extends Controller
             'enemizer.potShuffle' => $request->input('enemizer.pot_shuffle', 'off'),
         ]);
 
-        if ($world->config('entrances') !== 'none') {
-            $rand = new EntranceRandomizer([$world]);
-        } else {
-            $rand = new Randomizer([$world]);
-        }
+        $rand = RandomizerSelector::getRandomizer($world);
 
         $rom = new Rom(config('alttp.base_rom'));
         $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
@@ -176,8 +183,8 @@ class RandomizerController extends Controller
         $rand->randomize();
         $world->writeToRom($rom, $save);
 
-        // E.R. is responsible for verifying winnability of itself
-        if ($world->config('entrances') === 'none') {
+        // Entrance rando and overworld rando are responsible for verifying winnability of themselves
+        if ($rand instanceof ALttP\Randomizer) {
             $worlds = new WorldCollection($rand->getWorlds());
 
             if (!$worlds->isWinnable()) {

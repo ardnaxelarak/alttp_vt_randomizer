@@ -10,17 +10,20 @@ use Symfony\Component\Process\Process;
  * Main class for randomization. All the magic happens here. We use mt_rand as it is much faster than rand. Not all PHP
  * functions support mt_rand (e.g. array_shuffle), so those had to be cloned to maintain seed integrity.
  */
-class EntranceRandomizer implements RandomizerContract
+class OverworldRandomizer implements RandomizerContract
 {
 	const LOGIC = -1;
-	const VERSION = '0.6.3';
-	const BRANCH = 'base';
+	const VERSION = '0.1.6.0';
+	const BRANCH = 'overworld';
 	protected $world;
 	/** @var array */
-	private $boss_shuffle_lookup = [
-		'simple' => 'basic',
-		'full' => 'normal',
-		'random' => 'chaos',
+	private $entrance_lookup = [
+		'none' => 'vanilla',
+		'full' => 'full',
+		'simple' => 'simple',
+		'restricted' => 'restricted',
+		'crossed' => 'crossed',
+		'insanity' => 'insanity',
 	];
 	/** @var array */
 	private $goal_lookup = [
@@ -39,7 +42,7 @@ class EntranceRandomizer implements RandomizerContract
 	];
 
 	/**
-	 * Create a new Entrance Randomizer. This currently only works with one
+	 * Create a new Overworld Randomizer. This currently only works with one
 	 * world. So we use the first of the array passed in.
 	 *
 	 * @param array  $worlds  worlds to randomize
@@ -66,8 +69,24 @@ class EntranceRandomizer implements RandomizerContract
 	public function randomize(): void
 	{
 		$flags = [];
-		if ($this->world->config('dungeonItems') === 'full') {
-			$flags[] = '--keysanity';
+		if ($this->world->config('dungeonItems') === 'mc') {
+			$flags = array_merge($flags, [
+				'--mapshuffle',
+				'--compassshuffle',
+			]);
+		} elseif ($this->world->config('dungeonItems') === 'mcs') {
+			$flags = array_merge($flags, [
+				'--mapshuffle',
+				'--compassshuffle',
+			  '--keyshuffle',
+			]);
+		} elseif ($this->world->config('dungeonItems') === 'full') {
+			$flags = array_merge($flags, [
+				'--mapshuffle',
+				'--compassshuffle',
+			  '--keyshuffle',
+			  '--bigkeyshuffle',
+			]);
 		}
 
 		$mode = 'standard';
@@ -77,14 +96,12 @@ class EntranceRandomizer implements RandomizerContract
 			$mode = 'inverted';
 		}
 		if ($this->world instanceof World\Retro) {
-			$mode = 'open';
-			$flags[] = '--retro';
+			$mode = 'retro';
 		}
 
 		switch ($this->world->config('logic')) {
-			case 'no_logic':
+			case 'NoLogic':
 				$logic = 'nologic';
-
 				break;
 			case 'none':
 			default:
@@ -94,8 +111,20 @@ class EntranceRandomizer implements RandomizerContract
 		if ($this->world->config('enemizer.bossShuffle') !== 'none') {
 			$flags = array_merge($flags, [
 				'--shufflebosses',
-				$this->boss_shuffle_lookup[$this->world->config('enemizer.bossShuffle')],
+				$this->world->config('enemizer.bossShuffle'),
 			]);
+		}
+
+		if ($this->world->config('dropShuffle') === 'on') {
+			$flags[] = '--keydropshuffle';
+		}
+
+		if ($this->world->config('shopsanity') === 'on') {
+			$flags[] = '--shopsanity';
+		}
+
+		if ($this->world->config('overworld.keepSimilar') === 'on') {
+			$flags[] = '--ow_keepsimilar';
 		}
 
 		if ($this->world->config('spoil.Hints') === 'on') {
@@ -105,7 +134,7 @@ class EntranceRandomizer implements RandomizerContract
 		$proc = new Process(array_merge(
 			[
 				'python3',
-				base_path('vendor/z3/entrancerandomizer/EntranceRandomizer.py'),
+				'DungeonRandomizer.py',
 				'--mode',
 				$mode,
 				'--logic',
@@ -121,12 +150,22 @@ class EntranceRandomizer implements RandomizerContract
 				'--item_functionality',
 				$this->world->config('item.functionality'),
 				'--shuffle',
-				$this->world->config('entrances'),
+				$this->entrance_lookup[$this->world->config('entrances')],
+        '--door_shuffle',
+        $this->world->config('doors.shuffle'),
+        '--intensity',
+        $this->world->config('doors.intensity'),
+        '--ow_shuffle',
+        $this->world->config('overworld.shuffle'),
+        '--ow_swap',
+        $this->world->config('overworld.swap'),
 				'--crystals_ganon',
 				$this->world->config('crystals.ganon'),
 				'--crystals_gt',
 				$this->world->config('crystals.tower'),
-				'--securerandom',
+				'--shufflebosses',
+				$this->world->config('enemizer.bossShuffle'),
+				# '--securerandom',
 				'--jsonout',
 				'--loglevel',
 				'error',
@@ -134,6 +173,7 @@ class EntranceRandomizer implements RandomizerContract
 			$flags
 		));
 
+		$proc->setWorkingDirectory(base_path('vendor/z3/overworldrandomizer'));
 		Log::debug($proc->getCommandLine());
 		$proc->run();
 
@@ -143,17 +183,17 @@ class EntranceRandomizer implements RandomizerContract
 			throw new \Exception("Unable to generate");
 		}
 
-		$er = json_decode($proc->getOutput());
-		$patch = $er->patch;
+		$or_output = json_decode($proc->getOutput());
+		$patch = $or_output->patch_t0_p1;
 		array_walk($patch, function (&$write, $address) {
 			$write = [$address => $write];
 		});
 		$this->world->setOverridePatch(array_values((array) $patch));
 
 		// possible temp fix
-		$spoiler = json_decode($er->spoiler, true);
+		$spoiler = json_decode($or_output->spoiler, true);
 		$spoiler['meta']['build'] = Rom::BUILD_INFO[static::BRANCH]['BUILD'];
-		$spoiler['meta']['logic'] = 'er-no-glitches-' . static::VERSION;
+		$spoiler['meta']['logic'] = 'or-no-glitches-' . static::VERSION;
 
 		$this->world->setSpoiler($spoiler);
 

@@ -59,20 +59,26 @@
                 <div class="card-body">
                   <div class="row" v-if="!editable[world_id]">
                     <div
-                      class="col-xl-3 col-lg-6 my-1"
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.glitches_required.title') }}: {{ $t(worlds[world_id].glitches_required.name) }}</div>
                     <div
-                      class="col-xl-3 col-lg-6 my-1"
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.item_placement.title') }}: {{ $t(worlds[world_id].item_placement.name) }}</div>
                     <div
-                      class="col-xl-3 col-lg-6 my-1"
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.dungeon_items.title') }}: {{ $t(worlds[world_id].dungeon_items.name) }}</div>
                     <div
-                      class="col-xl-3 col-lg-6 my-1"
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.accessibility.title') }}: {{ $t(worlds[world_id].accessibility.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.drop_shuffle.title') }}: {{ $t(worlds[world_id].drop_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.shopsanity.title') }}: {{ $t(worlds[world_id].shopsanity.name) }}</div>
                   </div>
                   <div class="row" v-if="editable[world_id]">
-                    <div class="col-xl-6 col-lg-6 my-1">
+                    <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].glitches_required"
@@ -80,7 +86,7 @@
                         :options="optionsGlitchesRequired"
                       >{{ $t('randomizer.glitches_required.title') }}</Select>
                     </div>
-                    <div class="col-xl-6 col-lg-6 my-1">
+                    <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].item_placement"
@@ -88,7 +94,7 @@
                         :options="optionsItemPlacement"
                       >{{ $t('randomizer.item_placement.title') }}</Select>
                     </div>
-                    <div class="col-xl-6 col-lg-6 my-1">
+                    <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].dungeon_items"
@@ -96,13 +102,29 @@
                         :options="optionsDungeonItems"
                       >{{ $t('randomizer.dungeon_items.title') }}</Select>
                     </div>
-                    <div class="col-xl-6 col-lg-6 my-1">
+                    <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].accessibility"
                         @input="setAccessibility"
                         :options="optionsAccessibility"
                       >{{ $t('randomizer.accessibility.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].drop_shuffle"
+                        @input="setDropShuffle"
+                        :options="optionsDropShuffle"
+                      >{{ $t('randomizer.drop_shuffle.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].shopsanity"
+                        @input="setShopsanity"
+                        :options="optionsShopsanity"
+                      >{{ $t('randomizer.shopsanity.title') }}</Select>
                     </div>
                   </div>
                   <div
@@ -163,6 +185,21 @@
                     <div
                       class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.hints.title') }}: {{ $t(worlds[world_id].hints.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.door_shuffle.title') }}: {{ $t(worlds[world_id].door_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.door_intensity.title') }}: {{ $t(worlds[world_id].door_intensity.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_shuffle.title') }}: {{ $t(worlds[world_id].ow_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_swap.title') }}: {{ $t(worlds[world_id].ow_swap.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_keep_similar.title') }}: {{ $t(worlds[world_id].ow_keep_similar.name) }}</div>
                   </div>
                 </div>
                 <div class="card-body" v-if="editable[world_id]">
@@ -190,6 +227,46 @@
                         @input="setHints"
                         :options="optionsHints"
                       >{{ $t('randomizer.hints.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].door_shuffle"
+                        @input="setDoorShuffle"
+                        :options="optionsDoorShuffle"
+                      >{{ $t('randomizer.door_shuffle.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].door_intensity"
+                        @input="setDoorIntensity"
+                        :options="optionsDoorIntensity"
+                      >{{ $t('randomizer.door_intensity.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].ow_shuffle"
+                        @input="setOverworldShuffle"
+                        :options="optionsOverworldShuffle"
+                      >{{ $t('randomizer.ow_shuffle.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].ow_swap"
+                        @input="setOverworldSwap"
+                        :options="optionsOverworldSwap"
+                      >{{ $t('randomizer.ow_swap.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].ow_keep_similar"
+                        @input="setOverworldKeepSimilar"
+                        :options="optionsOverworldKeepSimilar"
+                      >{{ $t('randomizer.ow_keep_similar.title') }}</Select>
                     </div>
                   </div>
                 </div>
@@ -317,6 +394,9 @@ export default {
     setDungeonItems(value, worldId) {
       this.$store.dispatch("multiworld/setDungeonItems", { value, worldId });
     },
+    setDropShuffle(value, worldId) {
+      this.$store.dispatch("multiworld/setDropShuffle", { value, worldId });
+    },
     setAccessibility(value, worldId) {
       this.$store.commit("multiworld/setAccessibility", { value, worldId });
     },
@@ -334,6 +414,24 @@ export default {
     },
     setEntranceShuffle(value, worldId) {
       this.$store.dispatch("multiworld/setEntranceShuffle", { value, worldId });
+    },
+    setDoorShuffle(value, worldId) {
+      this.$store.dispatch("multiworld/setDoorShuffle", { value, worldId });
+    },
+    setDoorIntensity(value, worldId) {
+      this.$store.dispatch("multiworld/setDoorIntensity", { value, worldId });
+    },
+    setOverworldShuffle(value, worldId) {
+      this.$store.dispatch("multiworld/setOverworldShuffle", { value, worldId });
+    },
+    setOverworldSwap(value, worldId) {
+      this.$store.dispatch("multiworld/setOverworldSwap", { value, worldId });
+    },
+    setOverworldKeepSimilar(value, worldId) {
+      this.$store.dispatch("multiworld/setOverworldKeepSimilar", { value, worldId });
+    },
+    setShopsanity(value, worldId) {
+      this.$store.dispatch("multiworld/setShopsanity", { value, worldId });
     },
     setHints(value, worldId) {
       this.$store.commit("multiworld/setHints", { value, worldId });
@@ -419,12 +517,19 @@ export default {
       optionsGlitchesRequired: state => state.options.glitches_required,
       optionsItemPlacement: state => state.options.item_placement,
       optionsDungeonItems: state => state.options.dungeon_items,
+      optionsDropShuffle: state => state.options.drop_shuffle,
       optionsAccessibility: state => state.options.accessibility,
       optionsGoal: state => state.options.goal,
       optionsTowerOpen: state => state.options.tower_open,
       optionsGanonOpen: state => state.options.ganon_open,
       optionsWorldState: state => state.options.world_state,
       optionsEntranceShuffle: state => state.options.entrance_shuffle,
+      optionsDoorShuffle: state => state.options.door_shuffle,
+      optionsDoorIntensity: state => state.options.door_intensity,
+      optionsOverworldShuffle: state => state.options.ow_shuffle,
+      optionsOverworldSwap: state => state.options.ow_swap,
+      optionsOverworldKeepSimilar: state => state.options.ow_keep_similar,
+      optionsShopsanity: state => state.options.shopsanity,
       optionsHints: state => state.options.hints,
       optionsWeapons: state => state.options.weapons,
       optionsItemPool: state => state.options.item_pool,

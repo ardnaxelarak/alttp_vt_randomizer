@@ -126,6 +126,7 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
             return view('patch_from_hash', [
                 'hash' => $hash,
                 'md5' => $build->hash,
+                'branch' => $build->branch,
                 'seed' => $seed,
                 'bpsLocation' => sprintf(
                     '/bps/%s.bps',

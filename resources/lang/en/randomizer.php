@@ -34,6 +34,13 @@ return [
             'full' => 'Keysanity',
         ],
     ],
+    'drop_shuffle' => [
+        'title' => 'Drop Shuffle',
+        'options' => [
+            'on' => 'On',
+            'off' => 'Off',
+        ],
+    ],
     'accessibility' => [
         'title' => 'Accessibility',
         'options' => [
@@ -111,6 +118,52 @@ return [
             'full' => 'Full',
             'crossed' => 'Crossed',
             'insanity' => 'Insanity',
+        ],
+    ],
+    "door_shuffle" => [
+        'title' => 'Door Shuffle',
+        'options' => [
+            'vanilla' => 'None',
+            'basic' => 'Basic',
+            'crossed' => 'Crossed',
+        ],
+    ],
+    "door_intensity" => [
+        'title' => 'Door Shuffle Intensity',
+        'options' => [
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+        ],
+    ],
+    "ow_shuffle" => [
+        'title' => 'Overworld Shuffle',
+        'options' => [
+            'vanilla' => 'None',
+            'parallel' => 'Parallel',
+            'full' => 'Full',
+        ],
+    ],
+    "ow_swap" => [
+        'title' => 'Overworld Swap',
+        'options' => [
+            'vanilla' => 'None',
+            'mixed' => 'Mixed',
+            'crossed' => 'Crossed',
+        ],
+    ],
+    "ow_keep_similar" => [
+        'title' => 'Overworld Keep Similar',
+        'options' => [
+            'on' => 'On',
+            'off' => 'Off',
+        ],
+    ],
+    "shopsanity" => [
+        'title' => 'Shopsanity',
+        'options' => [
+            'on' => 'On',
+            'off' => 'Off',
         ],
     ],
     "boss_shuffle" => [

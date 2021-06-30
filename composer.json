@@ -30,7 +30,9 @@
     "z3/enemizer_linux": "6.1.0.180",
     "z3/enemizer_osx": "6.1.0.180",
     "z3/entrancerandomizer": "^0.6.3",
-    "z3/randomizer": "^31.0"
+    "z3/overworldrandomizer": "^0.1.6",
+    "z3/randomizer": "^31.0",
+    "z3/randomizer_ow": "^31.0"
   },
   "require-dev": {
     "facade/ignition": "^1.4",
@@ -52,6 +54,18 @@
           "url": "https://github.com/KatDevsGames/z3randomizer",
           "type": "git",
           "reference": "d0fbd11d0f6c5b2a45ee20deb0a87a925592c93a"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "z3/randomizer_ow",
+        "version": "31.0.9",
+        "source": {
+          "url": "https://github.com/codemann8/z3randomizer",
+          "type": "git",
+          "reference": "b9193d2fbf1607192c2104e5c4afd168a69fb8ad"
         }
       }
     },
@@ -86,6 +100,18 @@
           "url": "https://github.com/KevinCathcart/ALttPEntranceRandomizer",
           "type": "git",
           "reference": "tags/0.6.3-pre10"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "z3/overworldrandomizer",
+        "version": "0.1.6.1",
+        "source": {
+          "url": "https://github.com/codemann8/ALttPDoorRandomizer",
+          "type": "git",
+          "reference": "a4e3ed1e4f69a41bcd99512d3e53ca416de728b1"
         }
       }
     }

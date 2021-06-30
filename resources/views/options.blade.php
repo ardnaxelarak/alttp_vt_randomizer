@@ -34,7 +34,7 @@
                 @endforeach
             </div>
 
-            <a class="anchor" id="accessibility"></a>
+            <a class="anchor" id="dungeon_items"></a>
             <h3 id="dungeon_items" class="card-title p-2 border-bottom">{{ __('options.cards.dungeon_items.header') }}</h3>
             <div class="card-body">
                 @foreach (__('options.cards.dungeon_items.sections') as $section)
@@ -56,6 +56,27 @@
                 @endforeach
             </div>
 
+            <a class="anchor" id="drop_shuffle"></a>
+            <h3 id="drop_shuffle" class="card-title p-2 border-bottom">{{ __('options.cards.drop_shuffle.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.drop_shuffle.sections') as $section)
+                <h4>{{ $section['header'] }}</h4>
+                    @foreach ($section['content'] as $block)
+                        <p>{!! $block !!}</p>
+                    @endforeach
+                @endforeach
+            </div>
+
+            <a class="anchor" id="shopsanity"></a>
+            <h3 id="shopsanity" class="card-title p-2 border-bottom">{{ __('options.cards.shopsanity.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.shopsanity.sections') as $section)
+                <h4>{{ $section['header'] }}</h4>
+                    @foreach ($section['content'] as $block)
+                        <p>{!! $block !!}</p>
+                    @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
 
@@ -130,6 +151,54 @@
                 @endforeach
             <div class="card-body">
                 @foreach (__('options.cards.entrance_shuffle.sections') as $section)
+                <h4>{{ $section['header'] }}</h4>
+                    @foreach ($section['content'] as $block)
+                        @if (is_array($block))
+                            <div class="ml-3">
+                                <h6>{{ $block['header'] }}</h6>
+                                @foreach ($block['content'] as $subblock)
+                                    <p>{!! $subblock !!}</p>
+                                @endforeach
+                            </div>
+                        @else
+                            <p>{!! $block !!}</p>
+                        @endif
+                    @endforeach
+                @endforeach
+            </div>
+
+            <a class="anchor" id="door_shuffle"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.door_shuffle.header') }}</h3>
+            <div class="mb-3"></div>
+                @foreach (__('options.cards.door_shuffle.subheader') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            <div class="card-body">
+                @foreach (__('options.cards.door_shuffle.sections') as $section)
+                <h4>{{ $section['header'] }}</h4>
+                    @foreach ($section['content'] as $block)
+                        @if (is_array($block))
+                            <div class="ml-3">
+                                <h6>{{ $block['header'] }}</h6>
+                                @foreach ($block['content'] as $subblock)
+                                    <p>{!! $subblock !!}</p>
+                                @endforeach
+                            </div>
+                        @else
+                            <p>{!! $block !!}</p>
+                        @endif
+                    @endforeach
+                @endforeach
+            </div>
+
+            <a class="anchor" id="ow_shuffle"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_shuffle.header') }}</h3>
+            <div class="mb-3"></div>
+                @foreach (__('options.cards.ow_shuffle.subheader') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            <div class="card-body">
+                @foreach (__('options.cards.ow_shuffle.sections') as $section)
                 <h4>{{ $section['header'] }}</h4>
                     @foreach ($section['content'] as $block)
                         @if (is_array($block))

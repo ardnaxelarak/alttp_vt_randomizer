@@ -203,6 +203,50 @@
             </tbody>
           </table>
         </tab>
+        <tab v-if="doors" key="doors" name="Doors">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th class="col-auto">Entrance</th>
+                <th class="col-auto"></th>
+                <th class="col-auto">Exit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="row in doors"
+                :key="row.entrance + row.exit"
+                class="spoil-item-location"
+              >
+                <td>{{ row.entrance }}</td>
+                <td>{{ row.direction == 'both' ? '↔' : '→' }}</td>
+                <td>{{ row.exit }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+        <tab v-if="overworld" key="overworld" name="Overworld">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th class="col-auto">Entrance</th>
+                <th class="col-auto"></th>
+                <th class="col-auto">Exit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="row in overworld"
+                :key="row.entrance + row.exit"
+                class="spoil-item-location"
+              >
+                <td>{{ row.entrance }}</td>
+                <td>{{ row.direction == 'both' ? '↔' : '→' }}</td>
+                <td>{{ row.exit }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
         <tab v-if="meta" key="meta" name="meta">
           <table class="table table-striped table-sm">
             <thead>
@@ -256,8 +300,10 @@ export default {
     regions: vm => {
       let regions = {};
       for (let name in vm.rom.spoiler) {
+        console.log(name);
+        console.log(vm.rom.spoiler[name]);
         if (
-          ["meta", "playthrough", "Entrances", "paths", "Shops"].indexOf(
+          ["meta", "playthrough", "Entrances", "paths", "Shops", "Overworld", "Doors", "Lobbies", "DoorTypes"].indexOf(
             name
           ) === -1
         ) {
@@ -314,6 +360,16 @@ export default {
         ? vm.rom.spoiler.Entrances
         : false;
     },
+    doors: vm => {
+      return typeof vm.rom.spoiler.Doors !== "undefined"
+        ? vm.rom.spoiler.Doors
+        : false;
+    },
+    overworld: vm => {
+      return typeof vm.rom.spoiler.Overworld !== "undefined"
+        ? vm.rom.spoiler.Overworld
+        : false;
+    },
     playthrough: vm => {
       let playthrough = [];
       let spoiler = vm.rom.spoiler.playthrough;
@@ -358,9 +414,21 @@ export default {
         : false;
     },
     meta: vm => {
-      return typeof vm.rom.spoiler.meta !== "undefined"
-        ? vm.rom.spoiler.meta
-        : false;
+      let spoiler = vm.rom.spoiler.meta;
+      if (!spoiler) {
+        return false;
+      }
+      let meta = {};
+      Object.keys(spoiler).forEach(setting => {
+        let value = spoiler[setting];
+        if (value != null && typeof value !== 'string' && spoiler.world_id
+            && value.hasOwnProperty(spoiler.world_id)) {
+          meta[setting] = value[spoiler.world_id];
+        } else {
+          meta[setting] = value;
+        }
+      });
+      return meta;
     },
     items: vm => {
       let items = {};

@@ -17,12 +17,19 @@ export default {
       glitches_required: [],
       item_placement: [],
       dungeon_items: [],
+      drop_shuffle: [],
       accessibility: [],
       goal: [],
       tower_open: [],
       ganon_open: [],
       world_state: [],
       entrance_shuffle: [],
+      door_shuffle: [],
+      door_intensity: [],
+      ow_shuffle: [],
+      ow_swap: [],
+      ow_keep_similar: [],
+      shopsanity: [],
       boss_shuffle: [],
       enemy_shuffle: [],
       hints: [],
@@ -69,12 +76,19 @@ export default {
         glitches_required,
         item_placement,
         dungeon_items,
+        drop_shuffle,
         accessibility,
         goals,
         tower_open,
         ganon_open,
         world_state,
         entrance_shuffle,
+        door_shuffle,
+        door_intensity,
+        ow_shuffle,
+        ow_swap,
+        ow_keep_similar,
+        shopsanity,
         boss_shuffle,
         enemy_shuffle,
         hints,
@@ -92,6 +106,7 @@ export default {
       );
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
+      state.options.drop_shuffle = asMulti(dungeon_items, "drop_shuffle");
       state.options.accessibility = asMulti(accessibility, "accessibility");
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
@@ -101,6 +116,12 @@ export default {
         entrance_shuffle,
         "entrance_shuffle"
       );
+      state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
+      state.options.door_intensity = asMulti(door_intensity, "door_intensity");
+      state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
+      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
+      state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
       state.options.enemy_shuffle = asMulti(enemy_shuffle, "enemy_shuffle");
       state.options.hints = asMulti(hints, "hints");

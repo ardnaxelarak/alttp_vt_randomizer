@@ -9,6 +9,7 @@ use ALttP\Randomizer;
 use ALttP\Rom;
 use ALttP\Sprite;
 use ALttP\Support\ItemCollection;
+use ALttP\Support\RandomizerSelector;
 use ALttP\Support\WorldCollection;
 use ALttP\World;
 use Exception;
@@ -172,11 +173,18 @@ class CustomizerController extends Controller
             'difficulty' => 'custom',
             'itemPlacement' => $request->input('item_placement', 'basic'),
             'dungeonItems' => $request->input('dungeon_items', 'standard'),
+            'dropShuffle' => $request->input('drop_shuffle', 'off'),
             'accessibility' => $request->input('accessibility', 'items'),
             'goal' => $request->input('goal', 'ganon'),
             'crystals.ganon' => $crystals_ganon,
             'crystals.tower' => $crystals_tower,
             'entrances' => $request->input('entrances', 'none'),
+            'doors.shuffle' => $request->input('door_shuffle', 'vanilla'),
+            'doors.intensity' => $request->input('door_intensity', '1'),
+            'overworld.shuffle' => $request->input('ow_shuffle', 'vanilla'),
+            'overworld.swap' => $request->input('ow_swap', 'vanilla'),
+            'overworld.keepSimilar' => $request->input('ow_keep_similar', 'vanilla'),
+            'shopsanity' => $request->input('shopsanity', 'off'),
             'mode.weapons' => $request->input('weapons', 'randomized'),
             'tournament' => $request->input('tournament', true),
             'spoilers' => $spoilers,
@@ -244,7 +252,7 @@ class CustomizerController extends Controller
             }
         }
 
-        $rand = new Randomizer([$world]);
+        $rand = RandomizerSelector::getRandomizer($world);
 
         $rom = new Rom(config('alttp.base_rom'));
         $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));

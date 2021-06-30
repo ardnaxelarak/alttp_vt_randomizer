@@ -14,6 +14,7 @@ class UpdateBuildRecord extends Command
 {
     const BRANCHES = [
         'base' => 'z3/randomizer',
+        'overworld' => 'z3/randomizer_ow',
     ];
 
     /**

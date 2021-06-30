@@ -428,6 +428,16 @@ export default class ROM {
     });
   }
 
+  parseMulti(meta, prop) {
+    const value = meta[prop];
+    if (value != null && typeof value !== 'string' && meta.world_id
+        && value.hasOwnProperty(meta.world_id)) {
+      return value[meta.world_id];
+    } else {
+      return value;
+    }
+  }
+
   parsePatch(data, progressCallback) {
     return new Promise(resolve => {
       this.rand = new Prando(data.hash);
@@ -449,7 +459,10 @@ export default class ROM {
         this.name = data.spoiler.meta.name;
         this.variation = data.spoiler.meta.variation;
         this.weapons = data.spoiler.meta.weapons;
-        this.shuffle = data.spoiler.meta.shuffle;
+        this.shuffle = this.parseMulti(data.spoiler.meta, "shuffle");
+        this.door_shuffle = this.parseMulti(data.spoiler.meta, "door_shuffle");
+        this.ow_shuffle = this.parseMulti(data.spoiler.meta, "ow_shuffle");
+        this.ow_swap = this.parseMulti(data.spoiler.meta, "ow_swap");
         this.difficulty_mode = data.spoiler.meta.difficulty_mode;
         this.difficulty = data.spoiler.meta.difficulty;
         this.notes = data.spoiler.meta.notes;

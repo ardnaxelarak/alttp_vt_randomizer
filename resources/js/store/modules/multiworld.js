@@ -56,6 +56,7 @@ export default {
               ]),
               dispatch("load", [worldId, "item_placement", "setItemPlacement"]),
               dispatch("load", [worldId, "dungeon_items", "setDungeonItems"]),
+              dispatch("load", [worldId, "drop_shuffle", "setDropShuffle"]),
               dispatch("load", [worldId, "accessibility", "setAccessibility"]),
               dispatch("load", [worldId, "goal", "setGoal"]),
               dispatch("load", [worldId, "tower_open", "setTowerOpen"]),
@@ -66,6 +67,12 @@ export default {
                 "entrance_shuffle",
                 "setEntranceShuffle"
               ]),
+              dispatch("load", [worldId, "door_shuffle", "setDoorShuffle"]),
+              dispatch("load", [worldId, "door_intensity", "setDoorIntensity"]),
+              dispatch("load", [worldId, "ow_shuffle", "setOverworldShuffle"]),
+              dispatch("load", [worldId, "ow_swap", "setOverworldSwap"]),
+              dispatch("load", [worldId, "ow_keep_similar", "setOverworldKeepSimilar"]),
+              dispatch("load", [worldId, "shopsanity", "setShopsanity"]),
               dispatch("load", [worldId, "boss_shuffle", "setBossShuffle"]),
               dispatch("load", [worldId, "enemy_shuffle", "setEnemyShuffle"]),
               dispatch("load", [worldId, "hints", "setHints"]),
@@ -105,6 +112,10 @@ export default {
           worldId,
           value: state.preset_map[preset.value]["dungeon_items"]
         });
+        commit("setDropShuffle", {
+          worldId,
+          value: state.preset_map[preset.value]["drop_shuffle"]
+        });
         commit("setAccessibility", {
           worldId,
           value: state.preset_map[preset.value]["accessibility"]
@@ -128,6 +139,30 @@ export default {
         commit("setEntranceShuffle", {
           worldId,
           value: state.preset_map[preset.value]["entrance_shuffle"]
+        });
+        commit("setDoorShuffle", {
+          worldId,
+          value: state.preset_map[preset.value]["door_shuffle"]
+        });
+        commit("setDoorIntensity", {
+          worldId,
+          value: state.preset_map[preset.value]["door_intensity"]
+        });
+        commit("setOverworldShuffle", {
+          worldId,
+          value: state.preset_map[preset.value]["ow_shuffle"]
+        });
+        commit("setOverworldSwap", {
+          worldId,
+          value: state.preset_map[preset.value]["ow_swap"]
+        });
+        commit("setOverworldKeepSimilar", {
+          worldId,
+          value: state.preset_map[preset.value]["ow_keep_similar"]
+        });
+        commit("setShopsanity", {
+          worldId,
+          value: state.preset_map[preset.value]["shopsanity"]
         });
         commit("setBossShuffle", {
           worldId,
@@ -277,12 +312,19 @@ export default {
         glitches_required,
         item_placement,
         dungeon_items,
+        drop_shuffle,
         accessibility,
         goals,
         tower_open,
         ganon_open,
         world_state,
         entrance_shuffle,
+        door_shuffle,
+        door_intensity,
+        ow_shuffle,
+        ow_swap,
+        ow_keep_similar,
+        shopsanity,
         boss_shuffle,
         enemy_shuffle,
         hints,
@@ -300,6 +342,7 @@ export default {
       );
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
+      state.options.drop_shuffle = asMulti(drop_shuffle, "drop_shuffle");
       state.options.accessibility = asMulti(accessibility, "accessibility");
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
@@ -309,6 +352,12 @@ export default {
         entrance_shuffle,
         "entrance_shuffle"
       );
+      state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
+      state.options.door_intensity = asMulti(door_intensity, "door_intensity");
+      state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
+      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
+      state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
       state.options.enemy_shuffle = asMulti(enemy_shuffle, "enemy_shuffle");
       state.options.hints = asMulti(hints, "hints");
@@ -349,6 +398,13 @@ export default {
       }
       state.worlds[worldId].dungeon_items = value;
       localforage.setItem(`multiworld.${worldId}.dungeon_items`, value);
+    },
+    setDropShuffle(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.drop_shuffle.find(o => o.value === value);
+      }
+      state.worlds[worldId].drop_shuffle = value;
+      localforage.setItem(`multiworld.${worldId}.drop_shuffle`, value);
     },
     setAccessibility(state, { worldId, value }) {
       if (typeof value === "string") {
@@ -391,6 +447,48 @@ export default {
       }
       state.worlds[worldId].entrance_shuffle = value;
       localforage.setItem(`multiworld.${worldId}.entrance_shuffle`, value);
+    },
+    setDoorShuffle(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.door_shuffle.find(o => o.value === value);
+      }
+      state.worlds[worldId].door_shuffle = value;
+      localforage.setItem(`multiworld.${worldId}.door_shuffle`, value);
+    },
+    setDoorIntensity(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.door_intensity.find(o => o.value === value);
+      }
+      state.worlds[worldId].door_intensity = value;
+      localforage.setItem(`multiworld.${worldId}.door_intensity`, value);
+    },
+    setOverworldShuffle(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.ow_shuffle.find(o => o.value === value);
+      }
+      state.worlds[worldId].ow_shuffle = value;
+      localforage.setItem(`multiworld.${worldId}.ow_shuffle`, value);
+    },
+    setOverworldSwap(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.ow_swap.find(o => o.value === value);
+      }
+      state.worlds[worldId].ow_swap = value;
+      localforage.setItem(`multiworld.${worldId}.ow_swap`, value);
+    },
+    setOverworldKeepSimilar(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.ow_keep_similar.find(o => o.value === value);
+      }
+      state.worlds[worldId].ow_keep_similar = value;
+      localforage.setItem(`multiworld.${worldId}.ow_keep_similar`, value);
+    },
+    setShopsanity(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.shopsanity.find(o => o.value === value);
+      }
+      state.worlds[worldId].shopsanity = value;
+      localforage.setItem(`multiworld.${worldId}.shopsanity`, value);
     },
     setBossShuffle(state, { worldId, value }) {
       if (typeof value === "string") {

@@ -22,6 +22,7 @@
       @error="onError"
       :current-rom-hash="current_rom_hash"
       :override-base-bps="overrideBaseBps"
+      :branch="branch"
     ></rom-loader>
 
     <div id="seed-details" class="card border-success" v-if="gameLoaded && romLoaded">
@@ -91,6 +92,10 @@ export default {
       type: String,
       required: true
     },
+    branch: {
+      type: String,
+      required: true
+    },
     hash: {
       type: String,
       required: true
@@ -132,7 +137,7 @@ export default {
     applyHash(e, second_attempt) {
       if (this.rom.checkMD5() != this.current_rom_hash) {
         if (second_attempt) {
-          return new Promise.reject(this.rom);
+          return Promise.reject(this.rom);
         }
         return this.rom
           .reset()

@@ -64,11 +64,18 @@ class MultiworldController extends Controller
             $worlds[] = World::factory($config['mode'] ?? 'standard', [
                 'itemPlacement' => $config['item_placement'] ?? 'basic',
                 'dungeonItems' => $config['dungeon_items'] ?? 'standard',
+                'dropShuffle' => $config['drop_shuffle'] ?? 'off',
                 'accessibility' => $config['accessibility'] ?? 'items',
                 'goal' => $config['goal'] ?? 'ganon',
                 'crystals.ganon' => $crystals_ganon,
                 'crystals.tower' => $crystals_tower,
                 'entrances' => $config['entrances'] ?? 'none',
+                'doors.shuffle' => $config['door_shuffle'] ?? 'vanilla',
+                'doors.intensity' => $config['door_intensity'] ?? '1',
+                'overworld.shuffle' => $config['ow_shuffle'] ?? 'vanilla',
+                'overworld.swap' => $config['ow_swap'] ?? 'vanilla',
+                'overworld.keepSimilar' => $config['ow_keep_similar'] ?? 'off',
+                'shopsanity' => $config['shopsanity'] ?? 'off',
                 'mode.weapons' => $config['weapons'] ?? 'randomized',
                 'tournament' => $config['tournament'] ?? false,
                 'spoilers' => $config['spoilers'] ?? false,
@@ -86,12 +93,7 @@ class MultiworldController extends Controller
             ]);
         }
 
-
-        //if ($world->config('entrances') !== 'none') {
-        //    $rand = new EntranceRandomizer([$world]);
-        //} else {
-        $rand = new Randomizer($worlds);
-        //}
+        $rand = RandomizerSelector::getRandomizer($world);
 
         $rand->randomize();
 

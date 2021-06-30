@@ -17,7 +17,10 @@
       v-if="rom.accessibility"
     >{{ $t('rom.info.accessibility') }}: {{ $t(`randomizer.accessibility.options.${rom.accessibility}`) }}</div>
     <div v-if="rom.variation">{{ $t('rom.info.variation') }}: {{ rom.variation }}</div>
-    <div v-if="rom.shuffle">{{ $t('rom.info.shuffle') }}: {{ rom.shuffle }}</div>
+    <div v-if="rom.shuffle">{{ $t('rom.info.shuffle') }}: {{ $t(`randomizer.entrance_shuffle.options.${rom.shuffle}`) }}</div>
+    <div v-if="rom.door_shuffle">{{ $t('rom.info.door_shuffle') }}: {{ $t(`randomizer.door_shuffle.options.${rom.door_shuffle}`) }}</div>
+    <div v-if="rom.ow_shuffle">{{ $t('rom.info.ow_shuffle') }}: {{ $t(`randomizer.ow_shuffle.options.${rom.ow_shuffle}`) }}</div>
+    <div v-if="rom.ow_swap">{{ $t('rom.info.ow_swap') }}: {{ $t(`randomizer.ow_swap.options.${rom.ow_swap}`) }}</div>
     <div
       v-if="rom.mode"
     >{{ $t('rom.info.mode') }}: {{ $t(`randomizer.world_state.options.${rom.mode}`) }}</div>

@@ -16,6 +16,10 @@ export default {
     value: "standard",
     name: "randomizer.dungeon_items.options.standard"
   },
+  drop_shuffle: {
+    value: "off",
+    name: "randomizer.drop_shuffle.options.off"
+  },
   accessibility: {
     value: "items",
     name: "randomizer.accessibility.options.items"
@@ -39,6 +43,30 @@ export default {
   entrance_shuffle: {
     value: "none",
     name: "randomizer.entrance_shuffle.options.none"
+  },
+  door_shuffle: {
+    value: "vanilla",
+    name: "randomizer.door_shuffle.options.vanilla"
+  },
+  door_intensity: {
+    value: "1",
+    name: "randomizer.door_intensity.options.1"
+  },
+  ow_shuffle: {
+    value: "vanilla",
+    name: "randomizer.ow_shuffle.options.vanilla"
+  },
+  ow_swap: {
+    value: "vanilla",
+    name: "randomizer.ow_swap.options.vanilla"
+  },
+  ow_keep_similar: {
+    value: "off",
+    name: "randomizer.ow_keep_similar.options.off"
+  },
+  shopsanity: {
+    value: "off",
+    name: "randomizer.shopsanity.options.off"
   },
   boss_shuffle: {
     value: "none",

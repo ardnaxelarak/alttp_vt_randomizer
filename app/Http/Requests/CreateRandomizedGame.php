@@ -41,6 +41,9 @@ class CreateRandomizedGame extends FormRequest
             'dungeon_items' => [
                 Rule::in($valid_settings['dungeon_items']),
             ],
+            'drop_shuffle' => [
+                Rule::in($valid_settings['drop_shuffle']),
+            ],
             'accessibility' => [
                 Rule::in($valid_settings['accessibility']),
             ],
@@ -58,6 +61,24 @@ class CreateRandomizedGame extends FormRequest
             ],
             'entrances' => [
                 Rule::in($valid_settings['entrance_shuffle']),
+            ],
+            'doors.shuffle' => [
+                Rule::in($valid_settings['door_shuffle']),
+            ],
+            'doors.intensity' => [
+                Rule::in($valid_settings['door_intensity']),
+            ],
+            'overworld.shuffle' => [
+                Rule::in($valid_settings['ow_shuffle']),
+            ],
+            'overworld.swap' => [
+                Rule::in($valid_settings['ow_swap']),
+            ],
+            'overworld.keepSimilar' => [
+                Rule::in($valid_settings['ow_keep_similar']),
+            ],
+            'shopsanity' => [
+                Rule::in($valid_settings['shopsanity']),
             ],
             'enemizer.boss_shuffle' => [
                 Rule::in($valid_settings['boss_shuffle']),
