@@ -460,6 +460,7 @@ export default class ROM {
         this.variation = data.spoiler.meta.variation;
         this.weapons = data.spoiler.meta.weapons;
         this.shuffle = this.parseMulti(data.spoiler.meta, "shuffle");
+        this.shuffle = this.shuffle === 'vanilla' ? 'none' : this.shuffle;
         this.door_shuffle = this.parseMulti(data.spoiler.meta, "door_shuffle");
         this.ow_shuffle = this.parseMulti(data.spoiler.meta, "ow_shuffle");
         this.ow_swap = this.parseMulti(data.spoiler.meta, "ow_swap");
