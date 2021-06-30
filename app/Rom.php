@@ -2616,6 +2616,40 @@ class Rom
     }
 
     /**
+     * Enable bombs-only mode
+     *
+     * @param bool $enable switch on or off
+     *
+     * @return $this
+     */
+    public function setBombsOnlyMode(bool $enable = false): self
+    {
+        $this->write(0x18002F, pack('C*', $enable ? 0x03 : 0x00)); // Special Bombs
+        $this->write(0x180040, pack('C*', $enable ? 0x01 : 0x00)); // Open Curtains
+        $this->write(0x18004D, pack('C*', $enable ? 0x22 : 0x00)); // Always infinite bombs
+        $this->write(0x180041, pack('C*', $enable ? 0x02 : 0x00)); // Swordless Medallions
+        $this->write(0x180043, pack('C*', $enable ? 0xFF : 0x00)); // set Link's starting sword 0xFF is taken sword
+
+        // since we have infinite bombs, let's get rid of bomb drops
+        $this->write(0x30051, pack('C*', $enable ? 0xDB : 0xDE)); // fish bottle merchant
+        $this->write(0x301F8, pack('C*', $enable ? 0xD9 : 0xDC)); // replace Pot bombs with green rupees
+        $this->write(0x301FD, pack('C*', $enable ? 0xD9 : 0xDC));
+        $this->write(0x30224, pack('C*', $enable ? 0x04 : 0x00)); // adjust width of offset for replaced pot bomb
+        $this->write(0x30229, pack('C*', $enable ? 0x04 : 0x00));
+
+        $this->write(0xEDA7, pack('C*', $enable ? 0x35 : 0x27)); // DW chest game (bomb -> blue rupee)
+
+        // thiefs and pikits shouldn't steal bombs
+        $this->write(0xECB54, $enable ? pack('C*', 0xA9, 0x00, 0xEA, 0xEA) : pack('C*', 0xAF, 0x43, 0xF3, 0x7E)); // thief
+        $this->write(0xF0D80, $enable ? pack('C*', 0xA9, 0x00, 0xEA, 0xEA) : pack('C*', 0xAF, 0x43, 0xF3, 0x7E)); // pikit
+
+        $this->setHammerTablet($enable);
+        $this->setHammerBarrier(false);
+
+        return $this;
+    }
+
+    /**
      * Enable lampless light cone in Sewers
      *
      * @param bool $enable switch on or off
@@ -2843,6 +2877,38 @@ class Rom
     public function setGanonCrystalRequirement(int $crystals = 7): self
     {
         $this->write(0x18005F, pack('C', max(min($crystals, 7), 0)));
+
+        return $this;
+    }
+
+    /**
+     * Set the Ganon item vulnerability requirement
+     *
+     * @param string $item
+     *
+     * @return $this
+     */
+    public function setGanonItem(string $item = 'default'): self
+    {
+        $itemMap = [
+            'default' => 0x00,
+            'arrow' => 0x01,
+            'boomerang' => 0x02,
+            'hookshot' => 0x03,
+            'bomb' => 0x04,
+            'powder' => 0x05,
+            'fire_rod' => 0x06,
+            'ice_rod' => 0x07,
+            'bombos' => 0x08,
+            'ether' => 0x09,
+            'quake' => 0x0A,
+            'hammer' => 0x0C,
+            'bee' => 0x10,
+            'somaria' => 0x11,
+            'byrna' => 0x12,
+        ];
+        $value = array_key_exists($item, $itemMap) ? $itemMap[$item] : 0x00;
+        $this->write(0x18002E, pack('C', $value));
 
         return $this;
     }

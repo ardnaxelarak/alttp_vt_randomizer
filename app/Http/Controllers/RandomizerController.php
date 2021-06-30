@@ -37,6 +37,7 @@ class RandomizerController extends Controller
                 'seed',
                 'spoiler.meta.crystals_ganon',
                 'spoiler.meta.crystals_tower',
+                'spoiler.meta.ganon_item',
             ]);
 
             if ($payload['spoiler']['meta']['tournament'] ?? false) {
@@ -107,10 +108,13 @@ class RandomizerController extends Controller
 
     protected function prepSeed(CreateRandomizedGame $request, bool $save = true)
     {
+        $weapons = $request->input('weapons', 'randomized');
         $crystals_ganon = $request->input('crystals.ganon', '7');
         $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
         $crystals_tower = $request->input('crystals.tower', '7');
         $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
+        $ganon_item = $request->input('ganon_item', 'default');
+        $ganon_item = $ganon_item === 'random' ? get_random_ganon_item($weapons) : $ganon_item;
         $logic = [
             'none' => 'NoGlitches',
             'overworld_glitches' => 'OverworldGlitches',
@@ -152,6 +156,7 @@ class RandomizerController extends Controller
             'goal' => $request->input('goal', 'ganon'),
             'crystals.ganon' => $crystals_ganon,
             'crystals.tower' => $crystals_tower,
+            'ganon_item' => $ganon_item,
             'entrances' => $request->input('entrances', 'none'),
             'doors.shuffle' => $request->input('doors.shuffle', 'vanilla'),
             'doors.intensity' => $request->input('doors.intensity', '1'),
@@ -159,7 +164,7 @@ class RandomizerController extends Controller
             'overworld.swap' => $request->input('overworld.swap', 'vanilla'),
             'overworld.keepSimilar' => $request->input('overworld.keep_similar', 'off'),
             'shopsanity' => $request->input('shopsanity', 'off'),
-            'mode.weapons' => $request->input('weapons', 'randomized'),
+            'mode.weapons' => $weapons,
             'tournament' => $request->input('tournament', false),
             'spoilers' => $spoilers,
             'allow_quickswap' => $request->input('allow_quickswap', true),
@@ -195,6 +200,7 @@ class RandomizerController extends Controller
         $spoiler = $world->getSpoiler(array_merge($spoiler_meta, [
             'entry_crystals_ganon' => $request->input('crystals.ganon', '7'),
             'entry_crystals_tower' => $request->input('crystals.tower', '7'),
+            'ganon_vulnerability_item' => $request->input('ganon_item', 'default'),
             'worlds' => 1,
         ]));
 

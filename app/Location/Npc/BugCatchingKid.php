@@ -118,6 +118,11 @@ class BugCatchingKid extends Npc
             case 'Bomb':
             case 'ThreeBombs':
             case 'TenBombs':
+            case 'L2Bombs':
+            case 'L3Bombs':
+            case 'L4Bombs':
+            case 'L5Bombs':
+            case 'ProgressiveBombs':
                 return "the bomb-holding kid";
             case 'Mushroom':
                 return "the drug-dealing kid";

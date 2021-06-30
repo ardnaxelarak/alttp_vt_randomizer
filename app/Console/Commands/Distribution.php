@@ -23,6 +23,7 @@ class Distribution extends Command
         . ' {--glitches=none : set glitches}'
         . ' {--crystals_ganon=7 : set ganon crystal requirement}'
         . ' {--crystals_tower=7 : set ganon tower crystal requirement}'
+        . ' {--ganon_item=default : set ganon item vulnerability}'
         . ' {--item_placement=advanced : set item placement rules}'
         . ' {--dungeon_items=standard : set dungeon item placement}'
         . ' {--accessibility=item : set item/location accessibility}'
@@ -66,6 +67,7 @@ class Distribution extends Command
             'goal' => $this->option('goal'),
             'crystals.ganon' => $this->option('crystals_ganon'),
             'crystals.tower' => $this->option('crystals_tower'),
+            'ganon_item' => $this->option('ganon_item'),
             'entrances' => 'none',
             'mode.weapons' => $this->option('weapons'),
             'tournament' => false,

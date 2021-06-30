@@ -401,7 +401,7 @@ class ItemCollection extends Collection
     public function canMeltThings(World $world)
     {
         return $this->has('FireRod')
-            || ($this->has('Bombos') && ($world->config('mode.weapons') === 'swordless' || $this->hasSword()));
+            || ($this->has('Bombos') && ($world->restrictedMedallions() || $this->canUseMedallions($world)));
     }
 
     /**
@@ -490,6 +490,69 @@ class ItemCollection extends Collection
                             || $this->has('ShopArrow') || $this->has('SilverArrowUpgrade')))
                     || $this->has('BowAndArrows')
                     || $this->has('BowAndSilverArrows');
+        }
+    }
+
+    /**
+     * Requirements for using a medallion at a place without an icon
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function canUseMedallions(World $world)
+    {
+        return $this->hasSword() || $world->config('mode.weapons') === 'bombs';
+    }
+
+    /**
+     * Requirements for damaging stunned Ganon
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function canHitStunnedGanon(World $world)
+    {
+        $ganon_item = $world->config('ganon_item', 'default');
+        if ($ganon_item === 'default') {
+          if ($world->config('mode.weapons') === 'bombs') {
+            $ganon_item = 'bomb';
+          } else {
+            $ganon_item = 'arrow';
+          }
+        }
+        
+        switch ($ganon_item) {
+            case 'boomerang':
+                return $this->has('Boomerang') || $this->has('RedBoomerang');
+            case 'hookshot':
+                return $this->has('Hookshot');
+            case 'bomb':
+                return true;
+            case 'powder':
+                return $this->has('Powder');
+            case 'fire_rod':
+                return $this->has('FireRod');
+            case 'ice_rod':
+                return $this->has('IceRod');
+            case 'bombos':
+                return $this->has('Bombos') && $this->canUseMedallions($world);
+            case 'ether':
+                return $this->has('Ether') && $this->canUseMedallions($world);
+            case 'quake':
+                return $this->has('Quake') && $this->canUseMedallions($world);
+            case 'hammer':
+                return $this->has('Hammer');
+            case 'bee':
+                return $this->hasABottle() && $this->canGetGoodBee($world);
+            case 'somaria':
+                return $this->has('CaneOfSomaria');
+            case 'byrna':
+                return $this->has('CaneOfByrna');
+            case 'arrow':
+            default:
+                return $this->canShootArrows($world, 2);
         }
     }
 
@@ -583,7 +646,8 @@ class ItemCollection extends Collection
             || $this->canShootArrows($world)
             || $this->has('Hammer')
             || $this->has('FireRod')
-            || $world->config('ignoreCanKillEscapeThings', false);
+            || $world->config('ignoreCanKillEscapeThings', false)
+            || $world->config('mode.weapons') === 'bombs';
     }
 
     /**
@@ -604,7 +668,8 @@ class ItemCollection extends Collection
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
             || $this->canShootArrows($world)
             || $this->has('Hammer')
-            || $this->has('FireRod');
+            || $this->has('FireRod')
+            || $world->config('mode.weapons') === 'bombs';
     }
 
     /**
@@ -620,14 +685,16 @@ class ItemCollection extends Collection
     /**
      * Requirements for catching a Golden Bee
      *
+     * @param \ALttP\World  $world  world to check items against
+     *
      * @return bool
      */
-    public function canGetGoodBee()
+    public function canGetGoodBee(World $world)
     {
         return $this->has('BugCatchingNet')
             && $this->hasABottle()
             && ($this->has('PegasusBoots')
-                || ($this->hasSword() && $this->has('Quake')));
+                || ($this->canUseMedallions($world) && $this->has('Quake')));
     }
 
     /**
@@ -666,6 +733,37 @@ class ItemCollection extends Collection
                     || $this->has('MasterSword')
                     || $this->has('L3Sword')
                     || $this->has('L4Sword');
+        }
+    }
+
+    /**
+     * Requirements for having a certain level of bombs, for bomb-only mode
+     *
+     * @param int $min_level minimum level of bombs
+     *
+     * @return bool
+     */
+    public function hasBombLevel(int $min_level)
+    {
+        switch ($min_level) {
+            case 4:
+                return $this->has('ProgressiveBombs', 3)
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
+            case 3:
+                return $this->has('ProgressiveBombs', 2)
+                    || $this->has('L3Bombs')
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
+            case 2:
+                return $this->has('ProgressiveBombs')
+                    || $this->has('L2Bombs')
+                    || $this->has('L3Bombs')
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
+            case 1:
+            default:
+                return true;
         }
     }
 

@@ -49,7 +49,7 @@ class West extends Region
 
         $this->locations["Ether Tablet"]->setRequirements(function ($locations, $items) {
             return $items->has('BookOfMudora') && ($items->hasSword(2)
-                || ($this->world->config('mode.weapons') == 'swordless' && $items->has('Hammer')))
+                || ($this->world->restrictedSwords() && $items->has('Hammer')))
                 && $this->world->getRegion('Tower of Hera')->canEnter($locations, $items);
         });
 

@@ -37,10 +37,13 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
             'day' => $date->toDateString(),
         ]);
         if (!$feature->exists) {
+            $weapons = getWeighted('weapons');
             $entry_crystals_ganon = getWeighted('ganon_open');
             $crystals_ganon = $entry_crystals_ganon === 'random' ? get_random_int(0, 7) : $entry_crystals_ganon;
             $entry_crystals_tower = getWeighted('tower_open');
             $crystals_tower = $entry_crystals_tower === 'random' ? get_random_int(0, 7) : $entry_crystals_tower;
+            $entry_ganon_item = getWeighted('ganon_item');
+            $ganon_item = $entry_ganon_item === 'random' ? get_random_ganon_item($weapons) : $entry_crystals_tower;
             $logic = [
                 'none' => 'NoGlitches',
                 'overworld_glitches' => 'OverworldGlitches',
@@ -56,6 +59,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'goal' => getWeighted('goals'),
                 'crystals.ganon' => $crystals_ganon,
                 'crystals.tower' => $crystals_tower,
+                'ganon_item' => $ganon_item,
                 'entrances' => getWeighted('entrance_shuffle'),
                 'doors.shuffle' => getWeighted('door_shuffle'),
                 'doors.intensity' => getWeighted('door_intensity'),
@@ -63,7 +67,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'overworld.swap' => getWeighted('overworld_swap'),
                 'overworld.keepSimilar' => getWeighted('overworld_keep_similar'),
                 'shopsanity' => getWeighted('shopsanity'),
-                'mode.weapons' => getWeighted('weapons'),
+                'mode.weapons' => $weapons,
                 'tournament' => true,
                 'spoil.Hints' => getWeighted('hints'),
                 'spoilers' => getWeighted('spoilers'),
@@ -105,6 +109,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'name' => 'Daily Challenge: ' . $date->toFormattedDateString(),
                 'entry_crystals_ganon' => $entry_crystals_ganon,
                 'entry_crystals_tower' => $entry_crystals_tower,
+                'ganon_item' => $entry_ganon_item,
                 'worlds' => 1,
             ]);
 
@@ -157,7 +162,8 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 [
                     'meta.seed',
                     'meta.crystals_ganon',
-                    'meta.crystals_tower'
+                    'meta.crystals_tower',
+                    'meta.ganon_item'
                 ]
             );
 

@@ -117,10 +117,13 @@ class HauntedGrove extends Dig
             case 'HeartContainerNoAnimation':
                 return "life boy feels love again";
             case 'Bomb':
-                return "'splosion boy explodes again";
             case 'ThreeBombs':
-                return "'splosion boy explodes again";
             case 'TenBombs':
+            case 'L2Bombs':
+            case 'L3Bombs':
+            case 'L4Bombs':
+            case 'L5Bombs':
+            case 'ProgressiveBombs':
                 return "'splosion boy explodes again";
             case 'Mushroom':
                 return "shroom boy sells drugs again";

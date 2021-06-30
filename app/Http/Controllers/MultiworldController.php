@@ -44,10 +44,13 @@ class MultiworldController extends Controller
         set_time_limit(300);
 
         foreach ($request->input('worlds') as $config) {
+            $weapons = $config['weapons'] ?? 'randomized';
             $crystals_ganon = $config['crystals.ganon'] ?? '7';
             $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
             $crystals_tower = $config['crystals.tower'] ?? '7';
             $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
+            $ganon_item = $config['ganon_item'] ?? 'default';
+            $ganon_item = $ganon_item === 'random' ? get_random_ganon_item($weapons) : $ganon_item;
             $logic = [
                 'none' => 'NoGlitches',
                 'overworld_glitches' => 'OverworldGlitches',
@@ -69,6 +72,7 @@ class MultiworldController extends Controller
                 'goal' => $config['goal'] ?? 'ganon',
                 'crystals.ganon' => $crystals_ganon,
                 'crystals.tower' => $crystals_tower,
+                'ganon_item' => $ganon_item,
                 'entrances' => $config['entrances'] ?? 'none',
                 'doors.shuffle' => $config['door_shuffle'] ?? 'vanilla',
                 'doors.intensity' => $config['door_intensity'] ?? '1',
@@ -76,7 +80,7 @@ class MultiworldController extends Controller
                 'overworld.swap' => $config['ow_swap'] ?? 'vanilla',
                 'overworld.keepSimilar' => $config['ow_keep_similar'] ?? 'off',
                 'shopsanity' => $config['shopsanity'] ?? 'off',
-                'mode.weapons' => $config['weapons'] ?? 'randomized',
+                'mode.weapons' => $weapons,
                 'tournament' => $config['tournament'] ?? false,
                 'spoilers' => $config['spoilers'] ?? false,
                 'spoilers_ongen' => $config['spoilers_ongen'] ?? false,

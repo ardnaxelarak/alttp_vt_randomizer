@@ -173,6 +173,12 @@ return [
                 'This settings lets you choose the number of crystals required to make Ganon vulnerable to your attacks. If 0 is chosen then he can be beaten as soon as you can reach him! If Random is chosen then there will be a sign on the Pyramid informing you of how many crystals are required. In Inverted this sign will be outside Hyrule Castle accordingly.',
             ],
         ],
+        'ganon_item' => [
+            'header' => __('randomizer.ganon_item.title'),
+            'content' => [
+                'This settings lets you choose what item Ganon will be weak to in his last phase. Regardless of what item is selected, Ganon will require four hits from that item to be defeated in that manner. Ganon can still be defeated without this item using sword spins as usual. In swordless modes, the item will always be in the item pool, and the selected item cannot be any of the medallions, as you will be unable to use them. If you select Random they will be excluded from the pool, and if chosen explicitly generation should fail.',
+            ],
+        ],
         'world_state' => [
             'header' => __('randomizer.world_state.title'),
             'sections' => [
@@ -226,7 +232,7 @@ return [
                                     . '<li>The first Progressive Bow only shoots Wooden Arrows.</li>'
                                     . '<li>The second Progressive Bow can shoot Wooden Arrows and Silver Arrows.</li>'
                                     . '<li>However neither Bow can be used until a Rupee Quiver has been purchased.</li>'
-                                    . '<li>The Rupee Quiver costs 80 rupees and only appears in one randomly chosen shop!</li>'
+                                    . '<li>The Rupee Quiver costs 80 rupees and appears in five randomly chosen shops.</li>'
                                     . '<li>Each Wooden Arrow costs 10 rupees and each Silver Arrow costs 50 rupees.</li>'
                                     . '</ul>',
                             ],
@@ -234,7 +240,7 @@ return [
                         [
                             'header' => 'Shops',
                             'content' => [
-                                'Five shops out of a possible nine will be randomly chosen to contain new stock. This does not include the Bomb Shop or the Potion Shop. One of these shops will contain the Rupee Quiver at a price of 80 rupees. Additionally, small keys will be available in multiple shops for a price of 100 rupees and there is no limit on how many may be purchased.',
+                                'Five shops out of a possible nine will be randomly chosen to contain new stock. This does not include the Bomb Shop or the Potion Shop. These shops will contain the Rupee Quiver at a price of 80 rupees, and small keys at a price of 100 rupees. There is no limit on how many small keys may be purchased.',
                             ],
                         ],
                         [
@@ -516,6 +522,32 @@ return [
                             . '<li>Medallions can only be used to open Misery Mire and Turtle Rock, or to progress through Ice Palace. They only work where their emblems indicate.</li>'
                             . '<li>Swords have been replaced with copies of 20 rupees</li>'
                             . '</ul>',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.bombs'),
+                    'content' => [
+                        'All swords are replaced with bomb upgrades, and bombs are now the only weapon. Multiple changes have been made for this to work:',
+                        '<ul>'
+                            . '<li>Link has an infinite supply of bombs.</li>'
+                            . '<li>Bombs initially deal the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage, with the fourth upgrade dealing damage equal to golden sword spin attacks.</li>'
+                            . '<li>All bosses (including Ganon) can now be damaged by bombs of the appropriate level.</li>'
+                            . '<li>All other weapons do no damage in most cases, except for the following:'
+                                . '<ul>'
+                                    . '<li>Red eyegores and mimics must still be killed with the bow.</li>'
+                                    . '<li>Freezors must still be killed with either the fire rod or Bombos.</li>'
+                                    . '<li>Kholdstare\'s initial phase still requires either the fire rod or Bombos.</li>'
+                                    . '<li>Trinexx\'s side heads still require the appropriate rod to make them vulnerable, but the rod will not damage them further.</li>'
+                                    . '<li>Hookshot and boomerang can still stun enemies, but will never damage enemies.</li>'
+                                    . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
+                                    . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
+                                . '</ul>'
+                            . '<li>The bat barrier outside Aghanim’s Tower can now be broken with the Hammer.</li>'
+                            . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
+                            . '<li>Ether and Bombos tablets require the Hammer and the Book of Mudora.</li>'
+                            . '<li>Medallions can always be used instead of requiring a sword.</li>'
+                            . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
+                        . '</ul>',
                     ],
                 ],
             ],

@@ -168,11 +168,11 @@ abstract class World
                 $this->config['item.count.TwentyRupees2'] = 4;
         }
 
-        $this->config['region.requireBetterBow'] = false;
+        $this->config['region.requireGanonVulnerability'] = false;
         $this->config['region.requireBetterSword'] = false;
 
         if ($this->config('itemPlacement') === 'basic') {
-            $this->config['region.requireBetterBow'] = true;
+            $this->config['region.requireGanonVulnerability'] = true;
             $this->config['region.requireBetterSword'] = true;
         }
 
@@ -185,10 +185,13 @@ abstract class World
                 $this->config['rom.HardMode'] = 1;
         }
 
-        // In swordless mode silvers are 100% required
-        if ($this->config('mode.weapons') === 'swordless') {
-            $this->config['region.requireBetterBow'] = true;
-            $this->config['item.overflow.count.Bow'] = 2;
+        // In swordless modes ganon vulnerability item is 100% required
+        if ($this->restrictedSwords()) {
+            $this->config['region.requireGanonVulnerability'] = true;
+            if (($this->config('ganon_item', 'default') === 'default' && $this->config('mode.weapons', 'randomized') !== 'bombs')
+                    || $this->config['ganon_item'] === 'arrow') {
+                $this->config['item.overflow.count.Bow'] = 2;
+            }
         }
 
         if ($this->config('itemPlacement') === 'basic') {
@@ -388,6 +391,28 @@ abstract class World
     public function setBranch(string $branch)
     {
         $this->config['branch'] = $branch;
+    }
+
+    /*
+     * Get whether the world has restricted access to swords
+     *
+     * @return bool
+     */
+    public function restrictedSwords()
+    {
+        $swordless_modes = ['swordless', 'bombs'];
+        return in_array($this->config('mode.weapons'), $swordless_modes);
+    }
+
+    /**
+     * Get whether the world has restricted access to using medallions
+     *
+     * @return bool
+     */
+    public function restrictedMedallions()
+    {
+        $medallion_modes = ['swordless'];
+        return in_array($this->config('mode.weapons'), $medallion_modes);
     }
 
     /**
@@ -716,7 +741,7 @@ abstract class World
         foreach ($this->config('item.advancement') as $item_name => $count) {
             $loop = min($this->config('item.count.' . $item_name, $count), 216);
             for ($i = 0; $i < $loop; ++$i) {
-                $items[] = $item_name == 'BottleWithRandom' ? $this->getBottle() : Item::get($item_name, $this);
+                $items[] = $this->getItem($item_name);
             }
         }
 
@@ -735,7 +760,7 @@ abstract class World
         foreach ($this->config('item.nice') as $item_name => $count) {
             $loop = min($this->config('item.count.' . $item_name, $count), 216);
             for ($i = 0; $i < $loop; ++$i) {
-                $items[] = $item_name == 'BottleWithRandom' ? $this->getBottle() : Item::get($item_name, $this);
+                $items[] = $this->getItem($item_name);
             }
         }
 
@@ -754,7 +779,7 @@ abstract class World
         foreach ($this->config('item.junk') as $item_name => $count) {
             $loop = min($this->config('item.count.' . $item_name, $count), 216);
             for ($i = 0; $i < $loop; ++$i) {
-                $items[] = $item_name == 'BottleWithRandom' ? $this->getBottle() : Item::get($item_name, $this);
+                $items[] = $this->getItem($item_name);
             }
         }
 
@@ -773,7 +798,7 @@ abstract class World
         foreach ($this->config('item.dungeon') as $item_name => $count) {
             $loop = min($this->config('item.count.' . $item_name, $count), 216);
             for ($i = 0; $i < $loop; ++$i) {
-                $items[] = $item_name === 'BottleWithRandom' ? $this->getBottle() : Item::get($item_name, $this);
+                $items[] = $this->getItem($item_name);
             }
         }
 
@@ -798,6 +823,30 @@ abstract class World
         }
 
         return fy_shuffle($drops);
+    }
+
+    private function getItem(string $name): Item
+    {
+        $bomb_mode_replacements = [
+            'L1Sword' => 'L2Bombs',
+            'L1SwordAndShield' => 'L2Bombs',
+            'L2Sword' => 'L3Bombs',
+            'MasterSword' => 'L3Bombs',
+            'L3Sword' => 'L4Bombs',
+            'L4Sword' => 'L5Bombs',
+            'ProgressiveSword' => 'ProgressiveBombs',
+            'Bomb' => 'Heart',
+            'ThreeBombs' => 'Heart',
+            'TenBombs' => 'Heart',
+        ];
+
+        if ($name === 'BottleWithRandom') {
+            return $this->getBottle();
+        } elseif ($this->config('mode.weapons') === 'bombs' && array_key_exists($name, $bomb_mode_replacements)) {
+            return Item::get($bomb_mode_replacements[$name], $this);
+        } else {
+            return Item::get($name, $this);
+        }
     }
 
     /**
@@ -917,6 +966,7 @@ abstract class World
             'world_id' => $this->id,
             'crystals_ganon' => $this->config('crystals.ganon'),
             'crystals_tower' => $this->config('crystals.tower'),
+            'ganon_item' => $this->config('ganon_item'),
             'tournament' => $this->config('tournament', false),
             'size' => 2,
             'hints' => $this->config('spoil.Hints'),
@@ -1037,6 +1087,7 @@ abstract class World
 
         $rom->setTowerCrystalRequirement($this->config('crystals.tower', 7));
         $rom->setGanonCrystalRequirement($this->config('crystals.ganon', 7));
+        $rom->setGanonItem($this->config('ganon_item', 'default'));
 
         // testing features
         $rom->setGenericKeys($this->config('rom.genericKeys', false));
@@ -1127,6 +1178,9 @@ abstract class World
 
         $rom->setGameState($this->config('mode.state'));
         $rom->setSwordlessMode($this->config('mode.weapons') === 'swordless');
+        if ($this->config('mode.weapons') === 'bombs') {
+            $rom->setBombsOnlyMode(true);
+        }
 
         if (!$this->getLocation("Link's Uncle")->getItem() instanceof Item\Sword) {
             $rom->removeUnclesSword();
@@ -1224,7 +1278,7 @@ abstract class World
         }
         $this->config['ignoreCanKillEscapeThings'] = $ignoreCanKillEscapeThings;
         
-        if ($uncle_items->hasSword() || $uncle_items->has('Hammer')) {
+        if ($uncle_items->hasSword() || $uncle_items->has('Hammer') || $this->config['mode.weapons'] === 'bombs') {
             $rom->setEscapeFills(0b00000000);
             $rom->setUncleSpawnRefills(0, 0, 0);
             $rom->setZeldaSpawnRefills(0, 0, 0);
@@ -1284,6 +1338,11 @@ abstract class World
         // hard+ does not allow fairies/full magics
         if ($this->config('rom.HardMode', 0) >= 2) {
             $drop_bytes = str_replace([0xE0, 0xE3], [0xDF, 0xD8], $drop_bytes);
+        }
+
+        // bomb-only mode has infinite bombs, so drop rupees instead of bombs
+        if ($this->config('mode.weapons') === 'bombs') {
+            $drop_bytes = str_replace([0xDC, 0xDD, 0xDE], [0xD9, 0xDA, 0xDB], $drop_bytes);
         }
 
         if ($this->config('rom.rupeeBow', false)) {

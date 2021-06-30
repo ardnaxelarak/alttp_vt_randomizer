@@ -120,6 +120,11 @@ class Witch extends Npc
             case 'Bomb':
             case 'ThreeBombs':
             case 'TenBombs':
+            case 'L2Bombs':
+            case 'L3Bombs':
+            case 'L4Bombs':
+            case 'L5Bombs':
+            case 'ProgressiveBombs':
                 return "blend fungus into bombs";
             case 'Mushroom':
                 return "my name is error";

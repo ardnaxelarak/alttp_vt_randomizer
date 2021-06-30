@@ -40,6 +40,7 @@ class Randomize extends Command
         . ' {--glitches=none : set glitches}'
         . ' {--crystals_ganon=7 : set ganon crystal requirement}'
         . ' {--crystals_tower=7 : set ganon tower crystal requirement}'
+        . ' {--ganon_item=default : set ganon item vulnerability}'
         . ' {--item_placement=basic : set item placement rules}'
         . ' {--dungeon_items=standard : set dungeon item placement}'
         . ' {--drop_shuffle=off : set drop shuffle on or off}'
@@ -162,10 +163,13 @@ class Randomize extends Command
                 return 0;
             }
 
+            $weapons = $this->option('weapons');
             $crystals_ganon = $this->option('crystals_ganon');
             $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
             $crystals_tower = $this->option('crystals_tower');
             $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
+            $ganon_item = $this->option('ganon_item');
+            $ganon_item = $ganon_item === 'random' ? get_random_ganon_item($weapons) : $ganon_item;
             $logic = [
                 'none' => 'NoGlitches',
                 'overworld_glitches' => 'OverworldGlitches',
@@ -188,7 +192,8 @@ class Randomize extends Command
                 'overworld.swap' => $this->option('ow_swap'),
                 'overworld.keepSimilar' => $this->option('ow_keep_similar'),
                 'shopsanity' => $this->option('shopsanity'),
-                'mode.weapons' => $this->option('weapons'),
+                'ganon_item' => $ganon_item,
+                'mode.weapons' => $weapons,
                 'tournament' => $this->option('tournament'),
                 'spoil.Hints' => $this->option('hints'),
                 'logic' => $logic,

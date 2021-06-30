@@ -465,28 +465,23 @@ class GanonsTower extends Region\Standard\GanonsTower
 
         $this->can_enter = function ($locations, $items) {
             return ($this->world->config('itemPlacement') !== 'basic'
-                || (
-                    ($this->world->config('mode.weapons') === 'swordless'
-                        || $items->hasSword(2))
-                    && $items->hasHealth(12)
-                    && ($items->hasBottle(2)
-                        || $items->hasArmor()))) && ($this->world->config('canDungeonRevive', false)
-                || ($this->world->config('canSuperBunny', false)
-                    && $items->has('MagicMirror')) ||
-                $items->has('MoonPearl')
-                || (
-                    ($this->world->config('canOneFrameClipOW', false)
-                        || ($this->world->config('canBootsClip', false)
-                            && $items->has('PegasusBoots'))) && (
-                        ($this->world->config('canBunnyRevive', false)
-                            && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
-                            && $items->hasABottle())))) && ($items->has('Crystal1')
-                + $items->has('Crystal2')
-                + $items->has('Crystal3')
-                + $items->has('Crystal4')
-                + $items->has('Crystal5')
-                + $items->has('Crystal6')
-                + $items->has('Crystal7'))    >= $this->world->config('crystals.tower', 7)
+                || (($this->world->restrictedSwords() || $items->hasSword(2))
+                    && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
+                && ($this->world->config('canDungeonRevive', false)
+                    || ($this->world->config('canSuperBunny', false) && $items->has('MagicMirror'))
+                    || $items->has('MoonPearl')
+                    || (
+                        ($this->world->config('canOneFrameClipOW', false)
+                            || ($this->world->config('canBootsClip', false) && $items->has('PegasusBoots')))
+                        && (($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle()))))
+                && ($items->has('Crystal1')
+                    + $items->has('Crystal2')
+                    + $items->has('Crystal3')
+                    + $items->has('Crystal4')
+                    + $items->has('Crystal5')
+                    + $items->has('Crystal6')
+                    + $items->has('Crystal7')) >= $this->world->config('crystals.tower', 7)
                 && $this->world->getRegion('North East Light World')->canEnter($locations, $items);
         };
 

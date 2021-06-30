@@ -56,6 +56,9 @@ class CreateRandomizedGame extends FormRequest
             'crystals.ganon' => [
                 Rule::in($valid_settings['ganon_open']),
             ],
+            'ganon_item' => [
+                Rule::in($valid_settings['ganon_item']),
+            ],
             'mode' => [
                 Rule::in($valid_settings['world_state']),
             ],

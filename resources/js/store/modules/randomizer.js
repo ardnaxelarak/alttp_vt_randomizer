@@ -33,6 +33,7 @@ export default {
       goal: [],
       tower_open: [],
       ganon_open: [],
+      ganon_item: [],
       world_state: [],
       entrance_shuffle: [],
       door_shuffle: [],
@@ -73,6 +74,7 @@ export default {
             dispatch("load", ["goal", "setGoal"]),
             dispatch("load", ["tower_open", "setTowerOpen"]),
             dispatch("load", ["ganon_open", "setGanonOpen"]),
+            dispatch("load", ["ganon_item", "setGanonItem"]),
             dispatch("load", ["world_state", "setWorldState"]),
             dispatch("load", ["entrance_shuffle", "setEntranceShuffle"]),
             dispatch("load", ["door_shuffle", "setDoorShuffle"]),
@@ -124,6 +126,7 @@ export default {
         commit("setGoal", state.preset_map[preset.value]["goal"]);
         commit("setTowerOpen", state.preset_map[preset.value]["tower_open"]);
         commit("setGanonOpen", state.preset_map[preset.value]["ganon_open"]);
+        commit("setGanonItem", state.preset_map[preset.value]["ganon_item"]);
         commit("setWorldState", state.preset_map[preset.value]["world_state"]);
         commit(
           "setEntranceShuffle",
@@ -218,6 +221,13 @@ export default {
         commit("setGoal", "ganon");
       }
     },
+    setGanonItem({ commit, state }, value) {
+      commit("setGanonItem", value);
+
+      if (state.ganon_item.value !== "default" && state.entrance_shuffle.value !== "none") {
+        commit("setEntranceShuffle", "none");
+      }
+    },
     setWorldState({ commit }, value) {
       commit("setWorldState", value);
     },
@@ -243,6 +253,22 @@ export default {
         if (state.item_pool.value === "crowd_control") {
           commit("setItemPool", "expert");
         }
+        if (state.weapons.value === "bombs") {
+          commit("setWeapons", "swordless");
+        }
+        if (state.ganon_item.value !== "default") {
+          commit("setGanonItem", "default");
+        }
+      }
+    },
+    setWeapons({ commit, state }, value) {
+      commit("setWeapons", value);
+
+      if (
+        state.weapons.value === "bombs" &&
+        state.entrance_shuffle.value !== "none"
+      ) {
+        commit("setEntranceShuffle", "none");
       }
     },
     setItemPool({ commit, state }, value) {
@@ -275,6 +301,7 @@ export default {
         goals,
         tower_open,
         ganon_open,
+        ganon_item,
         world_state,
         entrance_shuffle,
         door_shuffle,
@@ -306,6 +333,7 @@ export default {
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
       state.options.ganon_open = asMulti(ganon_open, "ganon_open");
+      state.options.ganon_item = asMulti(ganon_item, "ganon_item");
       state.options.world_state = asMulti(world_state, "world_state");
       state.options.entrance_shuffle = asMulti(
         entrance_shuffle,
@@ -393,6 +421,13 @@ export default {
       }
       state.ganon_open = value;
       localforage.setItem("randomizer.ganon_open", value);
+    },
+    setGanonItem(state, value) {
+      if (typeof value === "string") {
+        value = state.options.ganon_item.find(o => o.value === value);
+      }
+      state.ganon_item = value;
+      localforage.setItem("randomizer.ganon_item", value);
     },
     setWorldState(state, value) {
       if (typeof value === "string") {

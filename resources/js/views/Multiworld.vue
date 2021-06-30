@@ -137,17 +137,20 @@
                 <div class="card-body">
                   <div class="row" v-if="!editable[world_id]">
                     <div
-                      class="col-xl-4 col-lg-6 my-1"
+                      class="col-xl-6 col-lg-6 my-1"
                     >{{ $t('randomizer.goal.title') }}: {{ $t(worlds[world_id].goal.name) }}</div>
                     <div
-                      class="col-xl-4 col-lg-6 my-1"
+                      class="col-xl-6 col-lg-6 my-1"
                     >{{ $t('randomizer.tower_open.title') }}: {{ $t(worlds[world_id].tower_open.name) }}</div>
                     <div
-                      class="col-xl-4 col-lg-6 my-1"
+                      class="col-xl-6 col-lg-6 my-1"
                     >{{ $t('randomizer.ganon_open.title') }}: {{ $t(worlds[world_id].ganon_open.name) }}</div>
+                    <div
+                      class="col-xl-6 col-lg-6 my-1"
+                    >{{ $t('randomizer.ganon_item.title') }}: {{ $t(worlds[world_id].ganon_item.name) }}</div>
                   </div>
                   <div class="row" v-if="editable[world_id]">
-                    <div class="col-xl-4 col-lg-6 my-1">
+                    <div class="col-xl-6 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].goal"
@@ -155,7 +158,7 @@
                         :options="optionsGoal"
                       >{{ $t('randomizer.goal.title') }}</Select>
                     </div>
-                    <div class="col-xl-4 col-lg-6 my-1">
+                    <div class="col-xl-6 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].tower_open"
@@ -163,13 +166,21 @@
                         :options="optionsTowerOpen"
                       >{{ $t('randomizer.tower_open.title') }}</Select>
                     </div>
-                    <div class="col-xl-4 col-lg-6 my-1">
+                    <div class="col-xl-6 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].ganon_open"
                         @input="setGanonOpen"
                         :options="optionsGanonOpen"
                       >{{ $t('randomizer.ganon_open.title') }}</Select>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].ganon_item"
+                        @input="setGanonItem"
+                        :options="optionsGanonItem"
+                      >{{ $t('randomizer.ganon_item.title') }}</Select>
                     </div>
                   </div>
                 </div>
@@ -522,6 +533,7 @@ export default {
       optionsGoal: state => state.options.goal,
       optionsTowerOpen: state => state.options.tower_open,
       optionsGanonOpen: state => state.options.ganon_open,
+      optionsGanonItem: state => state.options.ganon_item,
       optionsWorldState: state => state.options.world_state,
       optionsEntranceShuffle: state => state.options.entrance_shuffle,
       optionsDoorShuffle: state => state.options.door_shuffle,

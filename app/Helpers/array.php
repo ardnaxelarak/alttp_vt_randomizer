@@ -65,6 +65,29 @@ function weighted_random_pick(array $array, array $weights, int $pick = 1)
 }
 
 /**
+ * Weighted random selection of ganon vulnerability item
+ *
+ * @param string $weapons weapons setting for the game
+ *
+ * @return string
+ */
+function get_random_ganon_item(string $weapons)
+{
+    $table = config("alttp.randomizer.ganon_item_weights");
+    $keys = array_keys($table);
+    $combined = array_combine($keys, $keys);
+
+    // can't use medallions without a pad in swordless
+    if ($weapons === 'swordless') {
+      $table['bombos'] = 0;
+      $table['ether'] = 0;
+      $table['quake'] = 0;
+    }
+
+    return weighted_random_pick($combined, $table)[0];
+}
+
+/**
  * Sort array by key recursively (this is basically an extension of ksort)
  * @see http://php.net/manual/en/function.ksort.php
  *

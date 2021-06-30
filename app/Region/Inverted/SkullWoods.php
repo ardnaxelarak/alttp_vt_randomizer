@@ -28,8 +28,7 @@ class SkullWoods extends Region\Standard\SkullWoods
         $this->locations["Skull Woods - Boss"]->setRequirements(function ($locations, $items) {
             return $this->canEnter($locations, $items)
                 && $items->has('FireRod')
-                && ($this->world->config('mode.weapons') == 'swordless'
-                    || $items->hasSword())
+                && ($this->world->restrictedSwords() || $items->hasSword())
                 && $items->has('KeyD3', 3)
                 && $this->boss->canBeat($items, $locations)
                 && (!$this->world->config('region.wildCompasses', false)
@@ -41,11 +40,8 @@ class SkullWoods extends Region\Standard\SkullWoods
 
         $this->can_enter = function ($locations, $items) {
             return ($this->world->config('itemPlacement') !== 'basic'
-                || (
-                    ($this->world->config('mode.weapons') === 'swordless'
-                        || $items->hasSword())
-                    && $items->hasHealth(7)
-                    && $items->hasABottle()))
+                || (($this->world->restrictedSwords() || $items->hasSword())
+                    && $items->hasHealth(7) && $items->hasABottle()))
                 && $this->world->getRegion('North West Dark World')->canEnter($locations, $items);
         };
 

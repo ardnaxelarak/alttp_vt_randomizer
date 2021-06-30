@@ -116,7 +116,8 @@ class ThievesTown extends Region
         $this->can_enter = function ($locations, $items) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->config('mode.weapons') === 'swordless' || $items->hasSword()) && $items->hasHealth(7) && $items->hasABottle()))
+                    || (($this->world->restrictedSwords() || $items->hasSword())
+                        && $items->hasHealth(7) && $items->hasABottle()))
                 && ($items->has('MoonPearl')
                     || ($items->hasABottle() && $this->world->config('canOWYBA', false))
                     || ($this->world->config('canBunnyRevive', false) && $items->canSpinSpeed()))

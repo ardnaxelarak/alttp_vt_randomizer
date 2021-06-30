@@ -72,23 +72,17 @@ class TowerOfHera extends Region
      */
     public function canPlaceBoss(Boss $boss, string $level = 'top'): bool
     {
-        if (
-            $this->name != "Ice Palace" && $this->world->config('mode.weapons') == 'swordless'
-            && $boss->getName() == 'Kholdstare'
-        ) {
+        if (parent::canPlaceBoss($boss, $level)) {
+            return !in_array($boss->getName(), [
+                "Armos Knights",
+                "Arrghus",
+                "Blind",
+                "Lanmolas",
+                "Trinexx",
+            ]);
+        } else {
             return false;
         }
-
-        return !in_array($boss->getName(), [
-            "Agahnim",
-            "Agahnim2",
-            "Armos Knights",
-            "Arrghus",
-            "Blind",
-            "Ganon",
-            "Lanmolas",
-            "Trinexx",
-        ]);
     }
 
     /**
