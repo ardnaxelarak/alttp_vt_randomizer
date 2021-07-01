@@ -19,6 +19,39 @@ function asMulti(object, mKey) {
   });
 }
 
+function needOWBranch(state) {
+  return state.entrance_shuffle.value !== "none" || state.door_shuffle.value !== "vanilla"
+      || state.shopsanity.value === "on" || state.drop_shuffle.value === "on"
+      || state.ow_shuffle.value !== "vanilla" || state.ow_swap.value !== "vanilla";
+}
+
+function turnOffOWBranch(commit) {
+  commit("setEntranceShuffle", "none");
+  commit("setDoorShuffle", "vanilla");
+  commit("setOverworldShuffle", "vanilla");
+  commit("setOverworldSwap", "vanilla");
+  commit("setDropShuffle", "off");
+  commit("setShopsanity", "off");
+}
+
+// rules when anything requiring OR branch is enabled; hopefully we can reduce
+// this section to be completely removed in the future.
+function turnOnOWBranch(commit, state) {
+  if (needOWBranch(state)) {
+    if (state.glitches_required.value === 'major_glitches') {
+      commit("setGlitchesRequired", "overworld_glitches");
+    }
+
+    if (state.item_placement.value !== "advanced") {
+      commit("setItemPlacement", "advanced");
+    }
+
+    if (state.item_pool.value === "crowd_control") {
+      commit("setItemPool", "expert");
+    }
+  }
+}
+
 export default {
   namespaced: true,
   state: {
@@ -174,37 +207,21 @@ export default {
     setGlitchesRequired({ commit, state }, value) {
       commit("setGlitchesRequired", value);
 
-      if (
-        ["none", "no_logic"].indexOf(state.glitches_required.value) === -1 &&
-        state.entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", "none");
+      if (state.glitches_required.value === 'major_glitches' && needOWBranch(state)) {
+        turnOffOWBranch(commit);
       }
     },
     setItemPlacement({ commit, state }, value) {
       commit("setItemPlacement", value);
 
-      if (
-        state.item_placement.value !== "advanced" &&
-        state.entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", "none");
+      if (state.item_placement.value !== 'advanced' && needOWBranch(state)) {
+        turnOffOWBranch(commit);
       }
       if (
         state.item_placement.value !== "advanced" &&
         state.item_pool.value === "crowd_control"
       ) {
         commit("setItemPool", "expert");
-      }
-    },
-    setDungeonItems({ commit, state }, value) {
-      commit("setDungeonItems", value);
-
-      if (
-        ["full", "standard"].indexOf(state.dungeon_items.value) === -1 &&
-        state.entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", "none");
       }
     },
     setGoal({ commit, state }, value) {
@@ -221,55 +238,35 @@ export default {
         commit("setGoal", "ganon");
       }
     },
-    setGanonItem({ commit, state }, value) {
-      commit("setGanonItem", value);
+    setDropShuffle({ commit, state }, value) {
+      commit("setDropShuffle", value);
 
-      if (state.ganon_item.value !== "default" && state.entrance_shuffle.value !== "none") {
-        commit("setEntranceShuffle", "none");
-      }
-    },
-    setWorldState({ commit }, value) {
-      commit("setWorldState", value);
+      turnOnOWBranch(commit, state);
     },
     setEntranceShuffle({ commit, state }, value) {
       commit("setEntranceShuffle", value);
 
-      // rules when ER is enabled, hopefully we can reduce this section to be
-      // completely removed in the future.
-      if (state.entrance_shuffle.value !== "none") {
-        if (
-          ["none", "no_logic"].indexOf(state.glitches_required.value) === -1
-        ) {
-          commit("setGlitchesRequired", "none");
-        }
-
-        if (state.item_placement.value !== "advanced") {
-          commit("setItemPlacement", "advanced");
-        }
-
-        if (["full", "standard"].indexOf(state.dungeon_items.value) === -1) {
-          commit("setDungeonItems", "standard");
-        }
-        if (state.item_pool.value === "crowd_control") {
-          commit("setItemPool", "expert");
-        }
-        if (state.weapons.value === "bombs") {
-          commit("setWeapons", "swordless");
-        }
-        if (state.ganon_item.value !== "default") {
-          commit("setGanonItem", "default");
-        }
-      }
+      turnOnOWBranch(commit, state);
     },
-    setWeapons({ commit, state }, value) {
-      commit("setWeapons", value);
+    setDoorShuffle({ commit, state }, value) {
+      commit("setDoorShuffle", value);
 
-      if (
-        state.weapons.value === "bombs" &&
-        state.entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", "none");
-      }
+      turnOnOWBranch(commit, state);
+    },
+    setOverworldShuffle({ commit, state }, value) {
+      commit("setOverworldShuffle", value);
+
+      turnOnOWBranch(commit, state);
+    },
+    setOverworldSwap({ commit, state }, value) {
+      commit("setOverworldSwap", value);
+
+      turnOnOWBranch(commit, state);
+    },
+    setShopsanity({ commit, state }, value) {
+      commit("setShopsanity", value);
+
+      turnOnOWBranch(commit, state);
     },
     setItemPool({ commit, state }, value) {
       commit("setItemPool", value);
@@ -280,11 +277,8 @@ export default {
       ) {
         commit("setItemPlacement", "advanced");
       }
-      if (
-        state.item_pool.value === "crowd_control" &&
-        state.entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", "none");
+      if (state.item_pool.value === "crowd_control" && needOWBranch(state)) {
+        turnOffOWBranch(commit);
       }
     }
   },

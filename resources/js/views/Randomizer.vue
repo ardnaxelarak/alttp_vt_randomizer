@@ -116,7 +116,7 @@
                 class="col-xl-6 col-lg-6 my-1"
               >{{ $t('randomizer.ganon_open.title') }}: {{ $t(ganonOpen.name) }}</div>
               <div
-                class="col-xl-6 col-lg-6 my-1"
+                class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal'].includes(goal.value)"
               >{{ $t('randomizer.ganon_item.title') }}: {{ $t(ganonItem.name) }}</div>
             </div>
             <div class="row" v-if="editable">
@@ -141,7 +141,7 @@
                   :options="optionsGanonOpen"
                 >{{ $t('randomizer.ganon_open.title') }}</Select>
               </div>
-              <div class="col-xl-6 col-lg-6 my-1">
+              <div class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal'].includes(goal.value)">
                 <Select
                   :value="ganonItem"
                   @input="setGanonItem"
@@ -172,7 +172,7 @@
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.door_shuffle.title') }}: {{ $t(doorShuffle.name) }}</div>
               <div
-                class="col-xl-4 col-lg-6 my-1"
+                class="col-xl-4 col-lg-6 my-1" v-if="doorShuffle.value != 'vanilla'"
               >{{ $t('randomizer.door_intensity.title') }}: {{ $t(doorIntensity.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
@@ -181,7 +181,7 @@
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.ow_swap.title') }}: {{ $t(overworldSwap.name) }}</div>
               <div
-                class="col-xl-4 col-lg-6 my-1"
+                class="col-xl-4 col-lg-6 my-1" v-if="overworldShuffle.value != 'vanilla'"
               >{{ $t('randomizer.ow_keep_similar.title') }}: {{ $t(overworldKeepSimilar.name) }}</div>
             </div>
           </div>
@@ -229,7 +229,7 @@
                   :options="optionsDoorShuffle"
                 >{{ $t('randomizer.door_shuffle.title') }}</Select>
               </div>
-              <div class="col-xl-4 col-lg-6 my-1">
+              <div class="col-xl-4 col-lg-6 my-1" v-if="doorShuffle.value != 'vanilla'">
                 <Select
                   :value="doorIntensity"
                   @input="setDoorIntensity"
@@ -250,7 +250,7 @@
                   :options="optionsOverworldSwap"
                 >{{ $t('randomizer.ow_swap.title') }}</Select>
               </div>
-              <div class="col-xl-4 col-lg-6 my-1">
+              <div class="col-xl-4 col-lg-6 my-1" v-if="overworldShuffle.value != 'vanilla'">
                 <Select
                   :value="overworldKeepSimilar"
                   @input="setOverworldKeepSimilar"
@@ -474,27 +474,27 @@ export default {
       "setPreset",
       "setGlitchesRequired",
       "setItemPlacement",
-      "setDungeonItems",
       "setGoal",
+      "setDropShuffle",
       "setGanonOpen",
-      "setGanonItem",
+      "setDoorShuffle",
+      "setOverworldShuffle",
+      "setOverworldSwap",
+      "setShopsanity",
       "setWorldState",
       "setEntranceShuffle",
-      "setWeapons",
       "setItemPool"
     ]),
     ...mapMutations("randomizer", [
       "setAccessibility",
-      "setDropShuffle",
+      "setDungeonItems",
       "setTowerOpen",
-      "setDoorShuffle",
+      "setGanonItem",
       "setDoorIntensity",
-      "setOverworldShuffle",
-      "setOverworldSwap",
       "setOverworldKeepSimilar",
-      "setShopsanity",
       "setBossShuffle",
       "setEnemyShuffle",
+      "setWeapons",
       "setHints",
       "setItemFunctionality",
       "setEnemyDamage",

@@ -24,10 +24,9 @@ class RandomizerSelector
                 || $world->config('overworld.shuffle', 'vanilla') !== 'vanilla'
                 || $world->config('overworld.swap', 'vanilla') !== 'vanilla'
                 || $world->config('dropShuffle', 'off') === 'on'
-                || $world->config('shopsanity', 'off') === 'on') {
+                || $world->config('shopsanity', 'off') === 'on'
+                || $world->config('entrances', 'none') !== 'none') {
             return new OverworldRandomizer([$world]);
-        } elseif ($world->config('entrances') !== 'none') {
-            return new EntranceRandomizer([$world]);
         } else {
             return new Randomizer([$world]);
         }
