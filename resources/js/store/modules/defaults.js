@@ -60,13 +60,17 @@ export default {
     value: "vanilla",
     name: "randomizer.ow_shuffle.options.vanilla"
   },
+  ow_keep_similar: {
+    value: "off",
+    name: "randomizer.ow_keep_similar.options.off"
+  },
   ow_swap: {
     value: "vanilla",
     name: "randomizer.ow_swap.options.vanilla"
   },
-  ow_keep_similar: {
-    value: "off",
-    name: "randomizer.ow_keep_similar.options.off"
+  ow_flute_shuffle: {
+    value: "vanilla",
+    name: "randomizer.ow_flute_shuffle.options.vanilla"
   },
   shopsanity: {
     value: "off",

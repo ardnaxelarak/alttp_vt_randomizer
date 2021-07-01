@@ -22,7 +22,8 @@ function asMulti(object, mKey) {
 function needOWBranch(state) {
   return state.entrance_shuffle.value !== "none" || state.door_shuffle.value !== "vanilla"
       || state.shopsanity.value === "on" || state.drop_shuffle.value === "on"
-      || state.ow_shuffle.value !== "vanilla" || state.ow_swap.value !== "vanilla";
+      || state.ow_shuffle.value !== "vanilla" || state.ow_swap.value !== "vanilla"
+      || state.ow_flute_shuffle.value !== "vanilla";
 }
 
 function turnOffOWBranch(commit) {
@@ -30,6 +31,7 @@ function turnOffOWBranch(commit) {
   commit("setDoorShuffle", "vanilla");
   commit("setOverworldShuffle", "vanilla");
   commit("setOverworldSwap", "vanilla");
+  commit("setOverworldFluteShuffle", "vanilla");
   commit("setDropShuffle", "off");
   commit("setShopsanity", "off");
 }
@@ -72,8 +74,9 @@ export default {
       door_shuffle: [],
       door_intensity: [],
       ow_shuffle: [],
-      ow_swap: [],
       ow_keep_similar: [],
+      ow_swap: [],
+      ow_flute_shuffle: [],
       shopsanity: [],
       boss_shuffle: [],
       enemy_shuffle: [],
@@ -113,8 +116,9 @@ export default {
             dispatch("load", ["door_shuffle", "setDoorShuffle"]),
             dispatch("load", ["door_intensity", "setDoorIntensity"]),
             dispatch("load", ["ow_shuffle", "setOverworldShuffle"]),
-            dispatch("load", ["ow_swap", "setOverworldSwap"]),
             dispatch("load", ["ow_keep_similar", "setOverworldKeepSimilar"]),
+            dispatch("load", ["ow_swap", "setOverworldSwap"]),
+            dispatch("load", ["ow_flute_shuffle", "setOverworldFluteShuffle"]),
             dispatch("load", ["shopsanity", "setShopsanity"]),
             dispatch("load", ["boss_shuffle", "setBossShuffle"]),
             dispatch("load", ["enemy_shuffle", "setEnemyShuffle"]),
@@ -168,8 +172,9 @@ export default {
         commit("setDoorShuffle", state.preset_map[preset.value]["door_shuffle"]);
         commit("setDoorIntensity", state.preset_map[preset.value]["door_intensity"]);
         commit("setOverworldShuffle", state.preset_map[preset.value]["ow_shuffle"]);
-        commit("setOverworldSwap", state.preset_map[preset.value]["ow_swap"]);
         commit("setOverworldKeepSimilar", state.preset_map[preset.value]["ow_keep_similar"]);
+        commit("setOverworldSwap", state.preset_map[preset.value]["ow_swap"]);
+        commit("setOverworldFluteShuffle", state.preset_map[preset.value]["ow_flute_shuffle"]);
         commit("setShopsanity", state.preset_map[preset.value]["shopsanity"]);
         commit(
           "setBossShuffle",
@@ -263,6 +268,11 @@ export default {
 
       turnOnOWBranch(commit, state);
     },
+    setOverworldFluteShuffle({ commit, state }, value) {
+      commit("setOverworldFluteShuffle", value);
+
+      turnOnOWBranch(commit, state);
+    },
     setShopsanity({ commit, state }, value) {
       commit("setShopsanity", value);
 
@@ -301,8 +311,9 @@ export default {
         door_shuffle,
         door_intensity,
         ow_shuffle,
-        ow_swap,
         ow_keep_similar,
+        ow_swap,
+        ow_flute_shuffle,
         shopsanity,
         boss_shuffle,
         enemy_shuffle,
@@ -336,8 +347,9 @@ export default {
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
-      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
+      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_flute_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
       state.options.enemy_shuffle = asMulti(enemy_shuffle, "enemy_shuffle");
@@ -458,6 +470,13 @@ export default {
       state.ow_shuffle = value;
       localforage.setItem("randomizer.ow_shuffle", value);
     },
+    setOverworldKeepSimilar(state, value) {
+      if (typeof value === "string") {
+        value = state.options.ow_keep_similar.find(o => o.value === value);
+      }
+      state.ow_keep_similar = value;
+      localforage.setItem("randomizer.ow_keep_similar", value);
+    },
     setOverworldSwap(state, value) {
       if (typeof value === "string") {
         value = state.options.ow_swap.find(o => o.value === value);
@@ -465,12 +484,12 @@ export default {
       state.ow_swap = value;
       localforage.setItem("randomizer.ow_swap", value);
     },
-    setOverworldKeepSimilar(state, value) {
+    setOverworldFluteShuffle(state, value) {
       if (typeof value === "string") {
-        value = state.options.ow_keep_similar.find(o => o.value === value);
+        value = state.options.ow_flute_shuffle.find(o => o.value === value);
       }
-      state.ow_keep_similar = value;
-      localforage.setItem("randomizer.ow_keep_similar", value);
+      state.ow_flute_shuffle = value;
+      localforage.setItem("randomizer.ow_flute_shuffle", value);
     },
     setShopsanity(state, value) {
       if (typeof value === "string") {

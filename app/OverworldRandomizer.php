@@ -161,6 +161,8 @@ class OverworldRandomizer implements RandomizerContract
 				$this->world->config('overworld.shuffle'),
 				'--ow_swap',
 				$this->world->config('overworld.swap'),
+				'--ow_fluteshuffle',
+				$this->world->config('overworld.fluteShuffle'),
 				'--crystals_ganon',
 				$this->world->config('crystals.ganon'),
 				'--crystals_gt',

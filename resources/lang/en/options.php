@@ -103,6 +103,18 @@ return [
                 ],
             ],
         ],
+        'drop_shuffle' => [
+            'header' => __('randomizer.drop_shuffle.title'),
+            'content' => [
+                'Key Drops (Pots and Enemies) are shuffled and other items can take their place.',
+            ],
+        ],
+        'shopsanity' => [
+            'header' => __('randomizer.shopsanity.title'),
+            'content' => [
+                'When enabled, shop contents are shuffled in the main item pool and other items can take their place.',
+            ],
+        ],
         'accessibility' => [
             'header' => __('randomizer.accessibility.title'),
             'sections' => [
@@ -262,7 +274,7 @@ return [
         'entrance_shuffle' => [
             'header' => __('randomizer.entrance_shuffle.title'),
             'subheader' => [
-                'This setting randomizes where entrances lead. For example walking into Kakariko shop might take you to a fairy fountain, and so on. Different entrance types are grouped together and then each group is randomized. How entrances are grouped depends on which shuffle you choose. Overworld transitions are never randomized.',
+                'This setting randomizes where entrances lead. For example walking into Kakariko shop might take you to a fairy fountain, and so on. Different entrance types are grouped together and then each group is randomized. How entrances are grouped depends on which shuffle you choose. Overworld transitions are never randomized by this setting.',
                 'Multi-entrance caves/dungeons exhibit some specific behaviours, unless noted otherwise:',
                 '<ul>'
                     . '<li>All entrances remain coupled. This means exiting one of these caves/dungeons will take you back to the entrance from which it was entered.</li>'
@@ -347,6 +359,144 @@ return [
                     'header' => __('randomizer.entrance_shuffle.options.insanity'),
                     'content' => [
                         'As in ' . __('randomizer.entrance_shuffle.options.crossed') . ' except all entrances and holes are decoupled from each other (excluding single-entrance caves and the Skull Woods overworld region). This means exiting the way you entered will take you somewhere entirely different. However all single-entrance caves can still only exit to the same location from which they were entered. All overworld holes are no longer paired. All Skull Woods entrances remain confined to the Skull Woods overworld region (excluding the final dungeon entrance).',
+                    ],
+                ],
+            ],
+        ],
+        'door_shuffle' => [
+            'header' => __('randomizer.door_shuffle.title'),
+            'subheader' => [
+                'This setting randomizes where connections within a dungeon lead. Rooms that share a supertile continue to stay together on that supertile.',
+                'With this setting enabled, you will start with a mirror scroll, which functions as a mirror that only functions in dungeons and cannot erase blocks.',
+                'Dark rooms are never considered to be in logic without the lantern.',
+            ],
+            'sections' => [
+                'vanilla' => [
+                    'header' => __('randomizer.door_shuffle.options.vanilla'),
+                    'content' => [
+                        'No door connections are randomized. All connections lead to their original locations.',
+                    ],
+                ],
+                'basic' => [
+                    'header' => __('randomizer.door_shuffle.options.basic'),
+                    'content' => [
+                        'Doors are mixed within a single dungeon.',
+                    ],
+                ],
+                'crossed' => [
+                    'header' => __('randomizer.door_shuffle.options.crossed'),
+                    'content' => [
+                        'Doors are mixed betweeen all dungeons.',
+                    ],
+                ],
+            ],
+        ],
+        'door_intensity' => [
+            'header' => __('randomizer.door_intensity.title'),
+            'subheader' => [
+                'This setting controls how much of a dungeon is shuffled by ' . __('randomizer.door_shuffle.title') . '.',
+            ],
+            'sections' => [
+                '1' => [
+                    'header' => __('randomizer.door_intensity.options.1'),
+                    'content' => [
+                        'Normal doors and spiral staircases are shuffled.',
+                    ],
+                ],
+                '2' => [
+                    'header' => __('randomizer.door_intensity.options.2'),
+                    'content' => [
+                        'In addition to ' . __('randomizer.door_intensity.options.1') . ', open edges and straight staircases are shuffled.',
+                    ],
+                ],
+                '3' => [
+                    'header' => __('randomizer.door_intensity.options.3'),
+                    'content' => [
+                        'In addition to ' . __('randomizer.door_intensity.options.2') . ', dungeon lobbies are shuffled.',
+                    ],
+                ],
+            ],
+        ],
+        'ow_shuffle' => [
+            'header' => __('randomizer.ow_shuffle.title'),
+            'subheader' => [
+                'This setting randomizes transitions on the overworld.',
+            ],
+            'sections' => [
+                'vanilla' => [
+                    'header' => __('randomizer.ow_shuffle.options.vanilla'),
+                    'content' => [
+                        'No overworld transitions are randomized. All transitions lead to their original locations.',
+                    ],
+                ],
+                'parallel' => [
+                    'header' => __('randomizer.ow_shuffle.options.parallel'),
+                    'content' => [
+                        'Overworld transitions are shuffled, but both worlds will have the same pattern/shape.',
+                    ],
+                ],
+                'full' => [
+                    'header' => __('randomizer.ow_shuffle.options.full'),
+                    'content' => [
+                        'Overworld transitions are shuffled, and each world will have an independent map shape.',
+                    ],
+                ],
+            ],
+        ],
+        'ow_keep_similar' => [
+            'header' => __('randomizer.ow_keep_similar.title'),
+            'content' => [
+                'When enabled with ' . __('randomizer.ow_shuffle.title') . ', similar edge transitions will stay together. For example, the two west edges on Potion Shop with be paired with another similar pair.',
+            ],
+        ],
+        'ow_swap' => [
+            'header' => __('randomizer.ow_swap.title'),
+            'subheader' => [
+                'This setting swaps the tiles of the overworld between the light world and dark world.',
+            ],
+            'sections' => [
+                'vanilla' => [
+                    'header' => __('randomizer.ow_swap.options.vanilla'),
+                    'content' => [
+                        'All overworld tiles remain in their original world as they were in the base game.',
+                    ],
+                ],
+                'mixed' => [
+                    'header' => __('randomizer.ow_swap.options.mixed'),
+                    'content' => [
+                        'Overworld tiles are randomly chosen to become part of the opposite world.',
+                    ],
+                ],
+                'crossed' => [
+                    'header' => __('randomizer.ow_swap.options.crossed'),
+                    'content' => [
+                        'Overworld tiles remain in their original world, but the transitions are shuffled cross-world.',
+                    ],
+                ],
+            ],
+        ],
+        'ow_flute_shuffle' => [
+            'header' => __('randomizer.ow_flute_shuffle.title'),
+            'subheader' => [
+                'This setting randomizes the flute spot destinations.',
+            ],
+            'sections' => [
+                'vanilla' => [
+                    'header' => __('randomizer.ow_flute_shuffle.options.vanilla'),
+                    'content' => [
+                        'All flute spots remain unchanged.',
+                    ],
+                ],
+                'balanced' => [
+                    'header' => __('randomizer.ow_flute_shuffle.options.balanced'),
+                    'content' => [
+                        'New flute spots will be generated but prevents flute spots from being on any adjacent screen.',
+                    ],
+                ],
+                'random' => [
+                    'header' => __('randomizer.ow_flute_shuffle.options.random'),
+                    'content' => [
+                        'New flute spots will be generated with minimal bias.',
                     ],
                 ],
             ],

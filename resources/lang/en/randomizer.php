@@ -165,6 +165,13 @@ return [
             'full' => 'Full',
         ],
     ],
+    "ow_keep_similar" => [
+        'title' => 'Overworld Keep Similar',
+        'options' => [
+            'on' => 'On',
+            'off' => 'Off',
+        ],
+    ],
     "ow_swap" => [
         'title' => 'Overworld Swap',
         'options' => [
@@ -173,11 +180,12 @@ return [
             'crossed' => 'Crossed',
         ],
     ],
-    "ow_keep_similar" => [
-        'title' => 'Overworld Keep Similar',
+    "ow_flute_shuffle" => [
+        'title' => 'Overworld Flute Shuffle',
         'options' => [
-            'on' => 'On',
-            'off' => 'Off',
+            'vanilla' => 'None',
+            'balanced' => 'Balanced',
+            'random' => 'Random',
         ],
     ],
     "shopsanity" => [

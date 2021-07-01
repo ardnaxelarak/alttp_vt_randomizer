@@ -28,8 +28,9 @@ export default {
       door_shuffle: [],
       door_intensity: [],
       ow_shuffle: [],
-      ow_swap: [],
       ow_keep_similar: [],
+      ow_swap: [],
+      ow_flute_shuffle: [],
       shopsanity: [],
       boss_shuffle: [],
       enemy_shuffle: [],
@@ -88,8 +89,9 @@ export default {
         door_shuffle,
         door_intensity,
         ow_shuffle,
-        ow_swap,
         ow_keep_similar,
+        ow_swap,
+        ow_flute_shuffle,
         shopsanity,
         boss_shuffle,
         enemy_shuffle,
@@ -122,8 +124,9 @@ export default {
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
-      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
+      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_flute_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
       state.options.enemy_shuffle = asMulti(enemy_shuffle, "enemy_shuffle");
