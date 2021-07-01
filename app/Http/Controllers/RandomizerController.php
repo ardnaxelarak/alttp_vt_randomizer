@@ -193,7 +193,7 @@ class RandomizerController extends Controller
 
         // Entrance rando and overworld rando are responsible for verifying winnability of themselves
         // and generating their own full spoilers
-        if ($rand instanceof ALttP\Randomizer) {
+        if ($rand instanceof \ALttP\Randomizer) {
             $processSpoiler = true;
             $worlds = new WorldCollection($rand->getWorlds());
 
