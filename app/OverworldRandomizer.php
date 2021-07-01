@@ -104,7 +104,10 @@ class OverworldRandomizer implements RandomizerContract
 			case 'NoLogic':
 				$logic = 'nologic';
 				break;
-			case 'none':
+			case 'OverworldGlitches':
+				$logic = 'owglitches';
+				break;
+			case 'NoGLitches':
 			default:
 				$logic = 'noglitches';
 		}
