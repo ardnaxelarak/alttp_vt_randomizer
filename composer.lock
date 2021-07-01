@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ae57937380f141800ca281da66a4f3b",
+    "content-hash": "eb13487daff268257bfa34ff1cf648b6",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -7296,7 +7296,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
-                "reference": "acea1e29e9e101b97b15eaee9dbac33f7d6ea0cd"
+                "reference": "f5708a575cbf5146b6e364bd94ecc31f126613bf"
             },
             "type": "library"
         },
