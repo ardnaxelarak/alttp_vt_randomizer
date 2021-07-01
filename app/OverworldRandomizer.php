@@ -79,14 +79,14 @@ class OverworldRandomizer implements RandomizerContract
 			$flags = array_merge($flags, [
 				'--mapshuffle',
 				'--compassshuffle',
-			  '--keyshuffle',
+				'--keyshuffle',
 			]);
 		} elseif ($this->world->config('dungeonItems') === 'full') {
 			$flags = array_merge($flags, [
 				'--mapshuffle',
 				'--compassshuffle',
-			  '--keyshuffle',
-			  '--bigkeyshuffle',
+				'--keyshuffle',
+				'--bigkeyshuffle',
 			]);
 		}
 
@@ -130,6 +130,10 @@ class OverworldRandomizer implements RandomizerContract
 
 		if ($this->world->config('spoil.Hints') === 'on') {
 			$flags[] = '--hint';
+		}
+
+		if ($this->world->config('goal') === 'fast_ganon' && $this->world->config('entrances') === 'none') {
+			$flags[] = '--openpyramid';
 		}
 
 		$proc = new Process(array_merge(

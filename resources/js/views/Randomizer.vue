@@ -568,8 +568,9 @@ export default {
               },
               overworld: {
                 shuffle: this.overworldShuffle.value,
+                keep_similar: this.overworldKeepSimilar.value,
                 swap: this.overworldSwap.value,
-                keep_similar: this.overworldKeepSimilar.value
+                flute_shuffle: this.overworldFluteShuffle.value
               },
               shopsanity: this.shopsanity.value,
               hints: this.hints.value,
@@ -620,7 +621,6 @@ export default {
                     this.rom.allowQuickSwap = true;
                   }
                   this.gameLoaded = true;
-                  console.log(response.data.spoiler);
                   EventBus.$emit("gameLoaded", this.rom);
                   resolve({ rom: this.rom, patch: response.data.patch });
                 }.bind(this)
