@@ -350,7 +350,7 @@ export default {
       return regions;
     },
     shops: vm => {
-      const match = /([\w\s()+]+)(\s*—\s*(\d+))?/;
+      const match = /^([\w\s()+]+)(\s*—\s*(\d+))?$/;
       return typeof vm.rom.spoiler.Shops !== "undefined"
         ? vm.rom.spoiler.Shops.map(shop => {
             let returnObject = { ...shop };

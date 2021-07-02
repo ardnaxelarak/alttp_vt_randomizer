@@ -31,26 +31,24 @@ export default {
   props: {
     currentRomHash: { type: String, default: null},
     overrideBaseBps: { type: String, default: null},
-    branch: { type: String, default: "base"},
+    branch: { type: String, default: null},
   },
   data() {
     return {
-      current_rom_hash: "",
-      current_base_file: "",
+      rom_infos: {},
       loading: true,
       settings_loaded: false
     };
   },
   created() {
-    if (this.currentRomHash !== null) {
-      this.current_rom_hash = this.currentRomHash;
+    if (this.branch != null && this.currentRomHash !== null && this.overrideBaseBps != null) {
+      this.rom_infos = {};
+      this.rom_infos[this.branch] = {rom_hash: this.currentRomHash, base_file: this.overrideBaseBps};
       this.settings_loaded = true;
       return;
     }
     axios.get(`/base_rom/settings`).then(response => {
-      const rom_infos = response.data;
-      this.current_rom_hash = rom_infos[this.branch].rom_hash;
-      this.current_base_file = rom_infos[this.branch].base_file;
+      this.rom_infos = response.data;
       this.settings_loaded = true;
     });
   },
@@ -69,33 +67,56 @@ export default {
       }
       this.loading = true;
       let blob = change.target.files[0];
+      let branches = this.branch ? [this.branch] : Object.keys(this.rom_infos);
+      this.createBaseRoms(blob, branches);
+    },
+    createBaseRoms(blob, branches) {
+      let infos = [];
+      for (const branch of branches) {
+        new ROM(blob, rom => {
+          this.patchRomFromBPS(branch, rom)
+            .then(rom => {
+              if (rom.checkMD5() !== this.rom_infos[branch].rom_hash) {
+                console.error(`base rom of branch ${branch} failed md5 check`);
+                this.$emit("error", this.$i18n.t("error.bad_file"));
+                this.loading = false;
 
-      new ROM(blob, rom => {
-        this.patchRomFromBPS(rom)
-          .then(rom => {
-            if (rom.checkMD5() !== this.current_rom_hash) {
-              this.$emit("error", this.$i18n.t("error.bad_file"));
-              this.loading = false;
+                return;
+              } else {
+                localforage
+                  .setItem("rom", rom.getOriginalArrayBuffer())
+                  .catch(this.handleXHRError);
 
-              return;
-            } else {
-              localforage
-                .setItem("rom", rom.getOriginalArrayBuffer())
-                .catch(this.handleXHRError);
+                infos[branch] = {rom: rom, hash: this.rom_infos[branch].rom_hash};
+                this.romLoaded(infos);
+              }
+            })
+            .catch(error => {
+              if (error == "base patch corrupt") {
+                localforage.setItem(`vt.stored_base_${branch}`).catch(this.handleXHRError);
 
-              this.$emit("update", rom, this.current_rom_hash);
-              EventBus.$emit("applyHash", rom);
-              this.loading = false;
-            }
-          })
-          .catch(error => {
-            if (error == "base patch corrupt") {
-              localforage.setItem(`vt.stored_base_${this.branch}`).catch(this.handleXHRError);
-
-              this.loadBlob(change);
-            }
-          });
-      });
+                this.createBaseRoms(blob, [branch]);
+              } else {
+                console.error(error);
+              }
+            });
+        });
+      }
+    },
+    romLoaded(infos) {
+      if (!this.branch) {
+        for (const branch in this.rom_infos) {
+          if (!infos.hasOwnProperty(branch)) {
+            // we don't have all the branches loaded yet
+            return;
+          }
+        }
+      }
+      this.$emit("update", infos);
+      if (this.branch) {
+        EventBus.$emit("applyHash", infos[this.branch].rom);
+      }
+      this.loading = false;
     },
     handleXHRError(error) {
       if (error === "QuotaExceededError") {
@@ -106,7 +127,7 @@ export default {
       }
       throw error;
     },
-    patchRomFromBPS(rom) {
+    patchRomFromBPS(branch, rom) {
       return new Promise((resolve, reject) => {
         if (this.overrideBaseBps != null) {
           axios
@@ -129,9 +150,9 @@ export default {
             });
           return;
         }
-        localforage.getItem(`vt.stored_base_${this.branch}`).then(stored_base_file => {
-          if (this.current_base_file == stored_base_file) {
-            localforage.getItem(`vt.base_bps_${this.branch}`).then(patch => {
+        localforage.getItem(`vt.stored_base_${branch}`).then(stored_base_file => {
+          if (this.rom_infos[branch].base_file == stored_base_file) {
+            localforage.getItem(`vt.base_bps_${branch}`).then(patch => {
               rom
                 .parseBaseBPS(patch)
                 .then(rom => {
@@ -147,17 +168,17 @@ export default {
             });
           } else {
             axios
-              .get(this.current_base_file, {
+              .get(this.rom_infos[branch].base_file, {
                 responseType: "arraybuffer"
               })
               .then(response => {
                 localforage
-                  .setItem(`vt.stored_base_${this.branch}`, this.current_base_file)
+                  .setItem(`vt.stored_base_${branch}`, this.rom_infos[branch].base_file)
                   .then(() => {
                     localforage
-                      .setItem(`vt.base_bps_${this.branch}`, response.data)
+                      .setItem(`vt.base_bps_${branch}`, response.data)
                       .then(
-                        this.patchRomFromBPS(rom)
+                        this.patchRomFromBPS(branch, rom)
                           .then(() => {
                             resolve(rom);
                           })

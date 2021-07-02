@@ -209,12 +209,17 @@ export default {
         this.rom.downloadFilename() + ".txt"
       );
     },
-    updateRom(rom) {
-      if (!rom) {
-        console.log(rom);
+    updateRom(infos) {
+      console.log(infos);
+      if (!infos[this.branch]) {
+        console.log(`Received no rom for branch ${this.branch}`);
         return;
       }
-      this.rom = rom;
+      if (!infos[this.branch].rom) {
+        console.log(infos[this.branch].rom);
+        return;
+      }
+      this.rom = infos[this.branch].rom;
       this.error = false;
       this.romLoaded = true;
     },

@@ -229,6 +229,7 @@ class RandomizerController extends Controller
         return [
             'logic' => $world->config('logic'),
             'patch' => patch_merge_minify($patch),
+            'branch' => $world->config('branch'),
             'spoiler' => $spoiler,
             'hash' => $world->getSeedRecord()->hash,
             'generated' => $world->getSeedRecord()->created_at ? $world->getSeedRecord()->created_at->toIso8601String() : now()->toIso8601String(),

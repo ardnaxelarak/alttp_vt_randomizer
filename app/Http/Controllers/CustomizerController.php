@@ -287,7 +287,7 @@ class CustomizerController extends Controller
             'ganon_item' => $request->input('ganon_item', 'default'),
             'worlds' => 1,
             'difficulty' => 'custom',
-        ]));
+        ]), true);
 
         if ($world->isEnemized()) {
             $patch = $rom->getWriteLog();
@@ -309,12 +309,13 @@ class CustomizerController extends Controller
         return [
             'logic' => $world->config('logic'),
             'patch' => patch_merge_minify($patch),
+            'branch' => $world->config('branch'),
             'spoiler' => $spoiler,
             'hash' => $world->getSeedRecord()->hash,
             'generated' => $world->getSeedRecord()->created_at ? $world->getSeedRecord()->created_at->toIso8601String() : now()->toIso8601String(),
             'seed' => $world->getSeedRecord(),
             'size' => $spoiler['meta']['size'] ?? 2,
-            'current_rom_hash' => Rom::HASH,
+            'current_rom_hash' => Rom::BUILD_INFO[$world->config('branch')]['HASH'],
         ];
     }
 }

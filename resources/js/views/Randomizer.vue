@@ -458,7 +458,7 @@ export default {
       error: false,
       generating: false,
       romLoaded: false,
-      current_rom_hash: "",
+      rom_infos: {},
       gameLoaded: false,
       show_spoiler: false,
       tournament: false,
@@ -471,6 +471,8 @@ export default {
     this.$store.dispatch("randomizer/getItemSettings");
     this.$store.dispatch("romSettings/initialize");
 
+    this.rom_infos = {};
+    this.rom = null;
     localforage.getItem("rom").then(function(blob) {
       if (blob == null) {
         EventBus.$emit("noBlob");
@@ -527,23 +529,6 @@ export default {
     applySeed(e, second_attempt) {
       this.error = false;
       this.generating = true;
-      if (this.rom.checkMD5() != this.current_rom_hash) {
-        if (second_attempt) {
-          return new Promise((resolve, reject) => {
-            this.generating = false;
-            reject(this.rom);
-          });
-        }
-        return this.rom
-          .reset()
-          .then(() => {
-            return this.applySeed(e, true);
-          })
-          .catch(error => {
-            console.error(error);
-            this.generating = false;
-          });
-      }
       return new Promise(
         function(resolve, reject) {
           this.gameLoaded = false;
@@ -591,37 +576,39 @@ export default {
             })
             .then(response => {
               let prom;
-              if (this.rom.checkMD5() != this.current_rom_hash) {
-                prom = this.rom.reset().then(() => {
-                  if (this.rom.checkMD5() != this.current_rom_hash) {
+              let branch = response.data.branch;
+              if (!this.rom_infos[branch]) {
+                console.error(`No info on branch ${branch}`);
+                // TODO: should probably give a better error message
+                this.error = this.$i18n.t("error.failed_generation");
+                reject(this.error);
+              }
+              let rom = this.rom_infos[branch].rom;
+              let hash = this.rom_infos[branch].hash;
+              if (rom.checkMD5() != hash) {
+                prom = rom.reset().then(() => {
+                  if (rom.checkMD5() != hash) {
                     return new Promise((resolve, reject) => {
-                      reject(this.rom);
+                      reject(rom);
                     });
                   }
-                  return this.rom.parsePatch(response.data);
+                  return rom.parsePatch(response.data);
                 });
               } else {
-                prom = this.rom.parsePatch(response.data);
+                prom = rom.parsePatch(response.data);
               }
               prom.then(
-                function() {
-                  if (
-                    response.data.current_rom_hash &&
-                    response.data.current_rom_hash != this.current_rom_hash
-                  ) {
+                function(rom) {
+                  this.rom = rom;
+                  if (response.data.current_rom_hash && response.data.current_rom_hash != hash) {
                     // The base ROM has been updated.
-                    // window.location.reload(true);
                     window.location.assign(`/h/${this.rom.hash}`);
                   }
-                  if (
-                    this.rom.shuffle ||
-                    this.rom.spoilers == "mystery" ||
-                    this.rom.allow_quickswap
-                  ) {
+                  if (this.rom.shuffle || this.rom.spoilers == "mystery" || this.rom.allow_quickswap) {
                     this.rom.allowQuickSwap = true;
                   }
                   this.gameLoaded = true;
-                  EventBus.$emit("gameLoaded", this.rom);
+                  EventBus.$emit("gameLoaded", rom);
                   resolve({ rom: this.rom, patch: response.data.patch });
                 }.bind(this)
               );
@@ -665,13 +652,8 @@ export default {
         this.rom.downloadFilename() + ".txt"
       );
     },
-    updateRom(rom, current_rom_hash) {
-      if (!rom) {
-        console.log(rom);
-        return;
-      }
-      this.rom = rom;
-      this.current_rom_hash = current_rom_hash;
+    updateRom(rom_infos) {
+      this.rom_infos = rom_infos;
       this.error = false;
       this.romLoaded = true;
     },

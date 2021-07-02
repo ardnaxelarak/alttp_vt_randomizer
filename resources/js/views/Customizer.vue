@@ -382,7 +382,7 @@ export default {
       error: false,
       generating: false,
       romLoaded: false,
-      current_rom_hash: "",
+      rom_infos: {},
       gameLoaded: false,
       disableSaveRomButton: false,
       endpoint: "/api/customizer",
@@ -496,25 +496,6 @@ export default {
     applySeed(e, second_attempt) {
       this.error = false;
       this.generating = true;
-      if (this.rom.checkMD5() != this.current_rom_hash) {
-        if (second_attempt) {
-          return new Promise(function(resolve, reject) {
-            this.generating = false;
-            reject(this.rom);
-          });
-        }
-        return this.rom
-          .reset()
-          .then(
-            function() {
-              return this.applySeed(e, true);
-            }.bind(this)
-          )
-          .catch(error => {
-            console.log(error);
-            this.generating = false;
-          });
-      }
       return new Promise(
         function(resolve, reject) {
           this.gameLoaded = false;
@@ -562,14 +543,21 @@ export default {
               }
             })
             .then(response => {
-              this.rom.parsePatch(response.data).then(
-                function() {
-                  if (
-                    response.data.current_rom_hash &&
-                    response.data.current_rom_hash != this.current_rom_hash
-                  ) {
+              let branch = response.data.branch;
+              if (!this.rom_infos[branch]) {
+                console.error(`No info on branch ${branch}`);
+                // TODO: should probably give a better error message
+                this.error = this.$i18n.t("error.failed_generation");
+                reject(this.error);
+              }
+              let rom = this.rom_infos[branch].rom;
+              let hash = this.rom_infos[branch].hash;
+              rom.parsePatch(response.data).then(
+                function(rom) {
+                  this.rom = rom;
+                  if (response.data.current_rom_hash && response.data.current_rom_hash != hash) {
                     // The base ROM has been updated. or test call
-                    window.location.reload(true);
+                    window.location.assign(`/h/${this.rom.hash}`);
                   }
 
                   this.gameLoaded = true;
@@ -616,12 +604,8 @@ export default {
         this.rom.downloadFilename() + ".txt"
       );
     },
-    updateRom(rom, current_rom_hash) {
-      if (!rom) {
-        return;
-      }
-      this.rom = rom;
-      this.current_rom_hash = current_rom_hash;
+    updateRom(rom_infos) {
+      this.rom_infos = rom_infos;
       this.error = false;
       this.romLoaded = true;
     },
