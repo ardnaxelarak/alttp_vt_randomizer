@@ -90,26 +90,33 @@
             <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.goal.title') }}</h5>
             <div class="card-body">
               <div class="row">
-                <div class="col-xl-4 col-lg-6 my-1">
+                <div class="col-xl-6 col-lg-6 my-1">
                   <Select
                     :value="goal"
                     @input="setGoal"
                     :options="optionsGoal"
                   >{{ $t('randomizer.goal.title') }}</Select>
                 </div>
-                <div class="col-xl-4 col-lg-6 my-1">
+                <div class="col-xl-6 col-lg-6 my-1">
                   <Select
                     :value="towerOpen"
                     @input="setTowerOpen"
                     :options="optionsTowerOpen"
                   >{{ $t('randomizer.tower_open.title') }}</Select>
                 </div>
-                <div class="col-xl-4 col-lg-6 my-1">
+                <div class="col-xl-6 col-lg-6 my-1">
                   <Select
                     :value="ganonOpen"
                     @input="setGanonOpen"
                     :options="optionsGanonOpen"
                   >{{ $t('randomizer.ganon_open.title') }}</Select>
+                </div>
+                <div class="col-xl-6 col-lg-6 my-1">
+                  <Select
+                    :value="ganonItem"
+                    @input="setGanonItem"
+                    :options="optionsGanonItem"
+                  >{{ $t('randomizer.ganon_item.title') }}</Select>
                 </div>
               </div>
             </div>
@@ -414,6 +421,7 @@ export default {
         "randomizer.goal",
         "randomizer.tower_open",
         "randomizer.ganon_open",
+        "randomizer.ganon_item",
         "randomizer.world_state",
         "randomizer.hints",
         "randomizer.boss_shuffle",
@@ -432,6 +440,7 @@ export default {
         "randomizer.goal": "setGoal",
         "randomizer.tower_open": "setTowerOpen",
         "randomizer.ganon_open": "setGanonOpen",
+        "randomizer.ganon_item": "setGanonItem",
         "randomizer.world_state": "setWorldState",
         "randomizer.hints": "setHints",
         "randomizer.boss_shuffle": "setBossShuffle",
@@ -476,6 +485,7 @@ export default {
       "setDungeonItems",
       "setAccessibility",
       "setTowerOpen",
+      "setGanonItem",
       "setBossShuffle",
       "setEnemyShuffle",
       "setHints",
@@ -510,6 +520,7 @@ export default {
                 ganon: this.ganonOpen.value,
                 tower: this.towerOpen.value
               },
+              ganon_item: this.ganonItem.value,
               mode: this.worldState.value,
               hints: this.hints.value,
               weapons: this.weapons.value,
@@ -692,6 +703,7 @@ export default {
         localforage.removeItem("randomizer.goal"),
         localforage.removeItem("randomizer.tower_open"),
         localforage.removeItem("randomizer.ganon_open"),
+        localforage.removeItem("randomizer.ganon_item"),
         localforage.removeItem("randomizer.world_state"),
         localforage.removeItem("randomizer.hints"),
         localforage.removeItem("randomizer.weapons"),
@@ -726,6 +738,8 @@ export default {
       towerOpen: state => state.tower_open,
       optionsGanonOpen: state => state.options.ganon_open,
       ganonOpen: state => state.ganon_open,
+      optionsGanonItem: state => state.options.ganon_item,
+      ganonItem: state => state.ganon_item,
       optionsWorldState: state => state.options.world_state,
       worldState: state => state.world_state,
       optionsEntranceShuffle: state => state.options.entrance_shuffle,
