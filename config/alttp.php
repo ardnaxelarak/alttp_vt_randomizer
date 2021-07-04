@@ -358,7 +358,7 @@ return [
                     'dungeon_items' => 'full',
                     'drop_shuffle' => 'on',
                     'accessibility' => 'items',
-                    'goal' => 'ganon',
+                    'goal' => 'fast_ganon',
                     'tower_open' => '7',
                     'ganon_open' => '7',
                     'ganon_item' => 'random',

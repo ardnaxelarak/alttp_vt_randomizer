@@ -132,7 +132,7 @@ class OverworldRandomizer implements RandomizerContract
 		}
 
 		if ($this->world->config('spoil.Hints') === 'on') {
-			$flags[] = '--hint';
+			$flags[] = '--hints';
 		}
 
 		if ($this->world->config('goal') === 'fast_ganon' && $this->world->config('entrances') === 'none') {
