@@ -25,6 +25,8 @@ class OverworldRandomizer implements RandomizerContract
 		'restricted' => 'restricted',
 		'crossed' => 'crossed',
 		'insanity' => 'insanity',
+		'dungeonssimple' => 'dungeonssimple',
+		'dungeonsfull' => 'dungeonsfull',
 	];
 	/** @var array */
 	private $goal_lookup = [

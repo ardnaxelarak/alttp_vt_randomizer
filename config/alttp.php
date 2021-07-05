@@ -494,6 +494,8 @@ return [
                 'full' => 'Full',
                 'crossed' => 'Crossed',
                 'insanity' => 'Insanity',
+                'dungeonssimple' => 'Simple (Dungeons Only)',
+                'dungeonsfull' => 'Full (Dungeons Only)',
             ],
             'door_shuffle' => [
                 'vanilla' => 'None',
@@ -669,6 +671,8 @@ return [
                 'full' => 2,
                 'crossed' => 1,
                 'insanity' => 1,
+                'dungeonssimple' => 0,
+                'dungeonsfull' => 0,
             ],
             'door_shuffle' => [
                 'vanilla' => 100,
@@ -753,7 +757,7 @@ return [
             ]
         ],
         'ganon_item_weights' => [
-            'default' => 11,
+            'default' => 2,
             'arrow' => 7,
             'boomerang' => 7,
             'hookshot' => 7,
@@ -761,9 +765,9 @@ return [
             'powder' => 7,
             'fire_rod' => 7,
             'ice_rod' => 7,
-            'bombos' => 4,
-            'ether' => 4,
-            'quake' => 4,
+            'bombos' => 7,
+            'ether' => 7,
+            'quake' => 7,
             'hammer' => 7,
             'bee' => 7,
             'somaria' => 7,

@@ -145,6 +145,8 @@ return [
             'full' => 'Full',
             'crossed' => 'Crossed',
             'insanity' => 'Insanity',
+            'dungeonssimple' => 'Simple (Dungeons Only)',
+            'dungeonsfull' => 'Full (Dungeons Only)',
         ],
     ],
     'doors_warning' => 'Seeds with door shuffle or drop shuffle enabled could take a long time to generate and may sometimes fail, but should succeed after a retry or two if necessary.',
