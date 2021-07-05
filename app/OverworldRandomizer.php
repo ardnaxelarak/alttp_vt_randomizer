@@ -73,7 +73,11 @@ class OverworldRandomizer implements RandomizerContract
 	public function randomize(): void
 	{
 		$flags = [];
-		if ($this->world->config('dungeonItems') === 'mc') {
+		if ($this->world->config('dungeonItems') === 'b') {
+			$flags = array_merge($flags, [
+				'--bigkeyshuffle',
+			]);
+		} else if ($this->world->config('dungeonItems') === 'mc') {
 			$flags = array_merge($flags, [
 				'--mapshuffle',
 				'--compassshuffle',

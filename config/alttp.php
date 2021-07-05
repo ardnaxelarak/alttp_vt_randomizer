@@ -421,6 +421,7 @@ return [
             ],
             'dungeon_items' => [
                 'standard' => 'Standard',
+                'b' => 'BK Shuffle',
                 'mc' => 'MC Shuffle',
                 'mcs' => 'MCS Shuffle',
                 'full' => 'Full Shuffle',
@@ -598,6 +599,7 @@ return [
             ],
             'dungeon_items' => [
                 'standard' => 60,
+                'b' => 0,
                 'mc' => 10,
                 'mcs' => 10,
                 'full' => 20,

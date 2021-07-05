@@ -35,6 +35,7 @@ return [
         'title' => 'Dungeon Item Shuffle',
         'options' => [
             'standard' => 'Standard',
+            'b' => 'Big Keys',
             'mc' => 'Maps/Compasses',
             'mcs' => 'Maps/Compasses/Small Keys',
             'full' => 'Keysanity',

@@ -109,6 +109,11 @@ abstract class World
         $free_item_text = $this->config('rom.freeItemText', 0x00);
         $free_item_menu = $this->config('rom.freeItemMenu', 0x00);
         switch ($this->config('dungeonItems')) {
+            case 'b':
+                $this->config['region.wildBigKeys'] = true;
+                $free_item_text |= 0x18;
+                $free_item_menu |= 0x02;
+                break;
             case 'full':
                 $this->config['region.wildBigKeys'] = true;
                 $free_item_text |= 0x18;
