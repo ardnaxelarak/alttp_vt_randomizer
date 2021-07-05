@@ -5,6 +5,7 @@ namespace ALttP;
 use ALttP\Contracts\Randomizer as RandomizerContract;
 use Log;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
 /**
  * Main class for randomization. All the magic happens here. We use mt_rand as it is much faster than rand. Not all PHP
@@ -139,7 +140,7 @@ class OverworldRandomizer implements RandomizerContract
 			$flags[] = '--openpyramid';
 		}
 
-		$proc = new Process(array_merge(
+		$flags = array_merge(
 			[
 				'python3',
 				'DungeonRandomizer.py',
@@ -184,17 +185,9 @@ class OverworldRandomizer implements RandomizerContract
 				'error',
 			],
 			$flags
-		));
+		);
 
-		$proc->setWorkingDirectory(base_path('vendor/z3/overworldrandomizer'));
-		Log::debug($proc->getCommandLine());
-		$proc->run();
-
-		if (!$proc->isSuccessful()) {
-			Log::debug($proc->getOutput());
-			Log::debug($proc->getErrorOutput());
-			throw new \Exception("Unable to generate");
-		}
+		$proc = $this->callRandomizer($flags);
 
 		$or_output = json_decode($proc->getOutput());
 		$patch = $or_output->patch_t0_p1;
@@ -224,6 +217,33 @@ class OverworldRandomizer implements RandomizerContract
 			$this->world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses']['Ganons Tower Basement'], $this->world), 'bottom');
 			$this->world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses']['Ganons Tower Middle'], $this->world), 'middle');
 			$this->world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses']['Ganons Tower Top'], $this->world), 'top');
+		}
+	}
+
+	private function callRandomizer(array $flags, int $retries = 2): Process
+	{
+		$proc = new Process($flags);
+		$proc->setTimeout(30);
+
+		$proc->setWorkingDirectory(base_path('vendor/z3/overworldrandomizer'));
+		Log::debug($proc->getCommandLine());
+
+		try {
+			$proc->run();
+			if ($proc->isSuccessful()) {
+				return $proc;
+			}
+			Log::info($proc->getErrorOutput());
+			Log::info("overworld dungeon generation failed...");
+		} catch (ProcessTimedOutException $e) {
+			Log::info("overworld dungeon generation timed out...");
+		}
+
+		if ($retries > 0) {
+			Log::info("retrying overworld dungeon generation...");
+			return $this->callRandomizer($flags, $retries - 1);
+		} else {
+			throw new \Exception("Unable to generate");
 		}
 	}
 
