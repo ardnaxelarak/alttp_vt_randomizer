@@ -6,9 +6,10 @@ return [
         'customize' => 'Customize',
         'options' => [
             'default' => 'Default',
-            'bombs_only' => 'Bombs-Only Mode',
+            'bombs_only' => 'Bomb-Only Mode',
             'doors' => 'Dungeon Shuffle',
-            'ow_shuffle' => 'Overworld Shuffle',
+            'ow_basic' => 'Basic Overworld Shuffle',
+            'ow_advanced' => 'Advanced Overworld Shuffle',
             'beginner' => 'Beginner',
             'veetorp' => 'OWG (Veetorp’s Favorite)',
             'crosskeys' => 'Crosskeys',
@@ -146,6 +147,7 @@ return [
             'insanity' => 'Insanity',
         ],
     ],
+    'doors_warning' => 'Seeds with door shuffle or drop shuffle enabled could take a long time to generate and may sometimes fail, but should succeed after a retry or two if necessary.',
     "door_shuffle" => [
         'title' => 'Door Shuffle',
         'options' => [
@@ -157,13 +159,13 @@ return [
     "door_intensity" => [
         'title' => 'Door Shuffle Intensity',
         'options' => [
-            '1' => '1',
-            '2' => '2',
-            '3' => '3',
+            '1' => '1: Normal',
+            '2' => '2: Open Edges',
+            '3' => '3: Lobbies',
         ],
     ],
     "ow_shuffle" => [
-        'title' => 'Overworld Shuffle',
+        'title' => 'Overworld Layout Shuffle',
         'options' => [
             'vanilla' => 'None',
             'parallel' => 'Parallel',
@@ -178,7 +180,7 @@ return [
         ],
     ],
     "ow_swap" => [
-        'title' => 'Overworld Swap',
+        'title' => 'Overworld Tile Swap',
         'options' => [
             'vanilla' => 'None',
             'mixed' => 'Mixed',
@@ -186,7 +188,7 @@ return [
         ],
     ],
     "ow_flute_shuffle" => [
-        'title' => 'Overworld Flute Shuffle',
+        'title' => 'Flute Shuffle',
         'options' => [
             'vanilla' => 'None',
             'balanced' => 'Balanced',
@@ -231,9 +233,9 @@ return [
             'assured' => 'Assured',
             'vanilla' => 'Vanilla',
             'swordless' => 'Swordless',
-            'bombs' => 'Bombs Only',
+            'bombs' => 'Bomb-Only',
         ],
-        'bombs_warning' => 'This setting is still in development. Use at your own risk.',
+        'bombs_warning' => 'Bomb-Only mode is still in development, but should be mostly stable. Use at your own risk.',
     ],
     'item_pool' => [
         'title' => 'Item Pool',
