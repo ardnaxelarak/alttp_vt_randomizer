@@ -494,7 +494,6 @@ export default {
       "setOverworldSwap",
       "setOverworldFluteShuffle",
       "setShopsanity",
-      "setWorldState",
       "setEntranceShuffle",
       "setItemPool"
     ]),
@@ -508,6 +507,7 @@ export default {
       "setBossShuffle",
       "setEnemyShuffle",
       "setWeapons",
+      "setWorldState",
       "setHints",
       "setItemFunctionality",
       "setEnemyDamage",
