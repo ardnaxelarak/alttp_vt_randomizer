@@ -127,7 +127,8 @@ class Boss
             }),
             new static("Vitreous", "Vitreous", function ($locations, $items) use ($world) {
                 return ($world->config('itemPlacement') !== 'basic' || $items->hasSword(2)
-                        || $items->canShootArrows($world) || $world->config('mode.weapons') === 'bombs')
+                        || $items->canShootArrows($world)
+                        || ($world->config('mode.weapons') === 'bombs' && $items->hasBombLevel(3)))
                     && ($items->has('Hammer') || $items->hasSword() || $items->canShootArrows($world)
                         || $world->config('mode.weapons') === 'bombs')
                     && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(2));
@@ -135,14 +136,15 @@ class Boss
             new static("Trinexx", "Trinexx", function ($locations, $items) use ($world) {
                 return $items->has('FireRod') && $items->has('IceRod')
                     && ($world->config('itemPlacement') !== 'basic'
-                        || $world->restrictedSwords()
-                        || $items->hasSword(3) || ($items->canExtendMagic($world, 2) && $items->hasSword(2)))
+                        || $world->restrictedSwords() || $items->hasSword(3)
+                        || ($items->canExtendMagic($world, 2) && $items->hasSword(2)))
                     && ($items->hasSword(3) || $items->has('Hammer')
                         || ($items->canExtendMagic($world, 2) && $items->hasSword(2))
                         || ($items->canExtendMagic($world, 4) && $items->hasSword())
                         || $world->config('mode.weapons') === 'bombs')
-                    && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(3)
-                        || ($items->canExtendMagic($world, 2) && $items->hasBombLevel(2)));
+                    && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(4)
+                        || ($items->canExtendMagic($world, 2) && $items->hasBombLevel(3))
+                        || ($times->canExtendMagic($world, 6) && $items->hasBombLevel(2));
             }),
             new static("Agahnim2", "Agahnim2", function ($locations, $items) {
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');
