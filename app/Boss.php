@@ -144,7 +144,7 @@ class Boss
                         || $world->config('mode.weapons') === 'bombs')
                     && ($world->config('mode.weapons') !== 'bombs' || $items->hasBombLevel(4)
                         || ($items->canExtendMagic($world, 2) && $items->hasBombLevel(3))
-                        || ($times->canExtendMagic($world, 6) && $items->hasBombLevel(2));
+                        || ($times->canExtendMagic($world, 6) && $items->hasBombLevel(2)));
             }),
             new static("Agahnim2", "Agahnim2", function ($locations, $items) {
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');
