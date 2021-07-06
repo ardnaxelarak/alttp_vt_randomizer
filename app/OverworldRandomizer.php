@@ -142,7 +142,7 @@ class OverworldRandomizer implements RandomizerContract
 			$flags[] = '--hints';
 		}
 
-		if ($this->world->config('goal') === 'fast_ganon' && $this->world->config('entrances') === 'none') {
+		if ($this->world->config('goal') === 'fast_ganon' && in_array($this->world->config('entrances'), ['none', 'dungeonssimple', 'dungeonsfull'])) {
 			$flags[] = '--openpyramid';
 		}
 
