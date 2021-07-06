@@ -238,7 +238,7 @@ return [
             'swordless' => 'Swordless',
             'bombs' => 'Bomb-Only',
         ],
-        'bombs_warning' => 'Bomb-Only mode is still in development, but should be mostly stable. Use at your own risk.',
+        'bombs_warning' => 'Bomb-Only mode is still in development, but should be stable.',
     ],
     'item_pool' => [
         'title' => 'Item Pool',
