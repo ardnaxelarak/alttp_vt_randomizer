@@ -91,6 +91,17 @@
         v-html="'* ' + $t('rom.settings.reduce_flashing_warning')"
       />
     </div>
+    <div v-if="rom.build >= '2021-07-07' && !rom.tournament" class="row mb-3">
+      <div class="col-md-12">
+        <Toggle
+          :value="fakeBoots"
+          @input="setFakeBoots"
+        >{{ $t('rom.settings.fake_boots') }}
+        <sup
+          v-if="fakeBoots"
+        >*</sup></Toggle>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -178,7 +189,8 @@ export default {
           name: this.$i18n.t("rom.settings.heart_colors.red")
         },
         quickswap: false,
-        music: true
+        music: true,
+        fakeBoots: false
       }
     };
   },
@@ -197,7 +209,8 @@ export default {
       "setQuickswap",
       "setMusicOn",
       "setPaletteShuffle",
-      "setReduceFlashing"
+      "setReduceFlashing",
+      "setFakeBoots"
     ])
   },
   computed: {
@@ -211,7 +224,8 @@ export default {
       quickswap: state => state.quickswap,
       musicOn: state => state.musicOn,
       paletteShuffle: state => state.paletteShuffle,
-      reduceFlashing: state => state.reduceFlashing
+      reduceFlashing: state => state.reduceFlashing,
+      fakeBoots: state => state.fakeBoots
     })
   }
 };
