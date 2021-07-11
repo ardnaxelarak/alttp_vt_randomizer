@@ -692,9 +692,9 @@ return [
                                     . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
                                     . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
                                 . '</ul>'
-                            . '<li>The bat barrier outside Aghanim’s Tower can now be broken with the Hammer.</li>'
+                            . '<li>The bat barrier outside Aghanim’s Tower can now be broken with bombs of at least level 2.</li>'
                             . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
-                            . '<li>Ether and Bombos tablets require the Hammer and the Book of Mudora.</li>'
+                            . '<li>Ether and Bombos tablets require bombs of at least level 2 and the Book of Mudora.</li>'
                             . '<li>Medallions can always be used instead of requiring a sword.</li>'
                             . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
                         . '</ul>',

@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-07-08', 'HASH' => '84c3293438a06745309ff6dd2954fc8f'],
-        'overworld' => ['BUILD' => '2021-07-08', 'HASH' => '7230fb534c204a5971a51c5976de249c'],
+        'base' => ['BUILD' => '2021-07-10', 'HASH' => 'a1b2d0837a039ea70e50a7ec4b249515'],
+        'overworld' => ['BUILD' => '2021-07-10', 'HASH' => '1c34a4d419376775ae15d502c5a4b168'],
     ];
     const SIZE = 2097152;
 
@@ -2628,7 +2628,6 @@ class Rom
         $this->write(0x180040, pack('C*', $enable ? 0x01 : 0x00)); // Open Curtains
         $this->write(0x18004D, pack('C*', $enable ? 0x22 : 0x00)); // Always infinite bombs
         $this->write(0x180041, pack('C*', $enable ? 0x02 : 0x00)); // Swordless Medallions
-        $this->write(0x180043, pack('C*', $enable ? 0xFF : 0x00)); // set Link's starting sword 0xFF is taken sword
 
         // since we have infinite bombs, let's get rid of bomb drops
         $this->write(0x30051, pack('C*', $enable ? 0xDB : 0xDE)); // fish bottle merchant
@@ -2643,7 +2642,7 @@ class Rom
         $this->write(0xECB54, $enable ? pack('C*', 0xA9, 0x00, 0xEA, 0xEA) : pack('C*', 0xAF, 0x43, 0xF3, 0x7E)); // thief
         $this->write(0xF0D80, $enable ? pack('C*', 0xA9, 0x00, 0xEA, 0xEA) : pack('C*', 0xAF, 0x43, 0xF3, 0x7E)); // pikit
 
-        $this->setHammerTablet($enable);
+        $this->setHammerTablet(false);
         $this->setHammerBarrier(false);
 
         return $this;
