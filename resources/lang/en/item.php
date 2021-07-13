@@ -101,6 +101,7 @@ return [
     'ProgressiveShield' => 'Progressive Shield',
     'ProgressiveArmor' => 'Progressive Armor',
     'ProgressiveGlove' => 'Progressive Glove',
+    'L1Bombs' => 'Fighter Bombs',
     'L2Bombs' => 'Master Bombs',
     'L3Bombs' => 'Tempered Bombs',
     'L4Bombs' => 'Golden Bombs',

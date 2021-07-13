@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-07-10', 'HASH' => 'a1b2d0837a039ea70e50a7ec4b249515'],
-        'overworld' => ['BUILD' => '2021-07-10', 'HASH' => '1c34a4d419376775ae15d502c5a4b168'],
+        'base' => ['BUILD' => '2021-07-11', 'HASH' => 'ea6705091215dd7aef8eba259b88251c'],
+        'overworld' => ['BUILD' => '2021-07-12', 'HASH' => 'b7ef5f4a054a32d1fbe4f7dc02eac265'],
     ];
     const SIZE = 2097152;
 
@@ -2626,7 +2626,6 @@ class Rom
     {
         $this->write(0x18002F, pack('C*', $enable ? 0x03 : 0x00)); // Special Bombs
         $this->write(0x180040, pack('C*', $enable ? 0x01 : 0x00)); // Open Curtains
-        $this->write(0x18004D, pack('C*', $enable ? 0x22 : 0x00)); // Always infinite bombs
         $this->write(0x180041, pack('C*', $enable ? 0x02 : 0x00)); // Swordless Medallions
 
         // since we have infinite bombs, let's get rid of bomb drops
@@ -2635,6 +2634,7 @@ class Rom
         $this->write(0x301FD, pack('C*', $enable ? 0xD9 : 0xDC));
         $this->write(0x30224, pack('C*', $enable ? 0x04 : 0x00)); // adjust width of offset for replaced pot bomb
         $this->write(0x30229, pack('C*', $enable ? 0x04 : 0x00));
+        $this->write(0x4CC4A, pack('C*', $enable ? 0xD9 : 0xDC)); // dark graveyard bonk rocks
 
         $this->write(0xEDA7, pack('C*', $enable ? 0x35 : 0x27)); // DW chest game (bomb -> blue rupee)
 

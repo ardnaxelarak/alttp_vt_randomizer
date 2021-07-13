@@ -118,6 +118,7 @@ class BugCatchingKid extends Npc
             case 'Bomb':
             case 'ThreeBombs':
             case 'TenBombs':
+            case 'L1Bombs':
             case 'L2Bombs':
             case 'L3Bombs':
             case 'L4Bombs':

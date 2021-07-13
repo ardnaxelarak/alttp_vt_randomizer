@@ -69,15 +69,18 @@ class HyruleCastleEscape extends Region
         });
 
         $this->locations["Sewers - Secret Room - Left"]->setRequirements(function ($locations, $items) {
-            return $items->canKillEscapeThings($this->world) && $items->has('KeyH2');
+            return ($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                && $items->canKillEscapeThings($this->world) && $items->has('KeyH2');
         });
 
         $this->locations["Sewers - Secret Room - Middle"]->setRequirements(function ($locations, $items) {
-            return $items->canKillEscapeThings($this->world) && $items->has('KeyH2');
+            return ($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                && $items->canKillEscapeThings($this->world) && $items->has('KeyH2');
         });
 
         $this->locations["Sewers - Secret Room - Right"]->setRequirements(function ($locations, $items) {
-            return $items->canKillEscapeThings($this->world) && $items->has('KeyH2');
+            return ($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                && $items->canKillEscapeThings($this->world) && $items->has('KeyH2');
         });
 
         $this->locations["Sewers - Dark Cross"]->setRequirements(function ($locations, $items) {

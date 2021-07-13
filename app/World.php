@@ -420,6 +420,17 @@ abstract class World
         return in_array($this->config('mode.weapons'), $medallion_modes);
     }
 
+    /*
+     * Get whether the world has restricted access to weapons other than bombs
+     *
+     * @return bool
+     */
+    public function restrictedToBombs()
+    {
+        $bomb_modes = ['bombs'];
+        return in_array($this->config('mode.weapons'), $bomb_modes);
+    }
+
     /**
      * Get a region by Key name
      *
@@ -1275,7 +1286,7 @@ abstract class World
         $uncle_items = new ItemCollection;
         $uncle_items->setChecksForWorld($this->id);
         $uncle_items = $uncle_items->addItem($this->getLocation("Link's Uncle")->getItem());
-        
+
         // Add starting items if uncle doesn't have a weapon.  Temporarily disable ignoreCanKillEscapeThings for this check
         $ignoreCanKillEscapeThings = $this->config('ignoreCanKillEscapeThings', false);
         $this->config['ignoreCanKillEscapeThings'] = false;
@@ -1283,8 +1294,8 @@ abstract class World
             $uncle_items = $uncle_items->merge($this->getPreCollectedItems());
         }
         $this->config['ignoreCanKillEscapeThings'] = $ignoreCanKillEscapeThings;
-        
-        if ($uncle_items->hasSword() || $uncle_items->has('Hammer') || $this->config['mode.weapons'] === 'bombs') {
+
+        if ($uncle_items->hasSword() || $uncle_items->has('Hammer') || $uncle_items->hasBombLevel(1)) {
             $rom->setEscapeFills(0b00000000);
             $rom->setUncleSpawnRefills(0, 0, 0);
             $rom->setZeldaSpawnRefills(0, 0, 0);

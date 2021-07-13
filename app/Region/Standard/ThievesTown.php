@@ -95,6 +95,7 @@ class ThievesTown extends Region
         $this->locations["Thieves' Town - Boss"]->setRequirements(function ($locations, $items) {
             return $this->canEnter($locations, $items)
                 && $items->has('KeyD4') && $items->has('BigKeyD4')
+                && $items->canBombThings($this->world)
                 && $this->boss->canBeat($items, $locations)
                 && (!$this->world->config('region.wildCompasses', false) || $items->has('CompassD4') || $this->locations["Thieves' Town - Boss"]->hasItem(Item::get('CompassD4', $this->world)))
                 && (!$this->world->config('region.wildMaps', false) || $items->has('MapD4') || $this->locations["Thieves' Town - Boss"]->hasItem(Item::get('MapD4', $this->world)));

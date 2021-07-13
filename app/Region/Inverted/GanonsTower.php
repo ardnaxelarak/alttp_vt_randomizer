@@ -75,6 +75,7 @@ class GanonsTower extends Region\Standard\GanonsTower
         $this->locations["Ganon's Tower - Randomizer Room - Top Left"]->setRequirements(function ($locations, $items) {
             return $items->has('Hammer')
                 && $items->has('Hookshot')
+                && $items->canBombThings($this->world)
                 && (
                     ($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                         "Ganon's Tower - Randomizer Room - Top Right",
@@ -96,6 +97,7 @@ class GanonsTower extends Region\Standard\GanonsTower
         $this->locations["Ganon's Tower - Randomizer Room - Top Right"]->setRequirements(function ($locations, $items) {
             return $items->has('Hammer')
                 && $items->has('Hookshot')
+                && $items->canBombThings($this->world)
                 && (
                     ($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                         "Ganon's Tower - Randomizer Room - Top Left",
@@ -117,6 +119,7 @@ class GanonsTower extends Region\Standard\GanonsTower
         $this->locations["Ganon's Tower - Randomizer Room - Bottom Left"]->setRequirements(function ($locations, $items) {
             return $items->has('Hammer')
                 && $items->has('Hookshot')
+                && $items->canBombThings($this->world)
                 && (
                     ($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                         "Ganon's Tower - Randomizer Room - Top Right",
@@ -138,6 +141,7 @@ class GanonsTower extends Region\Standard\GanonsTower
         $this->locations["Ganon's Tower - Randomizer Room - Bottom Right"]->setRequirements(function ($locations, $items) {
             return $items->has('Hammer')
                 && $items->has('Hookshot')
+                && $items->canBombThings($this->world)
                 && (
                     ($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                         "Ganon's Tower - Randomizer Room - Top Right",
@@ -338,6 +342,7 @@ class GanonsTower extends Region\Standard\GanonsTower
             return (($items->has('Hammer')
                 && $items->has('Hookshot')) || ($items->has('FireRod')
                 && $items->has('CaneOfSomaria'))) && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations)
                 && ($items->has('MoonPearl')
                     || $this->world->config('canDungeonRevive', false)
@@ -354,6 +359,7 @@ class GanonsTower extends Region\Standard\GanonsTower
             return (($items->has('Hammer')
                 && $items->has('Hookshot')) || ($items->has('FireRod')
                 && $items->has('CaneOfSomaria'))) && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations)
                 && ($items->has('MoonPearl') || $this->world->config('canDungeonRevive', false)
                     || (
@@ -369,6 +375,7 @@ class GanonsTower extends Region\Standard\GanonsTower
             return (($items->has('Hammer')
                 && $items->has('Hookshot')) || ($items->has('FireRod')
                 && $items->has('CaneOfSomaria'))) && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations)
                 && ($items->has('MoonPearl') || $this->world->config('canDungeonRevive', false)
                     || (
@@ -421,6 +428,7 @@ class GanonsTower extends Region\Standard\GanonsTower
                 && $items->canLightTorches()
                 && $items->has('BigKeyA2')
                 && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_middle->canBeat($items, $locations)
                 && ($items->has('MoonPearl') || $this->world->config('canDungeonRevive', false)
                     || (
@@ -440,6 +448,7 @@ class GanonsTower extends Region\Standard\GanonsTower
                 && $items->canLightTorches()
                 && $items->has('BigKeyA2')
                 && $items->has('KeyA2', 4)
+                && $items->canBombThings($this->world)
                 && $this->boss_middle->canBeat($items, $locations)
                 && $this->boss_top->canBeat($items, $locations)
                 && ($items->has('MoonPearl') || $this->world->config('canDungeonRevive', false)

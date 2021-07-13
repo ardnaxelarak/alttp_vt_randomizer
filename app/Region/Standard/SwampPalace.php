@@ -111,7 +111,7 @@ class SwampPalace extends Region
         });
 
         $this->locations["Swamp Palace - Map Chest"]->setRequirements(function ($locations, $items) use ($mire) {
-            return $items->canBombThings()
+            return $items->canBombThings($this->world)
                 && ($items->has('KeyD2') || $mire($locations, $items));
         });
 

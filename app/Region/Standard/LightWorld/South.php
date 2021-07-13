@@ -96,7 +96,7 @@ class South extends Region
         });
 
         $this->shops["Light Hype Fairy"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         $this->shops["Capacity Upgrade"]->setRequirements(function ($locations, $items) {
@@ -105,27 +105,36 @@ class South extends Region
         });
 
         $this->locations["Aginah's Cave"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
-        
+
         $this->locations["Mini Moldorm Cave - Far Left"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings() && $items->canKillMostThings($this->world);
+            return $items->canKillMostThings($this->world)
+                && ($items->canBombThings($this->world) || ($items->has('BigRedBomb') && $items->has('MagicMirror')));
         });
-        
+
         $this->locations["Mini Moldorm Cave - Left"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings() && $items->canKillMostThings($this->world);
+            return $items->canKillMostThings($this->world)
+                && ($items->canBombThings($this->world) || ($items->has('BigRedBomb') && $items->has('MagicMirror')));
         });
 
         $this->locations["Mini Moldorm Cave - Right"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings() && $items->canKillMostThings($this->world);
+            return $items->canKillMostThings($this->world)
+                && ($items->canBombThings($this->world) || ($items->has('BigRedBomb') && $items->has('MagicMirror')));
         });
 
         $this->locations["Mini Moldorm Cave - Far Right"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings() && $items->canKillMostThings($this->world);
+            return $items->canKillMostThings($this->world)
+                && ($items->canBombThings($this->world) || ($items->has('BigRedBomb') && $items->has('MagicMirror')));
         });
 
         $this->locations["Mini Moldorm Cave - NPC"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings() && $items->canKillMostThings($this->world);
+            return $items->canKillMostThings($this->world)
+                && ($items->canBombThings($this->world) || ($items->has('BigRedBomb') && $items->has('MagicMirror')));
+        });
+
+        $this->locations["Ice Rod Cave"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world) || ($items->has('BigRedBomb') && $items->has('MagicMirror'));
         });
 
         $this->locations["Hobo"]->setRequirements(function ($locations, $items) {
@@ -156,6 +165,11 @@ class South extends Region
 
         $this->locations["Library"]->setRequirements(function ($locations, $items) {
             return $items->has('PegasusBoots');
+        });
+
+        $this->locations["Maze Race"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world) || $items->has('PegasusBoots')
+                || ($items->has('MagicMirror') && $this->world->getRegion('South Dark World')->canEnter($locations, $items));
         });
 
         $this->locations["Desert Ledge"]->setRequirements(function ($locations, $items) {

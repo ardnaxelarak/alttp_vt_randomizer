@@ -44,7 +44,7 @@ class South extends Region\Standard\DarkWorld\South
         });
 
         $this->shops["Dark Lake Hylia Ledge Fairy"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings()
+            return $items->canBombThings($this->world)
                 && ($items->has('Flippers')
                     || $items->canFly($this->world)
                     || ($this->world->config('canOWYBA', false)
@@ -106,23 +106,23 @@ class South extends Region\Standard\DarkWorld\South
         });
 
         $this->locations["Hype Cave - Top"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         $this->locations["Hype Cave - Middle Right"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         $this->locations["Hype Cave - Middle Left"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         $this->locations["Hype Cave - Bottom"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         $this->locations["Hype Cave - NPC"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         return $this;

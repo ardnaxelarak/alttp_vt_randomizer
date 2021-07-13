@@ -22,24 +22,27 @@ class HyruleCastleEscape extends Region\Standard\HyruleCastleEscape
     public function initalize()
     {
         $this->locations["Sewers - Secret Room - Left"]->setRequirements(function ($locations, $items) {
-            return $items->canLiftRocks() || (
-                ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                    || ($this->world->config('itemPlacement') === 'advanced' && $items->has('FireRod')))
-                && $items->has('KeyH2') && $items->canKillMostThings($this->world));
+            return ($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                && ($items->canLiftRocks()
+                    || ($items->has('KeyH2') && $items->canKillMostThings($this->world)
+                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                            || ($this->world->config('itemPlacement') === 'advanced' && $items->has('FireRod')))));
         });
 
         $this->locations["Sewers - Secret Room - Middle"]->setRequirements(function ($locations, $items) {
-            return $items->canLiftRocks() || (
-                ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                    || ($this->world->config('itemPlacement') === 'advanced' && $items->has('FireRod')))
-                && $items->has('KeyH2') && $items->canKillMostThings($this->world));
+            return ($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                && ($items->canLiftRocks()
+                    || ($items->has('KeyH2') && $items->canKillMostThings($this->world)
+                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                            || ($this->world->config('itemPlacement') === 'advanced' && $items->has('FireRod')))));
         });
 
         $this->locations["Sewers - Secret Room - Right"]->setRequirements(function ($locations, $items) {
-            return $items->canLiftRocks() || (
-                ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                    || ($this->world->config('itemPlacement') === 'advanced' && $items->has('FireRod')))
-                && $items->has('KeyH2') && $items->canKillMostThings($this->world));
+            return ($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                && ($items->canLiftRocks()
+                    || ($items->has('KeyH2') && $items->canKillMostThings($this->world)
+                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                            || ($this->world->config('itemPlacement') === 'advanced' && $items->has('FireRod')))));
         });
 
         $this->locations["Sewers - Dark Cross"]->setRequirements(function ($locations, $items) {

@@ -66,7 +66,7 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings();
+                $items->canBombThings($this->world);
         });
 
         $this->shops["Capacity Upgrade"]->setRequirements(function ($locations, $items) {
@@ -98,7 +98,7 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle()) || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world))) &&
-                $items->canBombThings();
+                $items->canBombThings($this->world);
         });
 
         $this->locations["Mini Moldorm Cave - Far Left"]->setRequirements(function ($locations, $items) {
@@ -106,7 +106,7 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings() && $items->canKillMostThings($this->world);
+                $items->canBombThings($this->world) && $items->canKillMostThings($this->world);
         });
 
         $this->locations["Mini Moldorm Cave - Left"]->setRequirements(function ($locations, $items) {
@@ -114,7 +114,7 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings() && $items->canKillMostThings($this->world);
+                $items->canBombThings($this->world) && $items->canKillMostThings($this->world);
         });
 
         $this->locations["Mini Moldorm Cave - Right"]->setRequirements(function ($locations, $items) {
@@ -122,7 +122,7 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings() && $items->canKillMostThings($this->world);
+                $items->canBombThings($this->world) && $items->canKillMostThings($this->world);
         });
 
         $this->locations["Mini Moldorm Cave - Far Right"]->setRequirements(function ($locations, $items) {
@@ -130,17 +130,15 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings() && $items->canKillMostThings($this->world);
+                $items->canBombThings($this->world) && $items->canKillMostThings($this->world);
         });
 
         $this->locations["Ice Rod Cave"]->setRequirements(function ($locations, $items) {
-            return (($items->has('MoonPearl')
-                || ($this->world->config('canBunnyRevive', false)
-                    && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
-                    && $items->hasABottle())) &&
-                $items->canBombThings()) || ($items->has('BigRedBomb')
-                && $this->world->config('canSuperBunny', false)
-                && $items->has('MagicMirror'));
+            return ($items->canBombThings($this->world)
+                    && ($items->has('MoonPearl')
+                        || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                        || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
+                || ($items->has('BigRedBomb') && $this->world->config('canSuperBunny', false) && $items->has('MagicMirror'));
         });
 
         $this->locations["Hobo"]->setRequirements(function ($locations, $items) {
@@ -180,7 +178,7 @@ class South extends Region\Standard\LightWorld\South
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings() && $items->canKillMostThings($this->world);
+                $items->canBombThings($this->world) && $items->canKillMostThings($this->world);
         });
 
         $this->locations["Library"]->setRequirements(function ($locations, $items) {
@@ -195,7 +193,7 @@ class South extends Region\Standard\LightWorld\South
         $this->locations["Maze Race"]->setRequirements(function ($locations, $items) {
             return ($items->has('MoonPearl')
                 && ($items->has('PegasusBoots')
-                    || $items->canBombThings())) ||
+                    || $items->canBombThings($this->world))) ||
                 $this->world->config('canOneFrameClipOW', false);
         });
 

@@ -19,38 +19,56 @@ class HyruleCastleEscape extends Region\Open\HyruleCastleEscape
     public function initalize()
     {
         parent::initalize();
-        
+
         $this->locations["Sewers - Secret Room - Left"]->setRequirements(function ($locations, $items) {
-            return ($items->canLiftRocks() && ($items->has('MoonPearl')
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
-                || ($items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('KeyH2')
-                && ($this->world->config('canDungeonRevive', false) || $items->hasSword()
-                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
-                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                    || $items->has('MoonPearl')));
+            return (($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                        && ($this->world->config('canDungeonRevive', false)
+                            || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                            || $items->has('MoonPearl')))
+                && (($items->canLiftRocks() && ($items->has('MoonPearl')
+                        || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                        || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
+                    || ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                        && $items->has('KeyH2')
+                        && ($this->world->config('canDungeonRevive', false) || $items->hasSword()
+                            || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                            || $items->has('MoonPearl'))));
         });
 
         $this->locations["Sewers - Secret Room - Middle"]->setRequirements(function ($locations, $items) {
-            return ($items->canLiftRocks() && ($items->has('MoonPearl')
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
-                || ($items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('KeyH2')
-                && ($this->world->config('canDungeonRevive', false) || $items->hasSword()
-                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
-                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                    || $items->has('MoonPearl')));
+            return (($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                        && ($this->world->config('canDungeonRevive', false)
+                            || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                            || $items->has('MoonPearl')))
+                && (($items->canLiftRocks() && ($items->has('MoonPearl')
+                        || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                        || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
+                    || ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                        && $items->has('KeyH2')
+                        && ($this->world->config('canDungeonRevive', false) || $items->hasSword()
+                            || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                            || $items->has('MoonPearl'))));
         });
 
         $this->locations["Sewers - Secret Room - Right"]->setRequirements(function ($locations, $items) {
-            return ($items->canLiftRocks() && ($items->has('MoonPearl')
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
-                || ($items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('KeyH2')
-                && ($this->world->config('canDungeonRevive', false) || $items->hasSword()
-                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
-                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                    || $items->has('MoonPearl')));
+            return (($items->canBombThings($this->world) || $items->has('PegasusBoots'))
+                        && ($this->world->config('canDungeonRevive', false)
+                            || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                            || $items->has('MoonPearl')))
+                && (($items->canLiftRocks() && ($items->has('MoonPearl')
+                        || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                        || ($this->world->config('canOWYBA', false) && $items->hasABottle())))
+                    || ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                        && $items->has('KeyH2')
+                        && ($this->world->config('canDungeonRevive', false) || $items->hasSword()
+                            || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world))
+                            || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                            || $items->has('MoonPearl'))));
         });
 
         $this->locations["Hyrule Castle - Boomerang Chest"]->setRequirements(function ($locations, $items) {

@@ -69,8 +69,12 @@ class IcePalace extends Region
      */
     public function initalize()
     {
+        $this->locations["Ice Palace - Iced T Room"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world);
+        });
+
         $this->locations["Ice Palace - Big Key Chest"]->setRequirements(function ($locations, $items) {
-            return $items->has('Hammer') && $items->canLiftRocks()
+            return $items->canBombThings($this->world) && $items->has('Hammer') && $items->canLiftRocks()
                 && (!$this->world->config('region.cantTakeDamage', false)
                     || $items->has('CaneOfByrna') || $items->has('Cape') || $items->has('Hookshot'))
                 && ($items->has('Hookshot') || $items->has('ShopKey')
@@ -79,7 +83,7 @@ class IcePalace extends Region
         });
 
         $this->locations["Ice Palace - Map Chest"]->setRequirements(function ($locations, $items) {
-            return $items->has('Hammer') && $items->canLiftRocks()
+            return $items->canBombThings($this->world) && $items->has('Hammer') && $items->canLiftRocks()
                 && (!$this->world->config('region.cantTakeDamage', false)
                     || $items->has('CaneOfByrna') || $items->has('Cape') || $items->has('Hookshot'))
                 && ($items->has('Hookshot') || $items->has('ShopKey')
@@ -88,7 +92,8 @@ class IcePalace extends Region
         });
 
         $this->locations["Ice Palace - Spike Room"]->setRequirements(function ($locations, $items) {
-            return (!$this->world->config('region.cantTakeDamage', false)
+            return $items->canBombThings($this->world)
+                && (!$this->world->config('region.cantTakeDamage', false)
                     || $items->has('CaneOfByrna') || $items->has('Cape') || $items->has('Hookshot'))
                 && ($items->has('Hookshot') || $items->has('ShopKey')
                     || ($items->has('KeyD5', 1) && (!$items->has('BigKeyD5') || $locations->itemInLocations(Item::get('BigKeyD5', $this->world), 
@@ -96,11 +101,11 @@ class IcePalace extends Region
         });
 
         $this->locations["Ice Palace - Freezor Chest"]->setRequirements(function ($locations, $items) {
-            return $items->canMeltThings($this->world);
+            return $items->canBombThings($this->world) && $items->canMeltThings($this->world);
         });
 
         $this->locations["Ice Palace - Big Chest"]->setRequirements(function ($locations, $items) {
-            return $items->has('BigKeyD5');
+            return $items->canBombThings($this->world) && $items->has('BigKeyD5');
         });
 
         $this->can_complete = function ($locations, $items) {
@@ -109,6 +114,7 @@ class IcePalace extends Region
 
         $this->locations["Ice Palace - Boss"]->setRequirements(function ($locations, $items) {
             return $this->canEnter($locations, $items)
+                && $items->canBombThings($this->world)
                 && $items->has('Hammer') && $items->canLiftRocks()
                 && $this->boss->canBeat($items, $locations)
                 && $items->has('BigKeyD5') && (

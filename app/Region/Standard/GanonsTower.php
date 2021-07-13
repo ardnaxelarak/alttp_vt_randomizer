@@ -197,7 +197,8 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Randomizer Room - Top Left"]->setRequirements(function ($locations, $items) {
-            return $items->has('Hammer') && $items->has('Hookshot')
+            return $items->canBombThings($this->world)
+                && $items->has('Hammer') && $items->has('Hookshot')
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
@@ -207,7 +208,8 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Randomizer Room - Top Right"]->setRequirements(function ($locations, $items) {
-            return $items->has('Hammer') && $items->has('Hookshot')
+            return $items->canBombThings($this->world)
+                && $items->has('Hammer') && $items->has('Hookshot')
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
@@ -217,7 +219,8 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Randomizer Room - Bottom Left"]->setRequirements(function ($locations, $items) {
-            return $items->has('Hammer') && $items->has('Hookshot')
+            return $items->canBombThings($this->world)
+                && $items->has('Hammer') && $items->has('Hookshot')
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Top Left",
@@ -227,7 +230,8 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Randomizer Room - Bottom Right"]->setRequirements(function ($locations, $items) {
-            return $items->has('Hammer') && $items->has('Hookshot')
+            return $items->canBombThings($this->world)
+                && $items->has('Hammer') && $items->has('Hookshot')
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Top Left",
@@ -316,22 +320,25 @@ class GanonsTower extends Region
 
         $this->locations["Ganon's Tower - Big Key Chest"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                    || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
                 && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations);
         });
 
         $this->locations["Ganon's Tower - Big Key Room - Left"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                    || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
                 && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations);
         });
 
         $this->locations["Ganon's Tower - Big Key Room - Right"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                    || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
                 && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations);
         });
 
@@ -354,6 +361,7 @@ class GanonsTower extends Region
         $this->locations["Ganon's Tower - Pre-Moldorm Chest"]->setRequirements(function ($locations, $items) {
             return $items->canShootArrows($this->world) && $items->canLightTorches()
                 && $items->has('BigKeyA2') && $items->has('KeyA2', 3)
+                && $items->canBombThings($this->world)
                 && $this->boss_middle->canBeat($items, $locations);
         })->setFillRules(function ($item, $locations, $items) {
             return $item != Item::get('BigKeyA2', $this->world);
@@ -363,6 +371,7 @@ class GanonsTower extends Region
             return $items->has('Hookshot')
                 && $items->canShootArrows($this->world) && $items->canLightTorches()
                 && $items->has('BigKeyA2') && $items->has('KeyA2', 4)
+                && $items->canBombThings($this->world)
                 && $this->boss_middle->canBeat($items, $locations)
                 && $this->boss_top->canBeat($items, $locations);
         })->setFillRules(function ($item, $locations, $items) {

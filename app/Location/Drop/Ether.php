@@ -263,6 +263,8 @@ class Ether extends Location
                 return "time for a\nchange of\nclothes?";
             case 'ProgressiveGlove':
                 return "a way to lift\nheavier things";
+            case 'L1Bombs':
+                return "some basic\nexplosives\nrest here!";
             case 'L2Bombs':
                 return "some decent\nexplosives\nrest here!";
             case 'L3Bombs':

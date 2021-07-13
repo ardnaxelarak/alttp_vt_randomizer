@@ -218,6 +218,8 @@ class Pedestal extends Location
                 return "the unknown hat";
             case 'ProgressiveGlove':
                 return "the magic hand cover";
+            case 'L1Bombs':
+                return "the basic grenades";
             case 'L2Bombs':
                 return "the decent grenades";
             case 'L3Bombs':
@@ -477,6 +479,8 @@ class Pedestal extends Location
                 return "time for a\nchange of\nclothes?";
             case 'ProgressiveGlove':
                 return "a way to lift\nheavier things";
+            case 'L1Bombs':
+                return "some basic\nexplosives\nrest here!";
             case 'L2Bombs':
                 return "some decent\nexplosives\nrest here!";
             case 'L3Bombs':

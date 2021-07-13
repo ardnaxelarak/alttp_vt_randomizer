@@ -44,7 +44,7 @@ class East extends Region\Standard\LightWorld\DeathMountain\East
                 && ((($this->world->config('canBootsClip', false)
                     && $items->has('PegasusBoots')) ||
                     $this->world->config('canOneFrameClipOW', false)))))
-                && $items->canBombThings();
+                && $items->canBombThings($this->world);
         });
 
 
@@ -133,7 +133,7 @@ class East extends Region\Standard\LightWorld\DeathMountain\East
         });
 
         $this->locations["Paradox Cave Upper - Left"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings()
+            return $items->canBombThings($this->world)
                 && ($items->has('MoonPearl')
                     || ($this->world->config('canOWYBA', false)
                         && $items->hasABottle(2) && ($items->has('Hookshot')
@@ -146,7 +146,7 @@ class East extends Region\Standard\LightWorld\DeathMountain\East
         });
 
         $this->locations["Paradox Cave Upper - Right"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings()
+            return $items->canBombThings($this->world)
                 && ($items->has('MoonPearl')
                     || ($this->world->config('canOWYBA', false)
                         && $items->hasABottle(2) && ($items->has('Hookshot')

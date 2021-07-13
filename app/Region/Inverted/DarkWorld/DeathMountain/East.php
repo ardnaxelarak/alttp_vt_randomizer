@@ -21,7 +21,7 @@ class East extends Region\Standard\DarkWorld\DeathMountain\East
             return $items->has('Hookshot')
                 && ($items->canLiftRocks()
                     || ($items->has('MagicMirror')
-                        && $items->canBombThings()
+                        && $items->canBombThings($this->world)
                         && $this->world->getRegion('East Death Mountain')->canEnter($locations, $items)) || ($this->world->config('canBootsClip', false)
                         && $items->has('PegasusBoots')) ||
                     $this->world->config('canOneFrameClipOW', false));
@@ -31,7 +31,7 @@ class East extends Region\Standard\DarkWorld\DeathMountain\East
             return $items->has('Hookshot')
                 && ($items->canLiftRocks()
                     || ($items->has('MagicMirror')
-                        && $items->canBombThings()
+                        && $items->canBombThings($this->world)
                         && $this->world->getRegion('East Death Mountain')->canEnter($locations, $items)) || ($this->world->config('canBootsClip', false)
                         && $items->has('PegasusBoots')) ||
                     $this->world->config('canOneFrameClipOW', false));
@@ -41,7 +41,7 @@ class East extends Region\Standard\DarkWorld\DeathMountain\East
             return $items->has('Hookshot')
                 && ($items->canLiftRocks()
                     || ($items->has('MagicMirror')
-                        && $items->canBombThings()
+                        && $items->canBombThings($this->world)
                         && $this->world->getRegion('East Death Mountain')->canEnter($locations, $items)) || ($this->world->config('canBootsClip', false)
                         && $items->has('PegasusBoots')) ||
                     $this->world->config('canOneFrameClipOW', false));
@@ -51,7 +51,7 @@ class East extends Region\Standard\DarkWorld\DeathMountain\East
             return ($items->has('Hookshot')
                 || $items->has('PegasusBoots')) && ($items->canLiftRocks()
                 || ($items->has('MagicMirror')
-                    && $items->canBombThings()
+                    && $items->canBombThings($this->world)
                     && $this->world->getRegion('East Death Mountain')->canEnter($locations, $items)) || ($this->world->config('canBootsClip', false)
                     && $items->has('PegasusBoots')) ||
                 $this->world->config('canOneFrameClipOW', false));

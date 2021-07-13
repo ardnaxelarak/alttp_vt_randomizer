@@ -29,7 +29,7 @@ class NorthWest extends Region\Standard\LightWorld\NorthWest
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle()) &&
-                $items->canBombThings();
+                $items->canBombThings($this->world);
         });
 
         // Bunny can pull pedestal
@@ -69,14 +69,15 @@ class NorthWest extends Region\Standard\LightWorld\NorthWest
         });
 
         $this->locations["Chicken House"]->setRequirements(function ($locations, $items) {
-            return $items->has('MoonPearl')
-                || ($this->world->config('canOWYBA', false)
-                    && $items->hasABottle()) || ($this->world->config('canBunnyRevive', false)
-                    && $items->canBunnyRevive($this->world));
+            return $items->canBombThings($this->world)
+                && $items->has('MoonPearl')
+                    || ($this->world->config('canOWYBA', false)
+                        && $items->hasABottle()) || ($this->world->config('canBunnyRevive', false)
+                        && $items->canBunnyRevive($this->world));
         });
 
         $this->locations["Kakariko Well - Top"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings()
+            return $items->canBombThings($this->world)
                 && ($items->has('MoonPearl')
                     || ($this->world->config('canOWYBA', false)
                         && $items->hasABottle()) || ($this->world->config('canBunnyRevive', false)
@@ -116,7 +117,7 @@ class NorthWest extends Region\Standard\LightWorld\NorthWest
         });
 
         $this->locations["Blind's Hideout - Top"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings()
+            return $items->canBombThings($this->world)
                 && ($items->has('MoonPearl')
                     || ($this->world->config('canOWYBA', false)
                         && $items->hasABottle()) || ($this->world->config('canBunnyRevive', false)
@@ -197,7 +198,7 @@ class NorthWest extends Region\Standard\LightWorld\NorthWest
                 || ($this->world->config('canBunnyRevive', false)
                     && $items->canBunnyRevive($this->world)) || ($this->world->config('canOWYBA', false)
                     && $items->hasABottle())) &&
-                $items->canBombThings();
+                $items->canBombThings($this->world);
         });
 
         $this->locations["Mushroom"]->setRequirements(function ($locations, $items) {

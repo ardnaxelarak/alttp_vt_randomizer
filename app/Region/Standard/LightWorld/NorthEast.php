@@ -56,6 +56,18 @@ class NorthEast extends Region
      */
     public function initalize()
     {
+        $this->locations["Sahasrahla's Hut - Left"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world) || $items->has('PegasusBoots');
+        });
+
+        $this->locations["Sahasrahla's Hut - Middle"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world) || $items->has('PegasusBoots');
+        });
+
+        $this->locations["Sahasrahla's Hut - Right"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world) || $items->has('PegasusBoots');
+        });
+
         $this->locations["Sahasrahla"]->setRequirements(function ($locations, $items) {
             return $items->has('PendantOfCourage');
         });

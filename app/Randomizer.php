@@ -244,12 +244,14 @@ class Randomizer implements RandomizerContract
                 }
             }
         } elseif ($world->config('mode.weapons') === 'bombs') {
-            // put L-2 bombs in
-            if (count($nice_items_bombs)) {
-                array_push($advancement_items, array_pop($nice_items_bombs));
+            // put L-1 through L-3 bombs in
+            for ($x = 0; $x < 3; $x++) {
+                if (count($nice_items_bombs)) {
+                    array_push($advancement_items, array_pop($nice_items_bombs));
+                }
             }
-            // put L-3 bombs in
-            if (count($nice_items_bombs)) {
+            // put L-4 bombs in if logically required
+            if ($world->config('region.requireBetterSword', false) && count($nice_items_bombs)) {
                 array_push($advancement_items, array_pop($nice_items_bombs));
             }
             $nice_items = array_merge($nice_items, $nice_items_bombs);

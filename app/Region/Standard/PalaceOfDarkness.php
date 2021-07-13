@@ -76,10 +76,13 @@ class PalaceOfDarkness extends Region
     public function initalize()
     {
         $this->locations["Palace of Darkness - The Arena - Ledge"]->setRequirements(function ($locations, $items) {
-            return $items->canShootArrows($this->world);
+            return $items->canShootArrows($this->world) && $items->canBombThings($this->world);
         });
 
         $this->locations["Palace of Darkness - Big Key Chest"]->setRequirements(function ($locations, $items) {
+            if (!$items->canBombThings($this->world)) {
+                return false;
+            }
             if ($locations["Palace of Darkness - Big Key Chest"]->hasItem(Item::get('KeyD1', $this->world))) {
                 return $items->has('KeyD1');
             }
@@ -97,7 +100,8 @@ class PalaceOfDarkness extends Region
         });
 
         $this->locations["Palace of Darkness - Big Chest"]->setRequirements(function ($locations, $items) {
-            return $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('BigKeyD1')
+            return $items->canBombThings($this->world) && $items->has('BigKeyD1')
+                && $items->has('Lamp', $this->world->config('item.require.Lamp', 1))
                 && ((($items->has('Hammer') && $items->canShootArrows($this->world)) || $this->world->config('region.wildKeys', false)) ? $items->has('KeyD1', 6) : $items->has('KeyD1', 5));
         })->setFillRules(function ($item, $locations, $items) {
             return $item != Item::get('KeyD1', $this->world);
@@ -137,7 +141,8 @@ class PalaceOfDarkness extends Region
         });
 
         $this->locations["Palace of Darkness - Map Chest"]->setRequirements(function ($locations, $items) {
-            return $items->canShootArrows($this->world);
+            return $items->canShootArrows($this->world)
+                && ($items->canBombThings($this->world) || $items->has('PegasusBoots'));
         });
 
         $this->locations["Palace of Darkness - Dark Maze - Top"]->setRequirements(function ($locations, $items) {

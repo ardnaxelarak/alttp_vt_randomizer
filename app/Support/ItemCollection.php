@@ -522,7 +522,7 @@ class ItemCollection extends Collection
             $ganon_item = 'arrow';
           }
         }
-        
+
         switch ($ganon_item) {
             case 'boomerang':
                 return $this->has('Boomerang') || $this->has('RedBoomerang');
@@ -637,6 +637,10 @@ class ItemCollection extends Collection
      */
     public function canKillEscapeThings(World $world)
     {
+        if ($world->restrictedToBombs()) {
+            return $this->hasBombLevel(1);
+        }
+
         return $this->has('UncleSword')
             || $this->has('CaneOfSomaria')
             || ($this->has('TenBombs')
@@ -646,8 +650,7 @@ class ItemCollection extends Collection
             || $this->canShootArrows($world)
             || $this->has('Hammer')
             || $this->has('FireRod')
-            || $world->config('ignoreCanKillEscapeThings', false)
-            || $world->config('mode.weapons') === 'bombs';
+            || $world->config('ignoreCanKillEscapeThings', false);
     }
 
     /**
@@ -660,26 +663,31 @@ class ItemCollection extends Collection
      */
     public function canKillMostThings(World $world, $enemies = 5)
     {
+        if ($world->restrictedToBombs()) {
+            return $this->hasBombLevel(1);
+        }
+
         return $this->hasSword()
             || $this->has('CaneOfSomaria')
-            || ($this->canBombThings() && $enemies < 6
+            || ($this->canBombThings($world) && $enemies < 6
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
             || ($this->has('CaneOfByrna') && ($enemies < 6 || $this->canExtendMagic())
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
             || $this->canShootArrows($world)
             || $this->has('Hammer')
-            || $this->has('FireRod')
-            || $world->config('mode.weapons') === 'bombs';
+            || $this->has('FireRod');
     }
 
     /**
      * Requirements for bombing things
      *
+     * @param \ALttP\World  $world  world to check items against
+     *
      * @return bool
      */
-    public function canBombThings()
+    public function canBombThings(World $world)
     {
-        return true;
+        return $world->config('mode.weapons') !== 'bombs' || $this->hasBombLevel(1);
     }
 
     /**
@@ -747,21 +755,27 @@ class ItemCollection extends Collection
     {
         switch ($min_level) {
             case 4:
-                return $this->has('ProgressiveBombs', 3)
+                return $this->has('ProgressiveBombs', 4)
                     || $this->has('L4Bombs')
                     || $this->has('L5Bombs');
             case 3:
-                return $this->has('ProgressiveBombs', 2)
+                return $this->has('ProgressiveBombs', 3)
                     || $this->has('L3Bombs')
                     || $this->has('L4Bombs')
                     || $this->has('L5Bombs');
             case 2:
-                return $this->has('ProgressiveBombs')
+                return $this->has('ProgressiveBombs', 2)
                     || $this->has('L2Bombs')
                     || $this->has('L3Bombs')
                     || $this->has('L4Bombs')
                     || $this->has('L5Bombs');
             case 1:
+                return $this->has('ProgressiveBombs')
+                    || $this->has('L1Bombs')
+                    || $this->has('L2Bombs')
+                    || $this->has('L3Bombs')
+                    || $this->has('L4Bombs')
+                    || $this->has('L5Bombs');
             default:
                 return true;
         }

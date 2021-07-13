@@ -76,7 +76,7 @@ class NorthWest extends Region
         });
 
         $this->locations["Brewery"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings() && ($items->has('MoonPearl')
+            return $items->canBombThings($this->world) && ($items->has('MoonPearl')
                 || ($this->world->config('canOWYBA', false) && $items->hasABottle())
                 || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world)));
         });

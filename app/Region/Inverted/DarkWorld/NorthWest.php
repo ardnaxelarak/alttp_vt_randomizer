@@ -22,7 +22,7 @@ class NorthWest extends Region\Standard\DarkWorld\NorthWest
         });
 
         $this->locations["Brewery"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
         });
 
         $this->locations["Hammer Pegs"]->setRequirements(function ($locations, $items) {

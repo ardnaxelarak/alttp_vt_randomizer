@@ -63,33 +63,38 @@ class South extends Region
     public function initalize()
     {
         $this->locations["Hype Cave - Top"]->setRequirements(function ($locations, $items) {
-            return $items->has('MoonPearl')
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world));
+            return $items->canBombThings($this->world)
+                && ($items->has('MoonPearl')
+                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world)));
         });
 
         $this->locations["Hype Cave - Middle Right"]->setRequirements(function ($locations, $items) {
-            return $items->has('MoonPearl')
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world));
+            return $items->canBombThings($this->world)
+                && ($items->has('MoonPearl')
+                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world)));
         });
 
         $this->locations["Hype Cave - Middle Left"]->setRequirements(function ($locations, $items) {
-            return $items->has('MoonPearl')
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world));
+            return $items->canBombThings($this->world)
+                && ($items->has('MoonPearl')
+                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world)));
         });
 
         $this->locations["Hype Cave - Bottom"]->setRequirements(function ($locations, $items) {
-            return $items->has('MoonPearl')
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world));
+            return $items->canBombThings($this->world)
+                && ($items->has('MoonPearl')
+                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world)));
         });
 
         $this->locations["Hype Cave - NPC"]->setRequirements(function ($locations, $items) {
-            return $items->has('MoonPearl')
-                || ($this->world->config('canOWYBA', false) && $items->hasABottle())
-                || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world));
+            return $items->canBombThings($this->world)
+                && ($items->has('MoonPearl')
+                    || ($this->world->config('canOWYBA', false) && $items->hasABottle())
+                    || ($this->world->config('canBunnyRevive', false) && $items->canBunnyRevive($this->world)));
         });
 
         $this->locations["Stumpy"]->setRequirements(function ($locations, $items) {
@@ -113,7 +118,7 @@ class South extends Region
         });
 
         $this->shops["Dark Lake Hylia Ledge Fairy"]->setRequirements(function ($locations, $items) {
-            return ($items->canBombThings() || ($items->has('PegasusBoots') && $this->world->config('canBootsClip', false)))
+            return ($items->canBombThings($this->world) || ($items->has('PegasusBoots') && $this->world->config('canBootsClip', false)))
                 && ($items->has('Flippers')
                     || ($this->world->getRegion('North West Dark World')->canEnter($locations, $items)
                         && $this->world->config('canFakeFlipper', false) && (!$this->world->config('region.cantTakeDamage', false)))

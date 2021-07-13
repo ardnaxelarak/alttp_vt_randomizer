@@ -62,7 +62,15 @@ class East extends Region
     public function initalize()
     {
         $this->shops["Light World Death Mountain Shop"]->setRequirements(function ($locations, $items) {
-            return $items->canBombThings();
+            return $items->canBombThings($this->world);
+        });
+
+        $this->locations["Paradox Cave Upper - Left"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world);
+        });
+
+        $this->locations["Paradox Cave Upper - Right"]->setRequirements(function ($locations, $items) {
+            return $items->canBombThings($this->world);
         });
 
         $this->locations["Mimic Cave"]->setRequirements(function ($locations, $items) {
@@ -81,7 +89,7 @@ class East extends Region
                 || ($this->world->config('canOWYBA', false) && $items->has('Bottle'))
                 || $this->world->config('canOneFrameClipOW', false)
                 || ($items->has('MagicMirror')
-                    && (($items->has('MoonPearl') && $items->canBombThings() && $items->canLiftRocks())
+                    && (($items->has('MoonPearl') && $items->canBombThings($this->world) && $items->canLiftRocks())
                         || $this->world->config('canMirrorWrap', false))
                     && $this->world->getRegion('East Dark World Death Mountain')->canEnter($locations, $items));
         });

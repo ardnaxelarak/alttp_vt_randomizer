@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc47a98e04077a76fdf7b9c7997c4836",
+    "content-hash": "52e6178de5fb4ed5e6f014db6a98b3cb",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.185.10",
+            "version": "3.185.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "667a83e4a18cb75db3ce74162efc97123da96261"
+                "reference": "fee396b3e137cc2ec9ae94159d01dd1ed15d8c40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/667a83e4a18cb75db3ce74162efc97123da96261",
-                "reference": "667a83e4a18cb75db3ce74162efc97123da96261",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fee396b3e137cc2ec9ae94159d01dd1ed15d8c40",
+                "reference": "fee396b3e137cc2ec9ae94159d01dd1ed15d8c40",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.185.10"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.185.11"
             },
-            "time": "2021-07-09T19:21:22+00:00"
+            "time": "2021-07-12T18:13:46+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -7296,7 +7296,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
-                "reference": "2f34e3a71e717a2ca3392ad281f1bdfa1c54764e"
+                "reference": "df35c1a3a68920e063e961c0ceaac8227f57ed59"
             },
             "type": "library"
         },
@@ -7306,7 +7306,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "08166fe6697d87dfd880b7ecefa6e6b5c90408ea"
+                "reference": "6d52427696def338adcfe6a4ce5d22553c06f119"
             },
             "type": "library"
         },
@@ -7316,7 +7316,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "2c221dfa375d609add1e5bfcb910e331aaf19e25"
+                "reference": "e81905a5175651a7a1cc2e65d2a5d40e8d505749"
             },
             "type": "library"
         }

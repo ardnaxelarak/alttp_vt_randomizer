@@ -99,7 +99,7 @@ class SkullWoods extends Region
         });
 
         $this->locations["Skull Woods - Big Chest"]->setRequirements(function ($locations, $items) {
-            return $items->has('BigKeyD3');
+            return $items->canBombThings($this->world) && $items->has('BigKeyD3');
         })->setAlwaysAllow(function ($item, $items) {
             return $this->world->config('accessibility') !== 'locations' && $item == Item::get('BigKeyD3', $this->world);
         });
