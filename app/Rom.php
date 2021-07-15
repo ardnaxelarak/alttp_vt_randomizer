@@ -2640,26 +2640,34 @@ class Rom
      *
      * @return $this
      */
-    public function setBombsOnlyMode(bool $enable = false): self
+    public function setBombsOnlyMode(): self
     {
-        $this->write(0x18002F, pack('C*', $enable ? 0x03 : 0x00)); // Special Bombs
-        $this->write(0x180040, pack('C*', $enable ? 0x01 : 0x00)); // Open Curtains
-        $this->write(0x180041, pack('C*', $enable ? 0x02 : 0x00)); // Swordless Medallions
-        $this->write(0x180034, pack('C*', $enable ? 0 : 10)); // max bombs
+        $this->write(0x18002F, pack('C*', 0x01)); // Special Bombs
+        $this->write(0x180040, pack('C*', 0x01)); // Open Curtains
+        $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
+        $this->write(0x180034, pack('C*', 0)); // max bombs
+
+        // remove regular bombs for sale from bomb shop and center the big bomb
+        $this->write(0x309DE, pack('C*', 0xA9, 0xFF, 0xEA, 0xEA));
+        $this->write(0x30A28, pack('C*', 0x2C));
 
         // since we have infinite bombs, let's get rid of bomb drops
-        $this->write(0x30051, pack('C*', $enable ? 0xDB : 0xDE)); // fish bottle merchant
-        $this->write(0x301F8, pack('C*', $enable ? 0xD9 : 0xDC)); // replace Pot bombs with green rupees
-        $this->write(0x301FD, pack('C*', $enable ? 0xD9 : 0xDC));
-        $this->write(0x30224, pack('C*', $enable ? 0x04 : 0x00)); // adjust width of offset for replaced pot bomb
-        $this->write(0x30229, pack('C*', $enable ? 0x04 : 0x00));
-        $this->write(0x4CC4A, pack('C*', $enable ? 0xD9 : 0xDC)); // dark graveyard bonk rocks
+        $this->write(0x30051, pack('C*', 0xDB)); // fish bottle merchant
+        $this->write(0x301F8, pack('C*', 0xD9)); // replace Pot bombs with green rupees
+        $this->write(0x301FD, pack('C*', 0xD9));
+        $this->write(0x30224, pack('C*', 0x04)); // adjust width of offset for replaced pot bomb
+        $this->write(0x30229, pack('C*', 0x04));
+        $this->write(0x4CC4A, pack('C*', 0xD9)); // bonk rocks
+        $this->write(0x4D028, pack('C*', 0xD9));
+        $this->write(0x4D397, pack('C*', 0xD9));
+        $this->write(0x4D3AE, pack('C*', 0xDB));
+        $this->write(0x4D56A, pack('C*', 0xDA));
 
-        $this->write(0xEDA7, pack('C*', $enable ? 0x35 : 0x27)); // DW chest game (bomb -> blue rupee)
+        $this->write(0xEDA7, pack('C*', 0x35)); // DW chest game (bomb -> blue rupee)
 
         // thiefs and pikits shouldn't steal bombs
-        $this->write(0xECB54, $enable ? pack('C*', 0xA9, 0x00, 0xEA, 0xEA) : pack('C*', 0xAF, 0x43, 0xF3, 0x7E)); // thief
-        $this->write(0xF0D80, $enable ? pack('C*', 0xA9, 0x00, 0xEA, 0xEA) : pack('C*', 0xAF, 0x43, 0xF3, 0x7E)); // pikit
+        $this->write(0xECB54, pack('C*', 0xA9, 0x00, 0xEA, 0xEA)); // thief
+        $this->write(0xF0D80, pack('C*', 0xA9, 0x00, 0xEA, 0xEA)); // pikit
 
         $this->setHammerTablet(false);
         $this->setHammerBarrier(false);
