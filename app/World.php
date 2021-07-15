@@ -193,7 +193,7 @@ abstract class World
         // In swordless modes ganon vulnerability item is 100% required
         if ($this->restrictedSwords()) {
             $this->config['region.requireGanonVulnerability'] = true;
-            if (($this->config('ganon_item', 'default') === 'default' && $this->config('mode.weapons', 'randomized') !== 'bombs')
+            if (($this->config('ganon_item', 'default') === 'default' && !$this->restrictedToBombs())
                     || $this->config['ganon_item'] === 'arrow') {
                 $this->config['item.overflow.count.Bow'] = 2;
             }
@@ -405,7 +405,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'bombs'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -427,7 +427,7 @@ abstract class World
      */
     public function restrictedToBombs()
     {
-        $bomb_modes = ['bombs'];
+        $bomb_modes = ['bombs', 'assured_bombs'];
         return in_array($this->config('mode.weapons'), $bomb_modes);
     }
 
@@ -858,7 +858,7 @@ abstract class World
 
         if ($name === 'BottleWithRandom') {
             return $this->getBottle();
-        } elseif ($this->config('mode.weapons') === 'bombs' && array_key_exists($name, $bomb_mode_replacements)) {
+        } elseif ($this->restrictedToBombs() && array_key_exists($name, $bomb_mode_replacements)) {
             return Item::get($bomb_mode_replacements[$name], $this);
         } else {
             return Item::get($name, $this);
@@ -1195,7 +1195,7 @@ abstract class World
 
         $rom->setGameState($this->config('mode.state'));
         $rom->setSwordlessMode($this->config('mode.weapons') === 'swordless');
-        if ($this->config('mode.weapons') === 'bombs') {
+        if ($this->restrictedToBombs()) {
             $rom->setBombsOnlyMode(true);
         }
 
@@ -1358,7 +1358,7 @@ abstract class World
         }
 
         // bomb-only mode has infinite bombs, so drop rupees instead of bombs
-        if ($this->config('mode.weapons') === 'bombs') {
+        if ($this->restrictedToBombs()) {
             $drop_bytes = str_replace([0xDC, 0xDD, 0xDE], [0xD9, 0xDA, 0xDB], $drop_bytes);
         }
 

@@ -555,7 +555,8 @@ return [
                 'assured' => 'Assured',
                 'vanilla' => 'Vanilla',
                 'swordless' => 'Swordless',
-                'bombs' => 'Bombs Only',
+                'bombs' => 'Bomb-Only',
+                'assured_bombs' => 'Assured Bomb-Only',
             ],
             'item_pool' => [
                 'normal' => 'Normal',
@@ -729,6 +730,8 @@ return [
                 'assured' => 10,
                 'vanilla' => 10,
                 'swordless' => 10,
+                'bombs' => 0,
+                'assured_bombs' => 0,
             ],
             'item_pool' => [
                 'normal' => 70,

@@ -107,7 +107,7 @@ class Boss
                 return ($world->config('itemPlacement') !== 'basic'
                         || $world->restrictedSwords() || $items->hasSword(2))
                     && $items->has('Hookshot')
-                    && ($items->has('Hammer') || $items->hasSword() || $world->config('mode.weapons') === 'bombs'
+                    && ($items->has('Hammer') || $items->hasSword()
                         || (($items->canExtendMagic($world, 2) || $items->canShootArrows($world))
                             && ($items->has('FireRod') || $items->has('IceRod'))));
             }),
@@ -128,7 +128,7 @@ class Boss
                 }
                 return ($world->config('itemPlacement') !== 'basic' || $world->restrictedSwords()
                         || ($items->hasSword() && ($items->has('Cape') || $items->has('CaneOfByrna'))))
-                    && ($items->hasSword() || $items->has('Hammer') || $world->config('mode.weapons') === 'bombs'
+                    && ($items->hasSword() || $items->has('Hammer')
                         || $items->has('CaneOfSomaria') || $items->has('CaneOfByrna'));
             }),
             new static("Kholdstare", "Kholdstare", function ($locations, $items) use ($world) {
@@ -167,8 +167,7 @@ class Boss
                         || ($items->canExtendMagic($world, 2) && $items->hasSword(2)))
                     && ($items->hasSword(3) || $items->has('Hammer')
                         || ($items->canExtendMagic($world, 2) && $items->hasSword(2))
-                        || ($items->canExtendMagic($world, 4) && $items->hasSword())
-                        || $world->config('mode.weapons') === 'bombs');
+                        || ($items->canExtendMagic($world, 4) && $items->hasSword()));
             }),
             new static("Agahnim2", "Agahnim2", function ($locations, $items) {
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');

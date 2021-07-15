@@ -272,7 +272,7 @@
           <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.difficulty.title') }}</h5>
           <div class="card-body">
             <div
-              v-if="weapons.value === 'bombs'"
+              v-if="weapons.value === 'bombs' || weapons.value === 'assured_bombs'"
               class="logic-warning text-danger"
               v-html="$t('randomizer.weapons.bombs_warning')"
             />

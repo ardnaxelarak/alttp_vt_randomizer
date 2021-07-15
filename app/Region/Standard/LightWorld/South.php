@@ -143,11 +143,20 @@ class South extends Region
         });
 
         $this->locations["Bombos Tablet"]->setRequirements(function ($locations, $items) {
-            return $items->has('BookOfMudora') && ($items->hasSword(2)
-                || ($this->world->restrictedSwords() && $items->has('Hammer')))
-                && ($this->world->config('canOneFrameClipOW', false)
-                    || ($this->world->config('canBootsClip', false) && $items->has('PegasusBoots'))
-                    || ($items->has('MagicMirror') && $this->world->getRegion('South Dark World')->canEnter($locations, $items)));
+            if (!($items->has('BookOfMudora')
+                    && ($this->world->config('canOneFrameClipOW', false)
+                        || ($this->world->config('canBootsClip', false) && $items->has('PegasusBoots'))
+                        || ($items->has('MagicMirror') && $this->world->getRegion('South Dark World')->canEnter($locations, $items))))) {
+                return false;
+            }
+
+            if ($this->world->restrictedToBombs()) {
+                return $items->hasBombLevel(2);
+            } else if ($this->world->restrictedSwords()) {
+                return $items->has('Hammer');
+            } else {
+                return $items->hasSword(2);
+            }
         });
 
         $this->locations["Cave 45"]->setRequirements(function ($locations, $items) {

@@ -43,6 +43,7 @@ class OverworldRandomizer implements RandomizerContract
 		'vanilla' => 'vanilla',
 		'swordless' => 'swordless',
 		'bombs' => 'bombs',
+		'assured_bombs' => 'bombs',
 	];
 
 	/**
@@ -144,6 +145,14 @@ class OverworldRandomizer implements RandomizerContract
 
 		if ($this->world->config('goal') === 'fast_ganon' && in_array($this->world->config('entrances'), ['none', 'dungeonssimple', 'dungeonsfull'])) {
 			$flags[] = '--openpyramid';
+		}
+
+		if ($this->world->config('mode.weapons') === 'assured_bombs') {
+			$flags = array_merge($flags, [
+				'--usestartinventory=true',
+				'--startinventory',
+				'Progressive Bombs',
+			]);
 		}
 
 		$flags = array_merge(

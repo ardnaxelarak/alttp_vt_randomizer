@@ -152,9 +152,17 @@ class South extends Region\Standard\LightWorld\South
         });
 
         $this->locations["Bombos Tablet"]->setRequirements(function ($locations, $items) {
-            return $items->has('BookOfMudora')
-                && ($items->hasSword(2)
-                    || ($this->world->restrictedSwords() && $items->has('Hammer')));
+            if (!$items->has('BookOfMudora')) {
+                return false;
+            }
+
+            if ($this->world->restrictedToBombs()) {
+                return $items->hasBombLevel(2);
+            } else if ($this->world->restrictedSwords()) {
+                return $items->has('Hammer');
+            } else {
+                return $items->hasSword(2);
+            }
         });
 
         $this->locations["Cave 45"]->setRequirements(function ($locations, $items) {

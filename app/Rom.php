@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-07-11', 'HASH' => 'ea6705091215dd7aef8eba259b88251c'],
-        'overworld' => ['BUILD' => '2021-07-12', 'HASH' => 'b7ef5f4a054a32d1fbe4f7dc02eac265'],
+        'base' => ['BUILD' => '2021-07-13', 'HASH' => 'feb3d6d8236e6afa8cb024131ef5759f'],
+        'overworld' => ['BUILD' => '2021-07-13', 'HASH' => 'cf3fa90e03857a4a26c804c0f3dd7ef9'],
     ];
     const SIZE = 2097152;
 
@@ -180,7 +180,7 @@ class Rom
      */
     public function setStartingEquipment(ItemCollection $items)
     {
-        $equipment = array_fill(0x340, 0x4F, 0);
+        $equipment = array_fill(0x340, 0x50, 0);
         $starting_rupees = 0;
         $starting_arrow_capacity = 0;
         $starting_bomb_capacity = 0;
@@ -676,6 +676,24 @@ class Rom
                     break;
                 case 'Crystal7':
                     $equipment[0x37A] |= 0b00001000;
+                    break;
+                case 'L1Bombs':
+                    $equipment[0x38F] = 0x01;
+                    break;
+                case 'L2Bombs':
+                    $equipment[0x38F] = 0x02;
+                    break;
+                case 'L3Bombs':
+                    $equipment[0x38F] = 0x03;
+                    break;
+                case 'L4Bombs':
+                    $equipment[0x38F] = 0x04;
+                    break;
+                case 'L5Bombs':
+                    $equipment[0x38F] = 0x05;
+                    break;
+                case 'ProgressiveBombs':
+                    $equipment[0x38F] = min($equipment[0x38F] + 1, 5);
                     break;
             }
         }
@@ -2627,6 +2645,7 @@ class Rom
         $this->write(0x18002F, pack('C*', $enable ? 0x03 : 0x00)); // Special Bombs
         $this->write(0x180040, pack('C*', $enable ? 0x01 : 0x00)); // Open Curtains
         $this->write(0x180041, pack('C*', $enable ? 0x02 : 0x00)); // Swordless Medallions
+        $this->write(0x180034, pack('C*', $enable ? 0 : 10)); // max bombs
 
         // since we have infinite bombs, let's get rid of bomb drops
         $this->write(0x30051, pack('C*', $enable ? 0xDB : 0xDE)); // fish bottle merchant

@@ -679,8 +679,8 @@ return [
                     'content' => [
                         'All swords are replaced with bomb upgrades, and bombs are now the only weapon. Multiple changes have been made for this to work:',
                         '<ul>'
-                            . '<li>Link has an infinite supply of bombs.</li>'
-                            . '<li>Bombs initially deal the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage, with the fourth upgrade dealing damage equal to golden sword spin attacks.</li>'
+                            . '<li>Link will obtain an infinite supply of bombs once he finds his first bomb upgrade.</li>'
+                            . '<li>Bombs initially deal the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage.</li>'
                             . '<li>All bosses (including Ganon) can now be damaged by bombs of the appropriate level.</li>'
                             . '<li>All other weapons do no damage in most cases, except for the following:'
                                 . '<ul>'
@@ -688,7 +688,8 @@ return [
                                     . '<li>Freezors must still be killed with either the fire rod or Bombos.</li>'
                                     . '<li>Kholdstare\'s initial phase still requires either the fire rod or Bombos.</li>'
                                     . '<li>Trinexx\'s side heads still require the appropriate rod to make them vulnerable, but the rod will not damage them further.</li>'
-                                    . '<li>Hookshot and boomerang can still stun enemies, but will never damage enemies.</li>'
+                                    . '<li>Hookshot and boomerang can still stun enemies that would noramlly be stunned, but will never damage enemies.</li>'
+                                    . '<li>Hookshot will still stun enemies that it would normally damage.</li>'
                                     . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
                                     . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
                                 . '</ul>'
@@ -698,6 +699,12 @@ return [
                             . '<li>Medallions can always be used instead of requiring a sword.</li>'
                             . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
                         . '</ul>',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.assured_bombs'),
+                    'content' => [
+                        'Same as ' . __('randomizer.weapons.options.bombs') . ', except Link starts with bombs already equipped! Perhaps he hid them in his pillow?',
                     ],
                 ],
             ],

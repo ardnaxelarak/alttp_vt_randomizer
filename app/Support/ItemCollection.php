@@ -464,8 +464,8 @@ class ItemCollection extends Collection
         }
 
         return $canBunnyRevive;
-    }   
-    
+    }
+
     /**
      * Requirements for lobbing arrows at things
      *
@@ -502,7 +502,7 @@ class ItemCollection extends Collection
      */
     public function canUseMedallions(World $world)
     {
-        return $this->hasSword() || $world->config('mode.weapons') === 'bombs';
+        return $this->hasSword() || $world->restrictedToBombs();
     }
 
     /**
@@ -516,7 +516,7 @@ class ItemCollection extends Collection
     {
         $ganon_item = $world->config('ganon_item', 'default');
         if ($ganon_item === 'default') {
-          if ($world->config('mode.weapons') === 'bombs') {
+          if ($world->restrictedToBombs()) {
             $ganon_item = 'bomb';
           } else {
             $ganon_item = 'arrow';
@@ -687,7 +687,7 @@ class ItemCollection extends Collection
      */
     public function canBombThings(World $world)
     {
-        return $world->config('mode.weapons') !== 'bombs' || $this->hasBombLevel(1);
+        return !$world->restrictedToBombs() || $this->hasBombLevel(1);
     }
 
     /**

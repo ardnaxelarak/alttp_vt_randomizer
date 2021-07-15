@@ -243,12 +243,24 @@ class Randomizer implements RandomizerContract
                     }
                 }
             }
-        } elseif ($world->config('mode.weapons') === 'bombs') {
-            // put L-1 through L-3 bombs in
-            for ($x = 0; $x < 3; $x++) {
-                if (count($nice_items_bombs)) {
-                    array_push($advancement_items, array_pop($nice_items_bombs));
+        } elseif ($world->restrictedToBombs()) {
+            // put L-1 bombs back
+            if (count($nice_items_bombs)) {
+                $first_bombs = array_pop($nice_items_bombs);
+                if ($world->config('mode.weapons') === 'assured_bombs') {
+                    $world->addPreCollectedItem($first_bombs);
+                    array_push($trash_items, Item::get('FiftyRupees', $world));
+                } else {
+                    array_push($advancement_items, $first_bombs);
                 }
+            }
+            // put L-2 bombs in
+            if (count($nice_items_bombs)) {
+                array_push($advancement_items, array_pop($nice_items_bombs));
+            }
+            // put L-3 bombs in
+            if (count($nice_items_bombs)) {
+                array_push($advancement_items, array_pop($nice_items_bombs));
             }
             // put L-4 bombs in if logically required
             if ($world->config('region.requireBetterSword', false) && count($nice_items_bombs)) {
@@ -721,12 +733,10 @@ class Randomizer implements RandomizerContract
                 break;
         }
 
-        if (
-            !$world->config('rom.genericKeys', false)
+        if (!$world->config('rom.genericKeys', false)
             && !$world->config('rom.rupeeBow', false)
             && !$world->config('region.takeAnys', false)
-            && $world->config('mode.weapons') !== 'bombs'
-        ) {
+            && !$world->restrictedToBombs()) {
             return;
         }
 
@@ -747,7 +757,7 @@ class Randomizer implements RandomizerContract
 
             $old_man->setActive(true);
             $old_man->setShopkeeper('old_man');
-            $old_man->addInventory(0, (in_array($world->config('mode.weapons'), ['swordless', 'bombs', 'vanilla'])) ? Item::get('ThreeHundredRupees', $world)
+            $old_man->addInventory(0, (in_array($world->config('mode.weapons'), ['swordless', 'bombs', 'assured_bombs', 'vanilla'])) ? Item::get('ThreeHundredRupees', $world)
                 : Item::get('ProgressiveSword', $world), 0);
         }
 
@@ -780,7 +790,7 @@ class Randomizer implements RandomizerContract
             }
         }
 
-        if ($world->config('mode.weapons') === 'bombs') {
+        if ($world->restrictedToBombs()) {
             $shops->each(function ($shop) use ($world) {
                 foreach ($shop->getInventory() as $slot => $data) {
                     if ($data['item'] instanceof Item\Bomb) {
@@ -793,12 +803,12 @@ class Randomizer implements RandomizerContract
 
         if (in_array($world->config('rom.HardMode', 0), [1, 2, 3])) {
             $world->getShop("Capacity Upgrade")->clearInventory();
-        } else if ($world->config('rom.rupeeBow', false) && $world->config('mode.weapons') === 'bombs') {
+        } else if ($world->config('rom.rupeeBow', false) && $world->restrictedToBombs()) {
             $world->getShop("Capacity Upgrade")->clearInventory();
         } else if ($world->config('rom.rupeeBow', false)) {
             $world->getShop("Capacity Upgrade")->clearInventory()
                 ->addInventory(0, Item::get('BombUpgrade5', $world), 100, 7);
-        } else if ($world->config('mode.weapons') === 'bombs') {
+        } else if ($world->restrictedToBombs()) {
             $world->getShop("Capacity Upgrade")->clearInventory()
                 ->addInventory(0, Item::get('ArrowUpgrade5', $world), 100, 7);
         }
@@ -978,7 +988,7 @@ class Randomizer implements RandomizerContract
 
         $ganon_item = $world->config('ganon_item', 'default');
         if ($ganon_item === 'default') {
-          if ($world->config('mode.weapons') === 'bombs') {
+          if ($world->restrictedToBombs()) {
             $ganon_item = 'bomb';
           } else {
             $ganon_item = 'arrow';

@@ -237,6 +237,7 @@ return [
             'vanilla' => 'Vanilla',
             'swordless' => 'Swordless',
             'bombs' => 'Bomb-Only',
+            'assured_bombs' => 'Bomb-Only (Starting Bombs)',
         ],
         'bombs_warning' => 'Bomb-Only mode is still in development, but should be stable.',
     ],
