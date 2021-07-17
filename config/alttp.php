@@ -334,7 +334,7 @@ return [
                     'goal' => 'ganon',
                     'tower_open' => '7',
                     'ganon_open' => '7',
-                    'ganon_item' => 'random',
+                    'ganon_item' => 'default',
                     'world_state' => 'open',
                     'entrance_shuffle' => 'none',
                     'door_shuffle' => 'vanilla',

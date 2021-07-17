@@ -190,6 +190,7 @@ export default {
         },
         quickswap: false,
         music: true,
+        reduce_flashing: true,
         fakeBoots: false
       }
     };

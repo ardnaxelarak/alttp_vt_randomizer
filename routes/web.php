@@ -137,4 +137,31 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
         }
         abort(404);
     });
+
+    Route::get('named/{name}', static function ($lang, $name) {
+        $named_seed = ALttP\NamedSeed::where('name', $name)->first();
+        if (!$named_seed) {
+            abort(404);
+        } else {
+            $seed = ALttP\Seed::where('hash', $named_seed->hash)->first();
+            if ($seed) {
+                $build = ALttP\Build::where('branch', $seed->branch)->where('build', $seed->build)->first();
+                if (!$build) {
+                    abort(404);
+                }
+                return view('patch_from_hash', [
+                    'hash' => $named_seed->hash,
+                    'md5' => $build->hash,
+                    'branch' => $build->branch,
+                    'seed' => $seed,
+                    'bpsLocation' => sprintf(
+                        '/bps/%s.bps',
+                        $build->hash
+                    ),
+                    'spoiler' => json_decode($seed->spoiler),
+                ]);
+            }
+            abort(404);
+        }
+    });
 });

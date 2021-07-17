@@ -3,6 +3,7 @@
 namespace ALttP\Console\Commands;
 
 use ALttP\Jobs\SendPatchToDisk;
+use ALttP\NamedSeed;
 use ALttP\Rom;
 use ALttP\Seed;
 use ALttP\Support\Flips;
@@ -18,7 +19,8 @@ class CreateManualSeed extends Command
      * @var string
      */
     protected $signature = 'alttp:createmanualseed {file} {branch=base}'
-        . ' {--notes= : notes to display}';
+        . ' {--notes= : notes to display}'
+        . ' {--name= : name to insert into named seeds table}';
 
     /**
      * The console command description.
@@ -36,6 +38,7 @@ class CreateManualSeed extends Command
     {
         $file = $this->argument('file');
         $branch = $this->argument('branch');
+        $name = $this->option('name');
 
         if (!is_string($file)) {
             $this->error('argument not string');
@@ -70,6 +73,11 @@ class CreateManualSeed extends Command
             $seed->patch = $this->makeJsonPatch($tmp_file, $file);
             $seed->save();
             SendPatchToDisk::dispatch($seed);
+            if ($name) {
+                $named_seed = NamedSeed::firstOrNew(['name' => $name]);
+                $named_seed->hash = $seed->hash;
+                $named_seed->save();
+            }
             $this->info(sprintf('seed created: %s', $seed->hash));
         } catch (Exception $e) {
             $this->error($e->getMessage());
