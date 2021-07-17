@@ -954,7 +954,7 @@ abstract class World
                         'location' => $shop->getName(),
                         'type' => $shop instanceof Shop\TakeAny ? 'Take Any' : 'Shop',
                     ];
-                    foreach ($shop->getInventory() as $slot => $item) {
+                    foreach (array_values($shop->getInventory()) as $slot => $item) {
                         $shop_data["item_$slot"] = [
                             'item' => $item['item']->getName(),
                             'price' => $item['price'],

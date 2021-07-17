@@ -13,7 +13,7 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-07-13', 'HASH' => 'feb3d6d8236e6afa8cb024131ef5759f'],
+        'base' => ['BUILD' => '2021-07-16', 'HASH' => '3c6f1ef8e99f2d9188373b6485399b4c'],
         'overworld' => ['BUILD' => '2021-07-13', 'HASH' => 'cf3fa90e03857a4a26c804c0f3dd7ef9'],
     ];
     const SIZE = 2097152;
@@ -2668,6 +2668,20 @@ class Rom
         // thiefs and pikits shouldn't steal bombs
         $this->write(0xECB54, pack('C*', 0xA9, 0x00, 0xEA, 0xEA)); // thief
         $this->write(0xF0D80, pack('C*', 0xA9, 0x00, 0xEA, 0xEA)); // pikit
+
+        // replace sword stat text with bomb stat text in credits
+        $this->write(0x11803E, pack('C*', ...$this->credits->convertLargeCreditsTop("FIRST BOMBS")));
+        $this->write(0x11805C, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIRST BOMBS")));
+        $this->write(0x11807A, pack('C*', ...$this->credits->convertLargeCreditsTop("BOMBLESS ")));
+        $this->write(0x118098, pack('C*', ...$this->credits->convertLargeCreditsBottom("BOMBLESS ")));
+        $this->write(0x1180B6, pack('C*', ...$this->credits->convertLargeCreditsTop("FIGHTER'S BOMBS")));
+        $this->write(0x1180D4, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIGHTER'S BOMBS")));
+        $this->write(0x1180F2, pack('C*', ...$this->credits->convertLargeCreditsTop("MASTER BOMBS")));
+        $this->write(0x118110, pack('C*', ...$this->credits->convertLargeCreditsBottom("MASTER BOMBS")));
+        $this->write(0x11812E, pack('C*', ...$this->credits->convertLargeCreditsTop("TEMPERED BOMBS")));
+        $this->write(0x11814C, pack('C*', ...$this->credits->convertLargeCreditsBottom("TEMPERED BOMBS")));
+        $this->write(0x11816A, pack('C*', ...$this->credits->convertLargeCreditsTop("GOLD BOMBS")));
+        $this->write(0x118188, pack('C*', ...$this->credits->convertLargeCreditsBottom("GOLD BOMBS")));
 
         $this->setHammerTablet(false);
         $this->setHammerBarrier(false);

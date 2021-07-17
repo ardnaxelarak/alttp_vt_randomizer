@@ -136,6 +136,13 @@ class Shop
         return $this;
     }
 
+    public function removeInventory(int $slot): self
+    {
+        unset($this->inventory[$slot]);
+
+        return $this;
+    }
+
     public function getInventory(): array
     {
         return $this->inventory;

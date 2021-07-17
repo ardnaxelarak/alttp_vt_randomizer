@@ -724,12 +724,13 @@ class Randomizer implements RandomizerContract
             case 2:
             case 3:
                 $world->getShop("Capacity Upgrade")->clearInventory();
-                $world->getShop("Dark World Potion Shop")->addInventory(1, Item::get('Nothing', $world), 0);
-                $world->getShop("Dark World Forest Shop")->addInventory(0, Item::get('Nothing', $world), 0);
-                $world->getShop("Dark World Lumberjack Hut Shop")->addInventory(1, Item::get('Nothing', $world), 0);
-                $world->getShop("Dark World Outcasts Shop")->addInventory(1, Item::get('Nothing', $world), 0);
-                $world->getShop("Dark World Lake Hylia Shop")->addInventory(1, Item::get('Nothing', $world), 0);
-
+                $shops->each(function ($shop) use ($world) {
+                    foreach ($shop->getInventory() as $slot => $data) {
+                        if ($data['item'] instanceof Item\Shield) {
+                            $shop->removeInventory((int) $slot);
+                        }
+                    }
+                });
                 break;
         }
 
@@ -768,11 +769,12 @@ class Randomizer implements RandomizerContract
         })->randomCollection(5)->each(function ($shop) use ($world) {
             $shop->setActive(true);
             if ($world->config('rom.rupeeBow', false)) {
-                $shop->addInventory(0, Item::get('ShopArrow', $world), 80);
+                $arrowslot = 0;
                 $inventory = $shop->getInventory();
-                if (array_key_exists(2, $inventory) && $inventory[2]['item'] instanceof Item\Arrow) {
-                    $shop->addInventory(2, Item::get('TenBombs', $world), 50);
+                if (!array_key_exists(2, $inventory) || $inventory[2]['item'] instanceof Item\Arrow) {
+                    $arrowslot = 2;
                 }
+                $shop->addInventory($arrowslot, Item::get('ShopArrow', $world), 80);
             }
             if ($world->config('rom.genericKeys', false)) {
                 $shop->addInventory(1, Item::get('ShopKey', $world), 100);
@@ -794,23 +796,20 @@ class Randomizer implements RandomizerContract
             $shops->each(function ($shop) use ($world) {
                 foreach ($shop->getInventory() as $slot => $data) {
                     if ($data['item'] instanceof Item\Bomb) {
-                        $shop->addInventory((int) $slot, Item::get('Nothing', $world), 0);
-                        $shop->setActive(true);
+                        $shop->removeInventory((int) $slot);
                     }
                 }
             });
         }
 
-        if (in_array($world->config('rom.HardMode', 0), [1, 2, 3])) {
-            $world->getShop("Capacity Upgrade")->clearInventory();
-        } else if ($world->config('rom.rupeeBow', false) && $world->restrictedToBombs()) {
-            $world->getShop("Capacity Upgrade")->clearInventory();
-        } else if ($world->config('rom.rupeeBow', false)) {
-            $world->getShop("Capacity Upgrade")->clearInventory()
-                ->addInventory(0, Item::get('BombUpgrade5', $world), 100, 7);
-        } else if ($world->restrictedToBombs()) {
-            $world->getShop("Capacity Upgrade")->clearInventory()
-                ->addInventory(0, Item::get('ArrowUpgrade5', $world), 100, 7);
+        $capacity_fairy = $world->getShop("Capacity Upgrade");
+        foreach ($capacity_fairy->getInventory() as $slot => $data) {
+            if ($data['item'] instanceof Item\Upgrade\Arrow && $world->config('rom.rupeeBow', false)) {
+                $capacity_fairy->removeInventory((int) $slot);
+            }
+            if ($data['item'] instanceof Item\Upgrade\Bomb && $world->restrictedToBombs()) {
+                $capacity_fairy->removeInventory((int) $slot);
+            }
         }
     }
 
