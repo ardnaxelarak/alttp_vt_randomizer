@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 /**
  * This file is for one off console commands. Ideally all of these should be
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 if (!function_exists('getWeighted')) {
     function getWeighted(string $category): string
     {
+        Log::info($category);
         $keys = array_keys(config("alttp.randomizer.item.$category"));
         $combined = array_combine($keys, $keys);
         $weights = config("alttp.randomizer.daily_weights.$category");
@@ -43,7 +45,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
             $entry_crystals_tower = getWeighted('tower_open');
             $crystals_tower = $entry_crystals_tower === 'random' ? get_random_int(0, 7) : $entry_crystals_tower;
             $entry_ganon_item = getWeighted('ganon_item');
-            $ganon_item = $entry_ganon_item === 'random' ? get_random_ganon_item($weapons) : $entry_crystals_tower;
+            $ganon_item = $entry_ganon_item === 'random' ? get_random_ganon_item($weapons) : $entry_ganon_item;
             $logic = [
                 'none' => 'NoGlitches',
                 'overworld_glitches' => 'OverworldGlitches',
@@ -63,10 +65,10 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'entrances' => getWeighted('entrance_shuffle'),
                 'doors.shuffle' => getWeighted('door_shuffle'),
                 'doors.intensity' => getWeighted('door_intensity'),
-                'overworld.shuffle' => getWeighted('overworld_shuffle'),
-                'overworld.keepSimilar' => getWeighted('overworld_keep_similar'),
-                'overworld.swap' => getWeighted('overworld_swap'),
-                'overworld.fluteShuffle' => getWeighted('overworld_flute_shuffle'),
+                'overworld.shuffle' => getWeighted('ow_shuffle'),
+                'overworld.keepSimilar' => getWeighted('ow_keep_similar'),
+                'overworld.swap' => getWeighted('ow_swap'),
+                'overworld.fluteShuffle' => getWeighted('ow_flute_shuffle'),
                 'shopsanity' => getWeighted('shopsanity'),
                 'mode.weapons' => $weapons,
                 'tournament' => true,
@@ -89,7 +91,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
             }
 
             $rom = new Rom(config('alttp.base_rom'));
-            $rom->applyPatchFile(Rom::getJsonPatchLocation($world));
+            $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
 
             $rand->randomize();
             $world->writeToRom($rom, true);
@@ -142,7 +144,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
 
             if ($world->isEnemized()) {
                 $en = new Enemizer($world, $patch);
-                $en->randomize();
+                $en->randomize($world->config('branch'));
                 $en->writeToRom($rom);
                 $patch = $rom->getWriteLog();
                 $world->updateSeedRecordPatch($patch);

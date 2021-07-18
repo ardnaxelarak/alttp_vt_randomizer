@@ -104,6 +104,7 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
                 abort(404);
             }
             return view('daily', [
+                'branch' => $seed->branch,
                 'hash' => $seed->hash,
                 'md5' => $build->hash,
                 'bpsLocation' => sprintf(
