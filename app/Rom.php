@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-07-16', 'HASH' => '3c6f1ef8e99f2d9188373b6485399b4c'],
-        'overworld' => ['BUILD' => '2021-07-17', 'HASH' => 'bf3754cbc1d3db9ec47c3b96b8d61377'],
+        'base' => ['BUILD' => '2021-07-20', 'HASH' => '840af660934c0053b3d80e6bbdfc4d93'],
+        'overworld' => ['BUILD' => '2021-07-20', 'HASH' => '48b960998b73ccc43060530c95a20c3b'],
     ];
     const SIZE = 2097152;
 
