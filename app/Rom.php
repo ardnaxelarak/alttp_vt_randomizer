@@ -14,7 +14,7 @@ class Rom
 {
     const BUILD_INFO = [
         'base' => ['BUILD' => '2021-07-20', 'HASH' => '840af660934c0053b3d80e6bbdfc4d93'],
-        'overworld' => ['BUILD' => '2021-07-20', 'HASH' => '48b960998b73ccc43060530c95a20c3b'],
+        'overworld' => ['BUILD' => '2021-07-23', 'HASH' => 'bc94fd9274e2024ae8dd9b57dfb343cc'],
     ];
     const SIZE = 2097152;
 
