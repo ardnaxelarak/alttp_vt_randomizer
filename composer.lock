@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06f76159bb55b0954793b5c9c4919753",
+    "content-hash": "ee332228dfdf34120971f8b0bae5ca77",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -7296,11 +7296,11 @@
         },
         {
             "name": "z3/overworldrandomizer",
-            "version": "0.1.6.8",
+            "version": "0.1.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
-                "reference": "d5f7da443ff3b25b7336dffee0cb1e62b063ff12"
+                "reference": "63bff5998b7815e023e304259ccb78c1d2849d0b"
             },
             "type": "library"
         },
@@ -7310,7 +7310,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "2bb5ec87b0be32e52f332c66b346c0aac11cff09"
+                "reference": "3f4db583f536ddd9ec3b5b78d351f57e092d8fcb"
             },
             "type": "library"
         },
@@ -7320,7 +7320,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "b663bb982fdfe92c471eca7bf21451ae1f1d5359"
+                "reference": "7aac3970d175996250d8cb8491a93b3c8a7b3c5b"
             },
             "type": "library"
         }

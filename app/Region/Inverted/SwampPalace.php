@@ -130,7 +130,7 @@ class SwampPalace extends Region\Standard\SwampPalace
         $this->can_enter = function ($locations, $items) use ($mire) {
             return $items->has('Flippers')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->restrictedSwords() || $items->hasSword())
+                    || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world))
                         && $items->hasHealth(7) && $items->hasBottle()))
                 && (($items->has('MoonPearl')
                     || ($this->world->config('canOWYBA', false)

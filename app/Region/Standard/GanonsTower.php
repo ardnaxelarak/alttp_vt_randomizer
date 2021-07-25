@@ -389,7 +389,7 @@ class GanonsTower extends Region
         $this->can_enter = function ($locations, $items) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->restrictedSwords() || $items->hasSword(2))
+                    || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world, 2))
                         && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && ((($items->has('MoonPearl') || ($this->world->config('canOWYBA', false) && $items->hasABottle()))
                     && (((($items->has('Crystal1')

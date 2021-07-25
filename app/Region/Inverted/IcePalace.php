@@ -21,7 +21,7 @@ class IcePalace extends Region\Standard\IcePalace
 
         $this->can_enter = function ($locations, $items) {
             return ($this->world->config('itemPlacement') !== 'basic'
-                || (($this->world->restrictedSwords() || $items->hasSword(2))
+                || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world, 2))
                     && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && ($items->canMeltThings($this->world) || $this->world->config('canOneFrameClipUW', false))
                 && (($items->has('Flippers')

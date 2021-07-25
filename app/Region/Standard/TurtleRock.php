@@ -87,7 +87,7 @@ class TurtleRock extends Region
             return (($locations["Turtle Rock Medallion"]->hasItem(Item::get('Bombos', $this->world)) && $items->has('Bombos'))
                 || ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Ether', $this->world)) && $items->has('Ether'))
                 || ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Quake', $this->world)) && $items->has('Quake')))
-                && ($this->world->restrictedSwords() || $items->hasSword())
+                && ($this->world->restrictedMedallions() || $items->canUseMedallions($this->world))
                 && ($items->has('MoonPearl')
                     || ($this->world->config('canOWYBA', false) && $items->hasABottle()
                         && (($this->world->config('canBootsClip', false) && $items->has('PegasusBoots'))
@@ -254,7 +254,7 @@ class TurtleRock extends Region
         $this->can_enter = function ($locations, $items) use ($lower, $middle, $upper) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->restrictedSwords() || $items->hasSword(2))
+                    || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world, 2))
                         && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && ($lower($locations, $items)
                     || $middle($locations, $items)

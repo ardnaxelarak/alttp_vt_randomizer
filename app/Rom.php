@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-07-20', 'HASH' => '840af660934c0053b3d80e6bbdfc4d93'],
-        'overworld' => ['BUILD' => '2021-07-23', 'HASH' => 'bc94fd9274e2024ae8dd9b57dfb343cc'],
+        'base' => ['BUILD' => '2021-07-24', 'HASH' => '7c03b0b75ea7e64f165143fedc9a90e3'],
+        'overworld' => ['BUILD' => '2021-07-25', 'HASH' => '4f87a5f476d2bfff9671a602ae2532ee'],
     ];
     const SIZE = 2097152;
 
@@ -2634,9 +2634,20 @@ class Rom
     }
 
     /**
-     * Enable bombs-only mode
+     * Enable pseudo-sword mode
      *
-     * @param bool $enable switch on or off
+     * @return $this
+     */
+    public function setPseudoSwordMode(): self
+    {
+        $this->write(0x18002F, pack('C*', 0x02)); // Pseudo Swords
+        $this->write(0x18003F, pack('C*', 0x01)); // Hammer Ganon
+
+        return $this;
+    }
+
+    /**
+     * Enable bombs-only mode
      *
      * @return $this
      */

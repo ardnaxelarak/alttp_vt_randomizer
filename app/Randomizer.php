@@ -284,7 +284,7 @@ class Randomizer implements RandomizerContract
             // put uncle sword back
             if (count($nice_items_swords)) {
                 $uncle_sword = Item::get('UncleSword', $world)->setTarget(array_pop($nice_items_swords));
-                if ($world->config('mode.weapons') === 'assured') {
+                if (in_array($world->config('mode.weapons'), ['assured', 'assured_pseudo'])) {
                     $world->addPreCollectedItem($uncle_sword);
                     array_push($trash_items, Item::get('FiftyRupees', $world));
                 } else {

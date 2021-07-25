@@ -23,13 +23,13 @@ class MiseryMire extends Region\Standard\MiseryMire
         $this->can_enter = function ($locations, $items) {
             return ($this->world->config('itemPlacement') !== 'basic'
                 || (
-                    ($this->world->restrictedSwords() || $items->hasSword(2))
+                    ($this->world->restrictedRealSwords() || $items->hasRealSword($this->world, 2))
                     && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && (
                     ($locations["Misery Mire Medallion"]->hasItem(Item::get('Bombos', $this->world)) && $items->has('Bombos'))
                     || ($locations["Misery Mire Medallion"]->hasItem(Item::get('Ether', $this->world)) && $items->has('Ether'))
                     || ($locations["Misery Mire Medallion"]->hasItem(Item::get('Quake', $this->world)) && $items->has('Quake')))
-                && ($this->world->restrictedSwords() || $items->hasSword())
+                && ($this->world->restrictedMedallions() || $items->canUseMedallions($this->world))
                 && ($items->has('PegasusBoots') || $items->has('Hookshot'))
                 && $items->canKillMostThings($this->world, 8)
                 && $this->world->getRegion('Mire')->canEnter($locations, $items);

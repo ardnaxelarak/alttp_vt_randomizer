@@ -707,6 +707,18 @@ return [
                         'Same as ' . __('randomizer.weapons.options.bombs') . ', except Link starts with bombs already equipped! Perhaps he hid them in his pillow?',
                     ],
                 ],
+                [
+                    'header' => __('randomizer.weapons.options.pseudo'),
+                    'content' => [
+                        'All swords have been replaced with vaguely-sharpened sticks that will only ever do 1 damage. Ganon is fought with the hammer as in swordless, and both progressive bows are always in the item pool.',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.assured_pseudo'),
+                    'content' => [
+                        'Same as ' . __('randomizer.weapons.options.pseudo') . ', except Link starts with what now passes for a sword. Perhaps he used it as his pillow?',
+                    ],
+                ],
             ],
         ],
         'enemy_health' => [

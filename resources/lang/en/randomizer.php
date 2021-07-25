@@ -238,6 +238,8 @@ return [
             'swordless' => 'Swordless',
             'bombs' => 'Bomb-Only',
             'assured_bombs' => 'Bomb-Only (Starting Bombs)',
+            'pseudo' => 'Pseudo-Swords',
+            'assured_pseudo' => 'Assured Pseudo-Swords',
         ],
         'bombs_warning' => 'Bomb-Only mode is still in development, but should be stable.',
     ],

@@ -558,6 +558,8 @@ return [
                 'swordless' => 'Swordless',
                 'bombs' => 'Bomb-Only',
                 'assured_bombs' => 'Assured Bomb-Only',
+                'pseudo' => 'Pseudo-Swords',
+                'assured_pseudo' => 'Assured Pseudo-Swords',
             ],
             'item_pool' => [
                 'normal' => 'Normal',
@@ -730,9 +732,11 @@ return [
                 'randomized' => 60,
                 'assured' => 10,
                 'vanilla' => 10,
-                'swordless' => 10,
+                'swordless' => 3,
                 'bombs' => 3,
                 'assured_bombs' => 7,
+                'pseudo' => 4,
+                'assured_pseudo' => 3,
             ],
             'item_pool' => [
                 'normal' => 70,

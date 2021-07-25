@@ -139,7 +139,7 @@ class SkullWoods extends Region
         $this->can_enter = function ($locations, $items) {
             return $items->has('RescueZelda')
                 && ($this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->restrictedSwords() || $items->hasSword())
+                    || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world))
                         && $items->hasHealth(7) && $items->hasABottle()))
                 && ($this->world->config('canDungeonRevive', false) || $items->has('MoonPearl')
                     || (($items->hasABottle() && $this->world->config('canOWYBA', false))

@@ -56,7 +56,7 @@ class TurtleRock extends Region\Standard\TurtleRock
                 ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Bombos', $this->world)) && $items->has('Bombos'))
                 || ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Ether', $this->world)) && $items->has('Ether'))
                 || ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Quake', $this->world)) && $items->has('Quake')))
-            && ($this->world->restrictedSwords() || $items->hasSword())
+            && ($this->world->restrictedMedallions() || $items->canUseMedallions($this->world))
             && $items->has('CaneOfSomaria')
             && $this->world->getRegion('East Dark World Death Mountain')->canEnter($locations, $items);
     }
@@ -200,7 +200,7 @@ class TurtleRock extends Region\Standard\TurtleRock
         $this->can_enter = function ($locations, $items) {
             return (
                 $this->world->config('itemPlacement') !== 'basic'
-                    || (($this->world->restrictedSwords() || $items->hasSword(2))
+                    || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world, 2))
                         && $items->hasHealth(12) && ($items->hasBottle(2) || $items->hasArmor())))
                 && ($this->enterTop($locations, $items) || $this->enterMiddle($locations, $items)
                     || $this->enterBottom($locations, $items));

@@ -667,7 +667,7 @@ class ItemCollection extends Collection
             return $this->hasBombLevel(1);
         }
 
-        return $this->hasSword()
+        return $this->hasRealSword($world)
             || $this->has('CaneOfSomaria')
             || ($this->canBombThings($world) && $enemies < 6
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
@@ -706,7 +706,20 @@ class ItemCollection extends Collection
     }
 
     /**
-     * Requirements for having a sword, we treat the special UncleSword like a progressive sword.
+     * Requirements for having a real sword (not pseudo); we treat the special UncleSword like a progressive sword.
+     *
+     * @param \ALttP\World  $world  world to check items against
+     * @param int $min_level minimum level of sword
+     *
+     * @return bool
+     */
+    public function hasRealSword(World $world, int $min_level = 1)
+    {
+        return $this->hasSword($min_level) && !$world->hasPseudoSwords();
+    }
+
+    /**
+     * Requirements for having a sword (either pseudo or not); we treat the special UncleSword like a progressive sword.
      *
      * @param int $min_level minimum level of sword
      *

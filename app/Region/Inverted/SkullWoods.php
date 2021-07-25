@@ -40,7 +40,7 @@ class SkullWoods extends Region\Standard\SkullWoods
 
         $this->can_enter = function ($locations, $items) {
             return ($this->world->config('itemPlacement') !== 'basic'
-                || (($this->world->restrictedSwords() || $items->hasSword())
+                || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world))
                     && $items->hasHealth(7) && $items->hasABottle()))
                 && $this->world->getRegion('North West Dark World')->canEnter($locations, $items);
         };

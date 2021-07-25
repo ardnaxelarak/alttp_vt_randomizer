@@ -21,7 +21,7 @@ class PalaceOfDarkness extends Region\Standard\PalaceOfDarkness
 
         $this->can_enter = function ($locations, $items) {
             return ($this->world->config('itemPlacement') !== 'basic'
-                || (($this->world->restrictedSwords() || $items->hasSword())
+                || (($this->world->restrictedRealSwords() || $items->hasRealSword($this->world))
                     && $items->hasHealth(7) && $items->hasABottle()))
                 && ($this->world->getRegion('North East Dark World')->canEnter($locations, $items)
                     || ($this->world->config('canOneFrameClipOW', false)

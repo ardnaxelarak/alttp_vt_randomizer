@@ -44,6 +44,8 @@ class OverworldRandomizer implements RandomizerContract
 		'swordless' => 'swordless',
 		'bombs' => 'bombs',
 		'assured_bombs' => 'bombs',
+		'pseudo' => 'pseudo',
+		'assured_pseudo' => 'assured_pseudo',
 	];
 
 	/**

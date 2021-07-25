@@ -191,7 +191,7 @@ abstract class World
         }
 
         // In swordless modes ganon vulnerability item is 100% required
-        if ($this->restrictedSwords()) {
+        if ($this->restrictedRealSwords()) {
             $this->config['region.requireGanonVulnerability'] = true;
             if (($this->config('ganon_item', 'default') === 'default' && !$this->restrictedToBombs())
                     || $this->config['ganon_item'] === 'arrow') {
@@ -409,6 +409,17 @@ abstract class World
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
+    /*
+     * Get whether the world has restricted access to real swords
+     *
+     * @return bool
+     */
+    public function restrictedRealSwords()
+    {
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo'];
+        return in_array($this->config('mode.weapons'), $swordless_modes);
+    }
+
     /**
      * Get whether the world has restricted access to using medallions
      *
@@ -429,6 +440,17 @@ abstract class World
     {
         $bomb_modes = ['bombs', 'assured_bombs'];
         return in_array($this->config('mode.weapons'), $bomb_modes);
+    }
+
+    /*
+     * Get whether the world has pseudo swords instead of real ones
+     *
+     * @return bool
+     */
+    public function hasPseudoSwords()
+    {
+        $pseudo_modes = ['pseudo', 'assured_pseudo'];
+        return in_array($this->config('mode.weapons'), $pseudo_modes);
     }
 
     /**
@@ -1196,7 +1218,10 @@ abstract class World
         $rom->setGameState($this->config('mode.state'));
         $rom->setSwordlessMode($this->config('mode.weapons') === 'swordless');
         if ($this->restrictedToBombs()) {
-            $rom->setBombsOnlyMode(true);
+            $rom->setBombsOnlyMode();
+        }
+        if ($this->hasPseudoSwords()) {
+            $rom->setPseudoSwordMode();
         }
 
         if (!$this->getLocation("Link's Uncle")->getItem() instanceof Item\Sword) {
@@ -1295,7 +1320,7 @@ abstract class World
         }
         $this->config['ignoreCanKillEscapeThings'] = $ignoreCanKillEscapeThings;
 
-        if ($uncle_items->hasSword() || $uncle_items->has('Hammer') || $uncle_items->hasBombLevel(1)) {
+        if ($uncle_items->hasRealSword($this) || $uncle_items->has('Hammer') || $uncle_items->hasBombLevel(1)) {
             $rom->setEscapeFills(0b00000000);
             $rom->setUncleSpawnRefills(0, 0, 0);
             $rom->setZeldaSpawnRefills(0, 0, 0);
