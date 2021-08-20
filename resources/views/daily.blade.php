@@ -8,5 +8,5 @@
     @endforeach
 </div>
 
-<Hashloader :no-link="false" branch="{{ $branch }}" current_rom_hash="{{ $md5 }}" override-base-bps="{{ $bpsLocation }}" hash="{{ $hash }}"></Hashloader>
+<Hashloader branch="{{ $branch }}" current_rom_hash="{{ $md5 }}" override-base-bps="{{ $bpsLocation }}" hash="{{ $hash }}"></Hashloader>
 @overwrite

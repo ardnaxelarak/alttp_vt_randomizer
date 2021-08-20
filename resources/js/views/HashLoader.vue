@@ -34,7 +34,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md mb-3">
-            <vt-rom-info :no-link="noLink" :rom="rom"></vt-rom-info>
+            <vt-rom-info :rom="rom"></vt-rom-info>
           </div>
           <div class="col-md mb-3">
             <div class="row">
@@ -99,10 +99,6 @@ export default {
     hash: {
       type: String,
       required: true
-    },
-    noLink: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
@@ -201,6 +197,7 @@ export default {
         paletteShuffle: this.paletteShuffle,
         musicOn: this.musicOn,
         reduceFlashing: this.reduceFlashing,
+        shuffleSfx: this.shuffleSfx,
         fakeBoots: this.fakeBoots
       });
     },
@@ -237,6 +234,7 @@ export default {
       musicOn: state => state.musicOn,
       paletteShuffle: state => state.paletteShuffle,
       reduceFlashing: state => state.reduceFlashing,
+      shuffleSfx: state => state.shuffleSfx,
       fakeBoots: state => state.fakeBoots
     })
   }

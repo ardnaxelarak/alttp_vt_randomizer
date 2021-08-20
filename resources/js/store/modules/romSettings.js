@@ -18,6 +18,7 @@ export default {
     musicOn: true,
     paletteShuffle: false,
     reduceFlashing: false,
+    shuffleSfx: false,
     fakeBoots: false,
     options: {
       heartSpeed: [
@@ -54,6 +55,7 @@ export default {
         dispatch("load", ["music_on", "setMusicOn"]),
         dispatch("load", ["palette_shuffle", "setPaletteShuffle"]),
         dispatch("load", ["reduce_flashing", "setReduceFlashing"]),
+        dispatch("load", ["shuffle_sfx", "setShuffleSfx"]),
         dispatch("load", ["fake_boots", "setFakeBoots"]),
       ]).then(() => {
         commit("setInitalizing", false);
@@ -97,6 +99,10 @@ export default {
     setReduceFlashing(state, reduceFlashing) {
       state.reduceFlashing = reduceFlashing;
       localforage.setItem("rom.reduce_flashing", reduceFlashing);
+    },
+    setShuffleSfx(state, shuffleSfx) {
+      state.shuffleSfx = shuffleSfx;
+      localforage.setItem("rom.shuffle_sfx", shuffleSfx);
     },
     setFakeBoots(state, fakeBoots) {
       state.fakeBoots = fakeBoots;

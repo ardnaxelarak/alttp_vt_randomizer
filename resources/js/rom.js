@@ -5,6 +5,7 @@ import BPS from "./bps";
 import * as Z3PR from "@maseya/z3pr";
 import localforage from "localforage";
 import center from "center-align";
+import SFX from "./sfx";
 
 export default class ROM {
   constructor(blob, loadedCallback) {
@@ -116,7 +117,7 @@ export default class ROM {
     });
   }
 
-  save(filename, { paletteShuffle, quickswap, musicOn, reduceFlashing, fakeBoots }) {
+  save(filename, { paletteShuffle, quickswap, musicOn, reduceFlashing, shuffleSfx, fakeBoots }) {
     let preProcess = this.arrayBuffer.slice(0);
 
     if (paletteShuffle) {
@@ -135,6 +136,10 @@ export default class ROM {
       this.setFakeBoots(fakeBoots);
     } else {
       this.setFakeBoots(false);
+    }
+
+    if (shuffleSfx) {
+      this.randomizeSfx();
     }
 
     this.updateChecksum().then(() => {
@@ -421,7 +426,7 @@ export default class ROM {
       randomize_dungeon: true,
       seed: this.rand.nextInt(0, 4294967295)
     });
-    this.rand.reset()
+    this.rand.reset();
   }
 
   setReduceFlashing(enable) {
@@ -452,6 +457,11 @@ export default class ROM {
     } else {
       return value;
     }
+  }
+
+  randomizeSfx() {
+    new SFX(this.rand.nextInt(0, 4294967295)).randomize_sfx(this);
+    this.rand.reset();
   }
 
   parsePatch(data, progressCallback) {

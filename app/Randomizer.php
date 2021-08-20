@@ -719,19 +719,15 @@ class Randomizer implements RandomizerContract
         });
 
         // handle hardmode shops
-        switch ($world->config('rom.HardMode', 0)) {
-            case 1:
-            case 2:
-            case 3:
-                $world->getShop("Capacity Upgrade")->clearInventory();
-                $shops->each(function ($shop) use ($world) {
-                    foreach ($shop->getInventory() as $slot => $data) {
-                        if ($data['item'] instanceof Item\Shield) {
-                            $shop->removeInventory((int) $slot);
-                        }
+        if ($world->config('shops.HardMode', false)) {
+            $world->getShop("Capacity Upgrade")->clearInventory();
+            $shops->each(function ($shop) use ($world) {
+                foreach ($shop->getInventory() as $slot => $data) {
+                    if ($data['item'] instanceof Item\Shield) {
+                        $shop->removeInventory((int) $slot);
                     }
-                });
-                break;
+                }
+            });
         }
 
         if (!$world->config('rom.genericKeys', false)

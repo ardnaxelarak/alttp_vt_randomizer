@@ -62,6 +62,11 @@
         <Toggle :value="musicOn" @input="setMusicOn">{{ $t('rom.settings.music') }}</Toggle>
       </div>
     </div>
+    <div v-if="!rom.music" class="row mb-3">
+	  <div class="col-md-12">
+		<Toggle :value="shuffleSfx" @input="setShuffleSfx">{{ $t('rom.settings.shuffle_sfx') }}</Toggle>
+	  </div>
+	</div>
     <div v-if="!rom.tournament || rom.allowQuickSwap" class="row mb-3">
       <div class="col-md-12">
         <Toggle :value="quickswap" @input="setQuickswap">{{ $t('rom.settings.quickswap') }}</Toggle>
@@ -211,7 +216,8 @@ export default {
       "setMusicOn",
       "setPaletteShuffle",
       "setReduceFlashing",
-      "setFakeBoots"
+      "setShuffleSfx",
+      "setFakeBoots",
     ])
   },
   computed: {
@@ -226,6 +232,7 @@ export default {
       musicOn: state => state.musicOn,
       paletteShuffle: state => state.paletteShuffle,
       reduceFlashing: state => state.reduceFlashing,
+      shuffleSfx: state => state.shuffleSfx,
       fakeBoots: state => state.fakeBoots
     })
   }

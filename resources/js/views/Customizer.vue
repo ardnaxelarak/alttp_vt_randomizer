@@ -607,6 +607,7 @@ export default {
         paletteShuffle: this.paletteShuffle,
         musicOn: this.musicOn,
         reduceFlashing: this.reduceFlashing,
+        shuffleSfx: this.shuffleSfx,
         fakeBoots: this.fakeBoots
       });
     },
@@ -771,6 +772,8 @@ export default {
       quickswap: state => state.quickswap,
       musicOn: state => state.musicOn,
       paletteShuffle: state => state.paletteShuffle,
+      reduceFlashing: state => state.reduceFlashing,
+      shuffleSfx: state => state.shuffleSfx,
       fakeBoots: state => state.fakeBoots
     }),
     flatItemPool() {
