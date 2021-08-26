@@ -1321,7 +1321,8 @@ abstract class World
                 $rom->setWorldOnAgahnimDeath(false);
                 $rom->setRandomizerSeedType('MajorGlitches');
                 $rom->setWarningFlags(bindec('01100000'));
-                $rom->setPODEGfix(false);
+                $rom->setAllowAccidentalMajorGlitch(true);
+                $rom->setSQEGFix(false);
                 break;
             case 'OverworldGlitches':
                 $rom->setPreAgahnimDarkWorldDeathInDungeon(false);
@@ -1329,13 +1330,15 @@ abstract class World
                 $rom->setWorldOnAgahnimDeath(false);
                 $rom->setRandomizerSeedType('OverworldGlitches');
                 $rom->setWarningFlags(bindec('01000000'));
-                $rom->setPODEGfix(false);
+                $rom->setAllowAccidentalMajorGlitch(true);
+                $rom->setSQEGFix(false);
                 break;
             case 'NoGlitches':
             default:
                 $rom->setSaveAndQuitFromBossRoom(true);
                 $rom->setWorldOnAgahnimDeath(true);
-                $rom->setPODEGfix(true);
+                $rom->setAllowAccidentalMajorGlitch(false);
+                $rom->setSQEGFix(true);
                 break;
         }
 

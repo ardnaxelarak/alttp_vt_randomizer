@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac4ae3f8df06bd21b8856a62f4a8c270",
+    "content-hash": "7be054bd0e19e2e7ca63c5167bf52c25",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.191.0",
+            "version": "3.191.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "15e97fe060decf30fa103be091b113adcc578c5d"
+                "reference": "63f015b49346cda8e4ac57cc33174744cc116654"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/15e97fe060decf30fa103be091b113adcc578c5d",
-                "reference": "15e97fe060decf30fa103be091b113adcc578c5d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/63f015b49346cda8e4ac57cc33174744cc116654",
+                "reference": "63f015b49346cda8e4ac57cc33174744cc116654",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.191.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.191.4"
             },
-            "time": "2021-08-19T18:15:49+00:00"
+            "time": "2021-08-25T18:15:26+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -7324,17 +7324,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "74e2f96e0a0cb03e5cfe8e5ed7c2078730346195"
+                "reference": "7c8ef3afce710f6415012ff472f4e38987b261dc"
             },
             "type": "library"
         },
         {
             "name": "z3/randomizer_ow",
-            "version": "31.0.9",
+            "version": "31.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "0816bb7cab70aacceea5b01697868f4921c78b34"
+                "reference": "42002ae83995cbdbc49901c79e97341ec173d614"
             },
             "type": "library"
         }
@@ -9762,16 +9762,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.95",
+            "version": "0.12.96",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58"
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
-                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a98bdc51318f20fcae8c953d266f81a70254917f",
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f",
                 "shasum": ""
             },
             "require": {
@@ -9802,7 +9802,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.95"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.96"
             },
             "funding": [
                 {
@@ -9822,7 +9822,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-20T12:53:41+00:00"
+            "time": "2021-08-21T11:55:13+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

@@ -53,7 +53,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "74e2f96e0a0cb03e5cfe8e5ed7c2078730346195"
+          "reference": "7c8ef3afce710f6415012ff472f4e38987b261dc"
         }
       }
     },
@@ -61,11 +61,11 @@
       "type": "package",
       "package": {
         "name": "z3/randomizer_ow",
-        "version": "31.0.9",
+        "version": "31.0.10",
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "0816bb7cab70aacceea5b01697868f4921c78b34"
+          "reference": "42002ae83995cbdbc49901c79e97341ec173d614"
         }
       }
     },

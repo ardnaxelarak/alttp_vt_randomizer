@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-08-09', 'HASH' => '89b100100c84a01afea5da9c5ae352cc'],
-        'overworld' => ['BUILD' => '2021-08-09', 'HASH' => '28972caa75aa700fc7f4bf3601cac271'],
+        'base' => ['BUILD' => '2021-08-26', 'HASH' => '0377d46a5ac0f624e624d1ca735d65db'],
+        'overworld' => ['BUILD' => '2021-08-26', 'HASH' => '2df18524dd96e8e89a137e76c6b03ef8'],
     ];
     const SIZE = 2097152;
 
@@ -525,10 +525,8 @@ class Rom
                     $equipment[0x369] |= 0b00100000;
                     break;
                 case 'MapH1':
-                    $equipment[0x369] |= 0b01000000;
-                    break;
                 case 'MapH2':
-                    $equipment[0x369] |= 0b10000000;
+                    $equipment[0x369] |= 0b11000000;
                     break;
                 case 'CompassA2':
                     $equipment[0x364] |= 0b00000100;
@@ -567,10 +565,8 @@ class Rom
                     $equipment[0x365] |= 0b00100000;
                     break;
                 case 'CompassH1':
-                    $equipment[0x365] |= 0b01000000;
-                    break;
                 case 'CompassH2':
-                    $equipment[0x365] |= 0b10000000;
+                    $equipment[0x365] |= 0b11000000;
                     break;
                 case 'BigKeyA2':
                     $equipment[0x366] |= 0b00000100;
@@ -609,15 +605,12 @@ class Rom
                     $equipment[0x367] |= 0b00100000;
                     break;
                 case 'BigKeyH1':
-                    $equipment[0x367] |= 0b01000000;
-                    break;
                 case 'BigKeyH2':
-                    $equipment[0x367] |= 0b10000000;
-                    break;
-                case 'KeyH2':
-                    $equipment[0x37C] += 1;
+                    $equipment[0x367] |= 0b11000000;
                     break;
                 case 'KeyH1':
+                case 'KeyH2':
+                    $equipment[0x37C] += 1;
                     $equipment[0x37D] += 1;
                     break;
                 case 'KeyP1':
@@ -2783,15 +2776,29 @@ class Rom
     }
 
     /**
-     * Enable/Disable PoD EG correction
+     * Enable/Disable PoD / S&Q EG correction
      *
      * @param bool $enable switch on or off
      *
      * @return $this
      */
-    public function setPODEGfix(bool $enable = true): self
+    public function setSQEGFix(bool $enable = true): self
     {
         $this->write(0x1800A4, pack('C*', $enable ? 0x01 : 0x00));
+
+        return $this;
+    }
+
+    /**
+     * Enable/Disable Allow Accidental Major Glitch
+     *
+     * @param bool $enable switch on or off
+     *
+     * @return $this
+     */
+    public function setAllowAccidentalMajorGlitch(bool $enable = true): self
+    {
+        $this->write(0x180358, pack('C*', $enable ? 0x01 : 0x00));
 
         return $this;
     }

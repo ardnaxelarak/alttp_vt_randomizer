@@ -104,6 +104,10 @@ class SettingsController extends Controller
                                 'Map',
                                 'MapLW',
                                 'MapDW',
+                                'BigKeyH1',
+                                'KeyH1',
+                                'CompassH1',
+                                'MapH1',
                                 'multiRNG',
                                 'PowerStar',
                                 'singleRNG',
@@ -217,8 +221,8 @@ class SettingsController extends Controller
                 'name' => $info['name'],
                 'author' => $info['author'],
                 'version' => $info['version'],
-                'file' => 'https://alttpr.s3.us-east-2.amazonaws.com/' . $file,
-                'preview' => 'https://alttpr.s3.us-east-2.amazonaws.com/' . $file . '.png',
+                'file' => 'https://alttpr-assets.s3.us-east-2.amazonaws.com/' . $file,
+                'preview' => 'https://alttpr-assets.s3.us-east-2.amazonaws.com/' . $file . '.png',
                 'tags' => $info['tags'] ?? [],
                 'usage' => $info['usage'] ?? []
             ];
