@@ -23,6 +23,7 @@ class RandomizerSelector
         if ($world->config('doors.shuffle', 'vanilla') !== 'vanilla'
                 || $world->config('overworld.shuffle', 'vanilla') !== 'vanilla'
                 || $world->config('overworld.swap', 'vanilla') !== 'vanilla'
+                || $world->config('overworld.fluteshuffle', 'vanilla') !== 'vanilla'
                 || $world->config('dropShuffle', 'off') === 'on'
                 || $world->config('shopsanity', 'off') === 'on'
                 || $world->config('entrances', 'none') !== 'none') {
