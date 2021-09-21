@@ -193,10 +193,10 @@ return [
         ],
     ],
     "ow_mixed" => [
-        'title' => 'Overworld Mixed',
+        'title' => 'Overworld Tile Swap',
         'options' => [
-            'off' => 'Off',
-            'on' => 'On',
+            'off' => 'None',
+            'on' => 'Mixed',
         ],
     ],
     "ow_flute_shuffle" => [
