@@ -60,13 +60,17 @@ export default {
     value: "vanilla",
     name: "randomizer.ow_shuffle.options.vanilla"
   },
+  ow_crossed: {
+    value: "vanilla",
+    name: "randomizer.ow_crossed.options.vanilla"
+  },
   ow_keep_similar: {
     value: "off",
     name: "randomizer.ow_keep_similar.options.off"
   },
-  ow_swap: {
-    value: "vanilla",
-    name: "randomizer.ow_swap.options.vanilla"
+  ow_mixed: {
+    value: "off",
+    name: "randomizer.ow_mixed.options.off"
   },
   ow_flute_shuffle: {
     value: "vanilla",

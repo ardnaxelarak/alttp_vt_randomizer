@@ -443,36 +443,57 @@ return [
                 ],
             ],
         ],
+        'ow_crossed' => [
+            'header' => __('randomizer.ow_crossed.title'),
+            'subheader' => [
+                'This setting allows overworld connections to be shuffled cross-world.',
+                'Polar and Grouped both are guaranteed to result in two separated planes of tiles. To navigate to the other, you have the following methods: 1) normal portals, 2) mirroring on dark world tiles, and 3) fluting to a light world tile that was previously unreachable.',
+                'Limited and Chaos are not bound to a two-plane framework. This means that it could be possible to travel on foot to every tile without entering a normal portal.',
+            ],
+            'sections' => [
+                'vanilla' => [
+                    'header' => __('randomizer.ow_crossed.options.vanilla'),
+                    'content' => [
+                        'All overworld transitions will remain same-world.',
+                    ],
+                ],
+                'polar' => [
+                    'header' => __('randomizer.ow_crossed.options.polar'),
+                    'content' => [
+                        'Only effective if ' . __('randomizer.ow_mixed.title') . ' is enabled. Enabling Polar preserves the original/vanilla connections even when tiles are swapped/mixed. This results in a completely vanilla overworld, except that some tiles will transform Link to a Bunny (as per Mixed swapping some tiles to the other world). This offers an interesting twist on Mixed where you have a pre-conditioned knowledge of the terrain you will encounter, but not necessarily be able to do what you need to do there. (See ' . __('randomizer.ow_mixed.title') . ' for more details.)',
+                    ],
+                ],
+                'grouped' => [
+                    'header' => __('randomizer.ow_crossed.options.grouped'),
+                    'content' => [
+                        'This option shuffles connections cross-world in the same manner as ' . __('randomizer.ow_mixed.title') . ', the connections leading in and coming out of a group of tiles are crossed. Unlike Polar, this uses a different set of tile groups as a basis of crossing connections, albeit the same rule govern which groups of tiles must cross together. (See ' . __('randomizer.ow_mixed.title') . ' for more details.)',
+                    ],
+                ],
+                'limited' => [
+                    'header' => __('randomizer.ow_crossed.options.limited'),
+                    'content' => [
+                        'Every transition independently is a candidate to be chosen as a cross-world connection; however, only 9 transitions become crossed (in each world). This option abides by the ' . __('randomizer.ow_keep_similar.title') . ' option and will guarantee same effect on all edges in a similar edge group if enabled. If a similar edge group is chosen from the pool of candidates, it only counts as one portal, not multiple.',
+                        'Note: Only parallel connections (a connection that also exists in the opposite world) are considered for cross-world connections, which means that the same connection in the opposite world will also connect cross-world.',
+                    ],
+                ],
+                'chaos' => [
+                    'header' => __('randomizer.ow_crossed.options.chaos'),
+                    'content' => [
+                        'Same as ' . __('randomizer.ow_crossed.options.limited') . ', except that there is no limit to the number of cross-world connections that are made. Each transition has an equal 50/50 chance of being a crossed connection.',
+                    ],
+                ],
+            ],
+        ],
         'ow_keep_similar' => [
             'header' => __('randomizer.ow_keep_similar.title'),
             'content' => [
                 'When enabled with ' . __('randomizer.ow_shuffle.title') . ', similar edge transitions will stay together. For example, the two west edges on Potion Shop with be paired with another similar pair.',
             ],
         ],
-        'ow_swap' => [
-            'header' => __('randomizer.ow_swap.title'),
-            'subheader' => [
-                'This setting swaps the tiles of the overworld between the light world and dark world.',
-            ],
-            'sections' => [
-                'vanilla' => [
-                    'header' => __('randomizer.ow_swap.options.vanilla'),
-                    'content' => [
-                        'All overworld tiles remain in their original world as they were in the base game.',
-                    ],
-                ],
-                'mixed' => [
-                    'header' => __('randomizer.ow_swap.options.mixed'),
-                    'content' => [
-                        'Overworld tiles are randomly chosen to become part of the opposite world.',
-                    ],
-                ],
-                'crossed' => [
-                    'header' => __('randomizer.ow_swap.options.crossed'),
-                    'content' => [
-                        'Overworld tiles remain in their original world, but the transitions are shuffled cross-world.',
-                    ],
-                ],
+        'ow_mixed' => [
+            'header' => __('randomizer.ow_mixed.title'),
+            'content' => [
+                'When enabled, OW tiles are randomly chosen to become a part of the opposite world. When on the Overworld, there will be an L or D in the upper left corner, indicating which world you are currently in. Mirroring still works the same, you must be in the DW to mirror to the LW.',
             ],
         ],
         'ow_flute_shuffle' => [
@@ -806,12 +827,18 @@ return [
                         'Enable or disable the background music, including MSU-1 playback.  MSU-1 users should leave this enabled.',
                     ],
                 ],
+                'msu1resume' => [
+                    'header' => __('rom.settings.msu1resume'),
+                    'content' => [
+                        'Enables the MSU-1 music resume feature.  This feature allows the track that was playing to resume where it left off when re-entering the overworld.',
+                    ],
+                ],
                 'shuffle_sfx' => [
                 	'header' => __('rom.settings.shuffle_sfx'),
                 	'content' => [
 						'Randomizes the sound effects within the game. This means everything can sound like anything else. Enable with caution!',
 					],
-				]
+				],
                 'quickswap' => [
                     'header' => __('rom.settings.quickswap'),
                     'content' => [

@@ -141,6 +141,10 @@ class OverworldRandomizer implements RandomizerContract
 			$flags[] = '--ow_keepsimilar';
 		}
 
+		if ($this->world->config('overworld.mixed') === 'on') {
+			$flags[] = '--ow_mixed';
+		}
+
 		if ($this->world->config('spoil.Hints') === 'on') {
 			$flags[] = '--hints';
 		}
@@ -184,8 +188,8 @@ class OverworldRandomizer implements RandomizerContract
 				$this->world->config('doors.intensity'),
 				'--ow_shuffle',
 				$this->world->config('overworld.shuffle'),
-				'--ow_swap',
-				$this->world->config('overworld.swap'),
+				'--ow_crossed',
+				$this->world->config('overworld.crossed'),
 				'--ow_fluteshuffle',
 				$this->world->config('overworld.fluteShuffle'),
 				'--crystals_ganon',

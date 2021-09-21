@@ -48,8 +48,9 @@ class Randomize extends Command
         . ' {--door_shuffle=vanilla : set door shuffle}'
         . ' {--door_intensity=1 : set door shuffle intensity}'
         . ' {--ow_shuffle=vanilla : set overworld shuffle}'
+        . ' {--ow_crossed=vanilla : set overworld crossed mode}'
         . ' {--ow_keepsimilar=off : keep similar transitions together in overworld shuffle}'
-        . ' {--ow_swap=vanilla : set overworld swap}'
+        . ' {--ow_mixed=off : set overworld mixed mode}'
         . ' {--ow_flute_shuffle=vanilla : set overworld flute shuffle}'
         . ' {--shopsanity=off : set shopsanity on/off}'
         . ' {--accessibility=item : set item/location accessibility}'
@@ -190,8 +191,9 @@ class Randomize extends Command
                 'doors.shuffle' => $this->option('door_shuffle'),
                 'doors.intensity' => $this->option('door_intensity'),
                 'overworld.shuffle' => $this->option('ow_shuffle'),
+                'overworld.crossed' => $this->option('ow_crossed'),
                 'overworld.keepSimilar' => $this->option('ow_keep_similar'),
-                'overworld.swap' => $this->option('ow_swap'),
+                'overworld.mixed' => $this->option('ow_mixed'),
                 'overworld.fluteShuffle' => $this->option('ow_flute_shuffle'),
                 'shopsanity' => $this->option('shopsanity'),
                 'ganon_item' => $ganon_item,

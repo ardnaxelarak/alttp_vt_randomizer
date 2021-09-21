@@ -22,15 +22,16 @@ function asMulti(object, mKey) {
 function needOWBranch(state) {
   return state.entrance_shuffle.value !== "none" || state.door_shuffle.value !== "vanilla"
       || state.shopsanity.value === "on" || state.drop_shuffle.value === "on"
-      || state.ow_shuffle.value !== "vanilla" || state.ow_swap.value !== "vanilla"
-      || state.ow_flute_shuffle.value !== "vanilla";
+      || state.ow_shuffle.value !== "vanilla" || state.ow_crossed.value !== "vanilla"
+      || state.ow_mixed.value === "on" || state.ow_flute_shuffle.value !== "vanilla";
 }
 
 function turnOffOWBranch(commit) {
   commit("setEntranceShuffle", "none");
   commit("setDoorShuffle", "vanilla");
   commit("setOverworldShuffle", "vanilla");
-  commit("setOverworldSwap", "vanilla");
+  commit("setOverworldCrossed", "vanilla");
+  commit("setOverworldMixed", "off");
   commit("setOverworldFluteShuffle", "vanilla");
   commit("setDropShuffle", "off");
   commit("setShopsanity", "off");
@@ -74,8 +75,9 @@ export default {
       door_shuffle: [],
       door_intensity: [],
       ow_shuffle: [],
+      ow_crossed: [],
       ow_keep_similar: [],
-      ow_swap: [],
+      ow_mixed: [],
       ow_flute_shuffle: [],
       shopsanity: [],
       boss_shuffle: [],
@@ -116,8 +118,9 @@ export default {
             dispatch("load", ["door_shuffle", "setDoorShuffle"]),
             dispatch("load", ["door_intensity", "setDoorIntensity"]),
             dispatch("load", ["ow_shuffle", "setOverworldShuffle"]),
+            dispatch("load", ["ow_crossed", "setOverworldCrossed"]),
             dispatch("load", ["ow_keep_similar", "setOverworldKeepSimilar"]),
-            dispatch("load", ["ow_swap", "setOverworldSwap"]),
+            dispatch("load", ["ow_mixed", "setOverworldMixed"]),
             dispatch("load", ["ow_flute_shuffle", "setOverworldFluteShuffle"]),
             dispatch("load", ["shopsanity", "setShopsanity"]),
             dispatch("load", ["boss_shuffle", "setBossShuffle"]),
@@ -172,8 +175,9 @@ export default {
         commit("setDoorShuffle", state.preset_map[preset.value]["door_shuffle"]);
         commit("setDoorIntensity", state.preset_map[preset.value]["door_intensity"]);
         commit("setOverworldShuffle", state.preset_map[preset.value]["ow_shuffle"]);
+        commit("setOverworldCrossed", state.preset_map[preset.value]["ow_crossed"]);
         commit("setOverworldKeepSimilar", state.preset_map[preset.value]["ow_keep_similar"]);
-        commit("setOverworldSwap", state.preset_map[preset.value]["ow_swap"]);
+        commit("setOverworldMixed", state.preset_map[preset.value]["ow_mixed"]);
         commit("setOverworldFluteShuffle", state.preset_map[preset.value]["ow_flute_shuffle"]);
         commit("setShopsanity", state.preset_map[preset.value]["shopsanity"]);
         commit(
@@ -263,8 +267,13 @@ export default {
 
       turnOnOWBranch(commit, state);
     },
-    setOverworldSwap({ commit, state }, value) {
-      commit("setOverworldSwap", value);
+    setOverworldCrossed({ commit, state }, value) {
+      commit("setOverworldCrossed", value);
+
+      turnOnOWBranch(commit, state);
+    },
+    setOverworldMixed({ commit, state }, value) {
+      commit("setOverworldMixed", value);
 
       turnOnOWBranch(commit, state);
     },
@@ -311,8 +320,9 @@ export default {
         door_shuffle,
         door_intensity,
         ow_shuffle,
+        ow_crossed,
         ow_keep_similar,
-        ow_swap,
+        ow_mixed,
         ow_flute_shuffle,
         shopsanity,
         boss_shuffle,
@@ -347,8 +357,9 @@ export default {
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
+      state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
-      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_mixed = asMulti(ow_mixed, "ow_mixed");
       state.options.ow_flute_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
@@ -470,6 +481,13 @@ export default {
       state.ow_shuffle = value;
       localforage.setItem("randomizer.ow_shuffle", value);
     },
+    setOverworldCrossed(state, value) {
+      if (typeof value === "string") {
+        value = state.options.ow_crossed.find(o => o.value === value);
+      }
+      state.ow_crossed = value;
+      localforage.setItem("randomizer.ow_crossed", value);
+    },
     setOverworldKeepSimilar(state, value) {
       if (typeof value === "string") {
         value = state.options.ow_keep_similar.find(o => o.value === value);
@@ -477,12 +495,12 @@ export default {
       state.ow_keep_similar = value;
       localforage.setItem("randomizer.ow_keep_similar", value);
     },
-    setOverworldSwap(state, value) {
+    setOverworldMixed(state, value) {
       if (typeof value === "string") {
-        value = state.options.ow_swap.find(o => o.value === value);
+        value = state.options.ow_mixed.find(o => o.value === value);
       }
-      state.ow_swap = value;
-      localforage.setItem("randomizer.ow_swap", value);
+      state.ow_mixed = value;
+      localforage.setItem("randomizer.ow_mixed", value);
     },
     setOverworldFluteShuffle(state, value) {
       if (typeof value === "string") {

@@ -117,7 +117,7 @@ export default class ROM {
     });
   }
 
-  save(filename, { paletteShuffle, quickswap, musicOn, reduceFlashing, shuffleSfx, fakeBoots }) {
+  save(filename, { paletteShuffle, quickswap, musicOn, reduceFlashing, shuffleSfx, msu1Resume, fakeBoots }) {
     let preProcess = this.arrayBuffer.slice(0);
 
     if (paletteShuffle) {
@@ -129,6 +129,7 @@ export default class ROM {
       this.setQuickswap(false);
     }
     this.setMusicVolume(musicOn);
+    this.setMSU1Resume(msu1Resume);
 
     this.setReduceFlashing(reduceFlashing);
 
@@ -273,8 +274,10 @@ export default class ROM {
       }
 
       // GFX
-      for (let i = 0; i < 0x7000; i++) {
-        this.u_array[0x80000 + i] = zspr[gfx_offset + i];
+      if (gfx_offset !== 0xFFFFFFFF) {
+        for (let i = 0; i < 0x7000; i++) {
+          this.u_array[0x80000 + i] = zspr[gfx_offset + i];
+        }
       }
 
       // Palettes
@@ -308,6 +311,17 @@ export default class ROM {
         this.write(0x0cfec1, !enable ? 0x00 : 0xc0);
         this.write(0x0d0000, !enable ? [0x00, 0x00] : [0xda, 0x58]);
         this.write(0x0d00e7, !enable ? [0xc4, 0x58] : [0xda, 0x58]);
+      }
+
+      resolve(this);
+    });
+  }
+
+  setMSU1Resume(enable) {
+    return new Promise(resolve => {
+      if (this.build >= "2021-05-04" && !enable) {
+        this.write(0x18021D, 0x00);
+        this.write(0x18021E, 0x00);
       }
 
       resolve(this);
@@ -489,7 +503,8 @@ export default class ROM {
         this.shuffle = this.shuffle === 'vanilla' ? 'none' : this.shuffle;
         this.door_shuffle = this.parseMulti(data.spoiler.meta, "door_shuffle");
         this.ow_shuffle = this.parseMulti(data.spoiler.meta, "ow_shuffle");
-        this.ow_swap = this.parseMulti(data.spoiler.meta, "ow_swap");
+        this.ow_crossed = this.parseMulti(data.spoiler.meta, "ow_crossed");
+        this.ow_mixed = this.parseMulti(data.spoiler.meta, "ow_mixed");
         this.difficulty_mode = data.spoiler.meta.difficulty_mode;
         this.difficulty = data.spoiler.meta.difficulty;
         this.notes = data.spoiler.meta.notes;

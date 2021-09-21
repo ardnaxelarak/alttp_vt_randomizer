@@ -27,6 +27,7 @@
     "martinlindhe/laravel-vue-i18n-generator": "^0.1.35",
     "sentry/sentry": "^2.0",
     "sentry/sentry-laravel": "^1.0",
+    "spatie/laravel-cookie-consent": "^2.12",
     "z3/enemizer_linux": "6.1.0.180",
     "z3/enemizer_osx": "6.1.0.180",
     "z3/entrancerandomizer": "^0.6.3",
@@ -53,7 +54,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "7c8ef3afce710f6415012ff472f4e38987b261dc"
+          "reference": "123dcddc94426910f5fd6d2bec5aa74508918313"
         }
       }
     },
@@ -65,7 +66,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "42002ae83995cbdbc49901c79e97341ec173d614"
+          "reference": "f6f6383913ce2f27e2ce24ec2a53be5e55634c62"
         }
       }
     },
@@ -107,11 +108,11 @@
       "type": "package",
       "package": {
         "name": "z3/overworldrandomizer",
-        "version": "0.1.7.2",
+        "version": "0.1.9.1",
         "source": {
           "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
           "type": "git",
-          "reference": "3b72626f2388165c923bc0f7c3dd051984cc0b6c"
+          "reference": "d733eca0f844f93958cd84901df8da9e796d7462"
         }
       }
     }

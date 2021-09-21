@@ -22,7 +22,8 @@ class RandomizerSelector
     public static function getRandomizer(World $world) {
         if ($world->config('doors.shuffle', 'vanilla') !== 'vanilla'
                 || $world->config('overworld.shuffle', 'vanilla') !== 'vanilla'
-                || $world->config('overworld.swap', 'vanilla') !== 'vanilla'
+                || $world->config('overworld.crossed', 'vanilla') !== 'vanilla'
+                || $world->config('overworld.mixed', 'off') === 'on'
                 || $world->config('overworld.fluteshuffle', 'vanilla') !== 'vanilla'
                 || $world->config('dropShuffle', 'off') === 'on'
                 || $world->config('shopsanity', 'off') === 'on'

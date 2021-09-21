@@ -67,8 +67,9 @@ export default {
               dispatch("load", [worldId, "door_shuffle", "setDoorShuffle"]),
               dispatch("load", [worldId, "door_intensity", "setDoorIntensity"]),
               dispatch("load", [worldId, "ow_shuffle", "setOverworldShuffle"]),
+              dispatch("load", [worldId, "ow_crossed", "setOverworldCrossed"]),
               dispatch("load", [worldId, "ow_keep_similar", "setOverworldKeepSimilar"]),
-              dispatch("load", [worldId, "ow_swap", "setOverworldSwap"]),
+              dispatch("load", [worldId, "ow_mixed", "setOverworldMixed"]),
               dispatch("load", [worldId, "ow_flute_shuffle", "setOverworldFluteShuffle"]),
               dispatch("load", [worldId, "shopsanity", "setShopsanity"]),
               dispatch("load", [worldId, "boss_shuffle", "setBossShuffle"]),
@@ -150,13 +151,17 @@ export default {
           worldId,
           value: state.preset_map[preset.value]["ow_shuffle"]
         });
+        commit("setOverworldCrossed", {
+          worldId,
+          value: state.preset_map[preset.value]["ow_crossed"]
+        });
         commit("setOverworldKeepSimilar", {
           worldId,
           value: state.preset_map[preset.value]["ow_keep_similar"]
         });
-        commit("setOverworldSwap", {
+        commit("setOverworldMixed", {
           worldId,
-          value: state.preset_map[preset.value]["ow_swap"]
+          value: state.preset_map[preset.value]["ow_mixed"]
         });
         commit("setOverworldFluteShuffle", {
           worldId,
@@ -339,8 +344,9 @@ export default {
         door_shuffle,
         door_intensity,
         ow_shuffle,
+        ow_crossed,
         ow_keep_similar,
-        ow_swap,
+        ow_mixed,
         ow_flute_shuffle,
         shopsanity,
         boss_shuffle,
@@ -374,8 +380,9 @@ export default {
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
+      state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
-      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_mixed = asMulti(ow_mixed, "ow_mixed");
       state.options.ow_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
@@ -496,6 +503,13 @@ export default {
       state.worlds[worldId].ow_shuffle = value;
       localforage.setItem(`multiworld.${worldId}.ow_shuffle`, value);
     },
+    setOverworldCrossed(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.ow_crossed.find(o => o.value === value);
+      }
+      state.worlds[worldId].ow_crossed = value;
+      localforage.setItem(`multiworld.${worldId}.ow_crossed`, value);
+    },
     setOverworldKeepSimilar(state, { worldId, value }) {
       if (typeof value === "string") {
         value = state.options.ow_keep_similar.find(o => o.value === value);
@@ -503,12 +517,12 @@ export default {
       state.worlds[worldId].ow_keep_similar = value;
       localforage.setItem(`multiworld.${worldId}.ow_keep_similar`, value);
     },
-    setOverworldSwap(state, { worldId, value }) {
+    setOverworldMixed(state, { worldId, value }) {
       if (typeof value === "string") {
-        value = state.options.ow_swap.find(o => o.value === value);
+        value = state.options.ow_mixed.find(o => o.value === value);
       }
-      state.worlds[worldId].ow_swap = value;
-      localforage.setItem(`multiworld.${worldId}.ow_swap`, value);
+      state.worlds[worldId].ow_mixed = value;
+      localforage.setItem(`multiworld.${worldId}.ow_mixed`, value);
     },
     setOverworldFluteShuffle(state, { worldId, value }) {
       if (typeof value === "string") {

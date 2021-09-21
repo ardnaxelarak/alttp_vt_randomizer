@@ -241,22 +241,14 @@
                 @endforeach
             </div>
 
-            <a class="anchor" id="ow_keep_similar"></a>
-            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_keep_similar.header') }}</h3>
-            <div class="card-body">
-                @foreach (__('options.cards.ow_keep_similar.content') as $block)
-                    <p>{!! $block !!}</p>
-                @endforeach
-            </div>
-
-            <a class="anchor" id="ow_swap"></a>
-            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_swap.header') }}</h3>
+            <a class="anchor" id="ow_crossed"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_crossed.header') }}</h3>
             <div class="mb-3"></div>
-                @foreach (__('options.cards.ow_swap.subheader') as $block)
+                @foreach (__('options.cards.ow_crossed.subheader') as $block)
                     <p>{!! $block !!}</p>
                 @endforeach
             <div class="card-body">
-                @foreach (__('options.cards.ow_swap.sections') as $section)
+                @foreach (__('options.cards.ow_crossed.sections') as $section)
                 <h4>{{ $section['header'] }}</h4>
                     @foreach ($section['content'] as $block)
                         @if (is_array($block))
@@ -270,6 +262,22 @@
                             <p>{!! $block !!}</p>
                         @endif
                     @endforeach
+                @endforeach
+            </div>
+
+            <a class="anchor" id="ow_keep_similar"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_keep_similar.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.ow_keep_similar.content') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            </div>
+
+            <a class="anchor" id="ow_mixed"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_mixed.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.ow_mixed.content') as $block)
+                    <p>{!! $block !!}</p>
                 @endforeach
             </div>
 

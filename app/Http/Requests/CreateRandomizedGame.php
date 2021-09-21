@@ -74,11 +74,14 @@ class CreateRandomizedGame extends FormRequest
             'overworld.shuffle' => [
                 Rule::in($valid_settings['ow_shuffle']),
             ],
+            'overworld.crossed' => [
+                Rule::in($valid_settings['ow_crossed']),
+            ],
             'overworld.keepSimilar' => [
                 Rule::in($valid_settings['ow_keep_similar']),
             ],
-            'overworld.swap' => [
-                Rule::in($valid_settings['ow_swap']),
+            'overworld.mixed' => [
+                Rule::in($valid_settings['ow_mixed']),
             ],
             'overworld.fluteShuffle' => [
                 Rule::in($valid_settings['ow_flute_shuffle']),

@@ -188,11 +188,14 @@
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.ow_shuffle.title') }}: {{ $t(overworldShuffle.name) }}</div>
               <div
-                class="col-xl-4 col-lg-6 my-1" v-if="overworldShuffle.value != 'vanilla'"
+                class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.ow_crossed.title') }}: {{ $t(overworldCrossed.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1" v-if="overworldShuffle.value != 'vanilla' || overworldCrossed.value == 'limited' || overworldCrossed.value == 'chaos'"
               >{{ $t('randomizer.ow_keep_similar.title') }}: {{ $t(overworldKeepSimilar.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
-              >{{ $t('randomizer.ow_swap.title') }}: {{ $t(overworldSwap.name) }}</div>
+              >{{ $t('randomizer.ow_mixed.title') }}: {{ $t(overworldMixed.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.ow_flute_shuffle.title') }}: {{ $t(overworldFluteShuffle.name) }}</div>
@@ -256,7 +259,14 @@
                   :options="optionsOverworldShuffle"
                 >{{ $t('randomizer.ow_shuffle.title') }}</Select>
               </div>
-              <div class="col-xl-4 col-lg-6 my-1" v-if="overworldShuffle.value != 'vanilla'">
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="overworldCrossed"
+                  @input="setOverworldCrossed"
+                  :options="optionsOverworldCrossed"
+                >{{ $t('randomizer.ow_crossed.title') }}</Select>
+              </div>
+              <div class="col-xl-4 col-lg-6 my-1" v-if="overworldShuffle.value != 'vanilla' || overworldCrossed.value == 'limited' || overworldCrossed.value == 'chaos'">
                 <Select
                   :value="overworldKeepSimilar"
                   @input="setOverworldKeepSimilar"
@@ -265,10 +275,10 @@
               </div>
               <div class="col-xl-4 col-lg-6 my-1">
                 <Select
-                  :value="overworldSwap"
-                  @input="setOverworldSwap"
-                  :options="optionsOverworldSwap"
-                >{{ $t('randomizer.ow_swap.title') }}</Select>
+                  :value="overworldMixed"
+                  @input="setOverworldMixed"
+                  :options="optionsOverworldMixed"
+                >{{ $t('randomizer.ow_mixed.title') }}</Select>
               </div>
               <div class="col-xl-4 col-lg-6 my-1">
                 <Select
@@ -507,7 +517,8 @@ export default {
       "setGanonOpen",
       "setDoorShuffle",
       "setOverworldShuffle",
-      "setOverworldSwap",
+      "setOverworldCrossed",
+      "setOverworldMixed",
       "setOverworldFluteShuffle",
       "setShopsanity",
       "setEntranceShuffle",
@@ -569,8 +580,9 @@ export default {
               },
               overworld: {
                 shuffle: this.overworldShuffle.value,
+                crossed: this.overworldCrossed.value,
                 keep_similar: this.overworldKeepSimilar.value,
-                swap: this.overworldSwap.value,
+                mixed: this.overworldMixed.value,
                 flute_shuffle: this.overworldFluteShuffle.value
               },
               shopsanity: this.shopsanity.value,
@@ -660,6 +672,7 @@ export default {
         quickswap: this.quickswap,
         paletteShuffle: this.paletteShuffle,
         musicOn: this.musicOn,
+        msu1Resume: this.msu1Resume,
         reduceFlashing: this.reduceFlashing,
         shuffleSfx: this.shuffleSfx,
         fakeBoots: this.fakeBoots
@@ -712,10 +725,12 @@ export default {
       doorIntensity: state => state.door_intensity,
       optionsOverworldShuffle: state => state.options.ow_shuffle,
       overworldShuffle: state => state.ow_shuffle,
+      optionsOverworldCrossed: state => state.options.ow_crossed,
+      overworldCrossed: state => state.ow_crossed,
       optionsOverworldKeepSimilar: state => state.options.ow_keep_similar,
       overworldKeepSimilar: state => state.ow_keep_similar,
-      optionsOverworldSwap: state => state.options.ow_swap,
-      overworldSwap: state => state.ow_swap,
+      optionsOverworldMixed: state => state.options.ow_mixed,
+      overworldMixed: state => state.ow_mixed,
       optionsOverworldFluteShuffle: state => state.options.ow_flute_shuffle,
       overworldFluteShuffle: state => state.ow_flute_shuffle,
       optionsShopsanity: state => state.options.shopsanity,
@@ -743,6 +758,7 @@ export default {
       heartColor: state => state.heartColor,
       quickswap: state => state.quickswap,
       musicOn: state => state.musicOn,
+      msu1Resume: state => state.msu1Resume,
       paletteShuffle: state => state.paletteShuffle,
       reduceFlashing: state => state.reduceFlashing,
       shuffleSfx: state => state.shuffleSfx,

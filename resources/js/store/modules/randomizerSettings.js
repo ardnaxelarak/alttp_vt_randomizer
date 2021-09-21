@@ -28,8 +28,9 @@ export default {
       door_shuffle: [],
       door_intensity: [],
       ow_shuffle: [],
+      ow_crossed: [],
       ow_keep_similar: [],
-      ow_swap: [],
+      ow_mixed: [],
       ow_flute_shuffle: [],
       shopsanity: [],
       boss_shuffle: [],
@@ -89,8 +90,9 @@ export default {
         door_shuffle,
         door_intensity,
         ow_shuffle,
+        ow_crossed,
         ow_keep_similar,
-        ow_swap,
+        ow_mixed,
         ow_flute_shuffle,
         shopsanity,
         boss_shuffle,
@@ -124,8 +126,9 @@ export default {
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
+      state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
-      state.options.ow_swap = asMulti(ow_swap, "ow_swap");
+      state.options.ow_mixed = asMulti(ow_mixed, "ow_mixed");
       state.options.ow_flute_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");

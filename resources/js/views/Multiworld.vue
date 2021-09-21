@@ -207,10 +207,13 @@
                     >{{ $t('randomizer.ow_shuffle.title') }}: {{ $t(worlds[world_id].ow_shuffle.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_crossed.title') }}: {{ $t(worlds[world_id].ow_crossed.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.ow_keep_similar.title') }}: {{ $t(worlds[world_id].ow_keep_similar.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.ow_swap.title') }}: {{ $t(worlds[world_id].ow_swap.name) }}</div>
+                    >{{ $t('randomizer.ow_mixed.title') }}: {{ $t(worlds[world_id].ow_mixed.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.ow_flute_shuffle.title') }}: {{ $t(worlds[world_id].ow_flute_shuffle.name) }}</div>
@@ -269,6 +272,14 @@
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
+                        :value="worlds[world_id].ow_crossed"
+                        @input="setOverworldCrossed"
+                        :options="optionsOverworldCrossed"
+                      >{{ $t('randomizer.ow_crossed.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
                         :value="worlds[world_id].ow_keep_similar"
                         @input="setOverworldKeepSimilar"
                         :options="optionsOverworldKeepSimilar"
@@ -277,10 +288,10 @@
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
-                        :value="worlds[world_id].ow_swap"
-                        @input="setOverworldSwap"
-                        :options="optionsOverworldSwap"
-                      >{{ $t('randomizer.ow_swap.title') }}</Select>
+                        :value="worlds[world_id].ow_mixed"
+                        @input="setOverworldMixed"
+                        :options="optionsOverworldMixed"
+                      >{{ $t('randomizer.ow_mixed.title') }}</Select>
                     </div>
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
@@ -446,11 +457,14 @@ export default {
     setOverworldShuffle(value, worldId) {
       this.$store.dispatch("multiworld/setOverworldShuffle", { value, worldId });
     },
-    setOverworldSwap(value, worldId) {
-      this.$store.dispatch("multiworld/setOverworldSwap", { value, worldId });
+    setOverworldCrossed(value, worldId) {
+      this.$store.dispatch("multiworld/setOverworldCrossed", { value, worldId });
     },
     setOverworldKeepSimilar(value, worldId) {
       this.$store.dispatch("multiworld/setOverworldKeepSimilar", { value, worldId });
+    },
+    setOverworldMixed(value, worldId) {
+      this.$store.dispatch("multiworld/setOverworldMixed", { value, worldId });
     },
     setShopsanity(value, worldId) {
       this.$store.dispatch("multiworld/setShopsanity", { value, worldId });
@@ -550,8 +564,9 @@ export default {
       optionsDoorShuffle: state => state.options.door_shuffle,
       optionsDoorIntensity: state => state.options.door_intensity,
       optionsOverworldShuffle: state => state.options.ow_shuffle,
+      optionsOverworldCrossed: state => state.options.ow_crossed,
       optionsOverworldKeepSimilar: state => state.options.ow_keep_similar,
-      optionsOverworldSwap: state => state.options.ow_swap,
+      optionsOverworldMixed: state => state.options.ow_mixed,
       optionsOverworldFluteShuffle: state => state.options.ow_flute_shuffle,
       optionsShopsanity: state => state.options.shopsanity,
       optionsHints: state => state.options.hints,

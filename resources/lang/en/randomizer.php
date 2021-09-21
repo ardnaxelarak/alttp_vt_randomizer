@@ -175,6 +175,16 @@ return [
             'full' => 'Full',
         ],
     ],
+    "ow_crossed" => [
+        'title' => 'Overworld Crossed',
+        'options' => [
+            'vanilla' => 'None',
+            'polar' => 'Polar',
+            'grouped' => 'Grouped',
+            'limited' => 'Limited',
+            'chaos' => 'Chaos',
+        ],
+    ],
     "ow_keep_similar" => [
         'title' => 'Overworld Keep Similar',
         'options' => [
@@ -182,12 +192,11 @@ return [
             'off' => 'Off',
         ],
     ],
-    "ow_swap" => [
-        'title' => 'Overworld Tile Swap',
+    "ow_mixed" => [
+        'title' => 'Overworld Mixed',
         'options' => [
-            'vanilla' => 'None',
-            'mixed' => 'Mixed',
-            'crossed' => 'Crossed',
+            'off' => 'Off',
+            'on' => 'On',
         ],
     ],
     "ow_flute_shuffle" => [
