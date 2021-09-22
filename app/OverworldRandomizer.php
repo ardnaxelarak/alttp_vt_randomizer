@@ -18,6 +18,14 @@ class OverworldRandomizer implements RandomizerContract
 	const BRANCH = 'overworld';
 	protected $world;
 	/** @var array */
+	private $crossed_lookup = [
+		'vanilla' => 'none',
+		'polar' => 'polar',
+		'grouped' => 'grouped',
+		'limited' => 'limited',
+		'chaos' => 'chaos',
+	];
+	/** @var array */
 	private $entrance_lookup = [
 		'none' => 'vanilla',
 		'full' => 'full',
@@ -189,7 +197,7 @@ class OverworldRandomizer implements RandomizerContract
 				'--ow_shuffle',
 				$this->world->config('overworld.shuffle'),
 				'--ow_crossed',
-				$this->world->config('overworld.crossed'),
+				$this->crossed_lookup[$this->world->config('overworld.crossed')],
 				'--ow_fluteshuffle',
 				$this->world->config('overworld.fluteShuffle'),
 				'--crystals_ganon',
