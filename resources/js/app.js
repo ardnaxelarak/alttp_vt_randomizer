@@ -47,6 +47,7 @@ Vue.use(VueTimeago, {
   }
 });
 Vue.component("vt-rom-info", require("./components/VTRomInfo.vue").default);
+Vue.component("vt-multi-info", require("./components/VTMultiInfo.vue").default);
 Vue.component(
   "vt-rom-settings",
   require("./components/VTRomSettings.vue").default
@@ -65,6 +66,7 @@ Vue.component("vt-text", require("./components/VTText.vue").default);
 Vue.component("Multiworld", require("./views/Multiworld.vue").default);
 Vue.component("Customizer", require("./views/Customizer.vue").default);
 Vue.component("Hashloader", require("./views/HashLoader.vue").default);
+Vue.component("Multiloader", require("./views/Multiloader.vue").default);
 Vue.component("Randomizer", require("./views/Randomizer.vue").default);
 Vue.component("Sprites", require("./views/Sprites.vue").default);
 

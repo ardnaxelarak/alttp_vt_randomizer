@@ -2,32 +2,112 @@
 
 namespace ALttP\Http\Controllers;
 
+use ALttP\Enemizer;
 use ALttP\EntranceRandomizer;
-use Illuminate\Http\Request;
+use ALttP\Http\Requests\CreateRandomizedMultiworld;
 use ALttP\Jobs\SendPatchToDisk;
-use ALttP\Randomizer;
+use ALttP\Multiworld;
+use ALttP\OverworldRandomizer;
 use ALttP\Rom;
-use ALttP\Support\WorldCollection;
 use ALttP\World;
 use Exception;
+use GrahamCampbell\Markdown\Facades\Markdown;
+use HTMLPurifier_Config;
+use HTMLPurifier;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
+use Log;
 
 class MultiworldController extends Controller
 {
-    public function generateSeed(Request $request)
+    public function generateMultiworld(CreateRandomizedMultiworld $request)
     {
-        return response('not implemented', 404);
-
         if ($request->has('lang')) {
             app()->setLocale($request->input('lang'));
         }
 
         try {
-            $payload = $this->prepSeed($request);
-            //$payload['seed']->save();
-            //SendPatchToDisk::dispatch($payload['seed']);
+            $payload = $this->prepMultiworld($request);
 
-            return response($payload, 200)
-                ->header('Content-Type', 'application/octet-stream');
+            $return_payload = Arr::except($payload, [
+                'worlds',
+            ]);
+
+            $return_payload['worlds'] = [];
+
+            foreach ($payload['worlds'] as $world_payload) {
+                $world_payload['seed']->save();
+                SendPatchToDisk::dispatch($world_payload['seed']);
+
+                $cached_payload = Arr::except($world_payload, [
+                    'seed',
+                    'spoiler.meta.crystals_ganon',
+                    'spoiler.meta.crystals_tower',
+                    'spoiler.meta.ganon_item',
+                ]);
+
+                if ($world_payload['spoiler']['meta']['tournament'] ?? false) {
+                    switch ($world_payload['spoiler']['meta']['spoilers']) {
+                        case "on":
+                        case "generate":
+                            $cached_payload = Arr::except($cached_payload, [
+                                'spoiler.playthrough',
+                            ]);
+                            break;
+                        case "mystery":
+                            $cached_payload['spoiler'] = Arr::only($cached_payload['spoiler'], ['meta']);
+                            $cached_payload['spoiler']['meta'] = Arr::only($cached_payload['spoiler']['meta'], [
+                                'name',
+                                'notes',
+                                'logic',
+                                'build',
+                                'tournament',
+                                'spoilers',
+                                'size',
+                                'special',
+                                'allow_quickswap'
+                            ]);
+                            break;
+                        case "off":
+                        default:
+                            $cached_payload['spoiler'] = Arr::except(Arr::only($cached_payload['spoiler'], [
+                                'meta',
+                            ]), ['meta.seed']);
+                    }
+                }
+
+                if ($world_payload['spoiler']['meta']['spoilers'] === 'generate') {
+                    // ensure that the cache doesn't have the spoiler, but the original return_payload still does
+                    $cached_payload['spoiler'] = Arr::except(Arr::only($cached_payload['spoiler'], [
+                        'meta',
+                    ]), ['meta.seed']);
+                }
+                $save_data = json_encode(Arr::except($cached_payload, [
+                    'current_rom_hash',
+                ]));
+                Cache::put('hash.' . $world_payload['hash'], $save_data, now()->addDays(7));
+
+                $return_payload['worlds'][] = [
+                    'name' => $world_payload['name'],
+                    'hash' => $world_payload['hash'],
+                ];
+            }
+
+            return response()->json($return_payload);
+        } catch (Exception $exception) {
+            Log::warning($exception);
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($exception);
+            }
+
+            return response($exception->getMessage(), 409);
+        }
+    }
+
+    public function testGenerateMultiworld(CreateRandomizedMultiworld $request)
+    {
+        try {
+            return response()->json(Arr::except($this->prepMultiworld($request, false), ['patch', 'seed', 'hash']));
         } catch (Exception $exception) {
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($exception);
@@ -37,96 +117,149 @@ class MultiworldController extends Controller
         }
     }
 
-    protected function prepSeed(Request $request)
+    protected function prepMultiworld(CreateRandomizedMultiworld $request, bool $save = true)
     {
+        $count = count($request->input('worlds'));
+        $spoiler_meta = [];
+
+        $purifier_settings = HTMLPurifier_Config::create(config("purifier.default"));
+        $purifier_settings->loadArray(config("purifier.default"));
+        $purifier = new HTMLPurifier($purifier_settings);
+        if ($request->filled('name')) {
+            $markdowned = Markdown::convertToHtml(substr($request->input('name'), 0, 100));
+            $spoiler_meta['name'] = strip_tags($purifier->purify($markdowned));
+        }
+        if ($request->filled('notes')) {
+            $markdowned = Markdown::convertToHtml(substr($request->input('notes'), 0, 300));
+            $spoiler_meta['notes'] = $purifier->purify($markdowned);
+        }
+
+        $tournament = $request->input('tournament', true);
+        $spoilers = $request->input('spoilers', 'off');
+        if (!$tournament) {
+            $spoilers = "on";
+        } else if (!in_array($request->input('spoilers', 'off'), ["on", "off", "generate", "mystery"])) {
+            $spoilers = "off";
+        }
+
         $worlds = [];
-
-        set_time_limit(300);
-
-        foreach ($request->input('worlds') as $config) {
-            $weapons = $config['weapons'] ?? 'randomized';
-            $crystals_ganon = $config['crystals.ganon'] ?? '7';
+        for ($i = 1; $i <= $count; $i++) {
+            $weapons = $request->input("worlds.{$i}.weapons", 'randomized');
+            $crystals_ganon = $request->input("worlds.{$i}.ganon_open", '7');
             $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
-            $crystals_tower = $config['crystals.tower'] ?? '7';
+            $crystals_tower = $request->input("worlds.{$i}.tower_open", '7');
             $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
-            $ganon_item = $config['ganon_item'] ?? 'default';
+            $ganon_item = $request->input("worlds.${i}.ganon_item", 'default');
             $ganon_item = $ganon_item === 'random' ? get_random_ganon_item($weapons) : $ganon_item;
             $logic = [
                 'none' => 'NoGlitches',
                 'overworld_glitches' => 'OverworldGlitches',
                 'major_glitches' => 'MajorGlitches',
                 'no_logic' => 'NoLogic',
-            ][$config['glitches'] ?? 'none'];
+            ][$request->input("worlds.{$i}.glitches", 'none')];
 
-            // quick fix for CC and Basic/Entrance
-            if (($config['item.pool'] ?? 'normal') === 'crowd_control') {
-                $request->merge(['item_placement' => 'advanced']);
-                $request->merge(['entrances' => 'none']);
-            }
-
-            $worlds[] = World::factory($config['mode'] ?? 'standard', [
-                'itemPlacement' => $config['item_placement'] ?? 'basic',
-                'dungeonItems' => $config['dungeon_items'] ?? 'standard',
-                'dropShuffle' => $config['drop_shuffle'] ?? 'off',
-                'accessibility' => $config['accessibility'] ?? 'items',
-                'goal' => $config['goal'] ?? 'ganon',
+            $worlds[] = World::factory($request->input("worlds.{$i}.mode", 'standard'), [
+                'worldName' => $request->input("worlds.{$i}.name", "Player ${i}"),
+                'itemPlacement' => 'advanced',
+                'dungeonItems' => $request->input("worlds.{$i}.dungeon_items", 'standard'),
+                'dropShuffle' => $request->input("worlds.{$i}.drop_shuffle", 'off'),
+                'accessibility' => $request->input("worlds.{$i}.accessibility", 'items'),
+                'goal' => $request->input("worlds.{$i}.goal", 'ganon'),
                 'crystals.ganon' => $crystals_ganon,
                 'crystals.tower' => $crystals_tower,
                 'ganon_item' => $ganon_item,
-                'entrances' => $config['entrances'] ?? 'none',
-                'doors.shuffle' => $config['door_shuffle'] ?? 'vanilla',
-                'doors.intensity' => $config['door_intensity'] ?? '1',
-                'overworld.shuffle' => $config['ow_shuffle'] ?? 'vanilla',
-                'overworld.crossed' => $config['ow_crossed'] ?? 'vanilla',
-                'overworld.keepSimilar' => $config['ow_keep_similar'] ?? 'off',
-                'overworld.mixed' => $config['ow_mixed'] ?? 'off',
-                'overworld.fluteShuffle' => $config['ow_flute_shuffle'] ?? 'vanilla',
-                'shopsanity' => $config['shopsanity'] ?? 'off',
+                'entrances' => $request->input("worlds.{$i}.entrances", 'none'),
+                'doors.shuffle' => $request->input("worlds.{$i}.door_shuffle", 'vanilla'),
+                'doors.intensity' => $request->input("worlds.{$i}.door_intensity", '1'),
+                'overworld.shuffle' => $request->input("worlds.{$i}.ow_shuffle", 'vanilla'),
+                'overworld.crossed' => $request->input("worlds.{$i}.ow_crossed", 'vanilla'),
+                'overworld.keepSimilar' => $request->input("worlds.{$i}.ow_keep_similar", 'off'),
+                'overworld.mixed' => $request->input("worlds.{$i}.ow_mixed", 'off'),
+                'overworld.fluteShuffle' => $request->input("worlds.{$i}.ow_flute_shuffle", 'vanilla'),
+                'shopsanity' => $request->input("worlds.{$i}.shopsanity", 'off'),
                 'mode.weapons' => $weapons,
-                'tournament' => $config['tournament'] ?? false,
-                'spoilers' => $config['spoilers'] ?? false,
-                'spoilers_ongen' => $config['spoilers_ongen'] ?? false,
-                'spoil.Hints' => $config['hints'] ?? 'on',
+                'tournament' => $tournament,
+                'spoilers' => $spoilers,
+                'allow_quickswap' => $request->input('allow_quickswap', true),
+                'override_start_screen' => $request->input("worlds.{$i}.override_start_screen", false),
+                'spoil.Hints' => $request->input("worlds.{$i}.hints", 'on'),
                 'logic' => $logic,
-                'item.pool' => $config['item.pool'] ?? 'normal',
-                'item.functionality' => $config['item.functionality'] ?? 'normal',
-                'enemizer.bossShuffle' => 'none',
-                'enemizer.enemyShuffle' => 'none',
-                'enemizer.enemyDamage' => 'default',
-                'enemizer.enemyHealth' => 'default',
-                'enemizer.potShuffle' => 'off',
-                'multiworld' => true,
+                'item.pool' => $request->input("worlds.{$i}.item_pool", 'normal'),
+                'item.functionality' => $request->input("worlds.{$i}.item_functionality", 'normal'),
+                'enemizer.bossShuffle' => $request->input("worlds.{$i}.boss_shuffle", 'none'),
+                'enemizer.enemyShuffle' => $request->input("worlds.{$i}.enemy_shuffle", 'none'),
+                'enemizer.enemyDamage' => $request->input("worlds.{$i}.enemy_damage", 'default'),
+                'enemizer.enemyHealth' => $request->input("worlds.{$i}.enemy_health", 'default'),
+                'enemizer.potShuffle' => $request->input("worlds.{$i}.pot_shuffle", 'off'),
             ]);
         }
 
-        $rand = RandomizerSelector::getRandomizer($world);
-
+        $rand = new OverworldRandomizer($worlds);
         $rand->randomize();
 
-        // E.R. is responsible for verifying winnability of itself
-        //if ($world->config('entrances') === 'none') {
-        $worlds = new WorldCollection($rand->getWorlds());
+        $world_payloads = [];
 
-        if (!$worlds->isWinnable()) {
-            throw new Exception('Game Unwinnable');
-        }
-        //}
+        $multi = new Multiworld;
+        $multi->spoiler = json_encode($rand->getSpoiler());
+        $multi->multidata = pack('C*', ...$rand->getMultidata());
+        $multi->save();
 
-        $spoiler = $worlds->getSpoiler([
-            'worlds' => $worlds->count(),
-        ]);
-
-        foreach ($spoiler as $worldId => $worldSpoiler) {
+        foreach ($worlds as $world) {
             $rom = new Rom(config('alttp.base_rom'));
-            $rom->applyPatchFile(Rom::getJsonPatchLocation($worlds[$worldId]->config('branch')));
+            $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
+            $world->writeToRom($rom, $save);
 
-            $worlds->get($worldId)->writeToRom($rom, false);
+            // Overworld rando is responsible for verifying winnability of itself
+            // and generating its own full spoiler
+            /*
+            $spoiler = $world->getSpoiler(array_merge($spoiler_meta, [
+                'entry_crystals_ganon' => $request->input('crystals.ganon', '7'),
+                'entry_crystals_tower' => $request->input('crystals.tower', '7'),
+                'ganon_vulnerability_item' => $request->input('ganon_item', 'default'),
+                'worlds' => 1,
+            ]), false);
+            */
+            $spoiler = $world->getSpoiler($spoiler_meta, false);
 
-            $writeLog = patch_merge_minify($rom->getWriteLog());
-            $spoiler[$worldId]['writeData'] = $writeLog;
+            if ($world->isEnemized()) {
+                $patch = $rom->getWriteLog();
+                $en = new Enemizer($world, $patch);
+                $en->randomize($world->config('branch'));
+                $en->writeToRom($rom);
+            }
+
+            if ($tournament) {
+                $rom->setTournamentType('standard');
+                $rom->rummageTable();
+            }
+            $patch = $rom->getWriteLog();
+
+            if ($save) {
+                $world->updateSeedRecordPatch($patch);
+                $world->updateSeedRecordMultiworld($multi);
+            }
+
+            $world_payloads[] = [
+                'name' => $world->config('worldName'),
+                'logic' => $world->config('logic'),
+                'patch' => patch_merge_minify($patch),
+                'branch' => $world->config('branch'),
+                'spoiler' => $spoiler,
+                'hash' => $world->getSeedRecord()->hash,
+                'generated' => $world->getSeedRecord()->created_at ? $world->getSeedRecord()->created_at->toIso8601String() : now()->toIso8601String(),
+                'seed' => $world->getSeedRecord(),
+                'size' => $spoiler['meta']['size'] ?? 2,
+                'current_rom_hash' => Rom::BUILD_INFO[$world->config('branch')]['HASH'],
+            ];
         }
 
-        // the .mw file
-        return gzencode(json_encode($spoiler));
+        return [
+            'worlds' => $world_payloads,
+            'multidata' => $rand->getMultidata(),
+            'spoiler' => $rand->getSpoiler(),
+            'generated' => $multi->created_at ? $multi->created_at->toIso8601String() : now()->toIso8601String(),
+            'hash' => $multi->hash,
+        ];
     }
 }
+

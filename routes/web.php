@@ -37,9 +37,36 @@ Route::any('hash/{hash}', static function ($hash) {
     return $payload;
 });
 
+Route::any('multi/{hash}', static function ($hash) {
+    $multi = ALttP\Multiworld::where('hash', $hash)->first();
+    if ($multi) {
+        return json_encode([
+            'hash' => $hash,
+            'multidata' => unpack('C*', $multi->multidata),
+            'spoiler' => json_decode($multi->spoiler),
+            'generated' => $multi->created_at->toIso8601String(),
+            'worlds' => $multi->seeds->map(function(ALttP\Seed $seed): array {
+                return [
+                    'name' => $seed->multi_name,
+                    'hash' => $seed->hash,
+                ];
+            })->toArray(),
+        ]);
+    }
+    abort(404);
+});
+
 // @TODO: perhaps a front end page that checks their localStorage for prefered locale?
 Route::get('h/{hash}', static function ($hash) {
     return redirect(config('app.locale') . '/h/' . $hash);
+});
+
+Route::get('m/{hash}', static function ($hash) {
+    return redirect(config('app.locale') . '/m/' . $hash);
+});
+
+Route::get('named/{name}', static function ($name) {
+    return redirect(config('app.locale') . '/named/' . $name);
 });
 
 Route::prefix('{lang?}')->middleware('locale')->group(function () {
@@ -71,7 +98,7 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
 
     Route::redirect('info', 'help', 301);
 
-    // Route::view('multiworld', 'multiworld');
+    Route::view('multiworld', 'multiworld');
 
     Route::view('options', 'options');
 
@@ -136,6 +163,16 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
                     $build->hash
                 ),
                 'spoiler' => json_decode($seed->spoiler),
+            ]);
+        }
+        abort(404);
+    });
+
+    Route::get('m/{hash}', static function ($lang, $hash) {
+        $multi = ALttP\Multiworld::where('hash', $hash)->first();
+        if ($multi) {
+            return view('multiworld_instance', [
+                'hash' => $hash,
             ]);
         }
         abort(404);

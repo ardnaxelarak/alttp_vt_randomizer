@@ -2,17 +2,17 @@
 
 namespace ALttP;
 
-use ALttP\Multiworld;
+use ALttP\Seed;
 use Illuminate\Database\Eloquent\Model;
 use Hashids\Hashids;
 
-class Seed extends Model
+class Multiworld extends Model
 {
     public static function boot()
     {
         parent::boot();
 
-        $hasher = new Hashids('vt', 10);
+        $hasher = new Hashids('mw', 10);
 
         static::created(function ($seed) use ($hasher) {
             $seed->hash = $hasher->encode($seed->id);
@@ -25,8 +25,8 @@ class Seed extends Model
         return hash_array($this->id);
     }
 
-    public function multiworld()
+    public function seeds()
     {
-        return $this->belongsTo(Multiworld::class, 'multi_id');
+        return $this->hasMany(Seed::class, 'multi_id');
     }
 }

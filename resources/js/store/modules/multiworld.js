@@ -48,12 +48,9 @@ export default {
           let loads = [];
           for (let worldId = 0; worldId < 8; worldId++) {
             loads = loads.concat([
+              dispatch("load", [worldId, "name", "setName"]),
               dispatch("load", [worldId, "preset", "setPreset"]),
-              dispatch("load", [
-                worldId,
-                "glitches_required",
-                "setGlitchesRequired"
-              ]),
+              dispatch("load", [worldId, "glitches_required", "setGlitchesRequired"]),
               dispatch("load", [worldId, "item_placement", "setItemPlacement"]),
               dispatch("load", [worldId, "dungeon_items", "setDungeonItems"]),
               dispatch("load", [worldId, "drop_shuffle", "setDropShuffle"]),
@@ -70,7 +67,7 @@ export default {
               dispatch("load", [worldId, "ow_crossed", "setOverworldCrossed"]),
               dispatch("load", [worldId, "ow_keep_similar", "setOverworldKeepSimilar"]),
               dispatch("load", [worldId, "ow_mixed", "setOverworldMixed"]),
-              dispatch("load", [worldId, "ow_flute_shuffle", "setOverworldFluteShuffle"]),
+              dispatch("load", [worldId, "ow_flute_shuffle", "setFluteShuffle"]),
               dispatch("load", [worldId, "shopsanity", "setShopsanity"]),
               dispatch("load", [worldId, "boss_shuffle", "setBossShuffle"]),
               dispatch("load", [worldId, "enemy_shuffle", "setEnemyShuffle"]),
@@ -163,7 +160,7 @@ export default {
           worldId,
           value: state.preset_map[preset.value]["ow_mixed"]
         });
-        commit("setOverworldFluteShuffle", {
+        commit("setFluteShuffle", {
           worldId,
           value: state.preset_map[preset.value]["ow_flute_shuffle"]
         });
@@ -209,48 +206,8 @@ export default {
     },
     async load({ commit, state }, [worldId, key, mutate]) {
       const value = await localforage.getItem(`multiworld.${worldId}.${key}`);
-      if (value !== null && hasValue(value, state.options[key])) {
+      if (key !== "name" && value !== null && hasValue(value, state.options[key])) {
         commit(mutate, { worldId, value });
-      }
-    },
-    setGlitchesRequired({ commit, state }, { worldId, value }) {
-      commit("setGlitchesRequired", { worldId, value });
-
-      if (
-        ["none", "no_logic"].indexOf(
-          state.worlds[worldId].glitches_required.value
-        ) === -1 &&
-        state.worlds[worldId].entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", { worldId, value: "none" });
-      }
-    },
-    setItemPlacement({ commit, state }, { worldId, value }) {
-      commit("setItemPlacement", { worldId, value });
-
-      if (
-        state.worlds[worldId].item_placement.value !== "advanced" &&
-        state.worlds[worldId].entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", { worldId, value: "none" });
-      }
-      if (
-        state.worlds[worldId].item_placement.value !== "advanced" &&
-        state.worlds[worldId].item_pool.value === "crowd_control"
-      ) {
-        commit("setItemPool", { worldId, value: "expert" });
-      }
-    },
-    setDungeonItems({ commit, state }, { worldId, value }) {
-      commit("setDungeonItems", { worldId, value });
-
-      if (
-        ["full", "standard"].indexOf(
-          state.worlds[worldId].dungeon_items.value
-        ) === -1 &&
-        state.worlds[worldId].entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", { worldId, value: "none" });
       }
     },
     setGoal({ commit, state }, { worldId, value }) {
@@ -270,60 +227,6 @@ export default {
         commit("setGoal", { worldId, value: "ganon" });
       }
     },
-    setGanonItem({ commit, state }, { worldId, value }) {
-      commit("setGanonItem", { worldId, value });
-
-      if (
-        state.worlds[worldId].ganon_item.value !== "default" &&
-        state.worlds[worldId].entrance_shuffle.value !== "none"
-      ) {
-        commit("setEntranceShuffle", { worldId, value: "none" });
-      }
-    },
-    setWorldState({ commit }, { worldId, value }) {
-      commit("setWorldState", { worldId, value });
-    },
-    setEntranceShuffle({ commit, state }, { worldId, value }) {
-      commit("setEntranceShuffle", { worldId, value });
-
-      // rules when ER is enabled, hopefully we can reduce this section to be
-      // completely removed in the future.
-      if (state.worlds[worldId].entrance_shuffle.value !== "none") {
-        if (
-          ["none", "no_logic"].indexOf(
-            state.worlds[worldId].glitches_required.value
-          ) === -1
-        ) {
-          commit("setGlitchesRequired", { worldId, value: "none" });
-        }
-
-        if (state.worlds[worldId].item_placement.value !== "advanced") {
-          commit("setItemPlacement", { worldId, value: "advanced" });
-        }
-
-        if (
-          ["full", "standard"].indexOf(
-            state.worlds[worldId].dungeon_items.value
-          ) === -1
-        ) {
-          commit("setDungeonItems", { worldId, value: "standard" });
-        }
-
-        if (state.worlds[worldId].ganon_item.value !== "default") {
-          commit("setGanonItem", { worldId, value: "default" });
-        }
-      }
-    },
-    setItemPool({ commit, state }, { worldId, value }) {
-      commit("setItemPool", { worldId, value });
-
-      if (
-        state.worlds[worldId].item_pool.value === "crowd_control" &&
-        state.worlds[worldId].item_placement.value !== "advanced"
-      ) {
-        commit("setItemPlacement", { worldId, value: "advanced" });
-      }
-    }
   },
   mutations: {
     updateItemSettings(
@@ -360,10 +263,7 @@ export default {
       }
     ) {
       state.options.preset = asMulti(presets, "preset");
-      state.options.glitches_required = asMulti(
-        glitches_required,
-        "glitches_required"
-      );
+      state.options.glitches_required = asMulti(glitches_required, "glitches_required");
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
       state.options.drop_shuffle = asMulti(drop_shuffle, "drop_shuffle");
@@ -373,30 +273,28 @@ export default {
       state.options.ganon_open = asMulti(ganon_open, "ganon_open");
       state.options.ganon_item = asMulti(ganon_item, "ganon_item");
       state.options.world_state = asMulti(world_state, "world_state");
-      state.options.entrance_shuffle = asMulti(
-        entrance_shuffle,
-        "entrance_shuffle"
-      );
+      state.options.entrance_shuffle = asMulti(entrance_shuffle, "entrance_shuffle");
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
       state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
       state.options.ow_mixed = asMulti(ow_mixed, "ow_mixed");
-      state.options.ow_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
+      state.options.ow_flute_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
       state.options.enemy_shuffle = asMulti(enemy_shuffle, "enemy_shuffle");
       state.options.hints = asMulti(hints, "hints");
       state.options.weapons = asMulti(weapons, "weapons");
       state.options.item_pool = asMulti(item_pool, "item_pool");
-      state.options.item_functionality = asMulti(
-        item_functionality,
-        "item_functionality"
-      );
+      state.options.item_functionality = asMulti(item_functionality, "item_functionality");
       state.options.enemy_damage = asMulti(enemy_damage, "enemy_damage");
       state.options.enemy_health = asMulti(enemy_health, "enemy_health");
       state.preset_map = presets;
+    },
+    setName(state, { worldId, value }) {
+      state.worlds[worldId].name = value;
+      localforage.setItem(`multiworld.${worldId}.name`, value);
     },
     setPreset(state, { worldId, value }) {
       if (typeof value === "string") {
@@ -524,7 +422,7 @@ export default {
       state.worlds[worldId].ow_mixed = value;
       localforage.setItem(`multiworld.${worldId}.ow_mixed`, value);
     },
-    setOverworldFluteShuffle(state, { worldId, value }) {
+    setFluteShuffle(state, { worldId, value }) {
       if (typeof value === "string") {
         value = state.options.ow_flute_shuffle.find(o => o.value === value);
       }

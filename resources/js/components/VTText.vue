@@ -36,6 +36,7 @@ export default {
     storageKey: { default: "" },
     placeholder: { default: "" },
     maxlength: { default: false },
+    sid: { default: null },
     type: { default: "text" }
   },
   mounted() {
@@ -43,7 +44,7 @@ export default {
       function(value) {
         if (value === null) return;
         this.value = value;
-        this.$emit("input", this.value);
+        this.$emit("input", this.value, this.sid);
       }.bind(this)
     );
   },
@@ -55,7 +56,7 @@ export default {
   methods: {
     onInput(input) {
       localforage.setItem(this.storageKey, this.value);
-      this.$emit("input", this.value);
+      this.$emit("input", this.value, this.sid);
     },
     onClear() {
       this.value = "";

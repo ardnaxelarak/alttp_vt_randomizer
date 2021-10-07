@@ -1594,6 +1594,20 @@ abstract class World
     }
 
     /**
+     * Update multiworld of seed record to DB.
+     *
+     * @param ALttP\Multiworld  $multi  multiworld that this seed belongs to
+     *
+     * @return void
+     */
+    public function updateSeedRecordMultiworld(Multiworld $multi): void
+    {
+        $this->seed->multi_id = $multi->id;
+        $this->seed->multi_name = $this->config('worldName');
+        $this->seed->save();
+    }
+
+    /**
      * Determine if this world requires Enemizer.
      *
      * @return bool
