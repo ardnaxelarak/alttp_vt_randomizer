@@ -1112,7 +1112,7 @@ abstract class World
      *
      * @return \ALttP\Rom
      */
-    public function writeToRom(Rom $rom, bool $save = false): Rom
+    public function writeToRom(Rom $rom, bool $save = false, bool $writeSeedString = true): Rom
     {
         if ($this->override_patch !== null) {
             foreach ($this->override_patch as $writes) {
@@ -1124,7 +1124,9 @@ abstract class World
             if ($save) {
                 $hash = $this->saveSeedRecord();
 
-                $rom->setSeedString(str_pad(sprintf("VT %s", $hash), 21, ' '));
+                if ($writeSeedString) {
+                    $rom->setSeedString(str_pad(sprintf("VT %s", $hash), 21, ' '));
+                }
 
                 $rom->setStartScreenHash($this->config('override_start_screen', false) ?: $this->seed->hashArray());
 

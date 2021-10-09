@@ -56,6 +56,14 @@ Route::any('multi/{hash}', static function ($hash) {
     abort(404);
 });
 
+Route::get('multidata/{hash}', static function ($hash) {
+    $multi = ALttP\Multiworld::where('hash', $hash)->first();
+    if ($multi) {
+        return $multi->multidata;
+    }
+    abort(404);
+});
+
 // @TODO: perhaps a front end page that checks their localStorage for prefered locale?
 Route::get('h/{hash}', static function ($hash) {
     return redirect(config('app.locale') . '/h/' . $hash);

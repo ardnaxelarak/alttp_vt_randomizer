@@ -108,11 +108,11 @@
       "type": "package",
       "package": {
         "name": "z3/overworldrandomizer",
-        "version": "0.1.9.2",
+        "version": "0.1.9.4",
         "source": {
           "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
           "type": "git",
-          "reference": "bd5c494d600d1da79a7b98ee6d38dd6a341d915c"
+          "reference": "0c9270bdb051c8333db88bd14ab06f1d6e0cc01c"
         }
       }
     }

@@ -158,7 +158,7 @@ class MultiworldController extends Controller
                 'no_logic' => 'NoLogic',
             ][$request->input("worlds.{$i}.glitches", 'none')];
 
-            $worlds[] = World::factory($request->input("worlds.{$i}.mode", 'standard'), [
+            $worlds[] = World::factory($request->input("worlds.{$i}.world_state", 'standard'), [
                 'worldName' => $request->input("worlds.{$i}.name", "Player ${i}"),
                 'itemPlacement' => 'advanced',
                 'dungeonItems' => $request->input("worlds.{$i}.dungeon_items", 'standard'),
@@ -207,7 +207,7 @@ class MultiworldController extends Controller
         foreach ($worlds as $world) {
             $rom = new Rom(config('alttp.base_rom'));
             $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
-            $world->writeToRom($rom, $save);
+            $world->writeToRom($rom, $save, false);
 
             // Overworld rando is responsible for verifying winnability of itself
             // and generating its own full spoiler

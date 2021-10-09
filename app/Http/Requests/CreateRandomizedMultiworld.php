@@ -59,7 +59,7 @@ class CreateRandomizedMultiworld extends FormRequest
             'worlds.*.ganon_item' => [
                 Rule::in($valid_settings['ganon_item']),
             ],
-            'worlds.*.mode' => [
+            'worlds.*.world_state' => [
                 Rule::in($valid_settings['world_state']),
             ],
             'worlds.*.entrance_shuffle' => [
