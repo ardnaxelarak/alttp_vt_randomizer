@@ -9,6 +9,14 @@
       <span class="message">{{ this.error }}</span>
     </div>
 
+    <div v-if="mw_host" class="alert alert-success" role="alert">
+      <button type="button" class="close" aria-label="Close">
+        <img class="icon" src="/i/svg/x.svg" alt="clear" @click="mw_host = false" />
+      </button>
+      <span class="glyphicon glyphicon-globe aria-hidden="true""></span>
+      <span class="message">{{ this.mw_host }}</span>
+    </div>
+
     <div
       v-if="!gameLoaded && !generating && !$store.state.multiworld.initializing"
       class="card border-success my-1"
@@ -457,6 +465,17 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6 mb-3"></div>
+              <div class="col-md-6 mb-3">
+                <div class="btn-group btn-flex" role="group" v-if="this.multi">
+                  <button
+                    class="btn btn-primary text-center"
+                    @click="hostMultidata"
+                  >{{ $t('multiworld.host') }}</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- <vt-spoiler v-model="show_spoiler" :multi="multi"></vt-spoiler> -->
@@ -485,6 +504,7 @@ export default {
       worldList: [1, 2],
       selectedWorldId: 1,
       error: false,
+      mw_host: false,
       generating: false,
       generationId: null,
       gameLoaded: false,
@@ -678,6 +698,28 @@ export default {
     },
     saveMultidata() {
       return this.multi.save(this.multi.downloadFilename() + "_multidata");
+    },
+    hostMultidata() {
+      axios
+        .post(
+          `/api/mw/host/${this.multi.hash}`,
+          {
+            responseType: "json"
+          }
+        )
+        .then(response => {
+          if (response.data.port && response.data.token) {
+            this.mw_host = `Your game is hosted at ws://mw.gwaa.kiwi:${response.data.port} with room token ${response.data.token}`;
+            this.error = false;
+          } else {
+            this.mw_host = false;
+            this.error = this.$i18n.t("error.failed_host");
+          }
+        })
+        .catch(error => {
+          this.mw_host = false;
+          this.error = this.$i18n.t("error.failed_host");
+        });
     },
     onError(error) {
       this.error = error;
