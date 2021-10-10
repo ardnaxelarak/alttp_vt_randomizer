@@ -1,5 +1,22 @@
 <template>
   <div id="seed-generate">
+    <div v-if="error" class="alert alert-danger" role="alert">
+      <button type="button" class="close" aria-label="Close">
+        <img class="icon" src="/i/svg/x.svg" alt="clear" @click="error = false" />
+      </button>
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">{{ $t('error.title') }}:</span>
+      <span class="message">{{ this.error }}</span>
+    </div>
+
+    <div v-if="mw_host" class="alert alert-success" role="alert">
+      <button type="button" class="close" aria-label="Close">
+        <img class="icon" src="/i/svg/x.svg" alt="clear" @click="mw_host = false" />
+      </button>
+      <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+      <span class="message">{{ this.mw_host }}</span>
+    </div>
+
     <div
       id="seed-details"
       class="card border-success"
@@ -32,6 +49,17 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6 mb-3"></div>
+              <div class="col-md-6 mb-3">
+                <div class="btn-group btn-flex" role="group" v-if="this.multi">
+                  <button
+                    class="btn btn-primary text-center"
+                    @click="hostMultidata"
+                  >{{ $t('multiworld.host') }}</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- <vt-spoiler v-model="show_spoiler" :multi="multi"></vt-spoiler> -->
@@ -57,10 +85,12 @@ export default {
     return {
       gameLoaded: false,
       multi: null,
+      error: null,
+      mw_host: null,
     };
   },
   created() {
-    axios.post(`/multi/` + this.hash).then(response => {
+    axios.get(`/multi/` + this.hash).then(response => {
       this.multi = new Multiworld(response.data);
       this.gameLoaded = true;
     });
@@ -75,6 +105,28 @@ export default {
     saveMultidata() {
       return this.multi.save(this.multi.downloadFilename() + "_multidata");
     },
+    hostMultidata() {
+      axios
+        .post(
+          `/api/mw/host/${this.hash}`,
+          {
+            responseType: "json"
+          }
+        )
+        .then(response => {
+          if (response.data.port && response.data.token) {
+            this.mw_host = `Your game is hosted at ws://mw.gwaa.kiwi:${response.data.port} with room token ${response.data.token}`;
+            this.error = false;
+          } else {
+            this.mw_host = false;
+            this.error = this.$i18n.t("error.failed_host");
+          }
+        })
+        .catch(error => {
+          this.mw_host = false;
+          this.error = this.$i18n.t("error.failed_host");
+        });
+    }
   },
 };
 </script>

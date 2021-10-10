@@ -6,7 +6,9 @@ use ALttP\Enemizer;
 use ALttP\EntranceRandomizer;
 use ALttP\Http\Requests\CreateRandomizedMultiworld;
 use ALttP\Jobs\SendPatchToDisk;
+use ALttP\Jobs\GenerateMultiworld;
 use ALttP\Multiworld;
+use ALttP\MultiworldGeneration;
 use ALttP\OverworldRandomizer;
 use ALttP\Rom;
 use ALttP\World;
@@ -24,6 +26,15 @@ class MultiworldController extends Controller
     {
         if ($request->has('lang')) {
             app()->setLocale($request->input('lang'));
+        }
+
+        if ($request->input('async', false)) {
+            $multigen = new MultiworldGeneration;
+            $multigen->save();
+            GenerateMultiworld::dispatch($multigen, $request->all())->onConnection('database');
+            return response()->json([
+                'multiworld_generation_id' => $multigen->id,
+            ], 202);
         }
 
         try {
@@ -168,7 +179,7 @@ class MultiworldController extends Controller
                 'crystals.ganon' => $crystals_ganon,
                 'crystals.tower' => $crystals_tower,
                 'ganon_item' => $ganon_item,
-                'entrances' => $request->input("worlds.{$i}.entrances", 'none'),
+                'entrances' => $request->input("worlds.{$i}.entrance_shuffle", 'none'),
                 'doors.shuffle' => $request->input("worlds.{$i}.door_shuffle", 'vanilla'),
                 'doors.intensity' => $request->input("worlds.{$i}.door_intensity", '1'),
                 'overworld.shuffle' => $request->input("worlds.{$i}.ow_shuffle", 'vanilla'),
@@ -202,7 +213,9 @@ class MultiworldController extends Controller
         $multi = new Multiworld;
         $multi->spoiler = json_encode($rand->getSpoiler());
         $multi->multidata = pack('C*', ...$rand->getMultidata());
-        $multi->save();
+        if ($save) {
+            $multi->save();
+        }
 
         foreach ($worlds as $world) {
             $rom = new Rom(config('alttp.base_rom'));

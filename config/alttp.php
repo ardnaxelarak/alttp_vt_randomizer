@@ -2,6 +2,8 @@
 
 return [
     'banner' => env('BANNER_TEXT', null),
+    'mw_host' => env('MW_HOST', null),
+    'hostname' => env('HOSTNAME', null),
     'base_rom' => env('ENEMIZER_BASE', null),
     'api_throttle_whitelist' => explode(',', env('API_THROTTLE_WHITELIST', '')),
     'custom' => [

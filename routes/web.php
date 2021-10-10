@@ -37,7 +37,7 @@ Route::any('hash/{hash}', static function ($hash) {
     return $payload;
 });
 
-Route::any('multi/{hash}', static function ($hash) {
+Route::get('multi/{hash}', static function ($hash) {
     $multi = ALttP\Multiworld::where('hash', $hash)->first();
     if ($multi) {
         return json_encode([

@@ -17,6 +17,7 @@
     "doctrine/dbal": "^2.5",
     "ezyang/htmlpurifier": "^4.9",
     "graham-campbell/markdown": "^11.0",
+    "guzzlehttp/guzzle": "^6.0",
     "hashids/hashids": "^4.0",
     "laravel/framework": "^6.0",
     "laravel/horizon": "^3.1",

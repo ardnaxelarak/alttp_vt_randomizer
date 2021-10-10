@@ -486,6 +486,7 @@ export default {
       selectedWorldId: 1,
       error: false,
       generating: false,
+      generationId: null,
       gameLoaded: false,
       multi: null,
       tournament: false,
@@ -610,6 +611,8 @@ export default {
             `/api/multiworld`,
             {
               worlds: { ...payload },
+              async: true,
+              tournament: false,
               lang: document.documentElement.lang
             },
             {
@@ -617,8 +620,13 @@ export default {
             }
           )
           .then(response => {
-            this.gameLoaded = true;
-            this.multi = new Multiworld(response.data);
+            if (response.data.multiworld_generation_id) {
+              this.generationId = response.data.multiworld_generation_id;
+              setTimeout(this.checkGeneration.bind(this), 1000);
+            } else {
+              this.error = this.$i18n.t("error.failed_generation");
+              this.generating = false;
+            }
           })
           .catch(error => {
             if (error.response) {
@@ -631,13 +639,36 @@ export default {
                   this.error = this.$i18n.t("error.failed_generation");
               }
             }
+            this.generating = false;
 
             reject(error);
-          })
-          .finally(() => {
-            this.generating = false;
           });
       });
+    },
+    checkGeneration() {
+      axios
+        .get(
+          `/api/generation/multiworld/${this.generationId}`,
+          {
+            responseType: "json"
+          }
+        )
+        .then(response => {
+          if (response.data.status === "waiting") {
+            setTimeout(this.checkGeneration.bind(this), 5000);
+          } else if (response.data.multiworld_hash) {
+            axios.get(`/multi/` + response.data.multiworld_hash).then(response => {
+              this.multi = new Multiworld(response.data);
+              this.generating = false;
+              this.generationId = null;
+              this.gameLoaded = true;
+            });
+          } else {
+            this.error = this.$i18n.t("error.failed_generation");
+            this.generating = false;
+            this.generationId = null;
+          }
+        });
     },
     saveSpoiler() {
       return FileSaver.saveAs(

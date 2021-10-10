@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 /*
@@ -58,6 +59,41 @@ Route::get('h/{hash}', static function ($hash) {
                 $build->hash
             ),
         ];
+    }
+    abort(404);
+});
+
+Route::get('generation/multiworld/{id}', static function ($id) {
+    $multigen = ALttP\MultiworldGeneration::where('id', $id)->first();
+    if ($multigen) {
+        if ($multigen->failed) {
+            return json_encode(['status' => 'failure']);
+        } else if ($multigen->multiworld) {
+            return json_encode([
+                'status' => 'success',
+                'multiworld_hash' => $multigen->multiworld->hash,
+            ]);
+        } else {
+            return json_encode(['status' => 'waiting']);
+        }
+    }
+    abort(404);
+});
+
+Route::post('mw/host/{hash}', static function ($hash) {
+    $client = new Client();
+
+    $multi = ALttP\Multiworld::where('hash', $hash)->first();
+    if ($multi) {
+        $response = $client->request('POST', config("alttp.mw_host") . "/game", [
+            'json' => [
+                'multidata' => array_values(unpack("C*", $multi->multidata)),
+            ],
+        ]);
+
+        $data = json_decode($response->getBody());
+
+        return json_encode($data);
     }
     abort(404);
 });

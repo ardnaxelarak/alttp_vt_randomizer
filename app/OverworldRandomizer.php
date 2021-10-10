@@ -234,7 +234,7 @@ class OverworldRandomizer implements RandomizerContract
 
         if (count($this->worlds) > 1) {
             $flags[] = "--names";
-            $flags[] = implode(',', array_map(fn($world): string => $world->config('worldName'), $this->worlds));
+            $flags[] = implode(',', array_map(fn($world): string => str_replace([" ", ","], "", $world->config('worldName')), $this->worlds));
         }
 
         $flags = array_merge(
@@ -254,7 +254,7 @@ class OverworldRandomizer implements RandomizerContract
             ],
         );
 
-        $proc = $this->callRandomizer($flags);
+        $proc = $this->callRandomizer($flags, 0);
 
         $or_output = json_decode($proc->getOutput());
 
@@ -280,7 +280,7 @@ class OverworldRandomizer implements RandomizerContract
 
             $world->setSpoiler($spoiler);
 
-            if ($world->config('enemizer.bossShuffle') !== 'none') {
+            if ($world->config('enemizer.bossShuffle') !== 'none' && count($this->worlds) > 1) {
                 $world->getRegion('Eastern Palace')->setBoss(Boss::get($spoiler['Bosses'][$index]['Eastern Palace'], $world));
                 $world->getRegion('Desert Palace')->setBoss(Boss::get($spoiler['Bosses'][$index]['Desert Palace'], $world));
                 $world->getRegion('Tower of Hera')->setBoss(Boss::get($spoiler['Bosses'][$index]['Tower Of Hera'], $world));
@@ -294,6 +294,20 @@ class OverworldRandomizer implements RandomizerContract
                 $world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses'][$index]['Ganons Tower Basement'], $world), 'bottom');
                 $world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses'][$index]['Ganons Tower Middle'], $world), 'middle');
                 $world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses'][$index]['Ganons Tower Top'], $world), 'top');
+            } else if ($world->config('enemizer.bossShuffle') !== 'none') {
+                $world->getRegion('Eastern Palace')->setBoss(Boss::get($spoiler['Bosses']['Eastern Palace'], $world));
+                $world->getRegion('Desert Palace')->setBoss(Boss::get($spoiler['Bosses']['Desert Palace'], $world));
+                $world->getRegion('Tower of Hera')->setBoss(Boss::get($spoiler['Bosses']['Tower Of Hera'], $world));
+                $world->getRegion('Palace of Darkness')->setBoss(Boss::get($spoiler['Bosses']['Palace Of Darkness'], $world));
+                $world->getRegion('Swamp Palace')->setBoss(Boss::get($spoiler['Bosses']['Swamp Palace'], $world));
+                $world->getRegion('Skull Woods')->setBoss(Boss::get($spoiler['Bosses']['Skull Woods'], $world));
+                $world->getRegion('Thieves Town')->setBoss(Boss::get($spoiler['Bosses']['Thieves Town'], $world));
+                $world->getRegion('Ice Palace')->setBoss(Boss::get($spoiler['Bosses']['Ice Palace'], $world));
+                $world->getRegion('Misery Mire')->setBoss(Boss::get($spoiler['Bosses']['Misery Mire'], $world));
+                $world->getRegion('Turtle Rock')->setBoss(Boss::get($spoiler['Bosses']['Turtle Rock'], $world));
+                $world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses']['Ganons Tower Basement'], $world), 'bottom');
+                $world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses']['Ganons Tower Middle'], $world), 'middle');
+                $world->getRegion('Ganons Tower')->setBoss(Boss::get($spoiler['Bosses']['Ganons Tower Top'], $world), 'top');
             }
             $index++;
         }
