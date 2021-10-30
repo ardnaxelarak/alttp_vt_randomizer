@@ -289,6 +289,48 @@ return [
                         'No entrances are randomized. All entrances lead to their original locations.',
                     ],
                 ],
+                'lite' => [
+                    'header' => __('randomizer.entrance_shuffle.options.lite'),
+                    'content' => [
+                        'This is intended to be a beginner-friendly introduction to playing Entrance Randomizer. It focuses on reducing low-percentage world traversal in late-game dungeons while reducing the number of entrances needing to be checked.',
+                        'This mode groups entrances into types and shuffles them freely within those groups:',
+                        '<ul>'
+                            . '<li>Dungeons and Connectors (Multi-Entrance caves)</li>'
+                            . '<li>Item Locations (Single-Entrance caves with an item, including the potion shop and bomb shop, and including other shaps only if ' . __('randomizer.shopsanity.title') . ' is enabled)</li>'
+                            . '<li>Dropdowns and their associated exits (Skull Woods dropdowns are handled the same as in ' . __('randomizer.entrance_shuffle.options.crossed') . ')'
+                            . '<li>Non-item Locations (junk locations) all remain vanilla</li>'
+                            . '</ul>',
+                        'Lite mode shuffles all connectors same-world, to limit bunny traversal, and to prevent low-percentage enemy and boss combat, some dungeons are confined to specific worlds:',
+                        'The following dungeons are guaranteed to be in the Light World:',
+                        '<ul>'
+                            . '<li>Hyrule Castle</li>'
+                            . '<li>Eastern Palace</li>'
+                            . '<li>Desert Palace</li>'
+                            . '<li>Tower of Hera</li>'
+                            . '<li>Agahnim\'s Tower</li>'
+                            . '</ul>',
+                        'The following dungeons are guaranteed to be in the Dark World:',
+                        '<ul>'
+                            . '<li>Ice Palace</li>'
+                            . '<li>Misery Mire</li>'
+                            . '<li>Turtle Rock</li>'
+                            . '<li>Ganon\'s Tower</li>'
+                            . '</ul>',
+                    ],
+                ],
+                'lean' => [
+                    'header' => __('randomizer.entrance_shuffle.options.lean'),
+                    'content' => [
+                        'This mode is intended to be a more refined and more competitive format to ' . __('randomizer.entrance_shuffle.options.crossed') . '. It focuses on reducing the number of entrances needing to be checked, while giving the player unique routing options based on the entrance pools defined below, as opposed to needing to check all remaining entrances. The dungeons and connectors can connect cross-world.',
+                        'This mode groups entrances into types and shuffles them freely within those groups:',
+                        '<ul>'
+                            . '<li>Dungeons and Connectors (Multi-Entrance caves)</li>'
+                            . '<li>Item Locations (Single-Entrance caves with an item, including the potion shop and bomb shop, and including other shaps only if ' . __('randomizer.shopsanity.title') . ' is enabled)</li>'
+                            . '<li>Dropdowns and their associated exits (Skull Woods dropdowns are handled the same as in ' . __('randomizer.entrance_shuffle.options.crossed') . ')'
+                            . '<li>Non-item Locations (junk locations) all remain vanilla</li>'
+                            . '</ul>',
+                    ],
+                ],
                 'simple' => [
                     'header' => __('randomizer.entrance_shuffle.options.simple'),
                     'content' => [

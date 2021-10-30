@@ -146,6 +146,8 @@ return [
             'full' => 'Full',
             'crossed' => 'Crossed',
             'insanity' => 'Insanity',
+            'lite' => 'Lite',
+            'lean' => 'Lean',
             'dungeonssimple' => 'Simple (Dungeons Only)',
             'dungeonsfull' => 'Full (Dungeons Only)',
         ],

@@ -32,7 +32,7 @@
     "z3/enemizer_linux": "6.1.0.180",
     "z3/enemizer_osx": "6.1.0.180",
     "z3/entrancerandomizer": "^0.6.3",
-    "z3/overworldrandomizer": "^0.1.6",
+    "z3/overworldrandomizer": "^0.2.1",
     "z3/randomizer": "^31.0",
     "z3/randomizer_ow": "^31.0"
   },
@@ -55,7 +55,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "123dcddc94426910f5fd6d2bec5aa74508918313"
+          "reference": "f3e0def5a220ce9dbfd422559f4bfa28d07e6f82"
         }
       }
     },
@@ -67,7 +67,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "825d4a1eadbdff6a44e8f0a8a994ee3e8b1058be"
+          "reference": "82c5190f6300dfd30795ac96d63cb06442ed72d6"
         }
       }
     },
@@ -109,11 +109,11 @@
       "type": "package",
       "package": {
         "name": "z3/overworldrandomizer",
-        "version": "0.1.9.4",
+        "version": "0.2.1.2",
         "source": {
           "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
           "type": "git",
-          "reference": "0c9270bdb051c8333db88bd14ab06f1d6e0cc01c"
+          "reference": "b8304c4c766ec42cd61ec67e2de82df1a59fc07c"
         }
       }
     }
