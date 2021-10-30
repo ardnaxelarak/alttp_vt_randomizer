@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bda1936250b271c607853572892eaea6",
+    "content-hash": "893b50860d9766aac08c7cd21d50c88e",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -7451,7 +7451,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "f3e0def5a220ce9dbfd422559f4bfa28d07e6f82"
+                "reference": "c323a71340f14658a1e4669eb46de3c0262a95dc"
             },
             "type": "library"
         },
@@ -7461,7 +7461,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/z3randomizer",
-                "reference": "82c5190f6300dfd30795ac96d63cb06442ed72d6"
+                "reference": "0c6ba204704f9aa832a7024c94c67999a8336012"
             },
             "type": "library"
         }

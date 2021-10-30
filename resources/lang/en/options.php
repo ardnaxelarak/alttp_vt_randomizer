@@ -743,6 +743,7 @@ return [
                         'All swords are replaced with bomb upgrades, and bombs are now the only weapon. Multiple changes have been made for this to work:',
                         '<ul>'
                             . '<li>Link will obtain an infinite supply of bombs once he finds his first bomb upgrade.</li>'
+                            . '<li>Bombs can be detonated early with the B button.</li>'
                             . '<li>Bombs initially deal the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage.</li>'
                             . '<li>All bosses (including Ganon) can now be damaged by bombs of the appropriate level.</li>'
                             . '<li>All other weapons do no damage in most cases, except for the following:'
