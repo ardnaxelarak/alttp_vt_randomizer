@@ -13,8 +13,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-10-30', 'HASH' => '44505346214336a482a3be4d2414653c'],
-        'overworld' => ['BUILD' => '2021-10-30', 'HASH' => '62556a2bff42e085d87697f1f825f107'],
+        'base' => ['BUILD' => '2021-11-07', 'HASH' => '46618a1e66171ee554e885ba40d2a1a9'],
+        'overworld' => ['BUILD' => '2021-11-07', 'HASH' => 'bbe12584f665c820b3b743fa4a3d5c1d'],
     ];
     const SIZE = 2097152;
 
@@ -2617,6 +2617,11 @@ class Rom
         // thiefs and pikits shouldn't steal bombs
         $this->write(0xECB54, pack('C*', 0xA9, 0x00, 0xEA, 0xEA)); // thief
         $this->write(0xF0D80, pack('C*', 0xA9, 0x00, 0xEA, 0xEA)); // pikit
+
+        // make gold bombs actually gold by minor modifications to sword/shield palettes (it works, ugh)
+        $this->write(0xDD634, pack('C*', 0xBC, 0x02));
+        $this->write(0xDD648, pack('C*', 0x5F, 0x4F));
+        $this->write(0xDD658, pack('C*', 0x5F, 0x4F));
 
         // replace sword stat text with bomb stat text in credits
         $this->write(0x11803E, pack('C*', ...$this->credits->convertLargeCreditsTop("FIRST BOMBS")));
