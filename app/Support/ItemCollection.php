@@ -506,6 +506,40 @@ class ItemCollection extends Collection
     }
 
     /**
+     * Requirements for flipping a crystal switch across a barrier
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function canHitCrystalThroughBarrier(World $world)
+    {
+        return $this->canBombThings($world)
+            || $this->canShootArrows($world)
+            || $this->has('Boomerang')
+            || $this->has('RedBoomerang')
+            || $this->has('CaneOfSomaria')
+            || $this->has('IceRod')
+            || $this->has('FireRod');
+    }
+
+    /**
+     * Requirements for flipping a crystal switch
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function canHitCrystal(World $world)
+    {
+        return $this->canHitCrystalThroughBarrier($world)
+            || $this->hasSword()
+            || $this->has('Hammer')
+            || $this->has('CaneOfByrna')
+            || $this->has('Hookshot');
+    }
+
+    /**
      * Requirements for damaging stunned Ganon
      *
      * @param \ALttP\World  $world  world to check items against

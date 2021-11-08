@@ -97,8 +97,8 @@ class TowerOfHera extends Region\Standard\TowerOfHera
         });
 
         $this->can_enter = function ($locations, $items) use ($main, $mire) {
-            return ($main($locations, $items)
-                || $mire($locations, $items));
+            return $items->canHitCrystal($this->world)
+                && ($main($locations, $items) || $mire($locations, $items));
         };
 
         return $this;

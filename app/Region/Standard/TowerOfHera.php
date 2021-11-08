@@ -153,9 +153,8 @@ class TowerOfHera extends Region
         });
 
         $this->can_enter = function ($locations, $items) use ($main, $mire) {
-            return $items->has('RescueZelda')
-                && ($main($locations, $items)
-                    || $mire($locations, $items));
+            return $items->has('RescueZelda') && $items->canHitCrystal($this->world)
+                && ($main($locations, $items) || $mire($locations, $items));
         };
 
         $this->prize_location->setRequirements($this->can_complete);

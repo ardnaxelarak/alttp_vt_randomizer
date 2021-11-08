@@ -11,14 +11,14 @@ use ALttP\Support\ShopCollection;
 use ALttP\World;
 
 /**
- * East Death Mountain Region and it's Locations contained within
+ * East Death Mountain Region and its Locations contained within
  */
 class East extends Region
 {
     protected $name = 'Death Mountain';
 
     /**
-     * Create a new East Death Mountain Region and initalize it's locations
+     * Create a new East Death Mountain Region and initalize its locations
      *
      * @param World $world World this Region is part of
      *
@@ -71,6 +71,26 @@ class East extends Region
 
         $this->locations["Paradox Cave Upper - Right"]->setRequirements(function ($locations, $items) {
             return $items->canBombThings($this->world);
+        });
+
+        $this->locations["Paradox Cave Lower - Far Left"]->setRequirements(function ($locations, $items) {
+            return $items->canHitCrystalThroughBarrier($this->world);
+        });
+
+        $this->locations["Paradox Cave Lower - Left"]->setRequirements(function ($locations, $items) {
+            return $items->canHitCrystalThroughBarrier($this->world);
+        });
+
+        $this->locations["Paradox Cave Lower - Middle"]->setRequirements(function ($locations, $items) {
+            return $items->canHitCrystalThroughBarrier($this->world);
+        });
+
+        $this->locations["Paradox Cave Lower - Right"]->setRequirements(function ($locations, $items) {
+            return $items->canHitCrystalThroughBarrier($this->world);
+        });
+
+        $this->locations["Paradox Cave Lower - Far Right"]->setRequirements(function ($locations, $items) {
+            return $items->canHitCrystalThroughBarrier($this->world);
         });
 
         $this->locations["Mimic Cave"]->setRequirements(function ($locations, $items) {
