@@ -319,7 +319,7 @@ class OverworldRandomizer implements RandomizerContract
     {
         $proc = new Process($flags);
         if (count($this->worlds) == 1) {
-            $proc->setTimeout(30);
+            $proc->setTimeout(60);
         } else {
             $proc->setTimeout(240);
         }
