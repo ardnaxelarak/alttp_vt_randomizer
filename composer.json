@@ -67,7 +67,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "e96d802ed1add11c1dab460a20f8498b431a579e"
+          "reference": "0ab9095222a76fb35ed739d42ed96a0be5092aff"
         }
       }
     },
@@ -109,11 +109,11 @@
       "type": "package",
       "package": {
         "name": "z3/overworldrandomizer",
-        "version": "0.2.2.0",
+        "version": "0.2.3.2",
         "source": {
           "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
           "type": "git",
-          "reference": "1b0c3db38f66a4ee64684180e260b45a253f4bd2"
+          "reference": "061b8975f9838a41b5e2cc399a22b6df10d4c144"
         }
       }
     }
