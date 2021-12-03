@@ -47,7 +47,7 @@ class GenerateMultiworld implements ShouldQueue
      */
     public function handle()
     {
-        $payload = $this->prepMultiworld();
+        $payload = GenerateMultiworld::prepMultiworld($this->request, true);
 
         foreach ($payload['worlds'] as $world_payload) {
             $world_payload['seed']->save();
@@ -102,6 +102,7 @@ class GenerateMultiworld implements ShouldQueue
             Cache::put('hash.' . $world_payload['hash'], $save_data, now()->addDays(7));
         }
 
+        $this->multigen->multi_id = $payload['id'];
         $this->multigen->save();
     }
 
@@ -117,84 +118,84 @@ class GenerateMultiworld implements ShouldQueue
         $this->multigen->save();
     }
 
-    protected function prepMultiworld()
+    public static function prepMultiworld(array $request, bool $save = true)
     {
-        $count = count(Arr::get($this->request, 'worlds'));
+        $count = count(Arr::get($request, 'worlds'));
         $spoiler_meta = [];
 
         $purifier_settings = HTMLPurifier_Config::create(config("purifier.default"));
         $purifier_settings->loadArray(config("purifier.default"));
         $purifier = new HTMLPurifier($purifier_settings);
-        if (Arr::has($this->request, 'name')) {
-            $markdowned = Markdown::convertToHtml(substr(Arr::get($this->request, 'name'), 0, 100));
+        if (Arr::has($request, 'name')) {
+            $markdowned = Markdown::convertToHtml(substr(Arr::get($request, 'name'), 0, 100));
             $spoiler_meta['name'] = strip_tags($purifier->purify($markdowned));
         }
-        if (Arr::has($this->request, 'notes')) {
-            $markdowned = Markdown::convertToHtml(substr(Arr::get($this->request, 'notes'), 0, 300));
+        if (Arr::has($request, 'notes')) {
+            $markdowned = Markdown::convertToHtml(substr(Arr::get($request, 'notes'), 0, 300));
             $spoiler_meta['notes'] = $purifier->purify($markdowned);
         }
 
-        $tournament = Arr::get($this->request, 'tournament', true);
-        $spoilers = Arr::get($this->request, 'spoilers', 'off');
+        $tournament = Arr::get($request, 'tournament', true);
+        $spoilers = Arr::get($request, 'spoilers', 'off');
         if (!$tournament) {
             $spoilers = "on";
-        } else if (!in_array(Arr::get($this->request, 'spoilers', 'off'), ["on", "off", "generate", "mystery"])) {
+        } else if (!in_array(Arr::get($request, 'spoilers', 'off'), ["on", "off", "generate", "mystery"])) {
             $spoilers = "off";
         }
 
         $worlds = [];
         for ($i = 1; $i <= $count; $i++) {
-            $worldName = Arr::get($this->request, "worlds.{$i}.name", "Player ${i}");
+            $worldName = Arr::get($request, "worlds.{$i}.name", "Player ${i}");
             if (!$worldName) {
                 $worldName = "Player ${i}";
             }
-            $weapons = Arr::get($this->request, "worlds.{$i}.weapons", 'randomized');
-            $crystals_ganon = Arr::get($this->request, "worlds.{$i}.ganon_open", '7');
+            $weapons = Arr::get($request, "worlds.{$i}.weapons", 'randomized');
+            $crystals_ganon = Arr::get($request, "worlds.{$i}.ganon_open", '7');
             $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
-            $crystals_tower = Arr::get($this->request, "worlds.{$i}.tower_open", '7');
+            $crystals_tower = Arr::get($request, "worlds.{$i}.tower_open", '7');
             $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
-            $ganon_item = Arr::get($this->request, "worlds.${i}.ganon_item", 'default');
+            $ganon_item = Arr::get($request, "worlds.${i}.ganon_item", 'default');
             $ganon_item = $ganon_item === 'random' ? get_random_ganon_item($weapons) : $ganon_item;
             $logic = [
                 'none' => 'NoGlitches',
                 'overworld_glitches' => 'OverworldGlitches',
                 'major_glitches' => 'MajorGlitches',
                 'no_logic' => 'NoLogic',
-            ][Arr::get($this->request, "worlds.{$i}.glitches", 'none')];
+            ][Arr::get($request, "worlds.{$i}.glitches", 'none')];
 
-            $worlds[] = World::factory(Arr::get($this->request, "worlds.{$i}.world_state", 'standard'), [
+            $worlds[] = World::factory(Arr::get($request, "worlds.{$i}.world_state", 'standard'), [
                 'worldName' => $worldName,
                 'itemPlacement' => 'advanced',
-                'dungeonItems' => Arr::get($this->request, "worlds.{$i}.dungeon_items", 'standard'),
-                'dropShuffle' => Arr::get($this->request, "worlds.{$i}.drop_shuffle", 'off'),
-                'accessibility' => Arr::get($this->request, "worlds.{$i}.accessibility", 'items'),
-                'goal' => Arr::get($this->request, "worlds.{$i}.goal", 'ganon'),
+                'dungeonItems' => Arr::get($request, "worlds.{$i}.dungeon_items", 'standard'),
+                'dropShuffle' => Arr::get($request, "worlds.{$i}.drop_shuffle", 'off'),
+                'accessibility' => Arr::get($request, "worlds.{$i}.accessibility", 'items'),
+                'goal' => Arr::get($request, "worlds.{$i}.goal", 'ganon'),
                 'crystals.ganon' => $crystals_ganon,
                 'crystals.tower' => $crystals_tower,
                 'ganon_item' => $ganon_item,
-                'entrances' => Arr::get($this->request, "worlds.{$i}.entrance_shuffle", 'none'),
-                'doors.shuffle' => Arr::get($this->request, "worlds.{$i}.door_shuffle", 'vanilla'),
-                'doors.intensity' => Arr::get($this->request, "worlds.{$i}.door_intensity", '1'),
-                'overworld.shuffle' => Arr::get($this->request, "worlds.{$i}.ow_shuffle", 'vanilla'),
-                'overworld.crossed' => Arr::get($this->request, "worlds.{$i}.ow_crossed", 'vanilla'),
-                'overworld.keepSimilar' => Arr::get($this->request, "worlds.{$i}.ow_keep_similar", 'off'),
-                'overworld.mixed' => Arr::get($this->request, "worlds.{$i}.ow_mixed", 'off'),
-                'overworld.fluteShuffle' => Arr::get($this->request, "worlds.{$i}.ow_flute_shuffle", 'vanilla'),
-                'shopsanity' => Arr::get($this->request, "worlds.{$i}.shopsanity", 'off'),
+                'entrances' => Arr::get($request, "worlds.{$i}.entrance_shuffle", 'none'),
+                'doors.shuffle' => Arr::get($request, "worlds.{$i}.door_shuffle", 'vanilla'),
+                'doors.intensity' => Arr::get($request, "worlds.{$i}.door_intensity", '1'),
+                'overworld.shuffle' => Arr::get($request, "worlds.{$i}.ow_shuffle", 'vanilla'),
+                'overworld.crossed' => Arr::get($request, "worlds.{$i}.ow_crossed", 'vanilla'),
+                'overworld.keepSimilar' => Arr::get($request, "worlds.{$i}.ow_keep_similar", 'off'),
+                'overworld.mixed' => Arr::get($request, "worlds.{$i}.ow_mixed", 'off'),
+                'overworld.fluteShuffle' => Arr::get($request, "worlds.{$i}.ow_flute_shuffle", 'vanilla'),
+                'shopsanity' => Arr::get($request, "worlds.{$i}.shopsanity", 'off'),
                 'mode.weapons' => $weapons,
                 'tournament' => $tournament,
                 'spoilers' => $spoilers,
-                'allow_quickswap' => Arr::get($this->request, 'allow_quickswap', true),
-                'override_start_screen' => Arr::get($this->request, "worlds.{$i}.override_start_screen", false),
-                'spoil.Hints' => Arr::get($this->request, "worlds.{$i}.hints", 'on'),
+                'allow_quickswap' => Arr::get($request, 'allow_quickswap', true),
+                'override_start_screen' => Arr::get($request, "worlds.{$i}.override_start_screen", false),
+                'spoil.Hints' => Arr::get($request, "worlds.{$i}.hints", 'on'),
                 'logic' => $logic,
-                'item.pool' => Arr::get($this->request, "worlds.{$i}.item_pool", 'normal'),
-                'item.functionality' => Arr::get($this->request, "worlds.{$i}.item_functionality", 'normal'),
-                'enemizer.bossShuffle' => Arr::get($this->request, "worlds.{$i}.boss_shuffle", 'none'),
-                'enemizer.enemyShuffle' => Arr::get($this->request, "worlds.{$i}.enemy_shuffle", 'none'),
-                'enemizer.enemyDamage' => Arr::get($this->request, "worlds.{$i}.enemy_damage", 'default'),
-                'enemizer.enemyHealth' => Arr::get($this->request, "worlds.{$i}.enemy_health", 'default'),
-                'enemizer.potShuffle' => Arr::get($this->request, "worlds.{$i}.pot_shuffle", 'off'),
+                'item.pool' => Arr::get($request, "worlds.{$i}.item_pool", 'normal'),
+                'item.functionality' => Arr::get($request, "worlds.{$i}.item_functionality", 'normal'),
+                'enemizer.bossShuffle' => Arr::get($request, "worlds.{$i}.boss_shuffle", 'none'),
+                'enemizer.enemyShuffle' => Arr::get($request, "worlds.{$i}.enemy_shuffle", 'none'),
+                'enemizer.enemyDamage' => Arr::get($request, "worlds.{$i}.enemy_damage", 'default'),
+                'enemizer.enemyHealth' => Arr::get($request, "worlds.{$i}.enemy_health", 'default'),
+                'enemizer.potShuffle' => Arr::get($request, "worlds.{$i}.pot_shuffle", 'off'),
             ]);
         }
 
@@ -206,12 +207,14 @@ class GenerateMultiworld implements ShouldQueue
         $multi = new Multiworld;
         $multi->spoiler = json_encode($rand->getSpoiler());
         $multi->multidata = pack('C*', ...$rand->getMultidata());
-        $multi->save();
+        if ($save) {
+            $multi->save();
+        }
 
         foreach ($worlds as $world) {
             $rom = new Rom(config('alttp.base_rom'));
             $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
-            $world->writeToRom($rom, true, false);
+            $world->writeToRom($rom, $save, false);
 
             // Overworld rando is responsible for verifying winnability of itself
             // and generating its own full spoiler
@@ -238,8 +241,10 @@ class GenerateMultiworld implements ShouldQueue
             }
             $patch = $rom->getWriteLog();
 
-            $world->updateSeedRecordPatch($patch);
-            $world->updateSeedRecordMultiworld($multi);
+            if ($save) {
+                $world->updateSeedRecordPatch($patch);
+                $world->updateSeedRecordMultiworld($multi);
+            }
 
             $world_payloads[] = [
                 'name' => $world->config('worldName'),
@@ -255,13 +260,12 @@ class GenerateMultiworld implements ShouldQueue
             ];
         }
 
-        $this->multigen->multi_id = $multi->id;
-
         return [
             'worlds' => $world_payloads,
             'multidata' => $rand->getMultidata(),
             'spoiler' => $rand->getSpoiler(),
             'generated' => $multi->created_at ? $multi->created_at->toIso8601String() : now()->toIso8601String(),
+            'id' => $multi->id,
             'hash' => $multi->hash,
         ];
     }
