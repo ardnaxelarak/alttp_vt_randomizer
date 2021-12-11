@@ -286,6 +286,27 @@
             </tbody>
           </table>
         </tab>
+        <tab v-if="maps" key="maps" name="Maps">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th class="col-auto">Type</th>
+                <th class="col-auto">Player</th>
+                <th class="col-auto">Map</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="row in maps"
+                class="spoil-item-location"
+              >
+                <td>{{ row.type }}</td>
+                <td>Player {{ row.player }}</td>
+                <td><pre>{{ row.text }}</pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
         <tab v-if="meta" key="meta" name="meta">
           <table class="table table-striped table-sm">
             <thead>
@@ -340,7 +361,7 @@ export default {
       let regions = {};
       for (let name in vm.rom.spoiler) {
         if (
-          ["meta", "playthrough", "Entrances", "Starting Inventory", "paths", "Shops", "Overworld", "Doors", "Lobbies", "DoorTypes"].indexOf(
+          ["meta", "playthrough", "Entrances", "Starting Inventory", "paths", "Shops", "Overworld", "Doors", "Lobbies", "DoorTypes", "Maps"].indexOf(
             name
           ) === -1
         ) {
@@ -406,6 +427,23 @@ export default {
       return vm.rom.spoiler.Overworld && vm.rom.spoiler.Overworld.length > 0
         ? vm.rom.spoiler.Overworld
         : false;
+    },
+    maps: vm => {
+      if (!vm.rom.spoiler.Maps || vm.rom.spoiler.Maps.length == 0) {
+        return false;
+      }
+      const returnArray = [];
+      for (const type in vm.rom.spoiler.Maps) {
+        for (const player in vm.rom.spoiler.Maps[type]) {
+          returnArray.push({
+            type: type,
+            player: player,
+            data: vm.rom.spoiler.Maps[type][player].data,
+            text: vm.rom.spoiler.Maps[type][player].text,
+          });
+        }
+      }
+      return returnArray;
     },
     lobbies: vm => {
       return vm.rom.spoiler.Lobbies && vm.rom.spoiler.Lobbies.length > 0
