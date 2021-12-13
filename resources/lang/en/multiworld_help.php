@@ -16,7 +16,7 @@ return [
             'header' => '1. Generate the Multiworld',
             'content' => [
                 'Head on over to <a href="/multiworld" target="_blank" rel="noopener noreferrer">' . __('navigation.multiworld') . '</a> and select the options for each player who will be participating in the multiworld. Then click “' . __('multiworld.generate') . '” and you’ll be given a randomized multiworld!',
-                'Please note that multiworld generation can take upwards of several minutes, depending on the settings schosen; please be patient.',
+                'Please note that multiworld generation can take upwards of several minutes, depending on the settings chosen; please be patient.',
             ]
         ],
         'hosting' => [

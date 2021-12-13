@@ -42,7 +42,7 @@ Route::get('multi/{hash}', static function ($hash) {
     if ($multi) {
         return json_encode([
             'hash' => $hash,
-            'multidata' => unpack('C*', $multi->multidata),
+            'multidata' => array_values(unpack('C*', $multi->multidata)),
             'spoiler' => json_decode($multi->spoiler),
             'generated' => $multi->created_at->toIso8601String(),
             'worlds' => $multi->seeds->map(function(ALttP\Seed $seed): array {
