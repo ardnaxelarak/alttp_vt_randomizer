@@ -321,7 +321,7 @@ class OverworldRandomizer implements RandomizerContract
         if (count($this->worlds) == 1) {
             $proc->setTimeout(60);
         } else {
-            $proc->setTimeout(240);
+            $proc->setTimeout(120 * count($this->worlds));
         }
 
         $proc->setWorkingDirectory(base_path('vendor/z3/overworldrandomizer'));
