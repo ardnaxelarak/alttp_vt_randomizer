@@ -711,6 +711,7 @@ export default {
           if (response.data.port && response.data.token) {
             this.mw_host = `Your game is hosted at ws://mw.gwaa.kiwi:${response.data.port} with room token ${response.data.token}`;
             this.error = false;
+            window.open(`https://mw.gwaa.kiwi/game/${response.data.token}`, '_blank');
           } else {
             this.mw_host = false;
             this.error = this.$i18n.t("error.failed_host");

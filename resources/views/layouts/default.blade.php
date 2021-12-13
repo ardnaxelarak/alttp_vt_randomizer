@@ -16,9 +16,7 @@
                         <a class="dropdown-item{!! (in_array(request()->path(), ['randomizer', 'entrance/randomizer'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/randomizer">{{ __('navigation.randomizer') }}</a>
                         <a class="dropdown-item{!! (in_array(request()->path(), ['daily'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/daily">{{ __('navigation.daily') }}</a>
                         <a class="dropdown-item{!! (in_array(request()->path(), ['customizer'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/customizer">{{ __('navigation.customizer') }}</a>
-                        <!--
                         <a class="dropdown-item{!! (in_array(request()->path(), ['multiworld'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/multiworld">{{ __('navigation.multiworld') }}</a>
-                        -->
                     </div>
                 </li>
             </ul>
@@ -38,6 +36,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item{!! (request()->path() == 'resources') ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/resources">{{ __('navigation.resources') }}</a>
                         <a class="dropdown-item{!! (request()->path() == 'options') ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/options">{{ __('navigation.options') }}</a>
+                        <a class="dropdown-item{!! (request()->path() == 'multiworld_setup') ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/multiworld_setup">{{ __('navigation.multiworld_setup') }}</a>
                         <a class="dropdown-item{!! (request()->path() == 'races') ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/races">{{ __('navigation.races') }}</a>
                         <a class="dropdown-item{!! (request()->path() == 'updates') ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/updates">{{ __('navigation.updates') }}</a>
                         <a class="dropdown-item{!! (request()->path() == 'sprite_preview') ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/sprite_preview">{{ __('navigation.sprite_preview') }}</a>

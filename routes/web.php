@@ -122,6 +122,8 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
 
     Route::view('start', 'start');
 
+    Route::view('multiworld_setup', 'multiworld_help');
+
     Route::view('updates', 'updates');
 
     Route::view('watch', 'watch');

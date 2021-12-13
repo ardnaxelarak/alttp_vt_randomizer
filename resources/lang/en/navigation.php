@@ -9,6 +9,7 @@ return [
     'daily' => 'Daily Challenge',
     'customizer' => 'Create Custom Game',
     'multiworld' => 'Multiworld Generator',
+    'multiworld_setup' => 'Multiworld Setup',
 
     'calendar' => 'Events Calendar',
 
