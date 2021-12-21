@@ -150,8 +150,8 @@ class South extends Region
                 return false;
             }
 
-            if ($this->world->restrictedToBombs()) {
-                return $items->hasBombLevel(2);
+            if ($this->world->restrictedToBombs() || $this->world->restrictedToCane()) {
+                return $items->hasSpecialWeaponLevel($this->world, 2);
             } else if ($this->world->restrictedSwords()) {
                 return $items->has('Hammer');
             } else {

@@ -134,7 +134,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return $this->canReachBottom($locations, $items)
                 && ($this->world->config('itemPlacement') !== 'basic'
                     || $items->has('Cape')
-                    || $items->has('CaneOfByrna')
+                    || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3
                         && $items->canBlockLasers()));
         });
@@ -143,7 +143,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return $this->canReachBottom($locations, $items)
                 && ($this->world->config('itemPlacement') !== 'basic'
                     || $items->has('Cape')
-                    || $items->has('CaneOfByrna')
+                    || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3
                         && $items->canBlockLasers()));
         });
@@ -152,7 +152,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return $this->canReachBottom($locations, $items)
                 && ($this->world->config('itemPlacement') !== 'basic'
                     || $items->has('Cape')
-                    || $items->has('CaneOfByrna')
+                    || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3
                         && $items->canBlockLasers()));
         });
@@ -161,7 +161,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return $this->canReachBottom($locations, $items)
                 && ($this->world->config('itemPlacement') !== 'basic'
                     || $items->has('Cape')
-                    || $items->has('CaneOfByrna')
+                    || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3
                         && $items->canBlockLasers()));
         });

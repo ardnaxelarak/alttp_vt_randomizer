@@ -165,7 +165,7 @@ class OverworldRandomizer implements RandomizerContract
             $flags = array_merge($flags, [
                 '--usestartinventory=true',
                 '--startinventory',
-                'Progressive Bombs',
+                'Progressive_Bombs',
             ]);
         }
 
@@ -319,7 +319,7 @@ class OverworldRandomizer implements RandomizerContract
     {
         $proc = new Process($flags);
         if (count($this->worlds) == 1) {
-            $proc->setTimeout(60);
+            $proc->setTimeout(120);
         } else {
             $proc->setTimeout(120 * count($this->worlds));
         }

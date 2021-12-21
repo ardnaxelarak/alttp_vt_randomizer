@@ -36,11 +36,9 @@ class West extends Region\Standard\DarkWorld\DeathMountain\West
             return $items->has('Hammer')
                 && $items->canLiftRocks()
                 && (
-                    ($items->canExtendMagic()
-                        && $items->has('Cape')) || (
-                        (!$this->world->config('region.cantTakeDamage', false)
-                            || $items->canExtendMagic()) &&
-                        $items->has('CaneOfByrna')));
+                    ($items->canExtendMagic() && $items->has('Cape'))
+                    || ((!$this->world->config('region.cantTakeDamage', false) || $items->canExtendMagic())
+                        && $items->hasByrna($this->world)));
         });
 
         $this->can_enter = function ($locations, $items) {

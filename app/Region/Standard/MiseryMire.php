@@ -75,7 +75,7 @@ class MiseryMire extends Region
 
         $this->locations["Misery Mire - Spike Chest"]->setRequirements(function ($locations, $items) {
             return !$this->world->config('region.cantTakeDamage', false)
-                || $items->has('CaneOfByrna') || $items->has('Cape');
+                || $items->hasByrna($this->world) || $items->has('Cape');
         });
 
         $this->locations["Misery Mire - Main Lobby"]->setRequirements(function ($locations, $items) {

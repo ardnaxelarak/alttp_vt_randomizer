@@ -249,6 +249,7 @@ return [
             'swordless' => 'Swordless',
             'bombs' => 'Bomb-Only',
             'assured_bombs' => 'Bomb-Only (Starting Bombs)',
+            'byrna' => 'Byrna-Only',
             'pseudo' => 'Pseudo-Swords',
             'assured_pseudo' => 'Assured Pseudo-Swords',
         ],

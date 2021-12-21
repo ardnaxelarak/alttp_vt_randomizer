@@ -171,6 +171,7 @@ class Randomizer implements RandomizerContract
         $nice_items_health = [];
         $nice_items_armors = [];
         $nice_items_bombs = [];
+        $nice_items_canes = [];
         foreach ($advancement_items as $key => $item) {
             if ($item == Item::get('SilverArrowUpgrade', $world)) {
                 $nice_items[] = $item;
@@ -191,6 +192,10 @@ class Randomizer implements RandomizerContract
                 $nice_items_bombs[] = $item;
                 unset($advancement_items[$key]);
             }
+            if ($item instanceof Item\SwordCane) {
+                $nice_items_canes[] = $item;
+                unset($advancement_items[$key]);
+            }
         }
         // and from the nice items as well
         foreach ($nice_items as $key => $item) {
@@ -209,6 +214,10 @@ class Randomizer implements RandomizerContract
             if ($item instanceof Item\SwordBomb) {
                 unset($nice_items[$key]);
                 $nice_items_bombs[] = $item;
+            }
+            if ($item instanceof Item\SwordCane) {
+                unset($nice_items[$key]);
+                $nice_items_canes[] = $item;
             }
         }
         foreach ($trash_items as $key => $item) {
@@ -267,6 +276,30 @@ class Randomizer implements RandomizerContract
                 array_push($advancement_items, array_pop($nice_items_bombs));
             }
             $nice_items = array_merge($nice_items, $nice_items_bombs);
+        } elseif ($world->restrictedToCane()) {
+            // put L-1 bombs back
+            if (count($nice_items_canes)) {
+                $first_cane = array_pop($nice_items_canes);
+                if ($world->config('mode.weapons') === 'assured_byrna') {
+                    $world->addPreCollectedItem($first_cane);
+                    array_push($trash_items, Item::get('FiftyRupees', $world));
+                } else {
+                    array_push($advancement_items, $first_cane);
+                }
+            }
+            // put L-2 cane in
+            if (count($nice_items_canes)) {
+                array_push($advancement_items, array_pop($nice_items_canes));
+            }
+            // put L-3 cane in
+            if (count($nice_items_canes)) {
+                array_push($advancement_items, array_pop($nice_items_canes));
+            }
+            // put L-4 cane in if logically required
+            if ($world->config('region.requireBetterSword', false) && count($nice_items_canes)) {
+                array_push($advancement_items, array_pop($nice_items_canes));
+            }
+            $nice_items = array_merge($nice_items, $nice_items_canes);
         } elseif ($world->config('mode.weapons') === 'vanilla') {
             $uncle_sword = Item::get('UncleSword', $world)->setTarget(array_pop($nice_items_swords));
             $world->getLocation("Link's Uncle")->setItem($uncle_sword);

@@ -13,7 +13,7 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2021-11-10', 'HASH' => '9bb5134a904192e7a2fecd8f877d5a11'],
+        'base' => ['BUILD' => '2021-12-21', 'HASH' => 'a64aae9cbff41915cec2af189f91e756'],
         'overworld' => ['BUILD' => '2021-11-29', 'HASH' => '0dbc8ebb4ee0856dfe7c12042b88a313'],
     ];
     const SIZE = 2097152;
@@ -671,20 +671,26 @@ class Rom
                     $equipment[0x37A] |= 0b00001000;
                     break;
                 case 'L1Bombs':
+                case 'L1Cane':
                     $equipment[0x38F] = 0x01;
                     break;
                 case 'L2Bombs':
+                case 'L2Cane':
                     $equipment[0x38F] = 0x02;
                     break;
                 case 'L3Bombs':
+                case 'L3Cane':
                     $equipment[0x38F] = 0x03;
                     break;
                 case 'L4Bombs':
+                case 'L4Cane':
                     $equipment[0x38F] = 0x04;
                     break;
                 case 'L5Bombs':
+                case 'L5Cane':
                     $equipment[0x38F] = 0x05;
                     break;
+                case 'ProgressiveCane':
                 case 'ProgressiveBombs':
                     $equipment[0x38F] = min($equipment[0x38F] + 1, 5);
                     break;
@@ -2636,6 +2642,63 @@ class Rom
         $this->write(0x11814C, pack('C*', ...$this->credits->convertLargeCreditsBottom("TEMPERED BOMBS")));
         $this->write(0x11816A, pack('C*', ...$this->credits->convertLargeCreditsTop("GOLD BOMBS")));
         $this->write(0x118188, pack('C*', ...$this->credits->convertLargeCreditsBottom("GOLD BOMBS")));
+
+        $this->setHammerTablet(false);
+        $this->setHammerBarrier(false);
+
+        return $this;
+    }
+
+    /**
+     * Enable cane-only mode
+     *
+     * @return $this
+     */
+    public function setCaneOnlyMode(): self
+    {
+        $this->write(0x18002F, pack('C*', 0x03)); // Special Cane
+        $this->write(0x180040, pack('C*', 0x01)); // Open Curtains
+        $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
+
+        // Remove magic cost of cane
+        $this->write(0x45C42, pack('C*', 0x00, 0x00, 0x00));
+        $this->write(0x45CC7, pack('C*', 0xEA, 0xEA));
+        $this->write(0x45CCD, pack('C*', 0x81));
+        $this->write(0x3B088, pack('C*', 0x00, 0x00, 0x00));
+        $this->write(0x3B0A8, pack('C*', 0xEA, 0xEA));
+        $this->write(0x3B0AE, pack('C*', 0x81));
+        $this->write(0x18016B, pack('C*', 0x00, 0x00, 0x00));
+
+        // change sword icon in menu to cane
+        $spritedata = [
+            0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x17, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x18, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x19, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x1A, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x1B, 0x2C,
+            0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x17, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x18, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x19, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x1A, 0x2C,
+            0xDC, 0x2C, 0xDD, 0x2C, 0xEC, 0x2C, 0x1B, 0x2C,
+        ];
+        $this->write(0x6FC51, pack('C*', ...$spritedata));
+
+        // replace sword stat text with bomb stat text in credits
+        $this->write(0x11803E, pack('C*', ...$this->credits->convertLargeCreditsTop("FIRST CANE ")));
+        $this->write(0x11805C, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIRST CANE ")));
+        $this->write(0x11807A, pack('C*', ...$this->credits->convertLargeCreditsTop("CANELESS ")));
+        $this->write(0x118098, pack('C*', ...$this->credits->convertLargeCreditsBottom("CANELESS ")));
+        $this->write(0x1180B6, pack('C*', ...$this->credits->convertLargeCreditsTop("FIGHTER'S CANE ")));
+        $this->write(0x1180D4, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIGHTER'S CANE ")));
+        $this->write(0x1180F2, pack('C*', ...$this->credits->convertLargeCreditsTop("MASTER CANE ")));
+        $this->write(0x118110, pack('C*', ...$this->credits->convertLargeCreditsBottom("MASTER CANE ")));
+        $this->write(0x11812E, pack('C*', ...$this->credits->convertLargeCreditsTop("TEMPERED CANE ")));
+        $this->write(0x11814C, pack('C*', ...$this->credits->convertLargeCreditsBottom("TEMPERED CANE ")));
+        $this->write(0x11816A, pack('C*', ...$this->credits->convertLargeCreditsTop("GOLD CANE ")));
+        $this->write(0x118188, pack('C*', ...$this->credits->convertLargeCreditsBottom("GOLD CANE ")));
 
         $this->setHammerTablet(false);
         $this->setHammerBarrier(false);

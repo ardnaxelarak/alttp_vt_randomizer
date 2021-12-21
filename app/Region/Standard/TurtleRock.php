@@ -109,7 +109,7 @@ class TurtleRock extends Region
                     || $items->has('MoonPearl') || ($this->world->config('canOWYBA', false) && $items->hasABottle()))))
                 && ($items->has('PegasusBoots') || $items->has('CaneOfSomaria') || $items->has('Hookshot')
                     || !$this->world->config('region.cantTakeDamage', false)
-                    || $items->has('Cape') || $items->has('CaneOfByrna'))
+                    || $items->has('Cape') || $items->hasByrna($this->world))
                 && $this->world->getRegion('East Dark World Death Mountain')->canEnter($locations, $items);
         };
 
@@ -190,7 +190,7 @@ class TurtleRock extends Region
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
                     $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
-                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->has('CaneOfByrna')
+                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
 
@@ -198,7 +198,7 @@ class TurtleRock extends Region
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
                     $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
-                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->has('CaneOfByrna')
+                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
 
@@ -206,7 +206,7 @@ class TurtleRock extends Region
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
                     $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
-                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->has('CaneOfByrna')
+                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
 
@@ -214,7 +214,7 @@ class TurtleRock extends Region
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
                     $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
-                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->has('CaneOfByrna')
+                && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
 

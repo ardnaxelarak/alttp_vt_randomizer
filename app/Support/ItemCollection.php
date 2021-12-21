@@ -405,6 +405,18 @@ class ItemCollection extends Collection
     }
 
     /**
+     * Requirements for using Cane of Byrna to avoid damage
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function hasByrna(World $world)
+    {
+        return $this->has('CaneOfByrna') || ($world->restrictedToCane() && $this->hasSpecialWeaponLevel($world, 1));
+    }
+
+    /**
      * Requirements for fast travel through the duck
      *
      * @param \ALttP\World  $world  world to check items against
@@ -502,7 +514,7 @@ class ItemCollection extends Collection
      */
     public function canUseMedallions(World $world)
     {
-        return $this->hasSword() || $world->restrictedToBombs();
+        return $this->hasSword() || $world->restrictedToBombs() || $world->restrictedToCane();
     }
 
     /**
@@ -536,7 +548,8 @@ class ItemCollection extends Collection
             || $this->hasSword()
             || $this->has('Hammer')
             || $this->has('CaneOfByrna')
-            || $this->has('Hookshot');
+            || $this->has('Hookshot')
+            || ($world->restrictedToCane() && $this->hasSpecialWeaponLevel($world, 1));
     }
 
     /**
@@ -659,8 +672,8 @@ class ItemCollection extends Collection
      */
     public function canKillEscapeThings(World $world)
     {
-        if ($world->restrictedToBombs()) {
-            return $this->hasBombLevel(1);
+        if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+            return $this->hasSpecialWeaponLevel($world, 1);
         }
 
         return $this->has('UncleSword')
@@ -685,8 +698,8 @@ class ItemCollection extends Collection
      */
     public function canKillMostThings(World $world, $enemies = 5)
     {
-        if ($world->restrictedToBombs()) {
-            return $this->hasBombLevel(1);
+        if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+            return $this->hasSpecialWeaponLevel($world, 1);
         }
 
         return $this->hasRealSword($world)
@@ -709,7 +722,7 @@ class ItemCollection extends Collection
      */
     public function canBombThings(World $world)
     {
-        return !$world->restrictedToBombs() || $this->hasBombLevel(1);
+        return !$world->restrictedToBombs() || $this->hasSpecialWeaponLevel($world, 1);
     }
 
     /**
@@ -786,33 +799,64 @@ class ItemCollection extends Collection
      *
      * @return bool
      */
-    public function hasBombLevel(int $min_level)
+    public function hasSpecialWeaponLevel(World $world, int $min_level)
     {
-        switch ($min_level) {
-            case 4:
-                return $this->has('ProgressiveBombs', 4)
-                    || $this->has('L4Bombs')
-                    || $this->has('L5Bombs');
-            case 3:
-                return $this->has('ProgressiveBombs', 3)
-                    || $this->has('L3Bombs')
-                    || $this->has('L4Bombs')
-                    || $this->has('L5Bombs');
-            case 2:
-                return $this->has('ProgressiveBombs', 2)
-                    || $this->has('L2Bombs')
-                    || $this->has('L3Bombs')
-                    || $this->has('L4Bombs')
-                    || $this->has('L5Bombs');
-            case 1:
-                return $this->has('ProgressiveBombs')
-                    || $this->has('L1Bombs')
-                    || $this->has('L2Bombs')
-                    || $this->has('L3Bombs')
-                    || $this->has('L4Bombs')
-                    || $this->has('L5Bombs');
-            default:
-                return true;
+        if ($world->restrictedToBombs()) {
+            switch ($min_level) {
+                case 4:
+                    return $this->has('ProgressiveBombs', 4)
+                        || $this->has('L4Bombs')
+                        || $this->has('L5Bombs');
+                case 3:
+                    return $this->has('ProgressiveBombs', 3)
+                        || $this->has('L3Bombs')
+                        || $this->has('L4Bombs')
+                        || $this->has('L5Bombs');
+                case 2:
+                    return $this->has('ProgressiveBombs', 2)
+                        || $this->has('L2Bombs')
+                        || $this->has('L3Bombs')
+                        || $this->has('L4Bombs')
+                        || $this->has('L5Bombs');
+                case 1:
+                    return $this->has('ProgressiveBombs')
+                        || $this->has('L1Bombs')
+                        || $this->has('L2Bombs')
+                        || $this->has('L3Bombs')
+                        || $this->has('L4Bombs')
+                        || $this->has('L5Bombs');
+                default:
+                    return true;
+            }
+        } else if ($world->restrictedToCane()) {
+            switch ($min_level) {
+                case 4:
+                    return $this->has('ProgressiveCane', 4)
+                        || $this->has('L4Cane')
+                        || $this->has('L5Cane');
+                case 3:
+                    return $this->has('ProgressiveCane', 3)
+                        || $this->has('L3Cane')
+                        || $this->has('L4Cane')
+                        || $this->has('L5Cane');
+                case 2:
+                    return $this->has('ProgressiveCane', 2)
+                        || $this->has('L2Cane')
+                        || $this->has('L3Cane')
+                        || $this->has('L4Cane')
+                        || $this->has('L5Cane');
+                case 1:
+                    return $this->has('ProgressiveCane')
+                        || $this->has('L1Cane')
+                        || $this->has('L2Cane')
+                        || $this->has('L3Cane')
+                        || $this->has('L4Cane')
+                        || $this->has('L5Cane');
+                default:
+                    return true;
+            }
+        } else {
+            return false;
         }
     }
 

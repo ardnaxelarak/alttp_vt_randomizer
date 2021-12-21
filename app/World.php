@@ -247,6 +247,11 @@ abstract class World
             }
         }
 
+        // In byrna-only mode, remove invulnerability
+        if ($this->restrictedToCane()) {
+            $this->config['rom.CaneOfByrnaInvulnerability'] = false;
+        }
+
         if ($this->config('itemPlacement') === 'basic') {
             $this->config['region.forceSkullWoodsKey'] = true;
         }
@@ -453,7 +458,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -464,7 +469,7 @@ abstract class World
      */
     public function restrictedRealSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -488,6 +493,17 @@ abstract class World
     {
         $bomb_modes = ['bombs', 'assured_bombs'];
         return in_array($this->config('mode.weapons'), $bomb_modes);
+    }
+
+    /*
+     * Get whether the world has restricted access to weapons other than canes
+     *
+     * @return bool
+     */
+    public function restrictedToCane()
+    {
+        $cane_modes = ['byrna', 'assured_byrna', 'somaria', 'assured_somaria'];
+        return in_array($this->config('mode.weapons'), $cane_modes);
     }
 
     /*
@@ -914,22 +930,35 @@ abstract class World
     private function getItem(string $name): Item
     {
         $bomb_mode_replacements = [
-            'L1Sword' => 'L2Bombs',
-            'L1SwordAndShield' => 'L2Bombs',
-            'L2Sword' => 'L3Bombs',
-            'MasterSword' => 'L3Bombs',
-            'L3Sword' => 'L4Bombs',
-            'L4Sword' => 'L5Bombs',
+            'L1Sword' => 'L1Bombs',
+            'L1SwordAndShield' => 'L1Bombs',
+            'L2Sword' => 'L2Bombs',
+            'MasterSword' => 'L2Bombs',
+            'L3Sword' => 'L3Bombs',
+            'L4Sword' => 'L4Bombs',
             'ProgressiveSword' => 'ProgressiveBombs',
             'Bomb' => 'Heart',
             'ThreeBombs' => 'Heart',
             'TenBombs' => 'Heart',
         ];
 
+        $cane_mode_replacements = [
+            'L1Sword' => 'L1Cane',
+            'L1SwordAndShield' => 'L1Cane',
+            'L2Sword' => 'L2Cane',
+            'MasterSword' => 'L2Cane',
+            'L3Sword' => 'L3Cane',
+            'L4Sword' => 'L4Cane',
+            'ProgressiveSword' => 'ProgressiveCane',
+            'CaneOfByrna' => 'ProgressiveCane',
+        ];
+
         if ($name === 'BottleWithRandom') {
             return $this->getBottle();
         } elseif ($this->restrictedToBombs() && array_key_exists($name, $bomb_mode_replacements)) {
             return Item::get($bomb_mode_replacements[$name], $this);
+        } elseif ($this->restrictedToCane() && array_key_exists($name, $cane_mode_replacements)) {
+            return Item::get($cane_mode_replacements[$name], $this);
         } else {
             return Item::get($name, $this);
         }
@@ -1284,6 +1313,9 @@ abstract class World
         if ($this->restrictedToBombs()) {
             $rom->setBombsOnlyMode();
         }
+        if ($this->restrictedToCane()) {
+            $rom->setCaneOnlyMode();
+        }
         if ($this->hasPseudoSwords()) {
             $rom->setPseudoSwordMode();
         }
@@ -1387,7 +1419,7 @@ abstract class World
         }
         $this->config['ignoreCanKillEscapeThings'] = $ignoreCanKillEscapeThings;
 
-        if ($uncle_items->hasRealSword($this) || $uncle_items->has('Hammer') || $uncle_items->hasBombLevel(1)) {
+        if ($uncle_items->hasRealSword($this) || $uncle_items->has('Hammer') || $uncle_items->hasSpecialWeaponLevel($this, 1)) {
             $rom->setEscapeFills(0b00000000);
             $rom->setUncleSpawnRefills(0, 0, 0);
             $rom->setZeldaSpawnRefills(0, 0, 0);

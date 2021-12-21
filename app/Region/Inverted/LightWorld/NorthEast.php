@@ -178,10 +178,10 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                     return false;
                 }
 
-                if ($this->world->restrictedToBombs()) {
-                    return $items->hasBombLevel(3)
+                if ($this->world->restrictedToBombs() || $this->world->restrictedToCane()) {
+                    return $items->hasSpecialWeaponLevel($this->world, 3)
                         && (!$this->world->config('region.requireBetterSword', false)
-                            || $items->hasBombLevel(4))
+                            || $items->hasSpecialWeaponLevel($this->world, 4))
                         && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
                             || ($items->has('FireRod') && $items->canExtendMagic($this->world, 2)));
                 }
