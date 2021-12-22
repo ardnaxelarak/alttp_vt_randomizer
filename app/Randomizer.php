@@ -276,11 +276,11 @@ class Randomizer implements RandomizerContract
                 array_push($advancement_items, array_pop($nice_items_bombs));
             }
             $nice_items = array_merge($nice_items, $nice_items_bombs);
-        } elseif ($world->restrictedToCane()) {
-            // put L-1 bombs back
+        } elseif ($world->restrictedToCanes() || $world->restrictedToBlueCane() || $world->restrictedToRedCane()) {
+            // put L-1 cane back
             if (count($nice_items_canes)) {
                 $first_cane = array_pop($nice_items_canes);
-                if ($world->config('mode.weapons') === 'assured_byrna') {
+                if (in_array($world->config('mode.weapons'), ['assured_byrna', 'assured_somaria', 'cane'])) {
                     $world->addPreCollectedItem($first_cane);
                     array_push($trash_items, Item::get('FiftyRupees', $world));
                 } else {

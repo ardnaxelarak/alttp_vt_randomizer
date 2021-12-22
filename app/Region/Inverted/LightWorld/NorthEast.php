@@ -170,7 +170,7 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                         $this->world->config('canSuperBunny', false)
                         && $this->world->config('canDungeonRevive', false) // Just so it's not in logic for everyone. Don't care, just think it's better like this.
                         && $this->world->getRegion('Ganons Tower')->canEnter($locations, $items) //Bunny Beam Storage from GT
-                        && $items->has('CaneOfSomaria')
+                        && $items->hasSomaria($this->world)
                         && $items->has('MagicMirror')
                         && $items->hasABottle())) // Magic should be easily fine, but it's easy to miss when Invisible, even with lamp. FRod when Requires a bunch of Bottles anyway.
                 && ($items->has('DefeatAgahnim2') || $this->world->config('goal') === 'fast_ganon')
@@ -178,7 +178,7 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                     return false;
                 }
 
-                if ($this->world->restrictedToBombs() || $this->world->restrictedToCane()) {
+                if ($this->world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($this->world, 3)
                         && (!$this->world->config('region.requireBetterSword', false)
                             || $items->hasSpecialWeaponLevel($this->world, 4))

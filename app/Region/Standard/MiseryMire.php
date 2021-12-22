@@ -105,7 +105,7 @@ class MiseryMire extends Region
         $this->locations["Misery Mire - Boss"]->setRequirements(function ($locations, $items) {
             return $this->canEnter($locations, $items)
                 && $items->canBombThings($this->world)
-                && $items->has('CaneOfSomaria') && $items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                && $items->hasSomaria($this->world) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1))
                 && $items->has('BigKeyD6')
                 && $this->boss->canBeat($items, $locations)
                 && (!$this->world->config('region.wildCompasses', false) || $items->has('CompassD6') || $this->locations["Misery Mire - Boss"]->hasItem(Item::get('CompassD6', $this->world)))

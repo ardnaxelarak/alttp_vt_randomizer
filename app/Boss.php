@@ -67,7 +67,7 @@ class Boss
 
         static::$items[$world->id] = new BossCollection([
             new static("Armos Knights", "Armos", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
                 return $items->hasRealSword($world) || $items->has('Hammer') || $items->canShootArrows($world)
@@ -76,7 +76,7 @@ class Boss
                     || ($items->canExtendMagic($world, 2) && ($items->has('CaneOfByrna') || $items->has('CaneOfSomaria')));
             }),
             new static("Lanmolas", "Lanmola", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
                 return $items->hasRealSword($world) || $items->has('Hammer')
@@ -84,7 +84,7 @@ class Boss
                     || $items->has('CaneOfByrna') || $items->has('CaneOfSomaria');
             }),
             new static("Moldorm", "Moldorm", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
                 return $items->hasRealSword($world) || $items->has('Hammer');
@@ -93,10 +93,7 @@ class Boss
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');
             }),
             new static("Helmasaur King", "Helmasaur", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs()) {
-                    return $items->hasSpecialWeaponLevel($world, 2);
-                }
-                if ($world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 2)
                         && ($items->canBombThings($world) || $items->has('Hammer'));
                 }
@@ -105,7 +102,7 @@ class Boss
                         || ($world->config('itemPlacement') !== 'basic' && $items->hasRealSword($world)));
             }),
             new static("Arrghus", "Arrghus", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->has('Hookshot') && $items->hasSpecialWeaponLevel($world, 2);
                 }
                 return ($world->config('itemPlacement') !== 'basic'
@@ -116,7 +113,7 @@ class Boss
                             && ($items->has('FireRod') || $items->has('IceRod'))));
             }),
             new static("Mothula", "Mothula", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1)
                         && ($world->config('itemPlacement') !== 'basic' || $items->hasSpecialWeaponLevel($world, 2));
                 }
@@ -127,7 +124,7 @@ class Boss
                             || $items->has('CaneOfByrna'))));
             }),
             new static("Blind", "Blind", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
                 return ($world->config('itemPlacement') !== 'basic' || $world->restrictedRealSwords()
@@ -136,7 +133,7 @@ class Boss
                         || $items->has('CaneOfSomaria') || $items->has('CaneOfByrna'));
             }),
             new static("Kholdstare", "Kholdstare", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->canMeltThings($world) && $items->hasSpecialWeaponLevel($world, 2)
                         && ($world->config('itemPlacement') !== 'basic' || $items->hasSpecialWeaponLevel($world, 3));
                 }
@@ -150,7 +147,7 @@ class Boss
                             && $items->has('Bombos') && ($world->restrictedMedallions() || $items->canUseMedallions($world))));
             }),
             new static("Vitreous", "Vitreous", function ($locations, $items) use ($world) {
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 2)
                         && ($world->config('itemPlacement') !== 'basic' || $items->hasSpecialWeaponLevel($world, 3));
                 }
@@ -162,7 +159,7 @@ class Boss
                 if (!($items->has('FireRod') && $items->has('IceRod'))) {
                     return false;
                   }
-                if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+                if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 3)
                         && ($world->config('itemPlacement') !== 'basic' || $items->hasSpecialWeaponLevel($world, 4));
                 }

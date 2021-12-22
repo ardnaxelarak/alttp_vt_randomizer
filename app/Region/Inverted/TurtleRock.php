@@ -12,7 +12,7 @@ class TurtleRock extends Region\Standard\TurtleRock
 {
     protected function canReachTop($locations, $items)
     {
-        return $items->has('CaneOfSomaria')
+        return $items->hasSomaria($this->world)
             && ($this->enterTop($locations, $items)
                 || ($this->enterMiddle($locations, $items)
                     && $items->has('KeyD7', 4)) || ($this->enterBottom($locations, $items)
@@ -26,7 +26,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             || ($this->enterTop($locations, $items)
                 && $items->has('KeyD7', $this->accountForWastingKeyOnTrinexDoor(2, 3))) || ($this->enterBottom($locations, $items)
                 && $items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                && $items->has('CaneOfSomaria'));
+                && $items->hasSomaria($this->world));
     }
 
     protected function canReachBottom($locations, $items)
@@ -36,7 +36,7 @@ class TurtleRock extends Region\Standard\TurtleRock
                 ($this->enterTop($locations, $items)
                     || $this->enterMiddle($locations, $items))
                 && $items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                && $items->has('CaneOfSomaria')
+                && $items->hasSomaria($this->world)
                 && $items->has('BigKeyD7')
                 && $items->has('KeyD7', 3));
     }
@@ -57,7 +57,7 @@ class TurtleRock extends Region\Standard\TurtleRock
                 || ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Ether', $this->world)) && $items->has('Ether'))
                 || ($locations["Turtle Rock Medallion"]->hasItem(Item::get('Quake', $this->world)) && $items->has('Quake')))
             && ($this->world->restrictedMedallions() || $items->canUseMedallions($this->world))
-            && $items->has('CaneOfSomaria')
+            && $items->hasSomaria($this->world)
             && $this->world->getRegion('East Dark World Death Mountain')->canEnter($locations, $items);
     }
 
@@ -86,7 +86,7 @@ class TurtleRock extends Region\Standard\TurtleRock
     {
         $this->locations["Turtle Rock - Chain Chomps"]->setRequirements(function ($locations, $items) {
             return ($this->enterTop($locations, $items)
-                && $items->has('CaneOfSomaria')
+                && $items->hasSomaria($this->world)
                 && $items->has('KeyD7', $this->accountForWastingKeyOnTrinexDoor(1, 2))) ||
                 $this->enterMiddle($locations, $items);
         });
@@ -109,7 +109,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return $items->has('BigKeyD7')
                 && $this->canReachMiddle($locations, $items)
                 && ($items->has('Hookshot')
-                    || $items->has('CaneOfSomaria'));
+                    || $items->hasSomaria($this->world));
         })->setFillRules(function ($item, $locations, $items) {
             return $item != Item::get('BigKeyD7', $this->world);
         });
@@ -127,7 +127,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return ($items->has('BigKeyD7')
                 && $this->canReachMiddle($locations, $items)) || ($this->enterBottom($locations, $items)
                 && $items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                && $items->has('CaneOfSomaria'));
+                && $items->hasSomaria($this->world));
         });
 
         $this->locations["Turtle Rock - Eye Bridge - Bottom Left"]->setRequirements(function ($locations, $items) {
@@ -174,7 +174,7 @@ class TurtleRock extends Region\Standard\TurtleRock
             return $this->canReachBottom($locations, $items)
                 && $items->has('KeyD7', 4)
                 && $items->has('BigKeyD7')
-                && $items->has('CaneOfSomaria')
+                && $items->hasSomaria($this->world)
                 && $this->boss->canBeat($items, $locations)
                 && (!$this->world->config('region.wildCompasses', false)
                     || $items->has('CompassD7')

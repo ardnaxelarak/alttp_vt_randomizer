@@ -263,23 +263,23 @@ class GanonsTower extends Region
 
         $this->locations["Ganon's Tower - Big Chest"]->setRequirements(function ($locations, $items) {
             return $items->has('BigKeyA2') && $items->has('KeyA2', 3)
-                && (($items->has('Hammer') && $items->has('Hookshot')) || ($items->has('FireRod') && $items->has('CaneOfSomaria')));
+                && (($items->has('Hammer') && $items->has('Hookshot')) || ($items->has('FireRod') && $items->hasSomaria($this->world)));
         })->setFillRules(function ($item, $locations, $items) {
             return $item != Item::get('BigKeyA2', $this->world);
         });
 
         $this->locations["Ganon's Tower - Bob's Chest"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                || ($items->has('FireRod') && $items->hasSomaria($this->world)))
                 && $items->has('KeyA2', 3);
         });
 
         $this->locations["Ganon's Tower - Tile Room"]->setRequirements(function ($locations, $items) {
-            return $items->has('CaneOfSomaria');
+            return $items->hasSomaria($this->world);
         });
 
         $this->locations["Ganon's Tower - Compass Room - Top Left"]->setRequirements(function ($locations, $items) {
-            return $items->has('FireRod') && $items->has('CaneOfSomaria')
+            return $items->has('FireRod') && $items->hasSomaria($this->world)
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Compass Room - Top Right",
                     "Ganon's Tower - Compass Room - Bottom Left",
@@ -289,7 +289,7 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Compass Room - Top Right"]->setRequirements(function ($locations, $items) {
-            return $items->has('FireRod') && $items->has('CaneOfSomaria')
+            return $items->has('FireRod') && $items->hasSomaria($this->world)
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Compass Room - Top Left",
                     "Ganon's Tower - Compass Room - Bottom Left",
@@ -299,7 +299,7 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Compass Room - Bottom Left"]->setRequirements(function ($locations, $items) {
-            return $items->has('FireRod') && $items->has('CaneOfSomaria')
+            return $items->has('FireRod') && $items->hasSomaria($this->world)
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Compass Room - Top Right",
                     "Ganon's Tower - Compass Room - Top Left",
@@ -309,7 +309,7 @@ class GanonsTower extends Region
         });
 
         $this->locations["Ganon's Tower - Compass Room - Bottom Right"]->setRequirements(function ($locations, $items) {
-            return $items->has('FireRod') && $items->has('CaneOfSomaria')
+            return $items->has('FireRod') && $items->hasSomaria($this->world)
                 && (($locations->itemInLocations(Item::get('BigKeyA2', $this->world), [
                     "Ganon's Tower - Compass Room - Top Right",
                     "Ganon's Tower - Compass Room - Top Left",
@@ -320,7 +320,7 @@ class GanonsTower extends Region
 
         $this->locations["Ganon's Tower - Big Key Chest"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                    || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                    || ($items->has('FireRod') && $items->hasSomaria($this->world)))
                 && $items->has('KeyA2', 3)
                 && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations);
@@ -328,7 +328,7 @@ class GanonsTower extends Region
 
         $this->locations["Ganon's Tower - Big Key Room - Left"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                    || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                    || ($items->has('FireRod') && $items->hasSomaria($this->world)))
                 && $items->has('KeyA2', 3)
                 && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations);
@@ -336,7 +336,7 @@ class GanonsTower extends Region
 
         $this->locations["Ganon's Tower - Big Key Room - Right"]->setRequirements(function ($locations, $items) {
             return (($items->has('Hammer') && $items->has('Hookshot'))
-                    || ($items->has('FireRod') && $items->has('CaneOfSomaria')))
+                    || ($items->has('FireRod') && $items->hasSomaria($this->world)))
                 && $items->has('KeyA2', 3)
                 && $items->canBombThings($this->world)
                 && $this->boss_bottom->canBeat($items, $locations);

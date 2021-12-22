@@ -405,7 +405,7 @@ class ItemCollection extends Collection
     }
 
     /**
-     * Requirements for using Cane of Byrna to avoid damage
+     * Requirements for using Cane of Byrna
      *
      * @param \ALttP\World  $world  world to check items against
      *
@@ -413,7 +413,19 @@ class ItemCollection extends Collection
      */
     public function hasByrna(World $world)
     {
-        return $this->has('CaneOfByrna') || ($world->restrictedToCane() && $this->hasSpecialWeaponLevel($world, 1));
+        return $this->has('CaneOfByrna') || ($world->restrictedToBlueCane() && $this->hasSpecialWeaponLevel($world, 1));
+    }
+
+    /**
+     * Requirements for using Cane of Somaria
+     *
+     * @param \ALttP\World  $world  world to check items against
+     *
+     * @return bool
+     */
+    public function hasSomaria(World $world)
+    {
+        return $this->has('CaneOfSomaria') || ($world->restrictedToRedCane() && $this->hasSpecialWeaponLevel($world, 1));
     }
 
     /**
@@ -514,7 +526,7 @@ class ItemCollection extends Collection
      */
     public function canUseMedallions(World $world)
     {
-        return $this->hasSword() || $world->restrictedToBombs() || $world->restrictedToCane();
+        return $this->hasSword() || $world->restrictedToSpecialWeapons();
     }
 
     /**
@@ -530,7 +542,7 @@ class ItemCollection extends Collection
             || $this->canShootArrows($world)
             || $this->has('Boomerang')
             || $this->has('RedBoomerang')
-            || $this->has('CaneOfSomaria')
+            || $this->hasSomaria($world)
             || $this->has('IceRod')
             || $this->has('FireRod');
     }
@@ -547,9 +559,8 @@ class ItemCollection extends Collection
         return $this->canHitCrystalThroughBarrier($world)
             || $this->hasSword()
             || $this->has('Hammer')
-            || $this->has('CaneOfByrna')
-            || $this->has('Hookshot')
-            || ($world->restrictedToCane() && $this->hasSpecialWeaponLevel($world, 1));
+            || $this->hasByrna($world)
+            || $this->has('Hookshot');
     }
 
     /**
@@ -594,9 +605,9 @@ class ItemCollection extends Collection
             case 'bee':
                 return $this->hasABottle() && $this->canGetGoodBee($world);
             case 'somaria':
-                return $this->has('CaneOfSomaria');
+                return $this->hasSomaria($world);
             case 'byrna':
-                return $this->has('CaneOfByrna');
+                return $this->hasByrna($world);
             case 'arrow':
             default:
                 return $this->canShootArrows($world, 2);
@@ -672,7 +683,7 @@ class ItemCollection extends Collection
      */
     public function canKillEscapeThings(World $world)
     {
-        if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+        if ($world->restrictedToSpecialWeapons()) {
             return $this->hasSpecialWeaponLevel($world, 1);
         }
 
@@ -698,7 +709,7 @@ class ItemCollection extends Collection
      */
     public function canKillMostThings(World $world, $enemies = 5)
     {
-        if ($world->restrictedToBombs() || $world->restrictedToCane()) {
+        if ($world->restrictedToSpecialWeapons()) {
             return $this->hasSpecialWeaponLevel($world, 1);
         }
 
@@ -828,7 +839,10 @@ class ItemCollection extends Collection
                 default:
                     return true;
             }
-        } else if ($world->restrictedToCane()) {
+        } else if ($world->restrictedToBlueCane() || $world->restrictedToRedCane() || $world->restrictedToCanes()) {
+            if ($world->restrictedToCanes() && !$this->has('CaneOfByrna') && !$this->has('CaneOfSomaria')) {
+                return false;
+            }
             switch ($min_level) {
                 case 4:
                     return $this->has('ProgressiveCane', 4)

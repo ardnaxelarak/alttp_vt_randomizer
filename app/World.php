@@ -248,7 +248,7 @@ abstract class World
         }
 
         // In byrna-only mode, remove invulnerability
-        if ($this->restrictedToCane()) {
+        if ($this->restrictedToBlueCane() || $this->restrictedToCanes()) {
             $this->config['rom.CaneOfByrnaInvulnerability'] = false;
         }
 
@@ -458,7 +458,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -469,7 +469,7 @@ abstract class World
      */
     public function restrictedRealSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -500,10 +500,43 @@ abstract class World
      *
      * @return bool
      */
-    public function restrictedToCane()
+    public function restrictedToCanes()
     {
-        $cane_modes = ['byrna', 'assured_byrna', 'somaria', 'assured_somaria'];
+        $cane_modes = ['cane'];
         return in_array($this->config('mode.weapons'), $cane_modes);
+    }
+
+    /*
+     * Get whether the world has restricted access to weapons other than blue cane
+     *
+     * @return bool
+     */
+    public function restrictedToBlueCane()
+    {
+        $cane_modes = ['byrna', 'assured_byrna'];
+        return in_array($this->config('mode.weapons'), $cane_modes);
+    }
+
+    /*
+     * Get whether the world has restricted access to weapons other than red cane
+     *
+     * @return bool
+     */
+    public function restrictedToRedCane()
+    {
+        $cane_modes = ['somaria', 'assured_somaria'];
+        return in_array($this->config('mode.weapons'), $cane_modes);
+    }
+
+    /*
+     * Get whether the world has restricted access to weapons other than bombs
+     *
+     * @return bool
+     */
+    public function restrictedToSpecialWeapons()
+    {
+        return $this->restrictedToBombs() || $this->restrictedToCanes()
+            || $this->restrictedToBlueCane() || $this->restrictedToRedCane();
     }
 
     /*
@@ -950,15 +983,19 @@ abstract class World
             'L3Sword' => 'L3Cane',
             'L4Sword' => 'L4Cane',
             'ProgressiveSword' => 'ProgressiveCane',
-            'CaneOfByrna' => 'ProgressiveCane',
         ];
 
         if ($name === 'BottleWithRandom') {
             return $this->getBottle();
         } elseif ($this->restrictedToBombs() && array_key_exists($name, $bomb_mode_replacements)) {
             return Item::get($bomb_mode_replacements[$name], $this);
-        } elseif ($this->restrictedToCane() && array_key_exists($name, $cane_mode_replacements)) {
+        } elseif (($this->restrictedToCanes() || $this->restrictedToBlueCane() || $this->restrictedToRedCane())
+                && array_key_exists($name, $cane_mode_replacements)) {
             return Item::get($cane_mode_replacements[$name], $this);
+        } elseif ($this->restrictedToBlueCane() && $name === 'CaneOfByrna') {
+            return Item::get('TwentyRupees2', $this);
+        } elseif ($this->restrictedToRedCane() && $name === 'CaneOfSomaria') {
+            return Item::get('TwentyRupees2', $this);
         } else {
             return Item::get($name, $this);
         }
@@ -1313,8 +1350,14 @@ abstract class World
         if ($this->restrictedToBombs()) {
             $rom->setBombsOnlyMode();
         }
-        if ($this->restrictedToCane()) {
-            $rom->setCaneOnlyMode();
+        if ($this->restrictedToCanes()) {
+            $rom->setCaneOnlyMode(true, true);
+        }
+        if ($this->restrictedToBlueCane()) {
+            $rom->setCaneOnlyMode(true, false);
+        }
+        if ($this->restrictedToRedCane()) {
+            $rom->setCaneOnlyMode(false, true);
         }
         if ($this->hasPseudoSwords()) {
             $rom->setPseudoSwordMode();

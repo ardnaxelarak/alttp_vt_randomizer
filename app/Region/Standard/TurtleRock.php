@@ -92,7 +92,7 @@ class TurtleRock extends Region
                     || ($this->world->config('canOWYBA', false) && $items->hasABottle()
                         && (($this->world->config('canBootsClip', false) && $items->has('PegasusBoots'))
                             || $this->world->config('canOneFrameClipOW', false))))
-                && $items->has('CaneOfSomaria')
+                && $items->hasSomaria($this->world)
                 && (($items->has('Hammer') && $items->canLiftDarkRocks()
                     && $this->world->getRegion('East Death Mountain')->canEnter($locations, $items))
                     || (($this->world->config('canBootsClip', false) && $items->has('PegasusBoots'))
@@ -107,7 +107,7 @@ class TurtleRock extends Region
                 || ($this->world->config('canSuperSpeed', false) && $items->has('MoonPearl') && $items->canSpinSpeed())
                 || ($this->world->config('canOneFrameClipOW', false) && ($this->world->config('canDungeonRevive', false)
                     || $items->has('MoonPearl') || ($this->world->config('canOWYBA', false) && $items->hasABottle()))))
-                && ($items->has('PegasusBoots') || $items->has('CaneOfSomaria') || $items->has('Hookshot')
+                && ($items->has('PegasusBoots') || $items->hasSomaria($this->world) || $items->has('Hookshot')
                     || !$this->world->config('region.cantTakeDamage', false)
                     || $items->has('Cape') || $items->hasByrna($this->world))
                 && $this->world->getRegion('East Dark World Death Mountain')->canEnter($locations, $items);
@@ -126,11 +126,11 @@ class TurtleRock extends Region
         $this->locations["Turtle Rock - Chain Chomps"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return ($upper($locations, $items) && $items->has('KeyD7'))
                 || $middle($locations, $items)
-                || ($lower($locations, $items) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria'));
+                || ($lower($locations, $items) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world));
         });
 
         $this->locations["Turtle Rock - Roller Room - Left"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
-            return $items->has('FireRod') && $items->has('CaneOfSomaria')
+            return $items->has('FireRod') && $items->hasSomaria($this->world)
                 && ($upper($locations, $items)
                     || ($middle($locations, $items) && (($locations->itemInLocations(Item::get('BigKeyD7', $this->world), [
                         "Turtle Rock - Roller Room - Right",
@@ -141,7 +141,7 @@ class TurtleRock extends Region
         });
 
         $this->locations["Turtle Rock - Roller Room - Right"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
-            return $items->has('FireRod') && $items->has('CaneOfSomaria')
+            return $items->has('FireRod') && $items->hasSomaria($this->world)
                 && ($upper($locations, $items)
                     || ($middle($locations, $items) && (($locations->itemInLocations(Item::get('BigKeyD7', $this->world), [
                         "Turtle Rock - Roller Room - Left",
@@ -152,7 +152,7 @@ class TurtleRock extends Region
         });
 
         $this->locations["Turtle Rock - Compass Chest"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
-            return $items->has('CaneOfSomaria')
+            return $items->hasSomaria($this->world)
                 && ($upper($locations, $items)
                     || ($middle($locations, $items) && (($locations->itemInLocations(Item::get('BigKeyD7', $this->world), [
                         "Turtle Rock - Roller Room - Left",
@@ -165,8 +165,8 @@ class TurtleRock extends Region
         $this->locations["Turtle Rock - Big Chest"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return $items->has('BigKeyD7')
                 && (($upper($locations, $items) && $items->has('KeyD7', 2))
-                    || ($middle($locations, $items) && ($items->has('Hookshot') || $items->has('CaneOfSomaria')))
-                    || ($lower($locations, $items) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria')));
+                    || ($middle($locations, $items) && ($items->has('Hookshot') || $items->hasSomaria($this->world)))
+                    || ($lower($locations, $items) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world)));
         })->setFillRules(function ($item, $locations, $items) {
             return $item != Item::get('BigKeyD7', $this->world);
         });
@@ -183,13 +183,13 @@ class TurtleRock extends Region
         $this->locations["Turtle Rock - Crystaroller Room"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return ($items->has('BigKeyD7') && (($upper($locations, $items) && $items->has('KeyD7', 2))
                     || $middle($locations, $items)))
-                || ($lower($locations, $items) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria'));
+                || ($lower($locations, $items) && $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world));
         });
 
         $this->locations["Turtle Rock - Eye Bridge - Bottom Left"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
-                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
+                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world) && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
                 && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
@@ -197,7 +197,7 @@ class TurtleRock extends Region
         $this->locations["Turtle Rock - Eye Bridge - Bottom Right"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
-                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
+                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world) && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
                 && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
@@ -205,7 +205,7 @@ class TurtleRock extends Region
         $this->locations["Turtle Rock - Eye Bridge - Top Left"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
-                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
+                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world) && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
                 && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
@@ -213,7 +213,7 @@ class TurtleRock extends Region
         $this->locations["Turtle Rock - Eye Bridge - Top Right"]->setRequirements(function ($locations, $items) use ($upper, $middle, $lower) {
             return ($lower($locations, $items)
                 || (($upper($locations, $items) || $middle($locations, $items)) &&
-                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->has('CaneOfSomaria') && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
+                    $items->has('Lamp', $this->world->config('item.require.Lamp', 1)) && $items->hasSomaria($this->world) && $items->has('BigKeyD7') && $items->has('KeyD7', 3)))
                 && ($this->world->config('itemPlacement') !== 'basic' || $items->has('Cape') || $items->hasByrna($this->world)
                     || ($this->world->config('item.overflow.count.Shield', 3) >= 3 && $items->canBlockLasers()));
         });
@@ -233,7 +233,7 @@ class TurtleRock extends Region
                         || (($this->world->config('canSuperSpeed', false) && $items->canSpinSpeed())
                             && $this->world->getRegion('East Dark World Death Mountain')->canEnter($locations, $items))))
                     || $items->has('Lamp', $this->world->config('item.require.Lamp', 1)))
-                && $items->has('BigKeyD7') && $items->has('CaneOfSomaria')
+                && $items->has('BigKeyD7') && $items->hasSomaria($this->world)
                 && $this->boss->canBeat($items, $locations)
                 && (!$this->world->config('region.wildCompasses', false) || $items->has('CompassD7') || $this->locations["Turtle Rock - Boss"]->hasItem(Item::get('CompassD7', $this->world)))
                 && (!$this->world->config('region.wildMaps', false) || $items->has('MapD7') || $this->locations["Turtle Rock - Boss"]->hasItem(Item::get('MapD7', $this->world)));

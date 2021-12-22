@@ -220,7 +220,7 @@ class NorthEast extends Region
                 return false;
             }
 
-            if ($this->world->restrictedToBombs() || $this->world->restrictedToCane()) {
+            if ($this->world->restrictedToSpecialWeapons()) {
                 return $items->hasSpecialWeaponLevel($this->world, 3)
                     && (!$this->world->config('region.requireBetterSword', false)
                         || $items->hasSpecialWeaponLevel($this->world, 4))

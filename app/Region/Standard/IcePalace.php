@@ -118,7 +118,7 @@ class IcePalace extends Region
                 && $items->has('Hammer') && $items->canLiftRocks()
                 && $this->boss->canBeat($items, $locations)
                 && $items->has('BigKeyD5') && (
-                    ($this->world->config('itemPlacement') !== 'basic' && ($items->has('CaneOfSomaria') && $items->has('KeyD5')
+                    ($this->world->config('itemPlacement') !== 'basic' && ($items->hasSomaria($this->world) && $items->has('KeyD5')
                         || $items->has('KeyD5', 2)))
                     || ($this->world->config('itemPlacement') === 'basic' && $items->has('KeyD5', 2)))
                 && (!$this->world->config('region.wildCompasses', false) || $items->has('CompassD5') || $this->locations["Ice Palace - Boss"]->hasItem(Item::get('CompassD5', $this->world)))
