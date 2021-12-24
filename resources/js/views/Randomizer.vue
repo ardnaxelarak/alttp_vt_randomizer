@@ -296,6 +296,11 @@
               class="logic-warning text-danger"
               v-html="$t('randomizer.weapons.bombs_warning')"
             />
+            <div
+              v-if="['byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane'].includes(weapons.value)"
+              class="logic-warning text-danger"
+              v-html="$t('randomizer.weapons.cane_warning')"
+            />
             <div class="row" v-if="!editable">
               <div
                 class="col-xl-4 col-lg-6 my-1"

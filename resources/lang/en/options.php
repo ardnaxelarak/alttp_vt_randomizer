@@ -738,29 +738,52 @@ return [
                     ],
                 ],
                 [
-                    'header' => __('randomizer.weapons.options.bombs'),
+                    'header' => __('randomizer.weapons.options.pseudo'),
                     'content' => [
-                        'All swords are replaced with bomb upgrades, and bombs are now the only weapon. Multiple changes have been made for this to work:',
+                        'All swords have been replaced with vaguely-sharpened sticks that will only ever do 1 damage. Ganon is fought with the hammer as in swordless, and both progressive bows are always in the item pool.',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.assured_pseudo'),
+                    'content' => [
+                        'Same as ' . __('randomizer.weapons.options.pseudo') . ', except Link starts with what now passes for a sword. Perhaps he used it as his pillow?',
+                    ],
+                ],
+                [
+                    'header' => 'Item-Only Modes',
+                    'content' => [
+                        'The following rules apply to all of the item-only modes listed below, which individual differences are indicated in the corresponding section.',
+                        'In these modes, the specified item is the only weapon, and all swords are replaced with upgrades for that item. Multiple changes have been made for this to work:',
                         '<ul>'
-                            . '<li>Link will obtain an infinite supply of bombs once he finds his first bomb upgrade.</li>'
-                            . '<li>Bombs can be detonated early with the B button.</li>'
-                            . '<li>Bombs initially deal the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage.</li>'
-                            . '<li>All bosses (including Ganon) can now be damaged by bombs of the appropriate level.</li>'
+                            . '<li>The specified item initially deals the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage.</li>'
+                            . '<li>All bosses (including Ganon) can now be damaged by the item (once at the appropriate level).</li>'
                             . '<li>All other weapons do no damage in most cases, except for the following:'
                                 . '<ul>'
                                     . '<li>Red eyegores and mimics must still be killed with the bow.</li>'
                                     . '<li>Freezors must still be killed with either the fire rod or Bombos.</li>'
+                                    . '<li>Agahnim\'s energy balls must still be reflected with the hammer or bugnet.</li>'
+                                    . '<li>Helmasaur King\'s mask must still be destroyed with either bombs or the hammer.</li>'
                                     . '<li>Kholdstare\'s initial phase still requires either the fire rod or Bombos.</li>'
                                     . '<li>Trinexx\'s side heads still require the appropriate rod to make them vulnerable, but the rod will not damage them further.</li>'
-                                    . '<li>Hookshot and boomerang can still stun enemies that would noramlly be stunned, but will never damage enemies.</li>'
-                                    . '<li>Hookshot will still stun enemies that it would normally damage.</li>'
+                                    . '<li>Hookshot and boomerang can still stun enemies that would noramlly be stunned, and will instead stun enemies that would normally be damaged.</li>'
                                     . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
                                     . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
                                 . '</ul>'
-                            . '<li>The bat barrier outside Aghanim’s Tower can now be broken with bombs of at least level 2.</li>'
+                            . '<li>The bat barrier outside Agahnim’s Tower can now be broken with the specified item if at least of level 2.</li>'
+                            . '<li>Ether and Bombos tablets require the item to be at least level 2 and the Book of Mudora.</li>'
                             . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
-                            . '<li>Ether and Bombos tablets require bombs of at least level 2 and the Book of Mudora.</li>'
-                            . '<li>Medallions can always be used instead of requiring a sword.</li>'
+                            . '<li>Medallions can always be used instead of requiring a sword, but note that they will only affect enemies that would normally be stunned, blobbed, or frozen; enemies that would be killed will be unaffected.</li>'
+                        . '</ul>',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.bombs'),
+                    'content' => [
+                        'This mode uses bombs as the only weapon, following all of the item-only mode changes as listed above, with the following additions:',
+                        '<ul>'
+                            . '<li>Link will obtain an infinite supply of bombs once he finds his first bomb upgrade.</li>'
+                            . '<li>Bombs can be detonated early with the B button.</li>'
+                            . '<li>Helmasaur King\'s mask cannot be destroyed with the hammer; you must use bombs.</li>'
                             . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
                         . '</ul>',
                     ],
@@ -772,15 +795,56 @@ return [
                     ],
                 ],
                 [
-                    'header' => __('randomizer.weapons.options.pseudo'),
+                    'header' => __('randomizer.weapons.options.byrna'),
                     'content' => [
-                        'All swords have been replaced with vaguely-sharpened sticks that will only ever do 1 damage. Ganon is fought with the hammer as in swordless, and both progressive bows are always in the item pool.',
+                        'This mode uses the Cane of Byrna as the only weapon, following all of the item-only mode changes as listed above, with the following additions:',
+                        '<ul>'
+                            . '<li>The Cane of Byrna does not consume any magic, either over time or on initial activation.</li>'
+                            . '<li>The Cane of Byrna does not grant invulnerability, except while in the following rooms:'
+                                . '<ul>'
+                                    . '<li>The spike rooms in Ice Palace and Misery Mire</li>'
+                                    . '<li>The laser bridge in Turtle Rock</li>'
+                                    . '<li>The spike cave on the west side of Death Mountain in the dark world</li>'
+                                . '</ul>'
+                        . '</ul>',
                     ],
                 ],
                 [
-                    'header' => __('randomizer.weapons.options.assured_pseudo'),
+                    'header' => __('randomizer.weapons.options.assured_byrna'),
                     'content' => [
-                        'Same as ' . __('randomizer.weapons.options.pseudo') . ', except Link starts with what now passes for a sword. Perhaps he used it as his pillow?',
+                        'Same as ' . __('randomizer.weapons.options.byrna') . ', except Link starts with the Cane of Byrna already equipped! Perhaps he found it in his uncle\'s closet?',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.somaria'),
+                    'content' => [
+                        'This mode uses the Cane of Somaria as the only weapon, following all of the item-only mode changes as listed above, with the following addition:',
+                        '<ul>'
+                            . '<li>The Cane of Somaria does not consume any magic.</li>'
+                        . '</ul>',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.assured_somaria'),
+                    'content' => [
+                        'Same as ' . __('randomizer.weapons.options.somaria') . ', except Link starts with the Cane of Somaria already equipped! Perhaps he found it in his uncle\'s closet?',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.cane'),
+                    'content' => [
+                        'This mode uses the two canes (Cane of Byrna and Cane of Somaria) as the only weapons. All of the item-only mode changes listed above apply, with the following additions:',
+                        '<ul>'
+                            . '<li>The Cane of Byrna and Cane of Somaria each exist once in the item pool, as do three Cane Upgrades. Each Cane Upgrade will increase the level of damage done with both canes, but Link cannot use either cane until he finds it.</li>'
+                            . '<li>The Cane of Somaria does not consume any magic.</li>'
+                            . '<li>The Cane of Byrna does not consume any magic, either over time or on initial activation.</li>'
+                            . '<li>The Cane of Byrna does not grant invulnerability, except while in the following rooms:'
+                                . '<ul>'
+                                    . '<li>The spike rooms in Ice Palace and Misery Mire</li>'
+                                    . '<li>The laser bridge in Turtle Rock</li>'
+                                    . '<li>The spike cave on the west side of Death Mountain in the dark world</li>'
+                                . '</ul>'
+                        . '</ul>',
                     ],
                 ],
             ],

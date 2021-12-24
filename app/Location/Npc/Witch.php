@@ -127,6 +127,13 @@ class Witch extends Npc
             case 'L5Bombs':
             case 'ProgressiveBombs':
                 return "blend fungus into bombs";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "fungus into stick";
             case 'Mushroom':
                 return "my name is error";
             case 'Bottle':

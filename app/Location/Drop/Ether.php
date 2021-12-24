@@ -274,6 +274,13 @@ class Ether extends Location
                 return "the golden\nexplosives\nrest here!";
             case 'ProgressiveBombs':
                 return "throw more\npowerful\nexplosives";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "a better\nstick to hit\nthings with";
             case 'singleRNG':
             case 'multiRNG':
                 return "who knows? you\nprobably don't\nneed this.";

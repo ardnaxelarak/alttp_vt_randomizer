@@ -119,6 +119,13 @@ class Uncle extends Location
             case 'L5Bombs':
             case 'ProgressiveBombs':
                 return "your uncle believes";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "your uncle can walk";
             case 'Mushroom':
                 return "your uncle deals drugs";
             case 'Bottle':

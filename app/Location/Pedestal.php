@@ -229,6 +229,13 @@ class Pedestal extends Location
                 return "the golden grenades";
             case 'ProgressiveBombs':
                 return "the unknown grenades";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "the better stick";
             case 'singleRNG':
             case 'multiRNG':
                 return "the whatever";
@@ -490,6 +497,13 @@ class Pedestal extends Location
                 return "the golden\nexplosives\nrest here!";
             case 'ProgressiveBombs':
                 return "throw more\npowerful\nexplosives";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "a better\nstick rests\nhere!";
             case 'singleRNG':
             case 'multiRNG':
                 return "who knows? you\nprobably don't\nneed this.";

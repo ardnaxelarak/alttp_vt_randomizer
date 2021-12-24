@@ -126,6 +126,13 @@ class HauntedGrove extends Dig
             case 'L5Bombs':
             case 'ProgressiveBombs':
                 return "'splosion boy explodes again";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "cane boy improves again";
             case 'Mushroom':
                 return "shroom boy sells drugs again";
             case 'Bottle':

@@ -133,6 +133,13 @@ class Zora extends Npc
             case 'L5Bombs':
             case 'ProgressiveBombs':
                 return "better booms for sale";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "better stick for sale";
             case 'Mushroom':
                 return "legal drugs for sale";
             case 'Bottle':
