@@ -191,6 +191,13 @@ class BugCatchingKid extends Npc
                 return "the starry-eyed kid";
             case 'TriforcePiece':
                 return "triforce-holding kid";
+            case 'L1Cane':
+            case 'L2Cane':
+            case 'L3Cane':
+            case 'L4Cane':
+            case 'L5Cane':
+            case 'ProgressiveCane':
+                return "stick-holding kid";
             case 'Nothing':
             default:
                 return "nothing-having kid";

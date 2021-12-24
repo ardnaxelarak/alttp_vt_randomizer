@@ -14,7 +14,7 @@ class Rom
 {
     const BUILD_INFO = [
         'base' => ['BUILD' => '2021-12-22', 'HASH' => 'e629df41bf69cfecbd4bfc7126e99a59'],
-        'overworld' => ['BUILD' => '2021-11-29', 'HASH' => '0dbc8ebb4ee0856dfe7c12042b88a313'],
+        'overworld' => ['BUILD' => '2021-12-23', 'HASH' => '4e43b28cf4a2bb4501bb07c494e3534b'],
     ];
     const SIZE = 2097152;
 
@@ -2676,7 +2676,7 @@ class Rom
         }
 
         if ($blue && $red) {
-            $this->write(0x18002F, pack('C*', 0x05)); // Special Canen
+            $this->write(0x18002F, pack('C*', 0x05)); // Special Canes
             $cb = 0x28;
         } else if ($blue) {
             $this->write(0x18002F, pack('C*', 0x03)); // Special Blue Cane

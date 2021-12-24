@@ -258,7 +258,7 @@ return [
             'assured_pseudo' => 'Assured Pseudo-Swords',
         ],
         'bombs_warning' => 'Bomb-Only mode is still in development, but should be stable.',
-        'cane_warning' => 'Byrna-Only, Somaria-Only, and Canes-Only modes are still in development, but should be stable. They will not at present work with entrance, door, or overworld randomizer, or with drop shuffle or shopsanity.',
+        'cane_warning' => 'Byrna-Only, Somaria-Only, and Canes-Only modes are still in development, but should be stable.',
     ],
     'item_pool' => [
         'title' => 'Item Pool',

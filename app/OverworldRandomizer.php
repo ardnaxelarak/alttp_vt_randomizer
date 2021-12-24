@@ -59,6 +59,11 @@ class OverworldRandomizer implements RandomizerContract
         'swordless' => 'swordless',
         'bombs' => 'bombs',
         'assured_bombs' => 'bombs',
+        'byrna' => 'byrna',
+        'assured_byrna' => 'byrna',
+        'somaria' => 'somaria',
+        'assured_somaria' => 'somaria',
+        'cane' => 'cane',
         'pseudo' => 'pseudo',
         'assured_pseudo' => 'assured_pseudo',
     ];
@@ -166,6 +171,18 @@ class OverworldRandomizer implements RandomizerContract
                 '--usestartinventory=true',
                 '--startinventory',
                 'Progressive_Bombs',
+            ]);
+        } else if ($world->config('mode.weapons') === 'assured_byrna') {
+            $flags = array_merge($flags, [
+                '--usestartinventory=true',
+                '--startinventory',
+                'Progressive_Cane',
+            ]);
+        } else if ($world->config('mode.weapons') === 'assured_somaria') {
+            $flags = array_merge($flags, [
+                '--usestartinventory=true',
+                '--startinventory',
+                'Progressive_Cane',
             ]);
         }
 
