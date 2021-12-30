@@ -21,6 +21,7 @@ export default {
     reduceFlashing: false,
     shuffleSfx: false,
     fakeBoots: false,
+    icePhysics: false,
     options: {
       heartSpeed: [
         { value: "off", name: "rom.settings.heart_speeds.off" },
@@ -113,6 +114,9 @@ export default {
     setFakeBoots(state, fakeBoots) {
       state.fakeBoots = fakeBoots;
       localforage.setItem("rom.fake_boots", fakeBoots);
+    },
+    setIcePhysics(state, icePhysics) {
+      state.icePhysics = icePhysics;
     },
     setInitalizing(state, init) {
       state.initializing = init;

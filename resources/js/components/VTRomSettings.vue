@@ -79,15 +79,18 @@
         >*</sup></Toggle>
       </div>
     </div>
-    <div v-if="rom.build >= '2021-07-07' && !rom.tournament" class="row mb-3">
-      <div class="col-md-12">
+    <div class="row mb-3">
+      <div v-if="rom.build >= '2021-07-07' && !rom.tournament" class="col">
         <Toggle
           :value="fakeBoots"
           @input="setFakeBoots"
-        >{{ $t('rom.settings.fake_boots') }}
-        <sup
-          v-if="fakeBoots"
-        >*</sup></Toggle>
+        >{{ $t('rom.settings.fake_boots') }}</Toggle>
+      </div>
+      <div v-if="rom.build >= '2021-12-29' && !rom.tournament" class="col">
+        <Toggle
+          :value="icePhysics"
+          @input="setIcePhysics"
+        >{{ $t('rom.settings.ice_physics') }}</Toggle>
       </div>
     </div>
     <div class="row mb-3">
@@ -197,7 +200,8 @@ export default {
         quickswap: false,
         music: true,
         reduce_flashing: true,
-        fakeBoots: false
+        fakeBoots: false,
+        icePhysics: false,
       }
     };
   },
@@ -220,6 +224,7 @@ export default {
       "setReduceFlashing",
       "setShuffleSfx",
       "setFakeBoots",
+      "setIcePhysics",
     ])
   },
   computed: {
@@ -236,7 +241,8 @@ export default {
       paletteShuffle: state => state.paletteShuffle,
       reduceFlashing: state => state.reduceFlashing,
       shuffleSfx: state => state.shuffleSfx,
-      fakeBoots: state => state.fakeBoots
+      fakeBoots: state => state.fakeBoots,
+      icePhysics: state => state.icePhysics,
     })
   }
 };

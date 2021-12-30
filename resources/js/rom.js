@@ -117,7 +117,7 @@ export default class ROM {
     });
   }
 
-  save(filename, { paletteShuffle, quickswap, musicOn, reduceFlashing, shuffleSfx, msu1Resume, fakeBoots }) {
+  save(filename, { paletteShuffle, quickswap, musicOn, reduceFlashing, shuffleSfx, msu1Resume, fakeBoots, icePhysics }) {
     let preProcess = this.arrayBuffer.slice(0);
 
     if (paletteShuffle) {
@@ -137,6 +137,12 @@ export default class ROM {
       this.setFakeBoots(fakeBoots);
     } else {
       this.setFakeBoots(false);
+    }
+
+    if (!this.tournament) {
+      this.setIcePhysics(icePhysics);
+    } else {
+      this.setIcePhysics(false);
     }
 
     if (shuffleSfx) {
@@ -457,6 +463,16 @@ export default class ROM {
     return new Promise(resolve => {
       if (this.build >= "2021-07-07") {
         this.write(0x18008E, enable ? 0x01 : 0x00);
+      }
+
+      resolve(this);
+    });
+  }
+
+  setIcePhysics(enable) {
+    return new Promise(resolve => {
+      if (this.build >= "2021-12-29") {
+        this.write(0x18002D, enable ? 0x01 : 0x00);
       }
 
       resolve(this);

@@ -680,7 +680,8 @@ export default {
         msu1Resume: this.msu1Resume,
         reduceFlashing: this.reduceFlashing,
         shuffleSfx: this.shuffleSfx,
-        fakeBoots: this.fakeBoots
+        fakeBoots: this.fakeBoots,
+        icePhysics: this.icePhysics,
       });
     },
     saveSpoiler() {
@@ -767,7 +768,8 @@ export default {
       paletteShuffle: state => state.paletteShuffle,
       reduceFlashing: state => state.reduceFlashing,
       shuffleSfx: state => state.shuffleSfx,
-      fakeBoots: state => state.fakeBoots
+      fakeBoots: state => state.fakeBoots,
+      icePhysics: state => state.icePhysics,
     }),
     editable() {
       return this.$store.state.randomizer.preset.value === "custom";

@@ -68,5 +68,6 @@ return [
         'reduce_flashing_warning' => 'This option only reduces the effects of flashing. Individual photosensitivity to effects may still vary.',
         'shuffle_sfx' => 'Shuffle SFX',
         'fake_boots' => 'Pseudoboots',
+        'ice_physics' => 'Ice Physics',
     ],
 ];

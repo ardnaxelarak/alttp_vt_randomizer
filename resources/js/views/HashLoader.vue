@@ -199,7 +199,8 @@ export default {
         msu1Resume: this.msu1Resume,
         reduceFlashing: this.reduceFlashing,
         shuffleSfx: this.shuffleSfx,
-        fakeBoots: this.fakeBoots
+        fakeBoots: this.fakeBoots,
+        icePhysics: this.icePhysics,
       });
     },
     saveSpoiler() {
@@ -209,13 +210,11 @@ export default {
       );
     },
     updateRom(infos) {
-      console.log(infos);
       if (!infos[this.branch]) {
         console.log(`Received no rom for branch ${this.branch}`);
         return;
       }
       if (!infos[this.branch].rom) {
-        console.log(infos[this.branch].rom);
         return;
       }
       this.rom = infos[this.branch].rom;
@@ -237,7 +236,8 @@ export default {
       paletteShuffle: state => state.paletteShuffle,
       reduceFlashing: state => state.reduceFlashing,
       shuffleSfx: state => state.shuffleSfx,
-      fakeBoots: state => state.fakeBoots
+      fakeBoots: state => state.fakeBoots,
+      icePhysics: state => state.icePhysics,
     })
   }
 };
