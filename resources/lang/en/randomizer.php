@@ -6,6 +6,7 @@ return [
         'customize' => 'Customize',
         'options' => [
             'default' => 'Default',
+            'trinity' => 'Trinity',
             'bombs_only' => 'Bomb-Only Mode',
             'doors' => 'Dungeon Shuffle',
             'ow_basic' => 'Basic Overworld Shuffle',
@@ -74,6 +75,7 @@ return [
             'dungeons' => 'All Dungeons',
             'pedestal' => 'Master Sword Pedestal',
             'triforce-hunt' => 'Triforce Pieces',
+            'trinity' => 'Trinity',
         ],
     ],
     'tower_open' => [

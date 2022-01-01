@@ -291,7 +291,6 @@
             <thead>
               <tr>
                 <th class="col-auto">Type</th>
-                <th class="col-auto">Player</th>
                 <th class="col-auto">Map</th>
               </tr>
             </thead>
@@ -301,7 +300,6 @@
                 class="spoil-item-location"
               >
                 <td>{{ row.type }}</td>
-                <td>Player {{ row.player }}</td>
                 <td><pre>{{ row.text }}</pre></td>
               </tr>
             </tbody>
@@ -433,15 +431,12 @@ export default {
         return false;
       }
       const returnArray = [];
-      for (const type in vm.rom.spoiler.Maps) {
-        for (const player in vm.rom.spoiler.Maps[type]) {
-          returnArray.push({
-            type: type,
-            player: player,
-            data: vm.rom.spoiler.Maps[type][player].data,
-            text: vm.rom.spoiler.Maps[type][player].text,
-          });
-        }
+      for (const map of vm.rom.spoiler.Maps) {
+        returnArray.push({
+          type: map.type,
+          data: map.data,
+          text: map.text,
+        });
       }
       return returnArray;
     },

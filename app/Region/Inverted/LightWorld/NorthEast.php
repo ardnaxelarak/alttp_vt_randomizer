@@ -149,7 +149,7 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
             }
 
             if (
-                in_array($this->world->config('goal'), ['ganon', 'fast_ganon'])
+                in_array($this->world->config('goal'), ['ganon', 'fast_ganon', 'trinity'])
                 && (($items->has('Crystal1')
                     + $items->has('Crystal2')
                     + $items->has('Crystal3')
@@ -173,7 +173,7 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                         && $items->hasSomaria($this->world)
                         && $items->has('MagicMirror')
                         && $items->hasABottle())) // Magic should be easily fine, but it's easy to miss when Invisible, even with lamp. FRod when Requires a bunch of Bottles anyway.
-                && ($items->has('DefeatAgahnim2') || $this->world->config('goal') === 'fast_ganon')
+                && ($items->has('DefeatAgahnim2') || in_array($this->world->config('goal'), ['fast_ganon', 'trinity']))
                 && (!$this->world->config('region.requireGanonVulnerability', false) || $items->canHitStunnedGanon($this->world)))) {
                     return false;
                 }

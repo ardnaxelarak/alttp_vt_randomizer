@@ -67,7 +67,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "e78c41ef3884e3b167257f2fe5eaa0fbacfc8494"
+          "reference": "74c55cf0483d03595822183abe9d726be268d029"
         }
       }
     },
@@ -113,7 +113,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
           "type": "git",
-          "reference": "7e0a07263967e5bfd4f99e63ef63728aaee54d33"
+          "reference": "683bea7af462f7ad5e1d85ff30e8208cf20b08d4"
         }
       }
     }

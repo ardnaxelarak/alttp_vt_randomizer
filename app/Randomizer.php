@@ -107,6 +107,10 @@ class Randomizer implements RandomizerContract
             case 'dungeons':
                 $world->getLocation("Ganon")->setItem(Item::get('Triforce', $world));
                 break;
+            case 'trinity':
+                $world->getLocation("Master Sword Pedestal")->setItem(Item::get('Triforce', $world));
+                $world->getLocation("Ganon")->setItem(Item::get('Triforce', $world));
+                break;
         }
 
         $dungeon_items = $world->getDungeonPool();
@@ -1110,6 +1114,10 @@ class Randomizer implements RandomizerContract
                 $ganon_crystals_singular = 'To beat Ganon you must collect %d crystal and defeat his minion at the top of his tower.';
                 $ganon_crystals_plural = 'To beat Ganon you must collect %d crystals and defeat his minion at the top of his tower.';
                 break;
+            case 'trinity':
+                $ganon_crystals_singular = 'Three ways to victory! %d crystals to beat Ganon. Get to it!';
+                $ganon_crystals_plural = 'Three ways to victory! %d crystals to beat Ganon. Get to it!';
+                break;
             default:
                 $ganon_crystals_singular = 'You need %d crystal to beat Ganon.';
                 $ganon_crystals_plural = 'You need %d crystals to beat Ganon.';
@@ -1134,6 +1142,13 @@ class Randomizer implements RandomizerContract
             case 'pedestal':
                 $world->setText('ganon_fall_in_alt', "You cannot\nkill me. You\nshould go for\nyour real goal\nIt's on the\npedestal.\n\nYou dingus!\n");
                 $world->setText('sign_ganon', "You need to get to the pedestal... Dingus!");
+
+                break;
+            case 'trinity':
+                $ganon_require = sprintf($ganon_string, $world->config('crystals.ganon'));
+                $world->setText('sign_ganon', $ganon_require);
+                $world->setText('ganon_fall_in_alt', "You think you\nare ready to\nface me?\n\nI will not die\n\nunless you\ncomplete your\ngoals. Dingus!");
+                $world->setText('murahdahla', sprintf("Hello @. I\nam Murahdahla, brother of\nSahasrahla and Aginah. Behold the power of\ninvisibility.\n\n\n\n… … …\n\nWait! you can see me? I knew I should have\nhidden in  a hollow tree. If you bring\n%d triforce pieces, I can reassemble it.", $world->config('item.Goal.Required')));
 
                 break;
             case 'triforce-hunt':

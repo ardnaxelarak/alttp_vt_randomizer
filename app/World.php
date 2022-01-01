@@ -1311,12 +1311,17 @@ abstract class World
                 $rom->setPyramidHoleOpen(false);
                 $rom->setGanonInvincible('dungeons');
                 break;
+            case 'trinity':
+                $rom->enableTriforceTurnIn(true);
+
+                // no break
             case 'fast_ganon':
                 $rom->setPyramidHoleOpen(true);
 
                 // no break
             default:
                 $rom->setGanonInvincible('custom');
+                break;
         }
 
         if ($this->config('rom.mapOnPickup', false)) {
