@@ -50,6 +50,7 @@ class OverworldRandomizer implements RandomizerContract
         'dungeons' => 'dungeons',
         'pedestal' => 'pedestal',
         'triforce-hunt' => 'triforcehunt',
+        'trinity' => 'trinity',
     ];
     /** @var array */
     private $swords_lookup = [
@@ -139,6 +140,13 @@ class OverworldRandomizer implements RandomizerContract
             $flags = array_merge($flags, [
                 '--shufflebosses',
                 $world->config('enemizer.bossShuffle'),
+            ]);
+        }
+
+        if ($world->config('goal') === 'trinity') {
+            $flags = array_merge($flags, [
+                '--triforce_pool=12',
+                '--triforce_goal=10',
             ]);
         }
 
