@@ -111,6 +111,7 @@ class RandomizerController extends Controller
         $weapons = $request->input('weapons', 'randomized');
         $crystals_ganon = $request->input('crystals.ganon', '7');
         $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
+        $crystals_ganon = $crystals_ganon === 'low_random' ? get_random_int(1, 4) : $crystals_ganon;
         $crystals_tower = $request->input('crystals.tower', '7');
         $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
         $ganon_item = $request->input('ganon_item', 'default');

@@ -103,7 +103,8 @@ return [
             '5' => '5 Crystals',
             '6' => '6 Crystals',
             '7' => '7 Crystals',
-            'random' => 'Random'
+            'random' => 'Random',
+            'low_random' => 'Low Random (1-4)'
         ],
     ],
     'ganon_item' => [

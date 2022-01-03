@@ -143,10 +143,12 @@ class OverworldRandomizer implements RandomizerContract
             ]);
         }
 
-        if ($world->config('goal') === 'trinity') {
+        if (in_array($world->config('goal'), ['triforce-hunt', 'trinity'])) {
             $flags = array_merge($flags, [
-                '--triforce_pool=12',
-                '--triforce_goal=10',
+                '--triforce_pool',
+                $world->config('item.count.TriforcePiece', 30),
+                '--triforce_goal',
+                $world->config('item.Goal.Required', 20),
             ]);
         }
 

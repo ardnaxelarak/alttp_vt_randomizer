@@ -152,6 +152,7 @@ class GenerateMultiworld implements ShouldQueue
             $weapons = Arr::get($request, "worlds.{$i}.weapons", 'randomized');
             $crystals_ganon = Arr::get($request, "worlds.{$i}.ganon_open", '7');
             $crystals_ganon = $crystals_ganon === 'random' ? get_random_int(0, 7) : $crystals_ganon;
+            $crystals_ganon = $crystals_ganon === 'low_random' ? get_random_int(1, 4) : $crystals_ganon;
             $crystals_tower = Arr::get($request, "worlds.{$i}.tower_open", '7');
             $crystals_tower = $crystals_tower === 'random' ? get_random_int(0, 7) : $crystals_tower;
             $ganon_item = Arr::get($request, "worlds.${i}.ganon_item", 'default');

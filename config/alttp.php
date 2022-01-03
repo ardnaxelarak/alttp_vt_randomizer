@@ -44,10 +44,10 @@ return [
         'trinity' => [
             'item' => [
                 'count' => [
-                    'TriforcePiece' => 12,
+                    'TriforcePiece' => 10,
                 ],
                 'Goal' => [
-                    'Required' => 10,
+                    'Required' => 8,
                     'Icon' => 'triforce',
                 ],
             ],
@@ -522,6 +522,7 @@ return [
                 '6' => '6',
                 '7' => '7',
                 'random' => 'random',
+                'low_random' => 'low random',
             ],
             'ganon_item' => [
                 'default' => 'Default',
@@ -717,6 +718,7 @@ return [
                 '6' => 5,
                 '7' => 50,
                 'random' => 15,
+                'low_random' => 0,
             ],
             'ganon_item' => [
                 'default' => 90,

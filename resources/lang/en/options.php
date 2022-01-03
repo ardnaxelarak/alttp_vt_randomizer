@@ -171,6 +171,12 @@ return [
                         'The Triforce has been shattered into 30 pieces and scattered throughout Hyrule! You must collect 20 of the 30 pieces and take them to Murahdahla to receive the Triforce. Who is Murahdahla I hear you ask? Why, he is obviously the younger brother of Sahasrahla and Aginah! Back from his vacation in Lorule you can find him hanging out around Hyrule Castle courtyard.',
                     ],
                 ],
+                [
+                    'header' => __('randomizer.goal.options.trinity'),
+                    'content' => [
+                        'There are three ways to win! You can either collect triforce pieces, pull the pedestal, or defeat Ganon. Ganon does not require completion of Ganon’s Tower, and the pyramid hole is already open (unless entrances are randomized). Prizes from dungeons are hidden until their corresponding map has been found.',
+                    ],
+                ],
             ],
         ],
         'tower_open' => [
