@@ -2,7 +2,7 @@
 
 namespace ALttP;
 
-use ALttP\Seed;
+use ALttP\Multiworld;
 use Illuminate\Database\Eloquent\Model;
 
 class MultiworldGeneration extends Model

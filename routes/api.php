@@ -80,6 +80,23 @@ Route::get('generation/multiworld/{id}', static function ($id) {
     abort(404);
 });
 
+Route::get('generation/seed/{id}', static function ($id) {
+    $seedgen = ALttP\SeedGeneration::where('id', $id)->first();
+    if ($seedgen) {
+        if ($seedgen->failed) {
+            return json_encode(['status' => 'failure']);
+        } else if ($seedgen->seed) {
+            return json_encode([
+                'status' => 'success',
+                'seed_hash' => $seedgen->seed->hash,
+            ]);
+        } else {
+            return json_encode(['status' => 'waiting']);
+        }
+    }
+    abort(404);
+});
+
 Route::post('mw/host/{hash}', static function ($hash) {
     $client = new Client();
 

@@ -346,9 +346,9 @@ class OverworldRandomizer implements RandomizerContract
     {
         $proc = new Process($flags);
         if (count($this->worlds) == 1) {
-            $proc->setTimeout(120);
+            $proc->setTimeout(240);
         } else {
-            $proc->setTimeout(120 * count($this->worlds));
+            $proc->setTimeout(240 * count($this->worlds));
         }
 
         $proc->setWorkingDirectory(base_path('vendor/z3/overworldrandomizer'));

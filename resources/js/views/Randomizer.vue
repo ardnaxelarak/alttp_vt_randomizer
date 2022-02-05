@@ -487,6 +487,7 @@ export default {
       rom: null,
       error: false,
       generating: false,
+      generationId: null,
       romLoaded: false,
       rom_infos: {},
       gameLoaded: false,
@@ -566,6 +567,7 @@ export default {
           this.gameLoaded = false;
           axios
             .post(`/api/randomizer`, {
+              async: true,
               glitches: this.glitchesRequired.value,
               item_placement: this.itemPlacement.value,
               dungeon_items: this.dungeonItems.value,
@@ -608,13 +610,50 @@ export default {
               }
             })
             .then(response => {
+              if (response.data.seed_generation_id) {
+                this.generationId = response.data.seed_generation_id;
+                setTimeout(this.checkGeneration.bind(this), 1000);
+              } else {
+                this.error = this.$i18n.t("error.failed_generation");
+                this.generating = false;
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                switch (error.response.status) {
+                  case 429:
+                    this.error = this.$i18n.t("error.429");
+                    break;
+                  default:
+                    this.error = this.$i18n.t("error.failed_generation");
+                }
+              }
+
+              this.generating = false;
+              reject(error);
+            });
+        }.bind(this)
+      );
+    },
+    checkGeneration() {
+      axios
+        .get(
+          `/api/generation/seed/${this.generationId}`,
+          {
+            responseType: "json"
+          }
+        )
+        .then(checkResponse => {
+          if (checkResponse.data.status === "waiting") {
+            setTimeout(this.checkGeneration.bind(this), 5000);
+          } else if (checkResponse.data.seed_hash) {
+            axios.get(`/hash/${checkResponse.data.seed_hash}`).then(response => {
               let prom;
               let branch = response.data.branch;
               if (!this.rom_infos[branch]) {
                 console.error(`No info on branch ${branch}`);
                 // TODO: should probably give a better error message
                 this.error = this.$i18n.t("error.failed_generation");
-                reject(this.error);
               }
               let rom = this.rom_infos[branch].rom;
               let hash = this.rom_infos[branch].hash;
@@ -640,31 +679,21 @@ export default {
                   if (this.rom.shuffle || this.rom.spoilers == "mystery" || this.rom.allow_quickswap) {
                     this.rom.allowQuickSwap = true;
                   }
+                  this.generating = false;
+                  this.generationId = null;
                   this.gameLoaded = true;
                   this.gameGenerated = true;
                   EventBus.$emit("gameLoaded", rom);
-                  resolve({ rom: this.rom, patch: response.data.patch });
+                  // resolve({ rom: this.rom, patch: response.data.patch });
                 }.bind(this)
               );
-            })
-            .catch(error => {
-              if (error.response) {
-                switch (error.response.status) {
-                  case 429:
-                    this.error = this.$i18n.t("error.429");
-                    break;
-                  default:
-                    this.error = this.$i18n.t("error.failed_generation");
-                }
-              }
-
-              reject(error);
-            })
-            .finally(() => {
-              this.generating = false;
             });
-        }.bind(this)
-      );
+          } else {
+            this.error = this.$i18n.t("error.failed_generation");
+            this.generating = false;
+            this.generationId = null;
+          }
+        });
     },
     saveRom() {
       // track the sprite choice for usage statistics

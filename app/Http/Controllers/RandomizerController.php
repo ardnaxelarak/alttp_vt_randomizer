@@ -3,12 +3,13 @@
 namespace ALttP\Http\Controllers;
 
 use ALttP\Enemizer;
-use ALttP\EntranceRandomizer;
 use ALttP\Http\Requests\CreateRandomizedGame;
 use ALttP\Jobs\SendPatchToDisk;
+use ALttP\Jobs\GenerateSeed;
 use ALttP\OverworldRandomizer;
 use ALttP\Randomizer;
 use ALttP\Rom;
+use ALttP\SeedGeneration;
 use ALttP\Support\RandomizerSelector;
 use ALttP\Support\WorldCollection;
 use ALttP\World;
@@ -26,6 +27,15 @@ class RandomizerController extends Controller
     {
         if ($request->has('lang')) {
             app()->setLocale($request->input('lang'));
+        }
+
+        if ($request->input('async', false)) {
+          $seedgen = new SeedGeneration;
+          $seedgen->save();
+          GenerateSeed::dispatch($seedgen, $request->all())->onConnection('database');
+          return response()->json([
+              'seed_generation_id' => $seedgen->id,
+          ], 202);
         }
 
         try {
