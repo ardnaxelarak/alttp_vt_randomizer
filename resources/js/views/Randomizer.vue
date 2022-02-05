@@ -476,6 +476,7 @@ import Select from "../components/Select.vue";
 import localforage from "localforage";
 import axios from "axios";
 import { mapMutations, mapActions, mapState } from "vuex";
+import { retry } from "@lifeomic/attempt";
 
 export default {
   components: {
@@ -609,10 +610,72 @@ export default {
                 enemy_health: this.enemyHealth.value
               }
             })
-            .then(response => {
-              if (response.data.seed_generation_id) {
-                this.generationId = response.data.seed_generation_id;
-                setTimeout(this.checkGeneration.bind(this), 1000);
+            .then(generationResponse => {
+              if (generationResponse.data.seed_generation_id) {
+                this.generationId = generationResponse.data.seed_generation_id;
+
+                retry(
+                  this.checkGeneration.bind(this),
+                  {
+                    delay: 300,
+                    maxDelay: 5000,
+                    factor: 1.5,
+                    maxAttempts: 0,
+                    jitter: true,
+                    minDelay: 300,
+                    handleError (err, context, options) {
+                      if (err.message != "not ready yet") {
+                        context.abort();
+                      }
+                    },
+                  }
+                )
+                  .then(response => {
+                    let prom;
+                    let branch = response.data.branch;
+                    if (!this.rom_infos[branch]) {
+                      console.error(`No info on branch ${branch}`);
+                      // TODO: should probably give a better error message
+                      this.error = this.$i18n.t("error.failed_generation");
+                      reject(this.error);
+                    }
+                    let rom = this.rom_infos[branch].rom;
+                    let hash = this.rom_infos[branch].hash;
+                    if (rom.checkMD5() != hash) {
+                      prom = rom.reset().then(() => {
+                        if (rom.checkMD5() != hash) {
+                          return new Promise((resolve, reject) => {
+                            reject(rom);
+                          });
+                        }
+                        return rom.parsePatch(response.data);
+                      });
+                    } else {
+                      prom = rom.parsePatch(response.data);
+                    }
+                    prom.then(
+                      function(rom) {
+                        this.rom = rom;
+                        if (response.data.current_rom_hash && response.data.current_rom_hash != hash) {
+                          // The base ROM has been updated.
+                          window.location.assign(`/h/${this.rom.hash}`);
+                        }
+                        if (this.rom.shuffle || this.rom.spoilers == "mystery" || this.rom.allow_quickswap) {
+                          this.rom.allowQuickSwap = true;
+                        }
+                        this.gameLoaded = true;
+                        this.gameGenerated = true;
+                        this.generating = false;
+                        EventBus.$emit("gameLoaded", rom);
+                        resolve({ rom: this.rom, patch: response.data.patch });
+                      }.bind(this)
+                    );
+                  })
+                  .catch(error => {
+                    this.error = this.$i18n.t("error.failed_generation");
+                    this.generating = false;
+                    reject(error);
+                  });
               } else {
                 this.error = this.$i18n.t("error.failed_generation");
                 this.generating = false;
@@ -635,65 +698,19 @@ export default {
         }.bind(this)
       );
     },
-    checkGeneration() {
-      axios
-        .get(
+    async checkGeneration() {
+      const response =
+        await axios.get(
           `/api/generation/seed/${this.generationId}`,
-          {
-            responseType: "json"
-          }
-        )
-        .then(checkResponse => {
-          if (checkResponse.data.status === "waiting") {
-            setTimeout(this.checkGeneration.bind(this), 5000);
-          } else if (checkResponse.data.seed_hash) {
-            axios.get(`/hash/${checkResponse.data.seed_hash}`).then(response => {
-              let prom;
-              let branch = response.data.branch;
-              if (!this.rom_infos[branch]) {
-                console.error(`No info on branch ${branch}`);
-                // TODO: should probably give a better error message
-                this.error = this.$i18n.t("error.failed_generation");
-              }
-              let rom = this.rom_infos[branch].rom;
-              let hash = this.rom_infos[branch].hash;
-              if (rom.checkMD5() != hash) {
-                prom = rom.reset().then(() => {
-                  if (rom.checkMD5() != hash) {
-                    return new Promise((resolve, reject) => {
-                      reject(rom);
-                    });
-                  }
-                  return rom.parsePatch(response.data);
-                });
-              } else {
-                prom = rom.parsePatch(response.data);
-              }
-              prom.then(
-                function(rom) {
-                  this.rom = rom;
-                  if (response.data.current_rom_hash && response.data.current_rom_hash != hash) {
-                    // The base ROM has been updated.
-                    window.location.assign(`/h/${this.rom.hash}`);
-                  }
-                  if (this.rom.shuffle || this.rom.spoilers == "mystery" || this.rom.allow_quickswap) {
-                    this.rom.allowQuickSwap = true;
-                  }
-                  this.generating = false;
-                  this.generationId = null;
-                  this.gameLoaded = true;
-                  this.gameGenerated = true;
-                  EventBus.$emit("gameLoaded", rom);
-                  // resolve({ rom: this.rom, patch: response.data.patch });
-                }.bind(this)
-              );
-            });
-          } else {
-            this.error = this.$i18n.t("error.failed_generation");
-            this.generating = false;
-            this.generationId = null;
-          }
-        });
+          { responseType: "json" });
+
+      if (response.data.status === "waiting") {
+        throw new Error("not ready yet");
+      } else if (response.data.seed_hash) {
+        return await axios.get(`/hash/${response.data.seed_hash}`);
+      } else {
+        throw new Error("generation failed");
+      }
     },
     saveRom() {
       // track the sprite choice for usage statistics
