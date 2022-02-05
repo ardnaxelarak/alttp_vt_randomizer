@@ -399,6 +399,7 @@
     <div v-show="generating" class="center">
       <div class="loading" />
       <h1>{{ $t('randomizer.generate.generating') }}</h1>
+      <h5>{{ $t('randomizer.generate.slow_warning') }}</h5>
     </div>
 
     <div

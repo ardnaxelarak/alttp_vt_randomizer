@@ -319,6 +319,7 @@ return [
         'regenerate' => 'Generate Again',
         'regenerate_tooltip' => 'Generate new game with same settings',
         'generating' => 'Generating...',
+        'slow_warning' => 'Generation of seeds with complicated settings may take several minutes. Please be patient.',
     ],
     'details' => [
         'title' => 'Game Details',
