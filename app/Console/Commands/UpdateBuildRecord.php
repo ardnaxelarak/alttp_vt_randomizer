@@ -81,9 +81,12 @@ class UpdateBuildRecord extends Command
             // asar --fix-checksum=off LTTP_RND_GeneralBugfixes.asm build/working.sfc
             $system = php_uname('s') == 'Darwin' ? 'macos' : 'linux';
 
+            $newText = $branch == 'overworld' ? 1 : 0;
+
             $proc = new Process([
                 base_path("bin/asar/$system/asar"),
                 '--fix-checksum=off',
+                "-DFEATURE_NEW_TEXT=$newText",
                 base_path("vendor/$repo/LTTP_RND_GeneralBugfixes.asm"),
                 $romFile,
             ], base_path("vendor/$repo"));

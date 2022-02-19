@@ -6,6 +6,7 @@ use ALttP\World;
 use ALttP\EntranceRandomizer;
 use ALttP\OverworldRandomizer;
 use ALttP\Randomizer;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Helper for selecting what randomizer to use to create a seed
@@ -27,6 +28,7 @@ class RandomizerSelector
                 || $world->config('overworld.fluteShuffle', 'vanilla') !== 'vanilla'
                 || $world->config('dropShuffle', 'off') === 'on'
                 || $world->config('shopsanity', 'off') === 'on'
+                || $world->config('mode.state', 'open') === 'inverted'
                 || $world->config('entrances', 'none') !== 'none') {
             return new OverworldRandomizer([$world]);
         } else {
