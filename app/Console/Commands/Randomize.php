@@ -49,7 +49,7 @@ class Randomize extends Command
         . ' {--door_intensity=1 : set door shuffle intensity}'
         . ' {--ow_shuffle=vanilla : set overworld shuffle}'
         . ' {--ow_crossed=vanilla : set overworld crossed mode}'
-        . ' {--ow_keepsimilar=off : keep similar transitions together in overworld shuffle}'
+        . ' {--ow_keep_similar=off : keep similar transitions together in overworld shuffle}'
         . ' {--ow_mixed=off : set overworld mixed mode}'
         . ' {--ow_flute_shuffle=vanilla : set overworld flute shuffle}'
         . ' {--shopsanity=off : set shopsanity on/off}'
@@ -126,7 +126,7 @@ class Randomize extends Command
             $rom = new Rom($this->argument('input_file'));
             $hash = $hasher->encode((int) (microtime(true) * 1000));
 
-            $branch = 'z3/randomizer';
+            $branch = 'base';
 
             if (!$this->option('skip-md5') && !$rom->checkMD5($branch)) {
                 $rom->resize();
