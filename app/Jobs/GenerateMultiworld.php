@@ -164,7 +164,7 @@ class GenerateMultiworld implements ShouldQueue
                 'no_logic' => 'NoLogic',
             ][Arr::get($request, "worlds.{$i}.glitches", 'none')];
 
-            $worlds[] = World::factory(Arr::get($request, "worlds.{$i}.world_state", 'standard'), [
+            $worlds[] = World::factory($i, Arr::get($request, "worlds.{$i}.world_state", 'standard'), [
                 'worldName' => $worldName,
                 'itemPlacement' => 'advanced',
                 'dungeonItems' => Arr::get($request, "worlds.{$i}.dungeon_items", 'standard'),

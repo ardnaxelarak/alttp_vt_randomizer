@@ -201,7 +201,7 @@ class Distribution extends Command
 
     private function item($item_name, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
         $item = Item::get($item_name, $world);
@@ -216,7 +216,7 @@ class Distribution extends Command
 
     private function location($location_name, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 
@@ -236,7 +236,7 @@ class Distribution extends Command
 
     private function location_ordered($location_name, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 
@@ -253,7 +253,7 @@ class Distribution extends Command
 
     private function region($region_name, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 
@@ -271,7 +271,7 @@ class Distribution extends Command
 
     private function required($unused, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 
@@ -294,7 +294,7 @@ class Distribution extends Command
 
     private function required_ordered($unused, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 
@@ -316,7 +316,7 @@ class Distribution extends Command
 
     private function full($unused, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 
@@ -338,7 +338,7 @@ class Distribution extends Command
 
     private function full_ordered($unused, &$locations)
     {
-        $world = World::factory($this->state, $this->options);
+        $world = World::factory(1, $this->state, $this->options);
         $rand = new Randomizer([$world]);
         $rand->randomize();
 

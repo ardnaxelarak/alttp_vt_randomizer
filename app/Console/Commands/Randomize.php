@@ -179,7 +179,7 @@ class Randomize extends Command
                 'no_logic' => 'NoLogic',
             ][$this->option('glitches')];
 
-            $world = World::factory($this->option('state'), [
+            $world = World::factory(1, $this->option('state'), [
                 'itemPlacement' => $this->option('item_placement'),
                 'dungeonItems' => $this->option('dungeon_items'),
                 'dropShuffle' => $this->option('drop_shuffle'),

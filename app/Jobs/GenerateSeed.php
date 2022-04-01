@@ -163,7 +163,7 @@ class GenerateSeed implements ShouldQueue
             $spoiler_meta['notes'] = $purifier->purify($markdowned);
         }
 
-        $world = World::factory(Arr::get($request, 'mode', 'standard'), [
+        $world = World::factory(1, Arr::get($request, 'mode', 'standard'), [
             'itemPlacement' => Arr::get($request, 'item_placement', 'basic'),
             'dungeonItems' => Arr::get($request, 'dungeon_items', 'standard'),
             'dropShuffle' => Arr::get($request, 'drop_shuffle', 'off'),

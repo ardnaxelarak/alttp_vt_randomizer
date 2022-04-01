@@ -174,7 +174,7 @@ class CustomizerController extends Controller
                 | $custom_data['region.wildKeys'];
         }
 
-        $world = World::factory($request->input('mode', 'standard'), array_merge([
+        $world = World::factory(1, $request->input('mode', 'standard'), array_merge([
             'difficulty' => 'custom',
             'itemPlacement' => $request->input('item_placement', 'basic'),
             'dungeonItems' => $request->input('dungeon_items', 'standard'),

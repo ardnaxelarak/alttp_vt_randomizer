@@ -16,8 +16,6 @@ use ErrorException;
 abstract class World
 {
     /** @var int */
-    protected static $max_world = 1;
-    /** @var int */
     public $id = 0;
     /** @var \ALttP\Seed */
     protected $seed;
@@ -265,7 +263,7 @@ abstract class World
      *
      * @return \ALttP\World
      */
-    public static function factory(string $type = 'standard', array $config = []): World
+    public static function factory(int $id = 1, string $type = 'standard', array $config = []): World
     {
         $config = array_merge($config, [
             'mode.state' => $type,
@@ -273,14 +271,14 @@ abstract class World
 
         switch ($type) {
             case 'open':
-                return new World\Open(static::$max_world++, $config);
+                return new World\Open($id, $config);
             case 'inverted':
-                return new World\Inverted(static::$max_world++, $config);
+                return new World\Inverted($id, $config);
             case 'retro':
-                return new World\Retro(static::$max_world++, $config);
+                return new World\Retro($id, $config);
             case 'standard':
             default:
-                return new World\Standard(static::$max_world++, $config);
+                return new World\Standard($id, $config);
         }
     }
 
