@@ -61,7 +61,7 @@ class SettingsController extends Controller
     public function customizer(): array
     {
         return Cache::rememberForever('customizer_settings', function () {
-            $world = World::factory();
+            $world = World::factory(1);
             $items = Item::all($world);
             $sprites = Sprite::all();
             return [

@@ -21,7 +21,7 @@ abstract class Filler
     public static function factory($type = null, array $worlds = null): self
     {
         if ($worlds === null) {
-            $worlds = [World::factory()];
+            $worlds = [World::factory(1)];
         }
 
         switch ($type) {
