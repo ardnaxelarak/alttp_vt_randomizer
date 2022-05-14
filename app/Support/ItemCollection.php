@@ -526,7 +526,7 @@ class ItemCollection extends Collection
      */
     public function canUseMedallions(World $world)
     {
-        return $this->hasSword() || $world->restrictedToSpecialWeapons();
+        return $this->hasSword() || $world->canAlwaysMedallion();
     }
 
     /**

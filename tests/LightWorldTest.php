@@ -9,7 +9,7 @@ class LightWorldTest extends TestCase
 {
     public function testBlacksmithAddressSwordShuffleOn()
     {
-        $world = World::factory('standard', [
+        $world = World::factory(1, 'standard', [
             'region.swordsInPool' => true,
         ]);
 
@@ -18,7 +18,7 @@ class LightWorldTest extends TestCase
 
     public function testBlacksmithAddressSwordShuffleOff()
     {
-        $world = World::factory('standard', [
+        $world = World::factory(1, 'standard', [
             'region.swordsInPool' => false,
         ]);
 

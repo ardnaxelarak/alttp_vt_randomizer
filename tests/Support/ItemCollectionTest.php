@@ -9,7 +9,7 @@ class ItemCollectionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory();
+        $this->world = World::factory(1);
         $this->collection = new ItemCollection;
     }
 
@@ -172,7 +172,7 @@ class ItemCollectionTest extends TestCase
      */
     public function testCanBunnyRevive($items, $difficultySetting, $expectedResult)
     {
-        $this->world = World::factory('standard', ['item.functionality' => $difficultySetting]);
+        $this->world = World::factory(1, 'standard', ['item.functionality' => $difficultySetting]);
         $this->collected->setChecksForWorld($this->world->id);
 
         $this->addCollected($items);
@@ -199,11 +199,11 @@ class ItemCollectionTest extends TestCase
         $world = null;
         if ($difficultySetting !== null)
         {
-            $world = World::factory('standard', ['item.functionality' => $difficultySetting]);
+            $world = World::factory(1, 'standard', ['item.functionality' => $difficultySetting]);
         }
         else
         {
-            $world = World::factory();
+            $world = World::factory(1);
         }
         $this->assertEquals($expectedResult, $this->collection->canAcquireFairy($world));
     }
@@ -231,7 +231,7 @@ class ItemCollectionTest extends TestCase
      */
     public function testCanExtendMagic($items, $difficultySetting, $magicBars, $expectedResult)
     {
-        $this->world = World::factory('standard', ['item.functionality' => $difficultySetting]);
+        $this->world = World::factory(1, 'standard', ['item.functionality' => $difficultySetting]);
 
         $this->collected->setChecksForWorld($this->world->id);
 

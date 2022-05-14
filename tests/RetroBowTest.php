@@ -14,7 +14,7 @@ class RetroBowTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('retro', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
+        $this->world = World::factory(1, 'retro', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
         $this->addCollected(['RescueZelda', 'Lamp', 'BigKeyP1', 'MoonPearl',
             'UncleSword', 'ProgressiveGlove', 'ProgressiveGlove', 'Flute', 'Hookshot', 'Hammer', 'FireRod',
             'Crystal1', 'Crystal2', 'Crystal3', 'Crystal4', 'Crystal5', 'Crystal6', 'Crystal7',

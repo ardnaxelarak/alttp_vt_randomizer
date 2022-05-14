@@ -158,6 +158,8 @@ class South extends Region\Standard\LightWorld\South
 
             if ($this->world->restrictedToSpecialWeapons()) {
                 return $items->hasSpecialWeaponLevel($this->world, 2);
+            } else if ($this->world->restrictedToBees()) {
+                return true;
             } else if ($this->world->restrictedSwords()) {
                 return $items->has('Hammer');
             } else {

@@ -632,6 +632,7 @@ return [
                 'cane' => 'Canes-Only',
                 'pseudo' => 'Pseudo-Swords',
                 'assured_pseudo' => 'Assured Pseudo-Swords',
+                'bees' => 'Bee Mode',
             ],
             'item_pool' => [
                 'normal' => 'Normal',
@@ -824,6 +825,7 @@ return [
                 'cane' => 4,
                 'pseudo' => 4,
                 'assured_pseudo' => 3,
+                'bees' => 0,
             ],
             'item_pool' => [
                 'normal' => 70,

@@ -14,7 +14,7 @@ class SwampPalaceTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'logic' => 'MajorGlitches']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'logic' => 'MajorGlitches']);
 
         $this->world->getLocation("Misery Mire Medallion")->setItem(Item::get('Ether', $this->world));
         $this->addCollected(['RescueZelda']);

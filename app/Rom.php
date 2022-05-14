@@ -13,7 +13,7 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2022-01-24', 'HASH' => 'afb7608cc456b1c6be0efe9ef223121b'],
+        'base' => ['BUILD' => '2022-05-14', 'HASH' => 'd0343a1287e66a73a2e879fc4ff800cf'],
         'overworld' => ['BUILD' => '2022-04-02', 'HASH' => '0a8fa4d5f04a8e6a7f4c974ad573cb51'],
     ];
     const SIZE = 2097152;
@@ -2719,6 +2719,29 @@ class Rom
 
         $this->setHammerTablet(false);
         $this->setHammerBarrier(false);
+
+        return $this;
+    }
+
+    /**
+     * Enable bee mode
+     *
+     * @return $this
+     */
+    public function setBeeMode(): self
+    {
+        $this->write(0x18002F, pack('C*', 0x06)); // Bees
+        $this->write(0x180040, pack('C*', 0x01)); // Open Curtains
+        $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
+
+        // Arrghus puff fixes
+        $this->write(0x0F399E, pack('C*', 0x00));
+        $this->write(0x06B3E6, pack('C*', 0x0D));
+        // Kholdstare shell fix
+        $this->write(0x06B123, pack('C*', 0x00));
+
+        $this->write(0x036D7F, pack('C*', 0xFF)); // remove hammer usage
+        $this->write(0x043BD4, pack('C*', 0xFF)); // remove powder usage
 
         return $this;
     }

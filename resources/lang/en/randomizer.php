@@ -259,6 +259,7 @@ return [
             'cane' => 'Canes-Only',
             'pseudo' => 'Pseudo-Swords',
             'assured_pseudo' => 'Assured Pseudo-Swords',
+            'bees' => 'Bee Mode',
         ],
         'bombs_warning' => 'Bomb-Only mode is still in development, but should be stable.',
         'cane_warning' => 'Byrna-Only, Somaria-Only, and Canes-Only modes are still in development, but should be stable.',

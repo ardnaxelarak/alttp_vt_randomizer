@@ -214,7 +214,7 @@ class GenerateSeed implements ShouldQueue
             $worlds = new WorldCollection($rand->getWorlds());
 
             if (!$worlds->isWinnable()) {
-                throw new Exception('Game Unwinnable');
+                throw new \Exception('Game Unwinnable');
             }
         }
 

@@ -239,12 +239,12 @@ class Randomizer implements RandomizerContract
             $nice_items = array_merge($nice_items, $nice_items_armors);
         }
 
-        if ($world->config('mode.weapons') === 'swordless') {
+        if (in_array($world->config('mode.weapons'), ['swordless', 'bees'])) {
             foreach ($nice_items_swords as $unneeded) {
                 $nice_items[] = Item::get('TwentyRupees2', $world);
             }
             $world_items = $world->collectItems();
-            // check for pregressive bows
+            // check for progressive bows
             if (!$world_items->merge($advancement_items)->has('ProgressiveBow', 2)) {
                 $world_items = $world_items->values();
                 if (
@@ -791,7 +791,7 @@ class Randomizer implements RandomizerContract
 
             $old_man->setActive(true);
             $old_man->setShopkeeper('old_man');
-            $old_man->addInventory(0, (in_array($world->config('mode.weapons'), ['swordless', 'bombs', 'assured_bombs', 'vanilla'])) ? Item::get('ThreeHundredRupees', $world)
+            $old_man->addInventory(0, $world->restrictedSwords() ? Item::get('ThreeHundredRupees', $world)
                 : Item::get('ProgressiveSword', $world), 0);
         }
 

@@ -456,7 +456,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -467,7 +467,7 @@ abstract class World
      */
     public function restrictedRealSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane'];
+        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -479,6 +479,17 @@ abstract class World
     public function restrictedMedallions()
     {
         $medallion_modes = ['swordless'];
+        return in_array($this->config('mode.weapons'), $medallion_modes);
+    }
+
+    /*
+     * Get whether the world has ability to always use medallions
+     *
+     * @return bool
+     */
+    public function canAlwaysMedallion()
+    {
+        $medallion_modes = ['bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
         return in_array($this->config('mode.weapons'), $medallion_modes);
     }
 
@@ -527,7 +538,7 @@ abstract class World
     }
 
     /*
-     * Get whether the world has restricted access to weapons other than bombs
+     * Get whether the world has restricted access to weapons other than a particular type
      *
      * @return bool
      */
@@ -535,6 +546,17 @@ abstract class World
     {
         return $this->restrictedToBombs() || $this->restrictedToCanes()
             || $this->restrictedToBlueCane() || $this->restrictedToRedCane();
+    }
+
+    /*
+     * Get whether the world has restricted access to weapons other than bees
+     *
+     * @return bool
+     */
+    public function restrictedToBees()
+    {
+        $bee_modes = ['bees'];
+        return in_array($this->config('mode.weapons'), $bee_modes);
     }
 
     /*
@@ -1364,6 +1386,9 @@ abstract class World
         }
         if ($this->hasPseudoSwords()) {
             $rom->setPseudoSwordMode();
+        }
+        if ($this->restrictedToBees()) {
+            $rom->setBeeMode();
         }
 
         if (!$this->getLocation("Link's Uncle")->getItem() instanceof Item\Sword) {

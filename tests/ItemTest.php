@@ -8,7 +8,7 @@ class ItemTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
     }
 
     public function tearDown(): void

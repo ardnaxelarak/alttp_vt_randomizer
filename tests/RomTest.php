@@ -95,7 +95,7 @@ class RomTest extends TestCase
      */
     public function testSetStartingEquipment(array $result, array $items)
     {
-        $world = World::factory();
+        $world = World::factory(1);
         $object_items = array_map(function ($item_name) use ($world) {
             return Item::get($item_name, $world);
         }, $items);

@@ -14,7 +14,7 @@ class MiseryMireTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('inverted', ['difficulty' => 'test_rules', 'logic' => 'OverworldGlitches']);
+        $this->world = World::factory(1, 'inverted', ['difficulty' => 'test_rules', 'logic' => 'OverworldGlitches']);
 
         $this->world->getLocation("Misery Mire Medallion")->setItem(Item::get('Ether', $this->world));
         $this->addCollected(['RescueZelda']);

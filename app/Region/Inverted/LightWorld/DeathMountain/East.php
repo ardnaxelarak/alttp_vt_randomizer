@@ -104,10 +104,11 @@ class East extends Region\Standard\LightWorld\DeathMountain\East
         });
 
         $this->locations["Ether Tablet"]->setRequirements(function ($locations, $items) {
-            return $items->has('BookOfMudora')
-                && (($this->world->restrictedSwords() && $items->has('Hammer'))
-                    || $items->hasSword(2))
-                && (($items->has('MoonPearl')
+            if (!$items->has('BookOfMudora')) {
+                return false;
+            }
+
+            if (!(($items->has('MoonPearl')
                     && ($items->has('Hammer')
                     || ($this->world->config('canBootsClip', false)
                         && $items->has('PegasusBoots')) || ($this->world->config('canSuperSpeed', false)
@@ -117,7 +118,19 @@ class East extends Region\Standard\LightWorld\DeathMountain\East
                             && $this->world->config('canBootsClip', false)
                             && $items->has('PegasusBoots'))))
                     || $this->world->config('canOneFrameClipOW', false)
-                );
+                )) {
+                return false;
+            }
+
+            if ($this->world->restrictedToSpecialWeapons()) {
+                return $items->hasSpecialWeaponLevel($this->world, 2);
+            } else if ($this->world->restrictedToBees()) {
+                return true;
+            } else if ($this->world->restrictedSwords()) {
+                return $items->has('Hammer');
+            } else {
+                return $items->hasSword(2);
+            }
         });
 
         $this->locations["Spectacle Rock"]->setRequirements(function ($locations, $items) {

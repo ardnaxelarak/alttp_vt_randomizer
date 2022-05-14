@@ -14,7 +14,7 @@ class EastTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('inverted', ['difficulty' => 'test_rules', 'logic' => 'MajorGlitches']);
+        $this->world = World::factory(1, 'inverted', ['difficulty' => 'test_rules', 'logic' => 'MajorGlitches']);
         $this->addCollected(['RescueZelda']);
         $this->collected->setChecksForWorld($this->world->id);
     }

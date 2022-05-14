@@ -12,7 +12,7 @@ class RandomizerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'accessibility' => 'full']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'accessibility' => 'full']);
         $this->randomizer = new Randomizer([$this->world]);
     }
 
@@ -122,14 +122,14 @@ class RandomizerTest extends TestCase
             $this->world->getLocation("Tower of Hera - Prize")->getItem(),
         ]);
     }
-    
+
     public function testVanillaSwordsSet()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'accessibility' => 'full', 'mode.weapons' => 'vanilla']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'accessibility' => 'full', 'mode.weapons' => 'vanilla']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->prepareWorld($this->world);
-        
+
         $this->assertEquals([
             Item::get('UncleSword', $this->world),
             Item::get('Progressive Sword', $this->world),
@@ -142,14 +142,14 @@ class RandomizerTest extends TestCase
             $this->world->getLocation("Master Sword Pedestal")->getItem(),
         ]);
     }
-    
+
     public function testVanillaSwordsSetWithPedestalGoal()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'accessibility' => 'full', 'mode.weapons' => 'vanilla', 'goal' => 'pedestal']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'accessibility' => 'full', 'mode.weapons' => 'vanilla', 'goal' => 'pedestal']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->prepareWorld($this->world);
-        
+
         $this->assertEquals([
             Item::get('UncleSword', $this->world),
             Item::get('Progressive Sword', $this->world),
@@ -162,15 +162,15 @@ class RandomizerTest extends TestCase
             $this->world->getLocation("Master Sword Pedestal")->getItem(),
         ]);
     }
-    
+
     public function testSimpleBossShuffle()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'simple']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'simple']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->placeBosses($this->world);
-        
-        $bosses = array_count_values ([ 
+
+        $bosses = array_count_values ([
                     $this->world->getRegion('Eastern Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Desert Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Tower of Hera')->getBoss('')->getEName(),
@@ -184,7 +184,7 @@ class RandomizerTest extends TestCase
                     $this->world->getRegion('Ganons Tower')->getBoss('bottom')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('middle')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('top')->getEName()]);
-        
+
         $this->assertEquals([2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
         [
             $bosses['Armos'],
@@ -199,15 +199,15 @@ class RandomizerTest extends TestCase
             $bosses['Trinexx']
         ]);
     }
-    
+
     public function testFullBossShuffle()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'full']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'full']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->placeBosses($this->world);
-        
-        $bosses = array_count_values ([ 
+
+        $bosses = array_count_values ([
                     $this->world->getRegion('Eastern Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Desert Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Tower of Hera')->getBoss('')->getEName(),
@@ -221,7 +221,7 @@ class RandomizerTest extends TestCase
                     $this->world->getRegion('Ganons Tower')->getBoss('bottom')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('middle')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('top')->getEName()]);
-        
+
         $this->assertGreaterThanOrEqual(1, $bosses['Armos']);
         $this->assertGreaterThanOrEqual(1, $bosses['Lanmola']);
         $this->assertGreaterThanOrEqual(1, $bosses['Moldorm']);
@@ -233,29 +233,29 @@ class RandomizerTest extends TestCase
         $this->assertGreaterThanOrEqual(1, $bosses['Vitreous']);
         $this->assertGreaterThanOrEqual(1, $bosses['Trinexx']);
     }
-    
+
     public function testNoBossShuffle()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'none']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'none']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->placeBosses($this->world);
-        
-        $this->assertEquals([ 
-            'Armos', 
-            'Lanmola', 
-            'Moldorm', 
-            'Helmasaur', 
-            'Arrghus', 
-            'Mothula', 
-            'Blind', 
-            'Kholdstare', 
-            'Vitreous', 
-            'Trinexx', 
-            'Armos', 
-            'Lanmola', 
+
+        $this->assertEquals([
+            'Armos',
+            'Lanmola',
+            'Moldorm',
+            'Helmasaur',
+            'Arrghus',
+            'Mothula',
+            'Blind',
+            'Kholdstare',
+            'Vitreous',
+            'Trinexx',
+            'Armos',
+            'Lanmola',
             'Moldorm'
-          ], [ 
+          ], [
             $this->world->getRegion('Eastern Palace')->getBoss('')->getEName(),
             $this->world->getRegion('Desert Palace')->getBoss('')->getEName(),
             $this->world->getRegion('Tower of Hera')->getBoss('')->getEName(),
@@ -271,15 +271,15 @@ class RandomizerTest extends TestCase
             $this->world->getRegion('Ganons Tower')->getBoss('top')->getEName()
           ]);
     }
-    
+
     public function testSwordlessSimpleBossShuffle()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'simple', 'mode.weapons' => 'swordless']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'simple', 'mode.weapons' => 'swordless']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->placeBosses($this->world);
-        
-        $bosses = array_count_values ([ 
+
+        $bosses = array_count_values ([
                     $this->world->getRegion('Eastern Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Desert Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Tower of Hera')->getBoss('')->getEName(),
@@ -293,9 +293,9 @@ class RandomizerTest extends TestCase
                     $this->world->getRegion('Ganons Tower')->getBoss('bottom')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('middle')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('top')->getEName()]);
-        
+
         $this->assertEquals('Kholdstare', $this->world->getRegion('Ice Palace')->getBoss('')->getEName());
-        
+
         $this->assertEquals([2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
         [
             $bosses['Armos'],
@@ -310,15 +310,15 @@ class RandomizerTest extends TestCase
             $bosses['Trinexx']
         ]);
     }
-    
+
     public function testSwordlessFullBossShuffle()
     {
-        $this->world = World::factory('standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'full', 'mode.weapons' => 'swordless']);
+        $this->world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'enemizer.bossShuffle' => 'full', 'mode.weapons' => 'swordless']);
         $this->randomizer = new Randomizer([$this->world]);
-        
+
         $this->randomizer->placeBosses($this->world);
-        
-        $bosses = array_count_values ([ 
+
+        $bosses = array_count_values ([
                     $this->world->getRegion('Eastern Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Desert Palace')->getBoss('')->getEName(),
                     $this->world->getRegion('Tower of Hera')->getBoss('')->getEName(),
@@ -332,9 +332,9 @@ class RandomizerTest extends TestCase
                     $this->world->getRegion('Ganons Tower')->getBoss('bottom')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('middle')->getEName(),
                     $this->world->getRegion('Ganons Tower')->getBoss('top')->getEName()]);
-        
+
         $this->assertEquals('Kholdstare', $this->world->getRegion('Ice Palace')->getBoss('')->getEName());
-        
+
         $this->assertGreaterThanOrEqual(1, $bosses['Armos']);
         $this->assertGreaterThanOrEqual(1, $bosses['Lanmola']);
         $this->assertGreaterThanOrEqual(1, $bosses['Moldorm']);

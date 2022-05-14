@@ -175,33 +175,36 @@ class NorthEast extends Region\Standard\LightWorld\NorthEast
                         && $items->hasABottle())) // Magic should be easily fine, but it's easy to miss when Invisible, even with lamp. FRod when Requires a bunch of Bottles anyway.
                 && ($items->has('DefeatAgahnim2') || in_array($this->world->config('goal'), ['fast_ganon', 'trinity']))
                 && (!$this->world->config('region.requireGanonVulnerability', false) || $items->canHitStunnedGanon($this->world)))) {
-                    return false;
-                }
+                return false;
+            }
 
-                if ($this->world->restrictedToSpecialWeapons()) {
-                    return $items->hasSpecialWeaponLevel($this->world, 3)
-                        && (!$this->world->config('region.requireBetterSword', false)
-                            || $items->hasSpecialWeaponLevel($this->world, 4))
-                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                            || ($items->has('FireRod') && $items->canExtendMagic($this->world, 2)));
-                }
+            if ($this->world->restrictedToSpecialWeapons()) {
+                return $items->hasSpecialWeaponLevel($this->world, 3)
+                    && (!$this->world->config('region.requireBetterSword', false)
+                        || $items->hasSpecialWeaponLevel($this->world, 4))
+                    && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                        || ($items->has('FireRod') && $items->canExtendMagic($this->world, 2)));
+            }
 
-                return ($this->world->config('mode.weapons') == 'swordless' && $items->has('Hammer')
-                        && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                            || ($items->has('FireRod') && ($items->canExtendMagic($this->world, 1)
-                                && $items->has('MoonPearl')) || $items->canExtendMagic($this->world, 4))))
-                    || (!$this->world->config('region.requireBetterSword', false)
-                        && ($items->hasSword(2)
-                            && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
-                                || ($items->has('FireRod')
-                                    && ($items->canExtendMagic($this->world, 3)
-                                        && $items->has('MoonPearl')) ||
-                                    $items->canExtendMagic($this->world, 4)))))
-                    || ($items->hasSword(3)
+            if ($this->world->restrictedSwords()) {
+                return $items->has('Hammer')
+                    && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                        || ($items->has('FireRod') && (($items->canExtendMagic($this->world, 1) && $items->has('MoonPearl'))
+                            || $items->canExtendMagic($this->world, 4))));
+            }
+
+            return (!$this->world->config('region.requireBetterSword', false)
+                    && ($items->hasSword(2)
                         && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
                             || ($items->has('FireRod')
-                                && ($items->canExtendMagic($this->world, 2) && $items->has('MoonPearl'))
-                                    || $items->canExtendMagic($this->world, 3))));
+                                && ($items->canExtendMagic($this->world, 3)
+                                    && $items->has('MoonPearl')) ||
+                                $items->canExtendMagic($this->world, 4)))))
+                || ($items->hasSword(3)
+                    && ($items->has('Lamp', $this->world->config('item.require.Lamp', 1))
+                        || ($items->has('FireRod')
+                            && ($items->canExtendMagic($this->world, 2) && $items->has('MoonPearl'))
+                                || $items->canExtendMagic($this->world, 3))));
         });
 
         $this->can_enter = function ($locations, $items) {

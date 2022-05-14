@@ -14,7 +14,7 @@ class HyruleCastleEscapeTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('inverted', ['difficulty' => 'test_rules', 'logic' => 'OverworldGlitches']);
+        $this->world = World::factory(1, 'inverted', ['difficulty' => 'test_rules', 'logic' => 'OverworldGlitches']);
         $this->collected->setChecksForWorld($this->world->id);
     }
 

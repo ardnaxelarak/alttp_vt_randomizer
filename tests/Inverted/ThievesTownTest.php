@@ -15,7 +15,7 @@ class ThievesTownTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->world = World::factory('inverted', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
+        $this->world = World::factory(1, 'inverted', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
         $this->world->getRegion('Thieves Town')->setBoss(new Boss("Dummy Boss"));
         $this->collected->setChecksForWorld($this->world->id);
     }
