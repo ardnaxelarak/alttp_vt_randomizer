@@ -1,10 +1,9 @@
 <?php
 
 use ALttP\Enemizer;
-use ALttP\EntranceRandomizer;
 use ALttP\Jobs\SendPatchToDisk;
-use ALttP\Randomizer;
 use ALttP\Rom;
+use ALttP\Support\RandomizerSelector;
 use ALttP\Support\WorldCollection;
 use ALttP\World;
 use Carbon\Carbon;
@@ -53,7 +52,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'no_logic' => 'NoLogic',
             ][getWeighted('glitches_required')];
 
-            $world = World::factory(getWeighted('world_state'), [
+            $world = World::factory(1, getWeighted('world_state'), [
                 'itemPlacement' => getWeighted('item_placement'),
                 'dungeonItems' => getWeighted('dungeon_items'),
                 'dropShuffle' => getWeighted('drop_shuffle'),
@@ -85,11 +84,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 'enemizer.potShuffle' => 'off',
             ]);
 
-            if ($world->config('entrances') !== 'none') {
-                $rand = new EntranceRandomizer([$world]);
-            } else {
-                $rand = new Randomizer([$world]);
-            }
+            $rand = RandomizerSelector::getRandomizer($world);
 
             $rom = new Rom(config('alttp.base_rom'));
             $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
