@@ -1677,7 +1677,7 @@ class Rom
             $shop_data = array_merge($shop_data, [$shop_id], $shop->getBytes($sram_offset));
             $sram_offset += ($shop instanceof Shop\TakeAny) ? 1 : count($shop->getInventory());
 
-            if ($sram_offset > 36) {
+            if ($sram_offset > 61) {
                 throw new \Exception("Exceeded SRAM indexing for shops");
             }
 

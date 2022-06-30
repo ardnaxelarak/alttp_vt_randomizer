@@ -63,12 +63,45 @@ class NorthWest extends Region
             new Shop\TakeAny("Snitch Lady East", 0x83, 0xA0, 0x011F, 0x3E, $this, [0xDBBB0 => [0x46]]),
             new Shop\TakeAny("Snitch Lady West", 0x83, 0xA0, 0x011F, 0x3F, $this, [0xDBBB1 => [0x46]]),
             new Shop\TakeAny("Bomb Hut", 0x83, 0xA0, 0x011F, 0x4A, $this, [0xDBBBC => [0x46]]),
+
+            // Mall entrances (for mall mode)
+            new Shop\Mall("Mall - Snitch Lady East", 0x03, 0xA0, 0x011F, 0x3E, $this, [0xDBBB0 => [0x46]]),
+            new Shop\Mall("Mall - Snitch Lady West", 0x03, 0xA0, 0x011F, 0x3F, $this, [0xDBBB1 => [0x46]]),
+            new Shop\Mall("Mall - Bush Covered House", 0x03, 0xA0, 0x011F, 0x44, $this, [0xDBBB6 => [0x46]]),
+            new Shop\Mall("Mall - Elder House Left", 0x03, 0xA0, 0x011F, 0x0D, $this, [0xDBB7F => [0x46]]),
+            new Shop\Mall("Mall - Elder House Right", 0x03, 0xA0, 0x011F, 0x0E, $this, [0xDBB80 => [0x46]]),
+            new Shop\Mall("Mall - Bomb Hut", 0x03, 0xA0, 0x011F, 0x4A, $this, [0xDBBBC => [0x46]]),
         ]);
 
         $this->shops["Light World Kakariko Shop"]->clearInventory()
             ->addInventory(0, Item::get('RedPotion', $world), 150)
             ->addInventory(1, Item::get('Heart', $world), 10)
             ->addInventory(2, Item::get('TenBombs', $world), 50);
+
+        $this->shops["Mall - Snitch Lady East"]->clearInventory()
+            ->addInventory(0, Item::get('Hammer', $world), 750)
+            ->addInventory(1, Item::get('Progressive Sword', $world), 450)
+            ->addInventory(2, Item::get('Progressive Bow', $world), 450);
+        $this->shops["Mall - Snitch Lady West"]->clearInventory()
+            ->addInventory(0, Item::get('Bombos', $world), 300)
+            ->addInventory(1, Item::get('Ether', $world), 300)
+            ->addInventory(2, Item::get('Quake', $world), 300);
+        $this->shops["Mall - Bush Covered House"]->clearInventory()
+            ->addInventory(0, Item::get('Fire Rod', $world), 750)
+            ->addInventory(1, Item::get('Ice Rod', $world), 750)
+            ->addInventory(2, Item::get('Lamp', $world), 450);
+        $this->shops["Mall - Elder House Left"]->clearInventory()
+            ->addInventory(0, Item::get('CaneOfSomaria', $world), 750)
+            ->addInventory(1, Item::get('OcarinaInactive', $world), 750)
+            ->addInventory(2, Item::get('MagicMirror', $world), 750);
+        $this->shops["Mall - Elder House Right"]->clearInventory()
+            ->addInventory(0, Item::get('ProgressiveGlove', $world), 450)
+            ->addInventory(1, Item::get('PegasusBoots', $world),750)
+            ->addInventory(2, Item::get('Flippers', $world), 750);
+        $this->shops["Mall - Bomb Hut"]->clearInventory()
+            ->addInventory(0, Item::get('Hookshot', $world), 750)
+            ->addInventory(1, Item::get('BookOfMudora', $world), 750)
+            ->addInventory(2, Item::get('MoonPearl', $world), 600);
     }
 
     /**

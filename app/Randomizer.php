@@ -750,7 +750,7 @@ class Randomizer implements RandomizerContract
         $shops = $world->getShops();
 
         $shops->filter(function ($shop) {
-            return !$shop instanceof Shop\TakeAny;
+            return !$shop instanceof Shop\TakeAny && !$shop instanceof Shop\Mall;
         })->each(function ($shop) {
             $shop->setActive(true);
         });
@@ -770,13 +770,24 @@ class Randomizer implements RandomizerContract
         if (!$world->config('rom.genericKeys', false)
             && !$world->config('rom.rupeeBow', false)
             && !$world->config('region.takeAnys', false)
+            && !$world->config('region.malls', false)
             && !$world->restrictedToBombs()) {
             return;
         }
 
+        if ($world->config('region.malls', false)) {
+            $shops->filter(function ($shop) {
+                return $shop instanceof Shop\Mall;
+            })->each(function ($shop) use ($world) {
+                $shop->setActive(true);
+            });
+        }
+
         if ($world->config('region.takeAnys', false)) {
             $shops->filter(function ($shop) {
-                return $shop instanceof Shop\TakeAny;
+                return $shop instanceof Shop\TakeAny
+                    && (!$world->config('region.malls', false)
+                        || !array_key_exists("Mall - " + $shop->getName()));
             })->randomCollection(4)->each(function ($shop) use ($world) {
                 $shop->setActive(true);
                 $shop->setShopkeeper('old_man');
@@ -798,6 +809,7 @@ class Randomizer implements RandomizerContract
         $shops->filter(function ($shop) use ($world) {
             return !$shop instanceof Shop\TakeAny
                 && !$shop instanceof Shop\Upgrade
+                && !$shop instanceof Shop\Mall
                 && (!$world instanceof \ALttP\World\Inverted || $shop->getName() != "Dark World Lake Hylia Shop");
         })->randomCollection(5)->each(function ($shop) use ($world) {
             $shop->setActive(true);

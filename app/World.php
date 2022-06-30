@@ -636,7 +636,9 @@ abstract class World
                 return !$location instanceof Location\Medallion
                     && !$location instanceof Location\Fountain
                     && !($this->collected_locations[$location->getName()] ?? false);
-            })->merge($this->shops->getLocations());
+            })->merge($this->shops->filter(function ($shop) {
+                return !$shop instanceof Shop\Mall;
+            })->getLocations());
         }
 
         return $this->collectable_locations;
