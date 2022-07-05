@@ -10,13 +10,15 @@ class Open extends World
     /**
      * Create a new world and initialize all of the Regions within it
      *
-     * @param int    $id      Id of this world
-     * @param array  $config  config for this world
+     * @param int    $relative_id   Id of this world within the multiworld
+     * @param int    $id            Unique id of this world
+     * @param array  $config        config for this world
      *
      * @return void
      */
-    public function __construct(int $id = 0, array $config = [])
+    public function __construct(int $relative_id, int $id, array $config = [])
     {
+        $this->relative_id = $relative_id;
         $this->id = $id;
         $this->config = array_merge([
             'difficulty' => 'normal',
@@ -53,6 +55,6 @@ class Open extends World
             'Fountains' => new Region\Standard\Fountains($this),
         ];
 
-        parent::__construct($id, $config);
+        parent::__construct($relative_id, $id, $config);
     }
 }

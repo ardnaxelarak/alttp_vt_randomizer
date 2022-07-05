@@ -16,7 +16,13 @@ use ErrorException;
 abstract class World
 {
     /** @var int */
+    private static $max_id = 1;
+    /** @var int */
     public $id = 0;
+
+    /** @var int */
+    public $relative_id = 0;
+
     /** @var \ALttP\Seed */
     protected $seed;
     /** @var array */
@@ -51,14 +57,16 @@ abstract class World
     /**
      * Create a new world and initialize all of the Regions within it
      *
-     * @param int    $id      Id of this world
-     * @param array  $config  config for this world
+     * @param int    $relative_id   Id of this world within the multiworld
+     * @param int    $id            Unique id of this world
+     * @param array  $config        config for this world
      *
      * @return void
      */
-    public function __construct(int $id = 0, array $config = [])
+    public function __construct(int $relative_id, int $id, array $config = [])
     {
         $this->id = $id;
+        $this->relative_id = $relative_id;
         $this->config = array_merge([
             'difficulty' => 'normal',
             'logic' => 'NoGlitches',
@@ -263,22 +271,23 @@ abstract class World
      *
      * @return \ALttP\World
      */
-    public static function factory(int $id = 1, string $type = 'standard', array $config = []): World
+    public static function factory(int $relative_id = 1, string $type = 'standard', array $config = []): World
     {
         $config = array_merge($config, [
             'mode.state' => $type,
         ]);
 
+        $id = static::$max_id++;
         switch ($type) {
             case 'open':
-                return new World\Open($id, $config);
+                return new World\Open($relative_id, $id, $config);
             case 'inverted':
-                return new World\Inverted($id, $config);
+                return new World\Inverted($relative_id, $id, $config);
             case 'retro':
-                return new World\Retro($id, $config);
+                return new World\Retro($relative_id, $id, $config);
             case 'standard':
             default:
-                return new World\Standard($id, $config);
+                return new World\Standard($relative_id, $id, $config);
         }
     }
 
@@ -328,7 +337,7 @@ abstract class World
      */
     public function copy()
     {
-        $copy = new static($this->id, $this->config);
+        $copy = new static($this->relative_id, $this->id, $this->config);
         $copy->locations->setChecksForWorld($this->id);
 
         foreach ($this->locations as $name => $location) {
