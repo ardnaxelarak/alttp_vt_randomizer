@@ -92,8 +92,9 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
             $rand->randomize();
             $world->writeToRom($rom, true);
 
-            // E.R. is responsible for verifying winnability of itself
-            if ($world->config('entrances') === 'none') {
+            // Entrance rando and overworld rando are responsible for verifying winnability of themselves
+            // and generating their own full spoilers
+            if ($rand instanceof \ALttP\Randomizer) {
                 $worlds = new WorldCollection($rand->getWorlds());
 
                 if (!$worlds->isWinnable()) {
@@ -101,7 +102,7 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                 }
             }
 
-            $rom->setTournamentType('standard');
+            $rom->setTournamentType('none');
 
             $patch = $rom->getWriteLog();
             $spoiler = $world->getSpoiler([
