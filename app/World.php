@@ -1441,8 +1441,6 @@ abstract class World
         }
 
         $rom->initial_sram->setStartingEquipment($this->pre_collected_items, $this->config);
-        $rom->setMaxArrows();
-        $rom->setMaxBombs();
         $rom->setBallNChainDungeon(0x02);
         $rom->setCapacityUpgradeFills([
             $this->config('item.value.BombUpgrade5', 50),
