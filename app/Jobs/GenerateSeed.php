@@ -186,6 +186,7 @@ class GenerateSeed implements ShouldQueue
             'spoilers' => $spoilers,
             'allow_quickswap' => Arr::get($request, 'allow_quickswap', true),
             'override_start_screen' => Arr::get($request, 'override_start_screen', false),
+            'pseudoboots' => Arr::get($request, 'pseudoboots', false),
             'spoil.Hints' => Arr::get($request, 'hints', 'on'),
             'logic' => $logic,
             'item.pool' => Arr::get($request, 'item.pool', 'normal'),

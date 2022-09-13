@@ -48,10 +48,6 @@ class Randomizer implements RandomizerContract
                     Item::get('BossHeartContainer', $world),
                     Item::get('BossHeartContainer', $world),
                     Item::get('BossHeartContainer', $world),
-                    Item::get('BombUpgrade10', $world),
-                    Item::get('ArrowUpgrade10', $world),
-                    Item::get('ArrowUpgrade10', $world),
-                    Item::get('ArrowUpgrade10', $world),
                 ]));
             }
 
@@ -387,7 +383,8 @@ class Randomizer implements RandomizerContract
         }
         if ($world->config('region.wildKeys', false)) {
             foreach ($dungeon_items as $key => $item) {
-                if ($item instanceof Item\Key && ($world->config('mode.state') != 'standard' || $item != Item::get('KeyH2', $world))) {
+                if ($item instanceof Item\Key && ($world->config('mode.state') !== 'standard' || $item != Item::get('KeyH2', $world)
+                    || $world->config('logic') === 'NoLogic')) {
                     unset($dungeon_items[$key]);
                     $advancement_items[] = $item;
                 }
@@ -758,13 +755,16 @@ class Randomizer implements RandomizerContract
         // handle hardmode shops
         if ($world->config('shops.HardMode', false)) {
             $world->getShop("Capacity Upgrade")->clearInventory();
-            $shops->each(function ($shop) use ($world) {
-                foreach ($shop->getInventory() as $slot => $data) {
-                    if ($data['item'] instanceof Item\Shield) {
-                        $shop->removeInventory((int) $slot);
-                    }
-                }
-            });
+        }
+        $shield_replacement = Item::get($world->config('item.overflow.replacement.Shield', 'TwentyRupees2'), $world);
+        if ($world->config('item.overflow.count.Shield', 3) < 2) {
+            $world->getShop("Dark World Forest Shop")->addInventory(0, $shield_replacement, 500);
+        }
+        if ($world->config('item.overflow.count.Shield', 3) < 1) {
+            $world->getShop("Dark World Potion Shop")->addInventory(1, $shield_replacement, 50);
+            $world->getShop("Dark World Lumberjack Hut Shop")->addInventory(1, $shield_replacement, 50);
+            $world->getShop("Dark World Outcasts Shop")->addInventory(1, $shield_replacement, 50);
+            $world->getShop("Dark World Lake Hylia Shop")->addInventory(1, $shield_replacement, 50);
         }
 
         if (!$world->config('rom.genericKeys', false)

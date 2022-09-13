@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'extensions' => [],
+    // 'extensions' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -64,57 +64,12 @@ return [
         'soft_break'      => "\n",
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Enable Em Tag Parsing
-    |--------------------------------------------------------------------------
-    |
-    | This option specifies if `<em>` parsing is enabled.
-    |
-    | Default: true
-    |
-    */
-
-    'enable_em' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enable Strong Tag Parsing
-    |--------------------------------------------------------------------------
-    |
-    | This option specifies if `<strong>` parsing is enabled.
-    |
-    | Default: true
-    |
-    */
-
-    'enable_strong' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enable Asterisk Parsing
-    |--------------------------------------------------------------------------
-    |
-    | This option specifies if `*` should be parsed for emphasis.
-    |
-    | Default: true
-    |
-    */
-
-    'use_asterisk' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enable Underscore Parsing
-    |--------------------------------------------------------------------------
-    |
-    | This option specifies if `_` should be parsed for emphasis.
-    |
-    | Default: true
-    |
-    */
-
-    'use_underscore' => true,
+    'commonmark' => [
+        'enable_em' => true,
+        'enable_strong' => true,
+        'use_asterisk' => true,
+        'use_underscore' => true,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +82,7 @@ return [
     |
     */
 
-    'html_input' => 'allow',
+    // 'html_input' => 'allow',
 
     /*
     |--------------------------------------------------------------------------
@@ -140,6 +95,6 @@ return [
     |
     */
 
-    'allow_unsafe_links' => false,
+    // 'allow_unsafe_links' => false,
 
 ];

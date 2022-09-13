@@ -371,6 +371,16 @@ abstract class World
     }
 
     /**
+     * Get a copy of config array for this world (for testing.)
+     *
+     * @return array
+     */
+    public function getConfig(): array {
+        $config_copy = $this->config;
+        return $config_copy;
+    }
+
+    /**
      * Determine the junk fill range of Ganon's Tower for this world. This
      * accounts for the number of crystals needed to enter.
      *
@@ -1156,6 +1166,7 @@ abstract class World
             'hints' => $this->config('spoil.Hints'),
             'spoilers' => $this->config('spoilers', 'off'),
             'allow_quickswap' => $this->config('allow_quickswap', true),
+            'pseudoboots' => $this->config('pseudoboots', false),
             'enemizer.boss_shuffle' => $this->config('enemizer.bossShuffle'),
             'enemizer.enemy_shuffle' => $this->config('enemizer.enemyShuffle'),
             'enemizer.enemy_damage' => $this->config('enemizer.enemyDamage'),
@@ -1217,6 +1228,19 @@ abstract class World
                     $rom->write($address, pack('C*', ...$bytes));
                 }
             }
+
+            // misc patches for inverted ER until we can update ER
+            if ($this->config('mode.state') === 'inverted') {
+                // remove diggable light world portals
+                $rom->write(snes_to_pc(0x1BC428), pack('C*', 0x00));
+                $rom->write(snes_to_pc(0x1BC43A), pack('C*', 0x00));
+                $rom->write(snes_to_pc(0x1BC590), pack('C*', 0x00));
+                $rom->write(snes_to_pc(0x1BC5A1), pack('C*', 0x00));
+                $rom->write(snes_to_pc(0x1BC5B1), pack('C*', 0x00));
+                $rom->write(snes_to_pc(0x1BC5C7), pack('C*', 0x00));
+            }
+
+            $rom->setPseudoBoots($this->config('pseudoboots', false));
 
             if ($save) {
                 $hash = $this->saveSeedRecord();
@@ -1293,7 +1317,6 @@ abstract class World
         $rom->setGenericKeys($this->config('rom.genericKeys', false));
         $rom->setupCustomShops($this->getShops());
         $rom->setRupeeArrow($this->config('rom.rupeeBow', false));
-        $rom->setLockAgahnimDoorInEscape(true);
         $rom->setWishingWellChests(true);
         $rom->setWishingWellUpgrade(false);
         $rom->setHyliaFairyShop(true);
@@ -1335,11 +1358,9 @@ abstract class World
 
                 // no break
             case 'pedestal':
-                $rom->setPyramidHoleOpen(false);
                 $rom->setGanonInvincible('yes');
                 break;
             case 'dungeons':
-                $rom->setPyramidHoleOpen(false);
                 $rom->setGanonInvincible('dungeons');
                 break;
             case 'trinity':
@@ -1347,7 +1368,7 @@ abstract class World
 
                 // no break
             case 'fast_ganon':
-                $rom->setPyramidHoleOpen(true);
+                $rom->initial_sram->preOpenPyramid();
 
                 // no break
             default:
@@ -1368,6 +1389,7 @@ abstract class World
 
         $rom->setMapMode($this->config('rom.mapOnPickup', false));
         $rom->setCompassMode($this->config('rom.dungeonCount', 'off'));
+        $rom->setCompassCountTotals();
         $rom->setFreeItemTextMode($this->config('rom.freeItemText', 0x00));
         $rom->setFreeItemMenu($this->config('rom.freeItemMenu', 0x00));
         $rom->setDiggingGameRng(get_random_int(1, 30));
@@ -1401,6 +1423,19 @@ abstract class World
         if ($this->restrictedToBees()) {
             $rom->setBeeMode();
         }
+        if ($this->config('mode.state') !== 'inverted') {
+            switch ($this->config('rom.logicMode', $this->config['logic'])) {
+                case 'MajorGlitches':
+                case 'NoLogic':
+                case 'OverworldGlitches':
+                    $rom->setLockAgahnimDoorInEscape(false);
+                    break;
+                case 'NoGlitches':
+                default:
+                    $rom->setLockAgahnimDoorInEscape(true);
+                    break;
+            }
+        }
 
         if (!$this->getLocation("Link's Uncle")->getItem() instanceof Item\Sword) {
             $rom->removeUnclesSword();
@@ -1412,7 +1447,10 @@ abstract class World
             $rom->removeUnclesShield();
         }
 
-        $rom->setStartingEquipment($this->pre_collected_items);
+        $rom->initial_sram->setStartingEquipment($this->pre_collected_items, $this->config);
+        $rom->setMaxArrows();
+        $rom->setMaxBombs();
+        $rom->setBallNChainDungeon(0x02);
         $rom->setCapacityUpgradeFills([
             $this->config('item.value.BombUpgrade5', 50),
             $this->config('item.value.BombUpgrade10', 50),
@@ -1426,7 +1464,7 @@ abstract class World
         $rom->setBlueClock($this->config('item.value.BlueClock', 0) ?: 0);
         $rom->setRedClock($this->config('item.value.RedClock', 0) ?: 0);
         $rom->setGreenClock($this->config('item.value.GreenClock', 0) ?: 0);
-        $rom->setStartingTime($this->config('rom.timerStart', 0) ?: 0);
+        $rom->initial_sram->setStartingTimer($this->config('rom.timerStart', 0) ?: 0);
 
         switch ($this->config('rom.logicMode', $this->config['logic'])) {
             case 'MajorGlitches':
@@ -1458,14 +1496,19 @@ abstract class World
                 break;
         }
 
-        $rom->setGanonsTowerOpen($this->config('crystals.tower') === 0);
+        if ($this->config('crystals.tower') === 0) {
+            $rom->initial_sram->preOpenGanonsTower();
+        }
 
         $rom->setGameType('item');
 
         $rom->setMysteryMasking($this->config('spoilers', 'on') === 'mystery');
 
+        $rom->setPseudoBoots($this->config('pseudoboots', false));
+
         $rom->writeCredits();
         $rom->writeText();
+        $rom->writeInitialSram();
 
         if ($save) {
             $hash = $this->saveSeedRecord();
@@ -1548,7 +1591,7 @@ abstract class World
             if ($this->config('rom.EscapeAssist', false)) {
                 $rom->setEscapeAssist(0b00000001);
             }
-        } elseif ($uncle_items->has('TenBombs') || $this->config('logic') !== 'None') {
+        } elseif ($uncle_items->has('TenBombs') || $this->config('logic') !== 'NoLogic') {
             // TenBombs, or give player bombs if uncle was plando'd to not have a weapon.
             $rom->setEscapeFills(0b00000010);
             $rom->setUncleSpawnRefills(
