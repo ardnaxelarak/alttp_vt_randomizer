@@ -609,26 +609,6 @@ class InitialSram
                 case 'Crystal7':
                     $this->initial_sram_bytes[0x37A] |= 0b00001000;
                     break;
-                case 'L1Bombs':
-                case 'L1Cane':
-                    $this->initial_sram_bytes[0x38F] = 0x01;
-                    break;
-                case 'L2Bombs':
-                case 'L2Cane':
-                    $this->initial_sram_bytes[0x38F] = 0x02;
-                    break;
-                case 'L3Bombs':
-                case 'L3Cane':
-                    $this->initial_sram_bytes[0x38F] = 0x03;
-                    break;
-                case 'L4Bombs':
-                case 'L4Cane':
-                    $this->initial_sram_bytes[0x38F] = 0x04;
-                    break;
-                case 'L5Bombs':
-                case 'L5Cane':
-                    $this->initial_sram_bytes[0x38F] = 0x05;
-                    break;
                 case 'ProgressiveBombs':
                 case 'ProgressiveCane':
                     $this->initial_sram_bytes[0x38F] = min($this->initial_sram_bytes[0x38F] + 1, 5);

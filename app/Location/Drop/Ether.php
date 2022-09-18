@@ -263,22 +263,8 @@ class Ether extends Location
                 return "time for a\nchange of\nclothes?";
             case 'ProgressiveGlove':
                 return "a way to lift\nheavier things";
-            case 'L1Bombs':
-                return "some basic\nexplosives\nrest here!";
-            case 'L2Bombs':
-                return "some decent\nexplosives\nrest here!";
-            case 'L3Bombs':
-                return "some good\nexplosives\nrest here!";
-            case 'L4Bombs':
-            case 'L5Bombs':
-                return "the golden\nexplosives\nrest here!";
             case 'ProgressiveBombs':
                 return "throw more\npowerful\nexplosives";
-            case 'L1Cane':
-            case 'L2Cane':
-            case 'L3Cane':
-            case 'L4Cane':
-            case 'L5Cane':
             case 'ProgressiveCane':
                 return "a better\nstick to hit\nthings with";
             case 'singleRNG':

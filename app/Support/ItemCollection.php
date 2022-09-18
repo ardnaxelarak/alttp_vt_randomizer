@@ -812,62 +812,12 @@ class ItemCollection extends Collection
     public function hasSpecialWeaponLevel(World $world, int $min_level)
     {
         if ($world->restrictedToBombs()) {
-            switch ($min_level) {
-                case 4:
-                    return $this->has('ProgressiveBombs', 4)
-                        || $this->has('L4Bombs')
-                        || $this->has('L5Bombs');
-                case 3:
-                    return $this->has('ProgressiveBombs', 3)
-                        || $this->has('L3Bombs')
-                        || $this->has('L4Bombs')
-                        || $this->has('L5Bombs');
-                case 2:
-                    return $this->has('ProgressiveBombs', 2)
-                        || $this->has('L2Bombs')
-                        || $this->has('L3Bombs')
-                        || $this->has('L4Bombs')
-                        || $this->has('L5Bombs');
-                case 1:
-                    return $this->has('ProgressiveBombs')
-                        || $this->has('L1Bombs')
-                        || $this->has('L2Bombs')
-                        || $this->has('L3Bombs')
-                        || $this->has('L4Bombs')
-                        || $this->has('L5Bombs');
-                default:
-                    return true;
-            }
+            return $this->has('ProgressiveBombs', $min_level);
         } else if ($world->restrictedToBlueCane() || $world->restrictedToRedCane() || $world->restrictedToCanes()) {
             if ($world->restrictedToCanes() && !$this->has('CaneOfByrna') && !$this->has('CaneOfSomaria')) {
                 return false;
             }
-            switch ($min_level) {
-                case 4:
-                    return $this->has('ProgressiveCane', 4)
-                        || $this->has('L4Cane')
-                        || $this->has('L5Cane');
-                case 3:
-                    return $this->has('ProgressiveCane', 3)
-                        || $this->has('L3Cane')
-                        || $this->has('L4Cane')
-                        || $this->has('L5Cane');
-                case 2:
-                    return $this->has('ProgressiveCane', 2)
-                        || $this->has('L2Cane')
-                        || $this->has('L3Cane')
-                        || $this->has('L4Cane')
-                        || $this->has('L5Cane');
-                case 1:
-                    return $this->has('ProgressiveCane')
-                        || $this->has('L1Cane')
-                        || $this->has('L2Cane')
-                        || $this->has('L3Cane')
-                        || $this->has('L4Cane')
-                        || $this->has('L5Cane');
-                default:
-                    return true;
-            }
+            return $this->has('ProgressiveCane', $min_level);
         } else {
             return false;
         }

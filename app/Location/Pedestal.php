@@ -218,22 +218,8 @@ class Pedestal extends Location
                 return "the unknown hat";
             case 'ProgressiveGlove':
                 return "the magic hand cover";
-            case 'L1Bombs':
-                return "the basic grenades";
-            case 'L2Bombs':
-                return "the decent grenades";
-            case 'L3Bombs':
-                return "the good grenades";
-            case 'L4Bombs':
-            case 'L5Bombs':
-                return "the golden grenades";
             case 'ProgressiveBombs':
                 return "the unknown grenades";
-            case 'L1Cane':
-            case 'L2Cane':
-            case 'L3Cane':
-            case 'L4Cane':
-            case 'L5Cane':
             case 'ProgressiveCane':
                 return "the better stick";
             case 'singleRNG':
@@ -486,22 +472,8 @@ class Pedestal extends Location
                 return "time for a\nchange of\nclothes?";
             case 'ProgressiveGlove':
                 return "a way to lift\nheavier things";
-            case 'L1Bombs':
-                return "some basic\nexplosives\nrest here!";
-            case 'L2Bombs':
-                return "some decent\nexplosives\nrest here!";
-            case 'L3Bombs':
-                return "some good\nexplosives\nrest here!";
-            case 'L4Bombs':
-            case 'L5Bombs':
-                return "the golden\nexplosives\nrest here!";
             case 'ProgressiveBombs':
                 return "throw more\npowerful\nexplosives";
-            case 'L1Cane':
-            case 'L2Cane':
-            case 'L3Cane':
-            case 'L4Cane':
-            case 'L5Cane':
             case 'ProgressiveCane':
                 return "a better\nstick rests\nhere!";
             case 'singleRNG':

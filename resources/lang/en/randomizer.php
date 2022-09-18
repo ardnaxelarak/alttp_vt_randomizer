@@ -262,8 +262,7 @@ return [
             'assured_pseudo' => 'Assured Pseudo-Swords',
             'bees' => 'Bee Mode',
         ],
-        'bombs_warning' => 'Bomb-Only mode is still in development, but should be stable.',
-        'cane_warning' => 'Byrna-Only, Somaria-Only, and Canes-Only modes are still in development, but should be stable.',
+        'bees_warning' => 'Bee Mode is only partially implemented, and not compatible with entrance, door, or overworld shuffle.',
     ],
     'item_pool' => [
         'title' => 'Item Pool',

@@ -1004,12 +1004,12 @@ abstract class World
     private function getItem(string $name): Item
     {
         $bomb_mode_replacements = [
-            'L1Sword' => 'L1Bombs',
-            'L1SwordAndShield' => 'L1Bombs',
-            'L2Sword' => 'L2Bombs',
-            'MasterSword' => 'L2Bombs',
-            'L3Sword' => 'L3Bombs',
-            'L4Sword' => 'L4Bombs',
+            'L1Sword' => 'ProgressiveBombs',
+            'L1SwordAndShield' => 'ProgressiveBombs',
+            'L2Sword' => 'ProgressiveBombs',
+            'MasterSword' => 'ProgressiveBombs',
+            'L3Sword' => 'ProgressiveBombs',
+            'L4Sword' => 'ProgressiveBombs',
             'ProgressiveSword' => 'ProgressiveBombs',
             'Bomb' => 'Heart',
             'ThreeBombs' => 'Heart',
@@ -1017,12 +1017,12 @@ abstract class World
         ];
 
         $cane_mode_replacements = [
-            'L1Sword' => 'L1Cane',
-            'L1SwordAndShield' => 'L1Cane',
-            'L2Sword' => 'L2Cane',
-            'MasterSword' => 'L2Cane',
-            'L3Sword' => 'L3Cane',
-            'L4Sword' => 'L4Cane',
+            'L1Sword' => 'ProgressiveCane',
+            'L1SwordAndShield' => 'ProgressiveCane',
+            'L2Sword' => 'ProgressiveCane',
+            'MasterSword' => 'ProgressiveCane',
+            'L3Sword' => 'ProgressiveCane',
+            'L4Sword' => 'ProgressiveCane',
             'ProgressiveSword' => 'ProgressiveCane',
         ];
 
