@@ -609,6 +609,7 @@ return [
                 'none' => 'None',
                 'shuffled' => 'Shuffled',
                 'random' => 'Random',
+                'moldorms' => 'Moldorms',
             ],
             'pot_shuffle' => [
                 'on' => 'On',

@@ -123,6 +123,17 @@ class Enemizer
             $this->patch[] = [$write->address => $write->patchData];
         }
 
+        if ($this->world->config('enemizer.enemyShuffle') === 'moldorms') {
+            $speedydorms = [
+                0x30, 0x2C, 0x22, 0x12, 0x00, 0xEE, 0xDE, 0xD4,
+                0xD0, 0xD4, 0xDE, 0xEE, 0x00, 0x12, 0x22, 0x2C,
+                0x00, 0x12, 0x22, 0x2C, 0x30, 0x2C, 0x22, 0x12,
+                0x00, 0xEE, 0xDE, 0xD4, 0xD0, 0xD4, 0xDE, 0xEE,
+            ];
+            $this->patch[] = [0x0317DF => $speedydorms];
+        }
+
+
         file_put_contents($this->patch_file, json_encode($this->patch));
 
         return $this;
@@ -213,15 +224,23 @@ class Enemizer
                 : $this->world->config('enemizer.enemyShuffle') !== 'none',
             "RandomizeSpriteOnHit" => false,
             "DebugMode" => false,
-            "DebugForceEnemy" => true,
+            "DebugForceEnemy" => false,
             "DebugForceEnemyId" => 196,
             "DebugForceBoss" => false,
             "DebugForceBossId" => 4,
             "DebugOpenShutterDoors" => false,
-            "DebugForceEnemyDamageZero" => true,
-            "DebugShowRoomIdInRupeeCounter" => true,
+            "DebugForceEnemyDamageZero" => false,
+            "DebugShowRoomIdInRupeeCounter" => false,
             "UseManualBosses" => $this->world->config('enemizer.bossShuffle') !== 'none',
         ];
+
+        if ($this->world->config('enemizer.enemyShuffle') === 'moldorms') {
+            $options = array_merge($options, [
+                "DebugMode" => true,
+                "DebugForceEnemy" => true,
+                "DebugForceEnemyId" => 0x18,
+            ]);
+        }
 
         if ($this->world->config('enemizer.bossShuffle') !== 'none') {
             $world = $this->world;

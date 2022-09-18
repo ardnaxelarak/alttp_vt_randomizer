@@ -234,6 +234,7 @@ return [
             'none' => 'None',
             'shuffled' => 'Shuffled',
             'random' => 'Random',
+            'moldorms' => 'Moldorms',
         ],
     ],
     "hints" => [
