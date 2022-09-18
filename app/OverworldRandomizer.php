@@ -160,6 +160,13 @@ class OverworldRandomizer implements RandomizerContract
             $flags[] = '--shopsanity';
         }
 
+        if ($world->config('doors.shuffle') !== 'vanilla') {
+            $flags = array_merge($flags, [
+                '--dungeon_counters',
+                'on',
+            ]);
+        }
+
         if ($world->config('overworld.keepSimilar') === 'on') {
             $flags[] = '--ow_keepsimilar';
         }
