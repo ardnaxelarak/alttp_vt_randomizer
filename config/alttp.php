@@ -51,9 +51,6 @@ return [
                     'Icon' => 'triforce',
                 ],
             ],
-            'rom' => [
-                'mapOnPickup' => true,
-            ],
         ],
     ],
     'randomizer' => [
