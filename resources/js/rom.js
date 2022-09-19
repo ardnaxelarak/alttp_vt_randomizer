@@ -522,8 +522,12 @@ export default class ROM {
         this.door_shuffle = this.parseMulti(data.spoiler.meta, "door_shuffle");
         this.ow_shuffle = this.parseMulti(data.spoiler.meta, "ow_shuffle");
         this.ow_crossed = this.parseMulti(data.spoiler.meta, "ow_crossed");
-        this.ow_crossed = this.ow_crossed === 'none' ? 'vanilla' : this.shuffle;
+        this.ow_crossed = this.ow_crossed === 'none' ? 'vanilla' : this.ow_crossed;
         this.ow_mixed = this.parseMulti(data.spoiler.meta, "ow_mixed") == true ? "on" : "off";
+        this.pottery = this.parseMulti(data.spoiler.meta, "pottery");
+        this.dungeon_items = this.parseMulti(data.spoiler.meta, "dungeon_items");
+        this.enemy_shuffle = this.parseMulti(data.spoiler.meta, "enemizer.enemy_shuffle");
+        this.boss_shuffle = this.parseMulti(data.spoiler.meta, "enemizer.boss_shuffle");
         this.difficulty_mode = data.spoiler.meta.difficulty_mode;
         this.difficulty = data.spoiler.meta.difficulty;
         this.notes = data.spoiler.meta.notes;

@@ -39,7 +39,7 @@ return [
             'b' => 'Big Keys',
             'mc' => 'Maps/Compasses',
             'mcs' => 'Maps/Compasses/Small Keys',
-            'full' => 'Keysanity',
+            'full' => 'Full',
         ],
     ],
     'drop_shuffle' => [

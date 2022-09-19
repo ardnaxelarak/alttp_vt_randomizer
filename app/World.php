@@ -1157,7 +1157,7 @@ abstract class World
             'mode' => $this->config('mode.state'),
             'shopsanity' => $this->config('shopsanity'),
             'weapons' => $this->config('mode.weapons'),
-            'world_id' => $this->id,
+            'world_id' => $this->relative_id,
             'crystals_ganon' => $this->config('crystals.ganon'),
             'crystals_tower' => $this->config('crystals.tower'),
             'ganon_item' => $this->config('ganon_item'),
