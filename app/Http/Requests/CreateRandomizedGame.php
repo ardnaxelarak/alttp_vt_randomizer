@@ -44,6 +44,12 @@ class CreateRandomizedGame extends FormRequest
             'drop_shuffle' => [
                 Rule::in($valid_settings['drop_shuffle']),
             ],
+            'bonk_shuffle' => [
+                Rule::in($valid_settings['bonk_shuffle']),
+            ],
+            'pottery_shuffle' => [
+                Rule::in($valid_settings['pottery_shuffle']),
+            ],
             'accessibility' => [
                 Rule::in($valid_settings['accessibility']),
             ],

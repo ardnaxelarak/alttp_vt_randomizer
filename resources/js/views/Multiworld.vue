@@ -90,6 +90,12 @@
                     >{{ $t('randomizer.drop_shuffle.title') }}: {{ $t(worlds[world_id].drop_shuffle.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.bonk_shuffle.title') }}: {{ $t(worlds[world_id].bonk_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.pottery_shuffle.title') }}: {{ $t(worlds[world_id].pottery_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.shopsanity.title') }}: {{ $t(worlds[world_id].shopsanity.name) }}</div>
                   </div>
                   <div class="row" v-if="editable[world_id]">
@@ -124,6 +130,22 @@
                         @input="setDropShuffle"
                         :options="optionsDropShuffle"
                       >{{ $t('randomizer.drop_shuffle.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].bonk_shuffle"
+                        @input="setBonkShuffle"
+                        :options="optionsBonkShuffle"
+                      >{{ $t('randomizer.bonk_shuffle.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].pottery_shuffle"
+                        @input="setPotteryShuffle"
+                        :options="optionsPotteryShuffle"
+                      >{{ $t('randomizer.pottery_shuffle.title') }}</Select>
                     </div>
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
@@ -535,6 +557,12 @@ export default {
     setDropShuffle(value, worldId) {
       this.$store.commit("multiworld/setDropShuffle", { value, worldId });
     },
+    setBonkShuffle(value, worldId) {
+      this.$store.commit("multiworld/setBonkShuffle", { value, worldId });
+    },
+    setPotteryShuffle(value, worldId) {
+      this.$store.commit("multiworld/setPotteryShuffle", { value, worldId });
+    },
     setAccessibility(value, worldId) {
       this.$store.commit("multiworld/setAccessibility", { value, worldId });
     },
@@ -741,6 +769,8 @@ export default {
       optionsItemPlacement: state => state.options.item_placement,
       optionsDungeonItems: state => state.options.dungeon_items,
       optionsDropShuffle: state => state.options.drop_shuffle,
+      optionsBonkShuffle: state => state.options.bonk_shuffle,
+      optionsPotteryShuffle: state => state.options.pottery_shuffle,
       optionsAccessibility: state => state.options.accessibility,
       optionsGoal: state => state.options.goal,
       optionsTowerOpen: state => state.options.tower_open,

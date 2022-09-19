@@ -20,6 +20,14 @@ export default {
     value: "off",
     name: "randomizer.drop_shuffle.options.off"
   },
+  bonk_shuffle: {
+    value: "off",
+    name: "randomizer.bonk_shuffle.options.off"
+  },
+  pottery_shuffle: {
+    value: "none",
+    name: "randomizer.pottery_shuffle.options.none"
+  },
   accessibility: {
     value: "items",
     name: "randomizer.accessibility.options.items"

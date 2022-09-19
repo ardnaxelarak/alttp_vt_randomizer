@@ -106,7 +106,75 @@ return [
         'drop_shuffle' => [
             'header' => __('randomizer.drop_shuffle.title'),
             'content' => [
-                'Key Drops (Pots and Enemies) are shuffled and other items can take their place.',
+                'Keys dropped by enemies are shuffled and other items can take their place.',
+            ],
+        ],
+        'bonk_shuffle' => [
+            'header' => __('randomizer.bonk_shuffle.title'),
+            'content' => [
+                'Bonk drops from trees, rocks, and statues are shuffled with the item pool.',
+            ],
+        ],
+        'pottery_shuffle' => [
+            'header' => __('randomizer.pottery_shuffle.title'),
+            'subheader' => [
+                'This setting controls how items under pots are shuffled and whether other items can take their place.',
+            ],
+            'sections' => [
+                'none' => [
+                    'header' => __('randomizer.pottery_shuffle.options.none'),
+                    'content' => [
+                        'All pots remain unchanged.',
+                    ],
+                ],
+                'keys' => [
+                    'header' => __('randomizer.pottery_shuffle.options.keys'),
+                    'content' => [
+                        'Key pots are included in the location pool and other items can take their place.',
+                    ],
+                ],
+                'cave' => [
+                    'header' => __('randomizer.pottery_shuffle.options.cave'),
+                    'content' => [
+                        'Only pots in houses and caves are included in the location pool.',
+                    ],
+                ],
+                'cavekeys' => [
+                    'header' => __('randomizer.pottery_shuffle.options.cavekeys'),
+                    'content' => [
+                        'Both pots in houses and caves and key pots are included in the location pool.',
+                    ],
+                ],
+                'reduced' => [
+                    'header' => __('randomizer.pottery_shuffle.options.reduced'),
+                    'content' => [
+                        'Same as KeyCaves + 25% of pots in dungeons (dynamic mode).',
+                    ],
+                ],
+                'clustered' => [
+                    'header' => __('randomizer.pottery_shuffle.options.clustered'),
+                    'content' => [
+                        'Same as KeyCaves + 50% of pots in dungeons (dynamic mode).',
+                    ],
+                ],
+                'nonempty' => [
+                    'header' => __('randomizer.pottery_shuffle.options.nonempty'),
+                    'content' => [
+                        'All pots that are not originally empty are included in the location pool.',
+                    ],
+                ],
+                'dungeon' => [
+                    'header' => __('randomizer.pottery_shuffle.options.dungeon'),
+                    'content' => [
+                        'Only pots in dungeons are included in the location pool.',
+                    ],
+                ],
+                'lottery' => [
+                    'header' => __('randomizer.pottery_shuffle.options.lottery'),
+                    'content' => [
+                        'All pots are part of the location pool.',
+                    ],
+                ],
             ],
         ],
         'shopsanity' => [

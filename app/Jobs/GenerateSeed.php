@@ -167,6 +167,8 @@ class GenerateSeed implements ShouldQueue
             'itemPlacement' => Arr::get($request, 'item_placement', 'basic'),
             'dungeonItems' => Arr::get($request, 'dungeon_items', 'standard'),
             'dropShuffle' => Arr::get($request, 'drop_shuffle', 'off'),
+            'bonkShuffle' => Arr::get($request, 'bonk_shuffle', 'off'),
+            'potteryShuffle' => Arr::get($request, 'pottery_shuffle', 'none'),
             'accessibility' => Arr::get($request, 'accessibility', 'items'),
             'goal' => Arr::get($request, 'goal', 'ganon'),
             'crystals.ganon' => $crystals_ganon,

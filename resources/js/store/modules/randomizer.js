@@ -22,6 +22,7 @@ function asMulti(object, mKey) {
 function needOWBranch(state) {
   return state.entrance_shuffle.value !== "none" || state.door_shuffle.value !== "vanilla"
       || state.shopsanity.value === "on" || state.drop_shuffle.value === "on"
+      || state.bonk_shuffle.value === "on" || state.pottery_shuffle.value !== "none"
       || state.ow_shuffle.value !== "vanilla" || state.ow_crossed.value !== "vanilla"
       || state.ow_mixed.value === "on" || state.ow_flute_shuffle.value !== "vanilla";
 }
@@ -34,6 +35,8 @@ function turnOffOWBranch(commit) {
   commit("setOverworldMixed", "off");
   commit("setOverworldFluteShuffle", "vanilla");
   commit("setDropShuffle", "off");
+  commit("setBonkShuffle", "off");
+  commit("setPotteryShuffle", "none");
   commit("setShopsanity", "off");
 }
 
@@ -65,6 +68,8 @@ export default {
       item_placement: [],
       dungeon_items: [],
       drop_shuffle: [],
+      bonk_shuffle: [],
+      pottery_shuffle: [],
       accessibility: [],
       goal: [],
       tower_open: [],
@@ -108,6 +113,8 @@ export default {
             dispatch("load", ["item_placement", "setItemPlacement"]),
             dispatch("load", ["dungeon_items", "setDungeonItems"]),
             dispatch("load", ["drop_shuffle", "setDropShuffle"]),
+            dispatch("load", ["bonk_shuffle", "setBonkShuffle"]),
+            dispatch("load", ["pottery_shuffle", "setPotteryShuffle"]),
             dispatch("load", ["accessibility", "setAccessibility"]),
             dispatch("load", ["goal", "setGoal"]),
             dispatch("load", ["tower_open", "setTowerOpen"]),
@@ -158,6 +165,14 @@ export default {
         commit(
           "setDropShuffle",
           state.preset_map[preset.value]["drop_shuffle"]
+        );
+        commit(
+          "setBonkShuffle",
+          state.preset_map[preset.value]["bonk_shuffle"]
+        );
+        commit(
+          "setPotteryShuffle",
+          state.preset_map[preset.value]["pottery_shuffle"]
         );
         commit(
           "setAccessibility",
@@ -252,6 +267,16 @@ export default {
 
       turnOnOWBranch(commit, state);
     },
+    setBonkShuffle({ commit, state }, value) {
+      commit("setBonkShuffle", value);
+
+      turnOnOWBranch(commit, state);
+    },
+    setPotteryShuffle({ commit, state }, value) {
+      commit("setPotteryShuffle", value);
+
+      turnOnOWBranch(commit, state);
+    },
     setEntranceShuffle({ commit, state }, value) {
       commit("setEntranceShuffle", value);
 
@@ -310,6 +335,8 @@ export default {
         item_placement,
         dungeon_items,
         drop_shuffle,
+        bonk_shuffle,
+        pottery_shuffle,
         accessibility,
         goals,
         tower_open,
@@ -344,6 +371,8 @@ export default {
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
       state.options.drop_shuffle = asMulti(drop_shuffle, "drop_shuffle");
+      state.options.bonk_shuffle = asMulti(bonk_shuffle, "bonk_shuffle");
+      state.options.pottery_shuffle = asMulti(pottery_shuffle, "pottery_shuffle");
       state.options.accessibility = asMulti(accessibility, "accessibility");
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
@@ -410,6 +439,20 @@ export default {
       }
       state.drop_shuffle = value;
       localforage.setItem("randomizer.drop_shuffle", value);
+    },
+    setBonkShuffle(state, value) {
+      if (typeof value === "string") {
+        value = state.options.bonk_shuffle.find(o => o.value === value);
+      }
+      state.bonk_shuffle = value;
+      localforage.setItem("randomizer.bonk_shuffle", value);
+    },
+    setPotteryShuffle(state, value) {
+      if (typeof value === "string") {
+        value = state.options.pottery_shuffle.find(o => o.value === value);
+      }
+      state.pottery_shuffle = value;
+      localforage.setItem("randomizer.pottery_shuffle", value);
     },
     setAccessibility(state, value) {
       if (typeof value === "string") {

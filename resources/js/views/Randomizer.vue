@@ -61,6 +61,12 @@
               >{{ $t('randomizer.drop_shuffle.title') }}: {{ $t(dropShuffle.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.bonk_shuffle.title') }}: {{ $t(bonkShuffle.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.pottery_shuffle.title') }}: {{ $t(potteryShuffle.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.shopsanity.title') }}: {{ $t(shopsanity.name) }}</div>
             </div>
             <div class="row" v-if="editable">
@@ -98,6 +104,20 @@
                   @input="setDropShuffle"
                   :options="optionsDropShuffle"
                 >{{ $t('randomizer.drop_shuffle.title') }}</Select>
+              </div>
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="bonkShuffle"
+                  @input="setBonkShuffle"
+                  :options="optionsBonkShuffle"
+                >{{ $t('randomizer.bonk_shuffle.title') }}</Select>
+              </div>
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="potteryShuffle"
+                  @input="setPotteryShuffle"
+                  :options="optionsPotteryShuffle"
+                >{{ $t('randomizer.pottery_shuffle.title') }}</Select>
               </div>
               <div class="col-xl-4 col-lg-6 my-1">
                 <Select
@@ -517,6 +537,8 @@ export default {
       "setItemPlacement",
       "setGoal",
       "setDropShuffle",
+      "setBonkShuffle",
+      "setPotteryShuffle",
       "setGanonOpen",
       "setDoorShuffle",
       "setOverworldShuffle",
@@ -569,6 +591,8 @@ export default {
               item_placement: this.itemPlacement.value,
               dungeon_items: this.dungeonItems.value,
               drop_shuffle: this.dropShuffle.value,
+              bonk_shuffle: this.bonkShuffle.value,
+              pottery_shuffle: this.potteryShuffle.value,
               accessibility: this.accessibility.value,
               goal: this.goal.value,
               crystals: {
@@ -753,6 +777,10 @@ export default {
       dungeonItems: state => state.dungeon_items,
       optionsDropShuffle: state => state.options.drop_shuffle,
       dropShuffle: state => state.drop_shuffle,
+      optionsBonkShuffle: state => state.options.bonk_shuffle,
+      bonkShuffle: state => state.bonk_shuffle,
+      optionsPotteryShuffle: state => state.options.pottery_shuffle,
+      potteryShuffle: state => state.pottery_shuffle,
       optionsAccessibility: state => state.options.accessibility,
       accessibility: state => state.accessibility,
       optionsGoal: state => state.options.goal,

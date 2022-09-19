@@ -169,6 +169,8 @@ class GenerateMultiworld implements ShouldQueue
                 'itemPlacement' => 'advanced',
                 'dungeonItems' => Arr::get($request, "worlds.{$i}.dungeon_items", 'standard'),
                 'dropShuffle' => Arr::get($request, "worlds.{$i}.drop_shuffle", 'off'),
+                'bonkShuffle' => Arr::get($request, "worlds.{$i}.bonk_shuffle", 'off'),
+                'potteryShuffle' => Arr::get($request, "worlds.{$i}.pottery_shuffle", 'none'),
                 'accessibility' => Arr::get($request, "worlds.{$i}.accessibility", 'items'),
                 'goal' => Arr::get($request, "worlds.{$i}.goal", 'ganon'),
                 'crystals.ganon' => $crystals_ganon,

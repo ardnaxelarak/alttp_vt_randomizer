@@ -18,6 +18,8 @@ export default {
       item_placement: [],
       dungeon_items: [],
       drop_shuffle: [],
+      bonk_shuffle: [],
+      pottery_shuffle: [],
       accessibility: [],
       goal: [],
       tower_open: [],
@@ -80,6 +82,8 @@ export default {
         item_placement,
         dungeon_items,
         drop_shuffle,
+        bonk_shuffle,
+        pottery_shuffle,
         accessibility,
         goals,
         tower_open,
@@ -112,7 +116,9 @@ export default {
       );
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
-      state.options.drop_shuffle = asMulti(dungeon_items, "drop_shuffle");
+      state.options.drop_shuffle = asMulti(drop_shuffle, "drop_shuffle");
+      state.options.bonk_shuffle = asMulti(bonk_shuffle, "bonk_shuffle");
+      state.options.pottery_shuffle = asMulti(pottery_shuffle, "pottery_shuffle");
       state.options.accessibility = asMulti(accessibility, "accessibility");
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");

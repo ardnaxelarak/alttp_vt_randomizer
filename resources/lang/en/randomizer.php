@@ -49,6 +49,27 @@ return [
             'off' => 'Off',
         ],
     ],
+    'bonk_shuffle' => [
+        'title' => 'Bonk Shuffle',
+        'options' => [
+            'on' => 'On',
+            'off' => 'Off',
+        ],
+    ],
+    'pottery_shuffle' => [
+        'title' => 'Pottery Shuffle',
+        'options' => [
+            'none' => 'Vanilla',
+            'lottery' => 'Lottery',
+            'nonempty' => 'Nonempty',
+            'keys' => 'Keys',
+            'dungeon' => 'Dungeon',
+            'cave' => 'Cave',
+            'cavekeys' => 'CaveKeys',
+            'reduced' => 'Reduced',
+            'clustered' => 'Clustered',
+        ],
+    ],
     'accessibility' => [
         'title' => 'Accessibility',
         'options' => [

@@ -27,6 +27,8 @@ class RandomizerSelector
                 || $world->config('overworld.mixed', 'off') === 'on'
                 || $world->config('overworld.fluteShuffle', 'vanilla') !== 'vanilla'
                 || $world->config('dropShuffle', 'off') === 'on'
+                || $world->config('bonkShuffle', 'off') === 'on'
+                || $world->config('potteryShuffle', 'none') !== 'none'
                 || $world->config('shopsanity', 'off') === 'on'
                 || $world->config('mode.state', 'open') === 'inverted'
                 || $world->config('entrances', 'none') !== 'none') {

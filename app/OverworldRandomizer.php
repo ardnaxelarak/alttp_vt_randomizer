@@ -156,6 +156,19 @@ class OverworldRandomizer implements RandomizerContract
             $flags[] = '--keydropshuffle';
         }
 
+        if ($world->config('bonkShuffle') === 'on') {
+            $flags[] = '--bonk_drops';
+        }
+
+        if ($world->config('potteryShuffle') !== 'none') {
+            $flags = array_merge($flags, [
+                '--pottery',
+                $world->config('potteryShuffle'),
+                '--colorizepots',
+                '--collection_rate',
+            ]);
+        }
+
         if ($world->config('shopsanity') === 'on') {
             $flags[] = '--shopsanity';
         }
@@ -261,7 +274,7 @@ class OverworldRandomizer implements RandomizerContract
         foreach ($this->worlds as $world) {
             $player_options = $this->getFlags($world);
             if (count($this->worlds) > 1) {
-                $player_options[] = "--experimental";
+                $player_options[] = "--collection_rate";
             }
             $options_string = implode(' ', $player_options);
             $flags[] = "--p{$index}={$options_string}";

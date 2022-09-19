@@ -54,6 +54,8 @@ export default {
               dispatch("load", [worldId, "item_placement", "setItemPlacement"]),
               dispatch("load", [worldId, "dungeon_items", "setDungeonItems"]),
               dispatch("load", [worldId, "drop_shuffle", "setDropShuffle"]),
+              dispatch("load", [worldId, "bonk_shuffle", "setBonkShuffle"]),
+              dispatch("load", [worldId, "pottery_shuffle", "setPotteryShuffle"]),
               dispatch("load", [worldId, "accessibility", "setAccessibility"]),
               dispatch("load", [worldId, "goal", "setGoal"]),
               dispatch("load", [worldId, "tower_open", "setTowerOpen"]),
@@ -107,6 +109,14 @@ export default {
         commit("setDropShuffle", {
           worldId,
           value: state.preset_map[preset.value]["drop_shuffle"]
+        });
+        commit("setBonkShuffle", {
+          worldId,
+          value: state.preset_map[preset.value]["bonk_shuffle"]
+        });
+        commit("setPotteryShuffle", {
+          worldId,
+          value: state.preset_map[preset.value]["pottery_shuffle"]
         });
         commit("setAccessibility", {
           worldId,
@@ -237,6 +247,8 @@ export default {
         item_placement,
         dungeon_items,
         drop_shuffle,
+        bonk_shuffle,
+        pottery_shuffle,
         accessibility,
         goals,
         tower_open,
@@ -267,6 +279,8 @@ export default {
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
       state.options.drop_shuffle = asMulti(drop_shuffle, "drop_shuffle");
+      state.options.bonk_shuffle = asMulti(bonk_shuffle, "bonk_shuffle");
+      state.options.pottery_shuffle = asMulti(pottery_shuffle, "pottery_shuffle");
       state.options.accessibility = asMulti(accessibility, "accessibility");
       state.options.goal = asMulti(goals, "goal");
       state.options.tower_open = asMulti(tower_open, "tower_open");
@@ -330,6 +344,20 @@ export default {
       }
       state.worlds[worldId].drop_shuffle = value;
       localforage.setItem(`multiworld.${worldId}.drop_shuffle`, value);
+    },
+    setBonkShuffle(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.bonk_shuffle.find(o => o.value === value);
+      }
+      state.worlds[worldId].bonk_shuffle = value;
+      localforage.setItem(`multiworld.${worldId}.bonk_shuffle`, value);
+    },
+    setPotteryShuffle(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.pottery_shuffle.find(o => o.value === value);
+      }
+      state.worlds[worldId].pottery_shuffle = value;
+      localforage.setItem(`multiworld.${worldId}.pottery_shuffle`, value);
     },
     setAccessibility(state, { worldId, value }) {
       if (typeof value === "string") {

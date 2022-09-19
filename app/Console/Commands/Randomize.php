@@ -44,6 +44,8 @@ class Randomize extends Command
         . ' {--item_placement=basic : set item placement rules}'
         . ' {--dungeon_items=standard : set dungeon item placement}'
         . ' {--drop_shuffle=off : set drop shuffle on or off}'
+        . ' {--bonk_shuffle=off : include bonk drops from trees in the pool}'
+        . ' {--pottery_shuffle=none : include items under pots in the pool}'
         . ' {--entrances=vanilla : set entrance shuffle}'
         . ' {--door_shuffle=vanilla : set door shuffle}'
         . ' {--door_intensity=1 : set door shuffle intensity}'
@@ -183,6 +185,8 @@ class Randomize extends Command
                 'itemPlacement' => $this->option('item_placement'),
                 'dungeonItems' => $this->option('dungeon_items'),
                 'dropShuffle' => $this->option('drop_shuffle'),
+                'bonkShuffle' => $this->option('bonk_shuffle'),
+                'potteryShuffle' => $this->option('pottery_shuffle'),
                 'accessibility' => $this->option('accessibility'),
                 'goal' => $this->option('goal'),
                 'crystals.ganon' => $crystals_ganon,

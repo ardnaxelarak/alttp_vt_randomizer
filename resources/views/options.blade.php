@@ -64,6 +64,38 @@
                 @endforeach
             </div>
 
+            <a class="anchor" id="bonk_shuffle"></a>
+            <h3 id="bonk_shuffle" class="card-title p-2 border-bottom">{{ __('options.cards.bonk_shuffle.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.bonk_shuffle.content') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            </div>
+
+            <a class="anchor" id="pottery_shuffle"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.pottery_shuffle.header') }}</h3>
+            <div class="mb-3"></div>
+                @foreach (__('options.cards.pottery_shuffle.subheader') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            <div class="card-body">
+                @foreach (__('options.cards.pottery_shuffle.sections') as $section)
+                <h4>{{ $section['header'] }}</h4>
+                    @foreach ($section['content'] as $block)
+                        @if (is_array($block))
+                            <div class="ml-3">
+                                <h6>{{ $block['header'] }}</h6>
+                                @foreach ($block['content'] as $subblock)
+                                    <p>{!! $subblock !!}</p>
+                                @endforeach
+                            </div>
+                        @else
+                            <p>{!! $block !!}</p>
+                        @endif
+                    @endforeach
+                @endforeach
+            </div>
+
             <a class="anchor" id="shopsanity"></a>
             <h3 id="shopsanity" class="card-title p-2 border-bottom">{{ __('options.cards.shopsanity.header') }}</h3>
             <div class="card-body">

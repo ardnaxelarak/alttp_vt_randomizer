@@ -179,6 +179,8 @@ class CustomizerController extends Controller
             'itemPlacement' => $request->input('item_placement', 'basic'),
             'dungeonItems' => $request->input('dungeon_items', 'standard'),
             'dropShuffle' => $request->input('drop_shuffle', 'off'),
+            'bonkShuffle' => $request->input('bonk_shuffle', 'off'),
+            'potteryShuffle' => $request->input('pottery_shuffle', 'none'),
             'accessibility' => $request->input('accessibility', 'items'),
             'goal' => $request->input('goal', 'ganon'),
             'crystals.ganon' => $crystals_ganon,
