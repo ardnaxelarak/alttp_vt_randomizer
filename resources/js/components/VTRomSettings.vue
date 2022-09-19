@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="row mb-3">
-      <div v-if="rom.build >= '2021-07-07' && !rom.tournament" class="col">
+      <div v-if="rom.build >= '2021-07-07' && (!rom.tournament || rom.allow_pseudoboots)" class="col">
         <Toggle
           :value="fakeBoots"
           @input="setFakeBoots"

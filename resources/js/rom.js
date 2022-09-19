@@ -133,10 +133,10 @@ export default class ROM {
 
     this.setReduceFlashing(reduceFlashing);
 
-    if (!this.tournament) {
-      this.setFakeBoots(fakeBoots);
+    if (!this.tournament || this.allow_pseudoboots) {
+      this.setPseudoBoots(fakeBoots);
     } else {
-      this.setFakeBoots(false);
+      this.setPseudoBoots(false);
     }
 
     if (!this.tournament) {
@@ -459,7 +459,7 @@ export default class ROM {
     });
   }
 
-  setFakeBoots(enable) {
+  setPseudoBoots(enable) {
     return new Promise(resolve => {
       if (this.build >= "2021-07-07") {
         this.write(0x18008E, enable ? 0x01 : 0x00);
@@ -534,6 +534,7 @@ export default class ROM {
         this.tournament = data.spoiler.meta.tournament;
         this.spoilers = data.spoiler.meta.spoilers;
         this.allow_quickswap = data.spoiler.meta.allow_quickswap;
+        this.allow_pseudoboots = data.spoiler.meta.allow_pseudoboots;
         this.special = data.spoiler.meta.special;
       }
 
