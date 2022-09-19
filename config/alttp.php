@@ -597,7 +597,7 @@ return [
                 'restricted' => 'Restricted',
                 'full' => 'Full',
                 'crossed' => 'Crossed',
-                'insanity' => 'Insanity',
+                'insanity' => 'Non-Reflexive',
                 'lite' => 'Lite',
                 'lean' => 'Lean',
                 'dungeonssimple' => 'Simple (Dungeons Only)',
