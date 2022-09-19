@@ -166,18 +166,18 @@ export default {
 .region-searcher {
   width: 200px;
 }
-.region-searcher :deep(.input-group) {
+.region-searcher ::v-deep .input-group {
   width: 190px !important;
 }
-.region-searcher :deep(.multiselect) {
+.region-searcher ::v-deep .multiselect {
   min-height: 34px !important;
 }
-.region-searcher :deep(.multiselect__tags) {
+.region-searcher ::v-deep .multiselect__tags {
   min-height: 34px;
   padding-top: 7px;
 }
-.region-searcher :deep(.multiselect__content),
-.region-searcher :deep(.multiselect__content-wrapper) {
+.region-searcher ::v-deep .multiselect__content,
+.region-searcher ::v-deep .multiselect__content-wrapper {
   z-index: 995;
 }
 .items-filter {
@@ -189,7 +189,7 @@ export default {
   z-index: 990;
   background-color: white;
 }
-.card :deep(.multiselect__input)::placeholder {
+.card ::v-deep .multiselect__input::placeholder {
   color: #dcdcdc;
 }
 .icon {
