@@ -348,10 +348,10 @@
               >{{ $t('randomizer.item_functionality.title') }}: {{ $t(itemFunctionality.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
-              >{{ $t('randomizer.starting_flute.title') }}: {{ $t(starting_flute.name) }}</div>
+              >{{ $t('randomizer.starting_flute.title') }}: {{ $t(startingFlute.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
-              >{{ $t('randomizer.starting_boots.title') }}: {{ $t(starting_boots.name) }}</div>
+              >{{ $t('randomizer.starting_boots.title') }}: {{ $t(startingBoots.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.enemy_damage.title') }}: {{ $t(enemyDamage.name) }}</div>
