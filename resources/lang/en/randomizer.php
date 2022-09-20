@@ -43,10 +43,10 @@ return [
         ],
     ],
     'boss_items' => [
-        'title' => 'Boss Item Restrictions',
+        'title' => 'Boss Items',
         'options' => [
-            'any' => 'Any',
-            'nondungeon' => 'Non-Dungeon',
+            'any' => 'No Restriction',
+            'nondungeon' => 'No Dungeon Items',
         ],
     ],
     'drop_shuffle' => [
