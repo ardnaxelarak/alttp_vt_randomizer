@@ -41,6 +41,9 @@ class CreateRandomizedGame extends FormRequest
             'dungeon_items' => [
                 Rule::in($valid_settings['dungeon_items']),
             ],
+            'boss_items' => [
+                Rule::in($valid_settings['boss_items']),
+            ],
             'drop_shuffle' => [
                 Rule::in($valid_settings['drop_shuffle']),
             ],
@@ -92,6 +95,9 @@ class CreateRandomizedGame extends FormRequest
             'overworld.fluteShuffle' => [
                 Rule::in($valid_settings['ow_flute_shuffle']),
             ],
+            'overworld.whirlpoolShuffle' => [
+                Rule::in($valid_settings['ow_whirlpool_shuffle']),
+            ],
             'shopsanity' => [
                 Rule::in($valid_settings['shopsanity']),
             ],
@@ -115,6 +121,12 @@ class CreateRandomizedGame extends FormRequest
             ],
             'item.functionality' => [
                 Rule::in($valid_settings['item_functionality']),
+            ],
+            'equipment.flute' => [
+                Rule::in($valid_settings['starting_flute']),
+            ],
+            'equipment.boots' => [
+                Rule::in($valid_settings['starting_boots']),
             ],
             'enemizer.enemy_damage' => [
                 Rule::in($valid_settings['enemy_damage']),

@@ -55,6 +55,9 @@
               >{{ $t('randomizer.dungeon_items.title') }}: {{ $t(dungeonItems.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.boss_items.title') }}: {{ $t(bossItems.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.accessibility.title') }}: {{ $t(accessibility.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
@@ -90,6 +93,13 @@
                   @input="setDungeonItems"
                   :options="optionsDungeonItems"
                 >{{ $t('randomizer.dungeon_items.title') }}</Select>
+              </div>
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="bossItems"
+                  @input="setBossItems"
+                  :options="optionsBossItems"
+                >{{ $t('randomizer.boss_items.title') }}</Select>
               </div>
               <div class="col-xl-4 col-lg-6 my-1">
                 <Select
@@ -219,6 +229,9 @@
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.ow_flute_shuffle.title') }}: {{ $t(overworldFluteShuffle.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}: {{ $t(overworldWhirlpoolShuffle.name) }}</div>
             </div>
           </div>
           <div class="card-body" v-if="editable">
@@ -307,6 +320,13 @@
                   :options="optionsOverworldFluteShuffle"
                 >{{ $t('randomizer.ow_flute_shuffle.title') }}</Select>
               </div>
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="overworldWhirlpoolShuffle"
+                  @input="setOverworldWhirlpoolShuffle"
+                  :options="optionsOverworldWhirlpoolShuffle"
+                >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}</Select>
+              </div>
             </div>
           </div>
           <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.difficulty.title') }}</h5>
@@ -326,6 +346,12 @@
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.item_functionality.title') }}: {{ $t(itemFunctionality.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.starting_flute.title') }}: {{ $t(starting_flute.name) }}</div>
+              <div
+                class="col-xl-4 col-lg-6 my-1"
+              >{{ $t('randomizer.starting_boots.title') }}: {{ $t(starting_boots.name) }}</div>
               <div
                 class="col-xl-4 col-lg-6 my-1"
               >{{ $t('randomizer.enemy_damage.title') }}: {{ $t(enemyDamage.name) }}</div>
@@ -355,6 +381,20 @@
                   @input="setItemFunctionality"
                   :options="optionsItemFunctionality"
                 >{{ $t('randomizer.item_functionality.title') }}</Select>
+              </div>
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="startingFlute"
+                  @input="setStartingFlute"
+                  :options="optionsStartingFlute"
+                >{{ $t('randomizer.starting_flute.title') }}</Select>
+              </div>
+              <div class="col-xl-4 col-lg-6 my-1">
+                <Select
+                  :value="startingBoots"
+                  @input="setStartingBoots"
+                  :options="optionsStartingBoots"
+                >{{ $t('randomizer.starting_boots.title') }}</Select>
               </div>
               <div class="col-xl-4 col-lg-6 my-1">
                 <Select
@@ -545,6 +585,7 @@ export default {
       "setOverworldCrossed",
       "setOverworldMixed",
       "setOverworldFluteShuffle",
+      "setOverworldWhirlpoolShuffle",
       "setShopsanity",
       "setEntranceShuffle",
       "setItemPool"
@@ -552,6 +593,7 @@ export default {
     ...mapMutations("randomizer", [
       "setAccessibility",
       "setDungeonItems",
+      "setBossItems",
       "setTowerOpen",
       "setGanonItem",
       "setDoorIntensity",
@@ -562,6 +604,8 @@ export default {
       "setWorldState",
       "setHints",
       "setItemFunctionality",
+      "setStartingFlute",
+      "setStartingBoots",
       "setEnemyDamage",
       "setEnemyHealth"
     ]),
@@ -590,6 +634,7 @@ export default {
               glitches: this.glitchesRequired.value,
               item_placement: this.itemPlacement.value,
               dungeon_items: this.dungeonItems.value,
+              boss_items: this.bossItems.value,
               drop_shuffle: this.dropShuffle.value,
               bonk_shuffle: this.bonkShuffle.value,
               pottery_shuffle: this.potteryShuffle.value,
@@ -611,7 +656,8 @@ export default {
                 crossed: this.overworldCrossed.value,
                 keep_similar: this.overworldKeepSimilar.value,
                 mixed: this.overworldMixed.value,
-                flute_shuffle: this.overworldFluteShuffle.value
+                flute_shuffle: this.overworldFluteShuffle.value,
+                whirlpool_shuffle: this.overworldWhirlpoolShuffle.value
               },
               shopsanity: this.shopsanity.value,
               hints: this.hints.value,
@@ -619,6 +665,10 @@ export default {
               item: {
                 pool: this.itemPool.value,
                 functionality: this.itemFunctionality.value
+              },
+              equipment: {
+                flute: this.startingFlute.value,
+                boots: this.startingBoots.value
               },
               tournament: this.tournament,
               spoilers: this.spoilers,
@@ -775,6 +825,8 @@ export default {
       itemPlacement: state => state.item_placement,
       optionsDungeonItems: state => state.options.dungeon_items,
       dungeonItems: state => state.dungeon_items,
+      optionsBossItems: state => state.options.boss_items,
+      bossItems: state => state.boss_items,
       optionsDropShuffle: state => state.options.drop_shuffle,
       dropShuffle: state => state.drop_shuffle,
       optionsBonkShuffle: state => state.options.bonk_shuffle,
@@ -809,6 +861,8 @@ export default {
       overworldMixed: state => state.ow_mixed,
       optionsOverworldFluteShuffle: state => state.options.ow_flute_shuffle,
       overworldFluteShuffle: state => state.ow_flute_shuffle,
+      optionsOverworldWhirlpoolShuffle: state => state.options.ow_whirlpool_shuffle,
+      overworldWhirlpoolShuffle: state => state.ow_whirlpool_shuffle,
       optionsShopsanity: state => state.options.shopsanity,
       shopsanity: state => state.shopsanity,
       optionsBossShuffle: state => state.options.boss_shuffle,
@@ -823,6 +877,10 @@ export default {
       itemPool: state => state.item_pool,
       optionsItemFunctionality: state => state.options.item_functionality,
       itemFunctionality: state => state.item_functionality,
+      optionsStartingFlute: state => state.options.starting_flute,
+      startingFlute: state => state.starting_flute,
+      optionsStartingBoots: state => state.options.starting_boots,
+      startingBoots: state => state.starting_boots,
       optionsEnemyDamage: state => state.options.enemy_damage,
       enemyDamage: state => state.enemy_damage,
       optionsEnemyHealth: state => state.options.enemy_health,

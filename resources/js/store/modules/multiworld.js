@@ -53,6 +53,7 @@ export default {
               dispatch("load", [worldId, "glitches_required", "setGlitchesRequired"]),
               dispatch("load", [worldId, "item_placement", "setItemPlacement"]),
               dispatch("load", [worldId, "dungeon_items", "setDungeonItems"]),
+              dispatch("load", [worldId, "boss_items", "setBossItems"]),
               dispatch("load", [worldId, "drop_shuffle", "setDropShuffle"]),
               dispatch("load", [worldId, "bonk_shuffle", "setBonkShuffle"]),
               dispatch("load", [worldId, "pottery_shuffle", "setPotteryShuffle"]),
@@ -70,6 +71,7 @@ export default {
               dispatch("load", [worldId, "ow_keep_similar", "setOverworldKeepSimilar"]),
               dispatch("load", [worldId, "ow_mixed", "setOverworldMixed"]),
               dispatch("load", [worldId, "ow_flute_shuffle", "setFluteShuffle"]),
+              dispatch("load", [worldId, "ow_whirlpool_shuffle", "setWhirlpoolShuffle"]),
               dispatch("load", [worldId, "shopsanity", "setShopsanity"]),
               dispatch("load", [worldId, "boss_shuffle", "setBossShuffle"]),
               dispatch("load", [worldId, "enemy_shuffle", "setEnemyShuffle"]),
@@ -77,6 +79,8 @@ export default {
               dispatch("load", [worldId, "weapons", "setWeapons"]),
               dispatch("load", [worldId, "item_pool", "setItemPool"]),
               dispatch("load", [worldId, "item_functionality", "setItemFunctionality"]),
+              dispatch("load", [worldId, "starting_flute", "setStartingFlute"]),
+              dispatch("load", [worldId, "starting_boots", "setStartingBoots"]),
               dispatch("load", [worldId, "enemy_damage", "setEnemyDamage"]),
               dispatch("load", [worldId, "enemy_health", "setEnemyHealth"]),
               dispatch("load", [worldId, "spoiler", "setSpoiler"])
@@ -105,6 +109,10 @@ export default {
         commit("setDungeonItems", {
           worldId,
           value: state.preset_map[preset.value]["dungeon_items"]
+        });
+        commit("setBossItems", {
+          worldId,
+          value: state.preset_map[preset.value]["boss_items"]
         });
         commit("setDropShuffle", {
           worldId,
@@ -174,6 +182,10 @@ export default {
           worldId,
           value: state.preset_map[preset.value]["ow_flute_shuffle"]
         });
+        commit("setWhirlpoolShuffle", {
+          worldId,
+          value: state.preset_map[preset.value]["ow_whirlpool_shuffle"]
+        });
         commit("setShopsanity", {
           worldId,
           value: state.preset_map[preset.value]["shopsanity"]
@@ -201,6 +213,14 @@ export default {
         commit("setItemFunctionality", {
           worldId,
           value: state.preset_map[preset.value]["item_functionality"]
+        });
+        commit("setStartingFlute", {
+          worldId,
+          value: state.preset_map[preset.value]["starting_flute"]
+        });
+        commit("setStartingBoots", {
+          worldId,
+          value: state.preset_map[preset.value]["starting_boots"]
         });
         commit("setEnemyDamage", {
           worldId,
@@ -246,6 +266,7 @@ export default {
         glitches_required,
         item_placement,
         dungeon_items,
+        boss_items,
         drop_shuffle,
         bonk_shuffle,
         pottery_shuffle,
@@ -263,6 +284,7 @@ export default {
         ow_keep_similar,
         ow_mixed,
         ow_flute_shuffle,
+        ow_whirlpool_shuffle,
         shopsanity,
         boss_shuffle,
         enemy_shuffle,
@@ -270,6 +292,8 @@ export default {
         weapons,
         item_pool,
         item_functionality,
+        starting_flute,
+        starting_boots,
         enemy_damage,
         enemy_health
       }
@@ -278,6 +302,7 @@ export default {
       state.options.glitches_required = asMulti(glitches_required, "glitches_required");
       state.options.item_placement = asMulti(item_placement, "item_placement");
       state.options.dungeon_items = asMulti(dungeon_items, "dungeon_items");
+      state.options.boss_items = asMulti(boss_items, "boss_items");
       state.options.drop_shuffle = asMulti(drop_shuffle, "drop_shuffle");
       state.options.bonk_shuffle = asMulti(bonk_shuffle, "bonk_shuffle");
       state.options.pottery_shuffle = asMulti(pottery_shuffle, "pottery_shuffle");
@@ -295,6 +320,7 @@ export default {
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
       state.options.ow_mixed = asMulti(ow_mixed, "ow_mixed");
       state.options.ow_flute_shuffle = asMulti(ow_flute_shuffle, "ow_flute_shuffle");
+      state.options.ow_whirlpool_shuffle = asMulti(ow_whirlpool_shuffle, "ow_whirlpool_shuffle");
       state.options.shopsanity = asMulti(shopsanity, "shopsanity");
       state.options.boss_shuffle = asMulti(boss_shuffle, "boss_shuffle");
       state.options.enemy_shuffle = asMulti(enemy_shuffle, "enemy_shuffle");
@@ -302,6 +328,8 @@ export default {
       state.options.weapons = asMulti(weapons, "weapons");
       state.options.item_pool = asMulti(item_pool, "item_pool");
       state.options.item_functionality = asMulti(item_functionality, "item_functionality");
+      state.options.starting_flute = asMulti(starting_flute, "starting_flute");
+      state.options.starting_boots = asMulti(starting_boots, "starting_boots");
       state.options.enemy_damage = asMulti(enemy_damage, "enemy_damage");
       state.options.enemy_health = asMulti(enemy_health, "enemy_health");
       state.preset_map = presets;
@@ -337,6 +365,13 @@ export default {
       }
       state.worlds[worldId].dungeon_items = value;
       localforage.setItem(`multiworld.${worldId}.dungeon_items`, value);
+    },
+    setBossItems(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.boss_items.find(o => o.value === value);
+      }
+      state.worlds[worldId].boss_items = value;
+      localforage.setItem(`multiworld.${worldId}.boss_items`, value);
     },
     setDropShuffle(state, { worldId, value }) {
       if (typeof value === "string") {
@@ -457,6 +492,13 @@ export default {
       state.worlds[worldId].ow_flute_shuffle = value;
       localforage.setItem(`multiworld.${worldId}.ow_flute_shuffle`, value);
     },
+    setWhirlpoolShuffle(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.ow_whirlpool_shuffle.find(o => o.value === value);
+      }
+      state.worlds[worldId].ow_whirlpool_shuffle = value;
+      localforage.setItem(`multiworld.${worldId}.ow_whirlpool_shuffle`, value);
+    },
     setShopsanity(state, { worldId, value }) {
       if (typeof value === "string") {
         value = state.options.shopsanity.find(o => o.value === value);
@@ -505,6 +547,20 @@ export default {
       }
       state.worlds[worldId].item_functionality = value;
       localforage.setItem(`multiworld.${worldId}.item_functionality`, value);
+    },
+    setStartingFlute(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.starting_flute.find(o => o.value === value);
+      }
+      state.worlds[worldId].starting_flute = value;
+      localforage.setItem(`multiworld.${worldId}.starting_flute`, value);
+    },
+    setStartingBoots(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.starting_boots.find(o => o.value === value);
+      }
+      state.worlds[worldId].starting_boots = value;
+      localforage.setItem(`multiworld.${worldId}.starting_boots`, value);
     },
     setEnemyDamage(state, { worldId, value }) {
       if (typeof value === "string") {

@@ -45,6 +45,14 @@
                 @endforeach
             </div>
 
+            <a class="anchor" id="boss_items"></a>
+            <h3 id="boss_items" class="card-title p-2 border-bottom">{{ __('options.cards.boss_items.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.boss_items.content') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            </div>
+
             <a class="anchor" id="accessibility"></a>
             <h3 class="card-title p-2 border-bottom">{{ __('options.cards.accessibility.header') }}</h3>
             <div class="card-body">
@@ -337,6 +345,14 @@
                 @endforeach
             </div>
 
+            <a class="anchor" id="ow_whirlpool_shuffle"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.ow_whirlpool_shuffle.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.ow_whirlpool_shuffle.content') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            </div>
+
             <a class="anchor" id="bosses"></a>
             <h3 class="card-title p-2 border-bottom">{{ __('options.cards.bosses.header') }}</h3>
             <div class="card-body">
@@ -522,6 +538,22 @@
                     @foreach ($section['content'] as $block)
                         <p>{!! $block !!}</p>
                     @endforeach
+                @endforeach
+            </div>
+
+            <a class="anchor" id="starting_flute"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.starting_flute.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.starting_flute.content') as $block)
+                    <p>{!! $block !!}</p>
+                @endforeach
+            </div>
+
+            <a class="anchor" id="starting_boots"></a>
+            <h3 class="card-title p-2 border-bottom">{{ __('options.cards.starting_boots.header') }}</h3>
+            <div class="card-body">
+                @foreach (__('options.cards.starting_boots.content') as $block)
+                    <p>{!! $block !!}</p>
                 @endforeach
             </div>
 

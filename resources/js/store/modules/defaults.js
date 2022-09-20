@@ -16,6 +16,10 @@ export default {
     value: "standard",
     name: "randomizer.dungeon_items.options.standard"
   },
+  boss_items: {
+    value: "any",
+    name: "randomizer.boss_items.options.any"
+  },
   drop_shuffle: {
     value: "off",
     name: "randomizer.drop_shuffle.options.off"
@@ -84,6 +88,10 @@ export default {
     value: "vanilla",
     name: "randomizer.ow_flute_shuffle.options.vanilla"
   },
+  ow_whirlpool_shuffle: {
+    value: "vanilla",
+    name: "randomizer.ow_whirlpool_shuffle.options.vanilla"
+  },
   shopsanity: {
     value: "off",
     name: "randomizer.shopsanity.options.off"
@@ -111,6 +119,14 @@ export default {
   item_functionality: {
     value: "normal",
     name: "randomizer.item_functionality.options.normal"
+  },
+  starting_flute: {
+    value: "off",
+    name: "randomizer.starting_flute.options.off"
+  },
+  starting_boots: {
+    value: "off",
+    name: "randomizer.starting_boots.options.off"
   },
   enemy_damage: {
     value: "default",

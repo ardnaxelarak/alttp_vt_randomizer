@@ -103,6 +103,12 @@ return [
                 ],
             ],
         ],
+        'boss_items' => [
+            'header' => __('randomizer.boss_items.title'),
+            'content' => [
+                'Controls whether there are any restrictions on what items can be placed on bosses.',
+            ],
+        ],
         'drop_shuffle' => [
             'header' => __('randomizer.drop_shuffle.title'),
             'content' => [
@@ -638,6 +644,12 @@ return [
                 ],
             ],
         ],
+        'ow_whirlpool_shuffle' => [
+            'header' => __('randomizer.ow_whirlpool_shuffle.title'),
+            'content' => [
+                'When enabled, Whirlpool connections will be shuffled and paired together.',
+            ],
+        ],
         'bosses' => [
             'header' => __('randomizer.boss_shuffle.title'),
             'sections' => [
@@ -757,6 +769,18 @@ return [
                     'potion_magic' => 'Potions will fill 100% magic in Spike Cave.',
                     'potion_health' => 'Potions will fill 20 hearts in Spike Cave.',
                 ],
+            ],
+        ],
+        'starting_flute' => [
+            'header' => __('randomizer.starting_flute.title'),
+            'content' => [
+                'Enable or disable starting with the flute.',
+            ],
+        ],
+        'starting_boots' => [
+            'header' => __('randomizer.starting_boots.title'),
+            'content' => [
+                'Enable or disable starting with the boots.',
             ],
         ],
         'weapons' => [

@@ -26,6 +26,7 @@ class RandomizerSelector
                 || $world->config('overworld.crossed', 'vanilla') !== 'vanilla'
                 || $world->config('overworld.mixed', 'off') === 'on'
                 || $world->config('overworld.fluteShuffle', 'vanilla') !== 'vanilla'
+                || $world->config('overworld.whirlpoolShuffle', 'vanilla') !== 'vanilla'
                 || $world->config('dropShuffle', 'off') === 'on'
                 || $world->config('bonkShuffle', 'off') === 'on'
                 || $world->config('potteryShuffle', 'none') !== 'none'

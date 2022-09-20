@@ -84,6 +84,9 @@
                     >{{ $t('randomizer.dungeon_items.title') }}: {{ $t(worlds[world_id].dungeon_items.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.boss_items.title') }}: {{ $t(worlds[world_id].boss_items.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.accessibility.title') }}: {{ $t(worlds[world_id].accessibility.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
@@ -114,6 +117,14 @@
                         @input="setDungeonItems"
                         :options="optionsDungeonItems"
                       >{{ $t('randomizer.dungeon_items.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].boss_items"
+                        @input="setBossItems"
+                        :options="optionsBossItems"
+                      >{{ $t('randomizer.boss_items.title') }}</Select>
                     </div>
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
@@ -252,6 +263,9 @@
                     <div
                       class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.ow_flute_shuffle.title') }}: {{ $t(worlds[world_id].ow_flute_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}: {{ $t(worlds[world_id].ow_whirlpool_shuffle.name) }}</div>
                   </div>
                 </div>
                 <div class="card-body" v-if="editable[world_id]">
@@ -352,6 +366,14 @@
                         :options="optionsFluteShuffle"
                       >{{ $t('randomizer.ow_flute_shuffle.title') }}</Select>
                     </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].ow_whirlpool_shuffle"
+                        @input="setWhirlpoolShuffle"
+                        :options="optionsWhirlpoolShuffle"
+                      >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}</Select>
+                    </div>
                   </div>
                 </div>
                 <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.difficulty.title') }}</h5>
@@ -366,6 +388,12 @@
                     <div
                       class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.item_functionality.title') }}: {{ $t(worlds[world_id].item_functionality.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.starting_flute.title') }}: {{ $t(worlds[world_id].starting_flute.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.starting_boots.title') }}: {{ $t(worlds[world_id].starting_boots.name) }}</div>
                     <div
                       class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.enemy_damage.title') }}: {{ $t(worlds[world_id].enemy_damage.name) }}</div>
@@ -402,6 +430,22 @@
                         @input="setItemFunctionality"
                         :options="optionsItemFunctionality"
                       >{{ $t('randomizer.item_functionality.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].starting_flute"
+                        @input="setStartingFlute"
+                        :options="optionsStartingFlute"
+                      >{{ $t('randomizer.starting_flute.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].starting_boots"
+                        @input="setStartingBoots"
+                        :options="optionsStartingBoots"
+                      >{{ $t('randomizer.starting_boots.title') }}</Select>
                     </div>
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
@@ -554,6 +598,9 @@ export default {
     setDungeonItems(value, worldId) {
       this.$store.commit("multiworld/setDungeonItems", { value, worldId });
     },
+    setBossItems(value, worldId) {
+      this.$store.commit("multiworld/setBossItems", { value, worldId });
+    },
     setDropShuffle(value, worldId) {
       this.$store.commit("multiworld/setDropShuffle", { value, worldId });
     },
@@ -614,6 +661,9 @@ export default {
     setFluteShuffle(value, worldId) {
       this.$store.commit("multiworld/setFluteShuffle", { value, worldId });
     },
+    setWhirlpoolShuffle(value, worldId) {
+      this.$store.commit("multiworld/setWhirlpoolShuffle", { value, worldId });
+    },
     setShopsanity(value, worldId) {
       this.$store.commit("multiworld/setShopsanity", { value, worldId });
     },
@@ -625,6 +675,12 @@ export default {
     },
     setItemFunctionality(value, worldId) {
       this.$store.commit("multiworld/setItemFunctionality", { value, worldId });
+    },
+    setStartingFlute(value, worldId) {
+      this.$store.commit("multiworld/setStartingFlute", { value, worldId });
+    },
+    setStartingBoots(value, worldId) {
+      this.$store.commit("multiworld/setStartingBoots", { value, worldId });
     },
     setEnemyDamage(value, worldId) {
       this.$store.commit("multiworld/setEnemyDamage", { value, worldId });
@@ -768,6 +824,7 @@ export default {
       optionsGlitchesRequired: state => state.options.glitches_required,
       optionsItemPlacement: state => state.options.item_placement,
       optionsDungeonItems: state => state.options.dungeon_items,
+      optionsBossItems: state => state.options.boss_items,
       optionsDropShuffle: state => state.options.drop_shuffle,
       optionsBonkShuffle: state => state.options.bonk_shuffle,
       optionsPotteryShuffle: state => state.options.pottery_shuffle,
@@ -787,11 +844,14 @@ export default {
       optionsOverworldKeepSimilar: state => state.options.ow_keep_similar,
       optionsOverworldMixed: state => state.options.ow_mixed,
       optionsFluteShuffle: state => state.options.ow_flute_shuffle,
+      optionsWhirlpoolShuffle: state => state.options.ow_whirlpool_shuffle,
       optionsShopsanity: state => state.options.shopsanity,
       optionsHints: state => state.options.hints,
       optionsWeapons: state => state.options.weapons,
       optionsItemPool: state => state.options.item_pool,
       optionsItemFunctionality: state => state.options.item_functionality,
+      optionsStartingFlute: state => state.options.starting_flute,
+      optionsStartingBoots: state => state.options.starting_boots,
       optionsEnemyDamage: state => state.options.enemy_damage,
       optionsEnemyHealth: state => state.options.enemy_health,
     }),

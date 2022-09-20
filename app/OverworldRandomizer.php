@@ -114,6 +114,13 @@ class OverworldRandomizer implements RandomizerContract
             ]);
         }
 
+        if ($world->config('bossItems') === 'nondungeon') {
+            $flags = array_merge($flags, [
+                '--restrict_boss_items',
+                'dungeon',
+            ]);
+        }
+
         $mode = 'standard';
         if ($world instanceof World\Open) {
             $mode = 'open';
@@ -188,6 +195,10 @@ class OverworldRandomizer implements RandomizerContract
             $flags[] = '--ow_mixed';
         }
 
+        if ($world->config('overworld.whirlpoolShuffle') !== 'vanilla') {
+            $flags[] = '--ow_whirlpool';
+        }
+
         if ($world->config('spoil.Hints') === 'on') {
             $flags[] = '--hints';
         }
@@ -196,23 +207,28 @@ class OverworldRandomizer implements RandomizerContract
             $flags[] = '--openpyramid';
         }
 
+        $starting = [];
+
         if ($world->config('mode.weapons') === 'assured_bombs') {
-            $flags = array_merge($flags, [
-                '--usestartinventory=true',
-                '--startinventory',
-                'Progressive_Bombs',
-            ]);
+            $starting[] = 'Progressive_Bombs';
         } else if ($world->config('mode.weapons') === 'assured_byrna') {
-            $flags = array_merge($flags, [
-                '--usestartinventory=true',
-                '--startinventory',
-                'Progressive_Cane',
-            ]);
+            $starting[] = 'Progressive_Cane';
         } else if ($world->config('mode.weapons') === 'assured_somaria') {
+            $starting[] = 'Progressive_Cane';
+        }
+
+        if ($world->config('equipment.flute') === 'starting') {
+            $starting[] = 'Ocarina';
+        }
+        if ($world->config('equipment.boots') === 'starting') {
+            $starting[] = 'Pegasus_Boots';
+        }
+
+        if (count($starting) > 0) {
             $flags = array_merge($flags, [
                 '--usestartinventory=true',
                 '--startinventory',
-                'Progressive_Cane',
+                implode(",", $starting),
             ]);
         }
 

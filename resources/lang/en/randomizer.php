@@ -42,6 +42,13 @@ return [
             'full' => 'Full',
         ],
     ],
+    'boss_items' => [
+        'title' => 'Boss Item Restrictions',
+        'options' => [
+            'any' => 'Any',
+            'nondungeon' => 'Non-Dungeon',
+        ],
+    ],
     'drop_shuffle' => [
         'title' => 'Drop Shuffle',
         'options' => [
@@ -61,11 +68,11 @@ return [
         'options' => [
             'none' => 'Vanilla',
             'lottery' => 'Lottery',
-            'nonempty' => 'Nonempty',
+            'nonempty' => 'Non-Empty',
             'keys' => 'Keys',
             'dungeon' => 'Dungeon',
             'cave' => 'Cave',
-            'cavekeys' => 'CaveKeys',
+            'cavekeys' => 'Caves + Keys',
             'reduced' => 'Reduced',
             'clustered' => 'Clustered',
         ],
@@ -233,6 +240,13 @@ return [
             'random' => 'Random',
         ],
     ],
+    "ow_whirlpool_shuffle" => [
+        'title' => 'Whirlpool Shuffle',
+        'options' => [
+            'vanilla' => 'None',
+            'shuffled' => 'Shuffled',
+        ],
+    ],
     "shopsanity" => [
         'title' => 'Shop Shuffle',
         'options' => [
@@ -303,6 +317,20 @@ return [
             'normal' => 'Normal',
             'hard' => 'Hard',
             'expert' => 'Expert',
+        ],
+    ],
+    'starting_flute' => [
+        'title' => 'Starting Flute',
+        'options' => [
+            'off' => 'Off',
+            'starting' => 'Starting Flute (Pre-Activated)',
+        ],
+    ],
+    'starting_boots' => [
+        'title' => 'Starting Boots',
+        'options' => [
+            'off' => 'Off',
+            'starting' => 'Starting Boots',
         ],
     ],
     'enemy_damage' => [

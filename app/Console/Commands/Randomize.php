@@ -43,6 +43,7 @@ class Randomize extends Command
         . ' {--ganon_item=default : set ganon item vulnerability}'
         . ' {--item_placement=basic : set item placement rules}'
         . ' {--dungeon_items=standard : set dungeon item placement}'
+        . ' {--boss_items=any : set boss item restrictions}'
         . ' {--drop_shuffle=off : set drop shuffle on or off}'
         . ' {--bonk_shuffle=off : include bonk drops from trees in the pool}'
         . ' {--pottery_shuffle=none : include items under pots in the pool}'
@@ -54,11 +55,14 @@ class Randomize extends Command
         . ' {--ow_keep_similar=off : keep similar transitions together in overworld shuffle}'
         . ' {--ow_mixed=off : set overworld mixed mode}'
         . ' {--ow_flute_shuffle=vanilla : set overworld flute shuffle}'
+        . ' {--ow_whirlpool_shuffle=vanilla : set overworld whirlpool shuffle}'
         . ' {--shopsanity=off : set shopsanity on/off}'
         . ' {--accessibility=item : set item/location accessibility}'
         . ' {--hints=on : set hints on or off}'
         . ' {--item_pool=normal : set item pool}'
         . ' {--item_functionality=normal : set item functionality}'
+        . ' {--starting_flute=off : set starting flute}'
+        . ' {--starting_boots=off : set starting boots}'
         . ' {--quickswap=false : set quickswap}';
 
     /**
@@ -184,6 +188,7 @@ class Randomize extends Command
             $world = World::factory(1, $this->option('state'), [
                 'itemPlacement' => $this->option('item_placement'),
                 'dungeonItems' => $this->option('dungeon_items'),
+                'bossItems' => $this->option('boss_items'),
                 'dropShuffle' => $this->option('drop_shuffle'),
                 'bonkShuffle' => $this->option('bonk_shuffle'),
                 'potteryShuffle' => $this->option('pottery_shuffle'),
@@ -199,6 +204,7 @@ class Randomize extends Command
                 'overworld.keepSimilar' => $this->option('ow_keep_similar'),
                 'overworld.mixed' => $this->option('ow_mixed'),
                 'overworld.fluteShuffle' => $this->option('ow_flute_shuffle'),
+                'overworld.whirlpoolShuffle' => $this->option('ow_whirlpool_shuffle'),
                 'shopsanity' => $this->option('shopsanity'),
                 'ganon_item' => $ganon_item,
                 'mode.weapons' => $weapons,
@@ -207,6 +213,8 @@ class Randomize extends Command
                 'logic' => $logic,
                 'item.pool' => $this->option('item_pool'),
                 'item.functionality' => $this->option('item_functionality'),
+                'equipment.flute' => $this->option('starting_flute'),
+                'equipment.boots' => $this->option('starting_boots'),
                 'enemizer.bossShuffle' => 'none',
                 'enemizer.enemyShuffle' => 'none',
                 'enemizer.enemyDamage' => 'default',
