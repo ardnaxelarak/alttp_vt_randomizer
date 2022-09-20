@@ -178,6 +178,20 @@ class Randomizer implements RandomizerContract
                 unset($advancement_items[$key]);
                 continue;
             }
+            if ($world->config('equipment.boots', 'off') === 'starting'
+                    && $item == Item::get('PegasusBoots', $world)) {
+                unset($advancement_items[$key]);
+                $world->addPreCollectedItem($item);
+                array_push($trash_items, Item::get('TwentyRupees2', $world));
+            }
+            if ($world->config('equipment.boots', 'off') === 'starting'
+                    && ($item == Item::get('OcarinaInactive', $world)
+                        || $item == Item::get('OcarinaActive', $world))) {
+                unset($advancement_items[$key]);
+                $world->addPreCollectedItem(Item::get('OcarinaActive', $world));
+                array_push($trash_items, Item::get('TwentyRupees2', $world));
+            }
+
             if ($item instanceof Item\Sword) {
                 $nice_items_swords[] = $item;
                 unset($advancement_items[$key]);

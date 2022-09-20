@@ -139,6 +139,8 @@ abstract class World
                 $free_item_menu |= 0x0C;
         }
 
+        $this->config['region.bossNormalLocation'] = $this->config('bossItems', 'any') === 'any';
+
         if (in_array($this->config('logic'), ['MajorGlitches', 'NoLogic']) || $this->config('canOneFrameClipUW', false)) {
             $free_item_menu |= 0x10;
         }
@@ -1148,6 +1150,7 @@ abstract class World
             'item_pool' => $this->config('item.pool'),
             'item_functionality' => $this->config('item.functionality'),
             'dungeon_items' => $this->config('dungeonItems'),
+            'boss_items' => $this->config('bossItems'),
             'drop_shuffle' => $this->config('dropShuffle'),
             'logic' => $this->config('logic'),
             'accessibility' => $this->config('accessibility'),
