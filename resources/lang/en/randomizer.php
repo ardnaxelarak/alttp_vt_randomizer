@@ -50,7 +50,7 @@ return [
         ],
     ],
     'drop_shuffle' => [
-        'title' => 'Drop Shuffle',
+        'title' => 'Enemy Drop Shuffle',
         'options' => [
             'on' => 'On',
             'off' => 'Off',
