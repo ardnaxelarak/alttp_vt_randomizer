@@ -171,7 +171,6 @@ class OverworldRandomizer implements RandomizerContract
             $flags = array_merge($flags, [
                 '--pottery',
                 $world->config('potteryShuffle'),
-                '--colorizepots',
                 '--collection_rate',
             ]);
         }
@@ -180,7 +179,7 @@ class OverworldRandomizer implements RandomizerContract
             $flags[] = '--shopsanity';
         }
 
-        if ($world->config('doors.shuffle') !== 'vanilla') {
+        if ($world->config('doors.shuffle') !== 'vanilla' || !in_array($world->config('pottery', 'none'), ['none', 'cave'])) {
             $flags = array_merge($flags, [
                 '--dungeon_counters',
                 'on',
