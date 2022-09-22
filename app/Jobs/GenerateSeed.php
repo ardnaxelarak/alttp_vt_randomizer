@@ -210,6 +210,15 @@ class GenerateSeed implements ShouldQueue
         $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
 
         $rand->randomize();
+
+        // enemize FIRST because otherwise pot/enemy drop shuffle gets borked
+        if ($world->isEnemized()) {
+            $patch = $rom->getWriteLog();
+            $en = new Enemizer($world, $patch);
+            $en->randomize($world->config('branch'));
+            $en->writeToRom($rom);
+        }
+
         $world->writeToRom($rom, $save);
 
         $processSpoiler = false;
@@ -231,13 +240,6 @@ class GenerateSeed implements ShouldQueue
             'ganon_vulnerability_item' => Arr::get($request, 'ganon_item', 'default'),
             'worlds' => 1,
         ]), $processSpoiler);
-
-        if ($world->isEnemized()) {
-            $patch = $rom->getWriteLog();
-            $en = new Enemizer($world, $patch);
-            $en->randomize($world->config('branch'));
-            $en->writeToRom($rom);
-        }
 
         if (Arr::get($request, 'tournament', false)) {
             $rom->setTournamentType('standard');
