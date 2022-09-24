@@ -695,7 +695,7 @@ return [
                         '<ul>'
                             . '<li>Not all enemies can appear everywhere due to game limitations.</li>'
                             . '<li>Rooms where killing all enemies is required will never include enemies which need specific weapons to kill (e.g. Mimics requiring Bow, etc)</li>'
-                            . '<li>Thieves’ can now be killed.</li>'
+                            . '<li>Thieves can now be killed.</li>'
                             . '<li>Tile rooms are not randomized.</li>'
                             . '<li>Enemies under bushes are not randomized.</li>'
                             . '</ul>',
@@ -704,7 +704,7 @@ return [
                 [
                     'header' => __('randomizer.enemy_shuffle.options.random'),
                     'content' => [
-                        'Same as ' . __('randomizer.enemy_shuffle.options.shuffled') . '  except enemies under bushes, as well as the percentage chance that they spawn an enemy, are also randomized. This may not seem like much of a difference but in practice it affects playability drastically. In addition tile rooms spawn tiles in random patterns and Thieves’ have a 50% chance for being killable or invincible.',
+                        'Same as ' . __('randomizer.enemy_shuffle.options.shuffled') . '  except enemies under bushes, as well as the percentage chance that they spawn an enemy, are also randomized. This may not seem like much of a difference but in practice it affects playability drastically. In addition tile rooms spawn tiles in random patterns. Note: this has now been changed so thieves will still always be killable.',
                     ],
                 ],
             ],

@@ -219,9 +219,7 @@ class Enemizer
             "BeesLevel" => 3,
             "RandomizeTileTrapPattern" => $this->world->config('enemizer.enemyShuffle') === 'random',
             "RandomizeTileTrapFloorTile" => false,
-            "AllowKillableThief" => $this->world->config('enemizer.enemyShuffle') === 'random'
-                ? (bool) get_random_int(0, 1)
-                : $this->world->config('enemizer.enemyShuffle') !== 'none',
+            "AllowKillableThief" => $this->world->config('enemizer.enemyShuffle') !== 'none',
             "RandomizeSpriteOnHit" => false,
             "DebugMode" => false,
             "DebugForceEnemy" => false,
