@@ -8,7 +8,7 @@ return [
             'content' => [
                 'Each player should ensure that they have an emulator capable of running Lua Scripts (Bizhawk or Snes9x-rr) or the sd2snes/fkpakpro cartridge connected to their computer.',
                 'Each player will need to download and extract the compressed .7z file from the latest release of <a href="https://github.com/Skarsnik/QUsb2snes/releases">QUsb2snes</a>.',
-                'Each player will need to download and extract the .7z archive of the MultiClient <a href="/MultiClient.7z">here</a>.',
+                'Each player will need to download MultiClient.exe <a href="/MultiClient.exe">here</a>.',
                 'If needed, a program capable of extracting .7z files can be found at <a href="https://www.7-zip.org/">7-zip.org</a>.',
             ]
         ],
@@ -47,7 +47,7 @@ return [
         'connecting' => [
             'header' => '5. Connect to the Server',
             'content' => [
-                'Each player should run MultiClient.exe (from the extraction of MultiClient.7z downloaded in step 0), which should automatically connect to QUsb2Snes. If it indicates a problem connecting to your game, check that QUsb2Snes is running properly and connected by right-clicking on its icon in the taskbar, and ensure that the lua script (if applicable) is running correctly.',
+                'Each player should run MultiClient.exe (downloaded in step 0), which should automatically connect to QUsb2Snes. If it indicates a problem connecting to your game, check that QUsb2Snes is running properly and connected by right-clicking on its icon in the taskbar, and ensure that the lua script (if applicable) is running correctly.',
                 'MultiClient.exe will prompt for a server address to connect to; each player should enter the server address created when “' . __('multiworld.host') . '” was clicked in step 2. If successful, it should show a message indicating you have successfully connected to the game.',
             ]
         ],

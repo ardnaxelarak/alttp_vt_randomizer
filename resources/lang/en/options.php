@@ -704,7 +704,7 @@ return [
                 [
                     'header' => __('randomizer.enemy_shuffle.options.random'),
                     'content' => [
-                        'Same as ' . __('randomizer.enemy_shuffle.options.shuffled') . '  except enemies under bushes, as well as the percentage chance that they spawn an enemy, are also randomized. This may not seem like much of a difference but in practice it affects playability drastically. In addition tile rooms spawn tiles in random patterns. Note: this has now been changed so thieves will still always be killable.',
+                        'Same as ' . __('randomizer.enemy_shuffle.options.shuffled') . '  except enemies under bushes, as well as the percentage chance that they spawn an enemy, are also randomized. This may not seem like much of a difference but in practice it affects playability drastically. In addition tile rooms spawn tiles in random patterns.<br>Note: this has now been changed so thieves will still always be killable.',
                     ],
                 ],
             ],
