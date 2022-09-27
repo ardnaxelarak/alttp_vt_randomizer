@@ -712,6 +712,7 @@ return [
             'enemy_shuffle' => [
                 'none' => 'None',
                 'shuffled' => 'Shuffled',
+                'killable' => 'Killable',
                 'random' => 'Random',
                 'moldorms' => 'Moldorms',
             ],
@@ -941,7 +942,9 @@ return [
             'enemy_shuffle' => [
                 'none' => 90,
                 'shuffled' => 7,
+                'killable' => 0,
                 'random' => 3,
+                'moldorms' => 0,
             ],
             'hints' => [
                 'on' => 50,

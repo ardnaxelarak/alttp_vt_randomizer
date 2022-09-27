@@ -148,7 +148,7 @@ class Enemizer
     {
         $options = [
             "RandomizeEnemies" => $this->world->config('enemizer.enemyShuffle') !== 'none',
-            "RandomizeEnemiesType" => 3,
+            "RandomizeEnemiesType" => $this->world->config('enemizer.enemyShuffle') === 'killable' ? 1 : 3,
             "RandomizeBushEnemyChance" => $this->world->config('enemizer.enemyShuffle') === 'random',
             "RandomizeEnemyHealthRange" => $this->world->config('enemizer.enemyHealth') !== 'default',
             "RandomizeEnemyHealthType" => [

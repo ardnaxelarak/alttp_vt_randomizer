@@ -268,9 +268,12 @@ return [
         'options' => [
             'none' => 'None',
             'shuffled' => 'Shuffled',
+            'killable' => 'Killable',
             'random' => 'Random',
             'moldorms' => 'Moldorms',
         ],
+        'moldorm_warning' => 'Are you sure you really want this?',
+        'killable_warning' => 'Killable Enemy Shuffle is still under development; expect occasional graphics irregularities.',
     ],
     "hints" => [
         'title' => 'Hints',

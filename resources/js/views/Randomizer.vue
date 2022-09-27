@@ -328,6 +328,16 @@
                 >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}</Select>
               </div>
             </div>
+            <div
+              v-if="enemyShuffle.value === 'killable'"
+              class="logic-warning text-danger"
+              v-html="$t('randomizer.enemy_shuffle.killable_warning')"
+            />
+            <div
+              v-if="enemyShuffle.value === 'moldorms'"
+              class="logic-warning text-danger"
+              v-html="$t('randomizer.enemy_shuffle.moldorm_warning')"
+            />
           </div>
           <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.difficulty.title') }}</h5>
           <div class="card-body">
