@@ -67,9 +67,14 @@ class UpdateBuildRecord extends Command
             return 101;
         }
 
-        $repo = static::BRANCHES[$branch];
+        $repo = null;
+        if (array_key_exists($branch, static::BRANCHES)) {
+            $repo = static::BRANCHES[$branch];
+        }
 
-        if ($romFile === null) {
+        if ($romFile === null && $repo === null) {
+            throw new \Exception('unknown branch but no rom specified');
+        } else if ($romFile === null) {
             $romFile = tempnam(sys_get_temp_dir(), __CLASS__);
 
             if ($romFile === false) {
@@ -120,7 +125,7 @@ class UpdateBuildRecord extends Command
 
                 return 301;
             }
-            
+
             $build_date = trim($git_log->getOutput());
         }
 
