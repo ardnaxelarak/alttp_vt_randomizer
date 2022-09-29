@@ -638,7 +638,7 @@ class Text
 
             'intro_zelda_cell' => $converter->convertDialogCompressed("{IBOX}\nIt is your time to shine!", false),
 
-            'intro_agahnim' => $converter->convertDialogCompressed("{IBOX}\nAlso, you need to defeat this guy!", false),
+            'intro_agahnim' => $converter->convertDialogCompressed("{IBOX}\nAlso, you need to incinerate this guy!", false),
 
             'pickup_purple_chest' => $converter->convertDialogCompressed("A curious box. Let's take it with us!"),
 
