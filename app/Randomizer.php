@@ -51,7 +51,7 @@ class Randomizer implements RandomizerContract
                 ]));
             }
 
-            $world->setBranch('base');
+            $world->setBranch('only_bombos');
         }
         $this->worlds = $worlds;
     }
