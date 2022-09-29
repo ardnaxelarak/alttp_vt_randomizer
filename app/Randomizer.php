@@ -1013,7 +1013,7 @@ class Randomizer implements RandomizerContract
 
         $green_pendant_location = $world->getLocationsWithItem(Item::get('PendantOfCourage', $world))->first();
 
-        $world->setText('sahasrahla_bring_courage', "Want something\nfor free? Go\nearn the green\npendant in\n"
+        $world->setText('sahasrahla_bring_courage', "Want a bombos\nmedallion? Go\nearn the green\npendant in\n"
             . $green_pendant_location->getRegion()->getName()
             . "\nand I'll give\nyou something.");
 
@@ -1024,7 +1024,7 @@ class Randomizer implements RandomizerContract
             . $crystal5_location->getRegion()->getName()
             . "\nand\n"
             . $crystal6_location->getRegion()->getName()
-            . "\nso I can make\na big bomb!");
+            . "\nso I can make\na big bombos!");
 
         $world->setText('blind_by_the_light', Arr::first(fy_shuffle($strings['blind'])));
 
@@ -1053,6 +1053,7 @@ class Randomizer implements RandomizerContract
           }
         }
 
+        /*
         if ($ganon_item === 'arrow') {
             if ($progressive_bow_locations->count() >= 2 && $world->config('item.overflow.count.Bow', 2) >= 2) {
                 $first_location = $progressive_bow_locations->pop();
@@ -1128,6 +1129,12 @@ class Randomizer implements RandomizerContract
             }
             $world->setText('ganon_phase_3_silvers', $have_text . "!\nMy one true\nweakness!");
         }
+        */
+
+        $world->setText('ganon_phase_3_no_bow', "Only Bombos\ncan defeat me\nbut which one?");
+        $world->setText('ganon_phase_3_silvers', "Only Bombos\ncan defeat me\nbut which one?");
+        $world->setText('ganon_phase_3_no_silvers', "Only Bombos\ncan defeat me\nbut which one?");
+        $world->setText('ganon_phase_3_no_silvers_alt', "Only Bombos\ncan defeat me\nbut which one?");
 
         if ($world->config('crystals.tower') < 7) {
             $tower_string = $world->config('crystals.tower') == 1 ? 'You need %d crystal to enter.' : 'You need %d crystals to enter.';
