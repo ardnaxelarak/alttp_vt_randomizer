@@ -708,6 +708,7 @@ return [
                 'simple' => 'Simple',
                 'full' => 'Full',
                 'random' => 'Random',
+                'moldorm' => 'Moldorm',
             ],
             'enemy_shuffle' => [
                 'none' => 'None',
@@ -938,6 +939,7 @@ return [
                 'simple' => 5,
                 'full' => 5,
                 'random' => 10,
+                'moldorms' => 0,
             ],
             'enemy_shuffle' => [
                 'none' => 90,

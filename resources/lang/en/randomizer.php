@@ -261,6 +261,7 @@ return [
             'simple' => 'Simple',
             'full' => 'Full',
             'random' => 'Random',
+            'moldorm' => 'All Moldorm',
         ],
     ],
     "enemy_shuffle" => [

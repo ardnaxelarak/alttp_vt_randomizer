@@ -507,6 +507,11 @@ class Randomizer implements RandomizerContract
                     $world->getRegion($location[0])->setBoss($boss, $location[1]);
                 }
                 break;
+            case 'moldorm':
+                foreach ($boss_locations as $location) {
+                    $world->getRegion($location[0])->setBoss(Boss::get("Moldorm", $location[1]));
+                }
+                break;
             case 'none':
             default:
                 $world->getRegion('Eastern Palace')->setBoss(Boss::get("Armos Knights", $world));
