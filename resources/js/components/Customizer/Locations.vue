@@ -189,6 +189,9 @@ export default {
   z-index: 990;
   background-color: white;
 }
+.bootstrap-dark .sticky-head {
+  background-color: #343a40;
+}
 .card ::v-deep .multiselect__input::placeholder {
   color: #dcdcdc;
 }

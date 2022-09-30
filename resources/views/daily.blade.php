@@ -2,7 +2,7 @@
 
 @section('content')
 <h3>{{ __('daily.header') }}</h3>
-<div class="card card-body bg-light">
+<div class="card card-body bg-themed">
     @foreach (__('daily.content') as $block)
         <p>{!! $block !!}</p>
     @endforeach

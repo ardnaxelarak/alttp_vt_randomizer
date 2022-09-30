@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ __('navigation.calendar') }}</h1>
-<div class="card card-body bg-light">
+<div class="card card-body bg-themed">
     <div class="card border-info mt-4">
         <div class="card-body">
             <div class="btn-wrapper">

@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ __('contribute.header') }}</h1>
-<div class="card card-body bg-light">
+<div class="card card-body bg-themed">
     <h3>{!! __('contribute.subheader') !!}</h3>
 
     <div class="card border-info mt-4">

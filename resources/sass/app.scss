@@ -9,7 +9,9 @@
 @import "bootstrap4fixes";
 
 // Bootstrap
-@import "~bootstrap/scss/bootstrap";
+// @import "~bootstrap/scss/bootstrap";
+@import "~@forevolve/bootstrap-dark/scss/toggle-bootstrap";
+@import "~@forevolve/bootstrap-dark/scss/toggle-bootstrap-dark";
 @import "~vue-multiselect/dist/vue-multiselect.min";
 @import "vue-multiselect";
 @import "v-tooltip";

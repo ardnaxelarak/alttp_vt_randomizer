@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('window')
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-themed fixed-top">
         <a class="navbar-brand" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/"><img src="/i/logo.png" title="ALttP VT Randomizer" alt="ALttP Randomizer logo" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,6 +21,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+                <dark-mode-toggle></dark-mode-toggle>
                 <!-- <Streams></Streams> -->
                 <li class="nav-item"><a class="nav-link" href="https://patreon.com/alttpr" target="_blank" rel="noopener noreferrer"><img src="/i/patreon-small.png" /> {{ __('navigation.patreon_support') }}</a></li>
                 <li class="nav-item dropdown">

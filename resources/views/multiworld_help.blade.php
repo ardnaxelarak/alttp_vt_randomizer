@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ __('multiworld_help.header') }}</h1>
-<div id="multiworld_help" class="card card-body bg-light">
+<div id="multiworld_help" class="card card-body bg-themed">
     <h2>{!! __('multiworld_help.subheader') !!}</h2>
 
     <div class="card border-info mt-4">

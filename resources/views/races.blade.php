@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ __('races.header') }}</h1>
-<div class="card card-body bg-light">
+<div class="card card-body bg-themed">
     <div class="card border-info mt-4">
         <div class="card-header bg-info">
             <h3 class="card-title text-white">{{ __('races.cards.races.header') }}</h3>

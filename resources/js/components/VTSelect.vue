@@ -135,3 +135,9 @@ export default {
   cursor: pointer;
 }
 </style>
+
+<style>
+.bootstrap-dark .multiselect * {
+  background-color: #343a40;
+}
+</style>

@@ -3,7 +3,7 @@
 @section('content')
 
 <h2>v31.0.11 (January 2022)</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <li>New Features</li>
     <ul>
         <li>Failing a Fake Flippers by taking a hit will now work like it does in the original game, except the player will be locked in place preventing the softlock.  The player may then Save & Quit normally.
@@ -39,7 +39,7 @@
 </div>
 
 <h2>v31.0.10 (September 2021)</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>New Features</li>
         <ul>
@@ -82,7 +82,7 @@
 </div>
 
 <h2>v31.0.9</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>New Features</li>
         <ul>
@@ -130,7 +130,7 @@
 </div>
 
 <h2>v31.0.8</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>The Ganon requirement signpost will now indicate if Aghanim 2 is required.</li>
         <li>Entrance Randomizer: Fixes some unwinnable scenarios with Inverted world state.</li>
@@ -154,7 +154,7 @@
 </div>
 
 <h2>v31.0.7</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>This release contains several ROM fixes.</li>
         <ul>
@@ -185,7 +185,7 @@
 <ins class="adsbygoogle" style="display:inline-block;width:100%;height:90px" data-ad-client="ca-pub-5161309967767506" data-ad-slot="9849787408"></ins>
 
 <h2>v31.0.6</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>This release contains several logic and bug fixes for Entrance Randomizer.</li>
         <li>Entrance Randomizer now fully uses a cryptographically secure pseudo-random number generator for all RNG operations.</li>
@@ -224,7 +224,7 @@
 </div>
 
 <h2>v31.0.5</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>The website now uses BPS for patching.</li>
         <li>Minor logic fixes.</li>
@@ -242,7 +242,7 @@
 </div>
 
 <h2>v31.0.4</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>The logic for Ganon was updated to include a fire source when playing Swordless weapons.</li>
         <li>Minor logic fixes</li>
@@ -271,7 +271,7 @@
 </div>
 
 <h2>v31.0.3</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Mirror wraps removed from OWG logic ;__;</li>
         <li>Uncle credit updated for progressive bow</li>
@@ -289,7 +289,7 @@
 </div>
 
 <h2>v31.0.2</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Customizer spoiler toggle added</li>
         <li>Permalink page settings not saving fixed</li>
@@ -305,7 +305,7 @@
 </div>
 
 <h2>v31.0.1</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Hint updates</li>
         <li>Updates to Glitched logics</li>
@@ -317,7 +317,7 @@
 </div>
 
 <h2>v31</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Progressive Bows</li>
         <li>Unified interface for Item Randomizer, Entrance Randomizer, and Enemizer</li>
@@ -363,7 +363,7 @@
 </div>
 
 <h2>v30.5</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Updated Entrance Randomizer to v0.6.2 (now with more hints).</li>
         <li>Added new player options<br />
@@ -373,7 +373,7 @@
 </div>
 
 <h2>v30.4</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Fixed bottle with random in customizer</li>
         <li>Fixed key-sanity menu in customizer</li>
@@ -395,7 +395,7 @@
 </div>
 
 <h2>v30.3</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Hints:<ul>
         <li>Fixed a bug where old V29 general hints were sometimes coming through in V30</li>
@@ -422,7 +422,7 @@
 </div>
 
 <h2>v30.2</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Fixed a bug where ROM corruptions were happening in Enemizer/Inverted</li>
         <li>Fixed a bug where exiting to random places on the Overworld were happening in Inverted</li>
@@ -449,7 +449,7 @@
 </div>
 
 <h2>v30.1</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Added Standard State/Enemizer initial compatibility</li>
         <li>Added Boots as initial equipment to No Logic</li>
@@ -490,7 +490,7 @@
 </div>
 
 <h2>v30</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Front end rewrite into Vue framework... you have no idea how much went into this</li>
         <li>Site translations! De rien! Bitte! ¡De nada!</li>
@@ -533,7 +533,7 @@
 </div>
 
 <h2>VT8.29</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Easy mode now gets 2 chances at silver arrow upgrade</li>
         <li>Triforce hunt lessens the chance of finding triforce pieces in GT</li>
@@ -588,7 +588,7 @@
 </div>
 
 <h2>VT8.28</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Daily Challenges</li>
         <li>Tweaked the Bees a little</li>
@@ -618,7 +618,7 @@
 </div>
 
 <h2>VT8.27</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Easy difficulty will always have dungeon counts in HUD enabled</li>
         <li>Added + to golden bee bottle in menu</li>
@@ -648,7 +648,7 @@
 </div>
 
 <h2>VT8.26.2</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Turtle Rock small key fix</li>
         <li>Skull Woods small key fix</li>
@@ -659,7 +659,7 @@
 </div>
 
 <h2>VT8.26</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>updated timed-OHKO for different difficulties</li>
         <li>Boots are no longer guaranteed in Sanctuary for Major Glitches</li>
@@ -695,7 +695,7 @@
 </div>
 
 <h2>VT8.25</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Fake Flippers death safey has been readded</li>
         <li>Green Pendant has an asterisk in the map to help with low visual acuity</li>
@@ -731,7 +731,7 @@
 </div>
 
 <h2>VT8.24</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Sword Upgrades are dealt with differently by the fill algorithm to be distributed more evenly over the game world.</li>
         <li>New Full Distribution <a href="https://docs.google.com/spreadsheets/d/17-_wlQBC6Fnt6qSoAkao1NAEoBXeDUmrGCNX5y7auNA" target="_blank" rel="noopener noreferrer">here</a></li>
@@ -744,7 +744,7 @@
 </div>
 
 <h2>VT8.23</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>The bookcase in the throne room of Hyrule Castle can now be moved without Zelda once she has been rescued</li>
         <li>The logic for the 4 chests in Sewers have had the Gloves requirement removed as you can no longer softlock</li>
@@ -785,7 +785,7 @@
 </div>
 
 <h2>VT8.22</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>The free lamp cone has been removed in the Light World (dark rooms are still never required the logic)</li>
         <li>The frog now persists through s+q (and death) as per vanilla</li>
@@ -841,10 +841,10 @@
 </div>
 
 <h2>V8 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <p>Switched to VT web based version</p>
 
-    <div class="card card-body bg-light mb-3">
+    <div class="card card-body bg-themed mb-3">
         <h3>Modes</h3>
         <h4>Open</h4>
         <ul>
@@ -863,7 +863,7 @@
         </ul>
     </div>
 
-    <div class="card card-body bg-light mb-3">
+    <div class="card card-body bg-themed mb-3">
         <h3>Difficulties</h3>
         <h4>Expert</h4>
         <ul>
@@ -896,7 +896,7 @@
         </ul>
     </div>
 
-    <div class="card card-body bg-light mb-3">
+    <div class="card card-body bg-themed mb-3">
         <h3>Logics</h3>
         <h3>Major Glitches</h3>
         <ul>
@@ -958,7 +958,7 @@
 </div>
 
 <h2>V7 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Boss hearts and the ½ magic bat statue have been added as new item locations</li>
         <li>Bomb and arrow capacity upgrades have been added to the item pool (70 arrows and 50 bombs)</li>
@@ -988,7 +988,7 @@
 </div>
 
 <h2>V6 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>The Chest Game is limited to 2 chests per session to prevent crashes (error with v5.2)</li>
         <li>The cursed dwarf is removed when you die or s+q with him following you (error with v5.11)</li>
@@ -1007,7 +1007,7 @@
 </div>
 
 <h2>V5 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Bottles are randomly filled upon collection with an equal chance for each bottle prize, including empty</li>
         <li>Throwing bottles into Faerie fountains now yields an equal chance for each bottle prize, including empty</li>
@@ -1031,7 +1031,7 @@
 </div>
 
 <h2>V4 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>NPCs are no longer guaranteed to give unique items</li>
         <li>Catfish throws a bomb if his item is a downgrade of an item you already have</li>
@@ -1056,7 +1056,7 @@
 </div>
 
 <h2>V3 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Fire Shield is now an NPC/chest item (replaced a 20 rupee chest)</li>
         <li>Mirror Shield and Red Mail are basic to the DW</li>
@@ -1076,7 +1076,7 @@
 </div>
 
 <h2>V2 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>Bug fixes (seed creation error)</li>
         <li>Logic improvements (accounting for access to lower DW with Hookshot)</li>
@@ -1084,7 +1084,7 @@
 </div>
 
 <h2>V1 Updates</h2>
-<div class="card card-body bg-light mb-3">
+<div class="card card-body bg-themed mb-3">
     <ul>
         <li>All unique chests and NPC rewards are randomized; NPCs always give unique items</li>
         <li>Swamp Palace water levels reset upon leaving the overworld screen</li>

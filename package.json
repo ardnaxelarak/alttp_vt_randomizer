@@ -46,6 +46,7 @@
 		"webpack-bundle-analyzer": "^3.8.0"
 	},
 	"dependencies": {
+		"@forevolve/bootstrap-dark": "^2.1.1",
 		"@lifeomic/attempt": "^3.0.2",
 		"@maseya/z3pr": "^1.0.1",
 		"@sentry/browser": "^5.18.1",

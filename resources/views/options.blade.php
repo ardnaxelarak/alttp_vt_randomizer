@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ __('options.header') }}</h1>
-<div  id="options" class="card card-body bg-light">
+<div  id="options" class="card card-body bg-themed">
     <h2>{!! __('options.subheader') !!}</h2>
 
     <div class="card border-info mt-4">

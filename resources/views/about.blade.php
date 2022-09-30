@@ -13,7 +13,7 @@
     role="button"
     style="margin-left:20px;">{{ __('navigation.start_watching') }}</a></div>
 </div>
-<div class="card card-body bg-light" style="font-size:22px;margin-top:40px;">
+<div class="card card-body bg-themed" style="font-size:22px;margin-top:40px;">
     @foreach (__('about.content') as $block)
         <p>{!! $block !!}</p>
     @endforeach

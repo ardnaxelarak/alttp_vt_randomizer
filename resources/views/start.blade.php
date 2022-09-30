@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ __('start.header') }}</h1>
-<div class="card card-body bg-light">
+<div class="card card-body bg-themed">
     <h2>{{ __('start.subheader') }}</h2>
 
     <div class="card border-info mt-4">

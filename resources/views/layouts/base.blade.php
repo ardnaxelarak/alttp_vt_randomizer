@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
-<body>
+<body class="bootstrap">
     <div id="page" :class="$store.state.theme">
         @yield('window')
     </div>

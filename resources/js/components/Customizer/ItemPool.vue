@@ -161,8 +161,15 @@ export default {
   z-index: 990;
   background-color: white;
 }
+.bootstrap-dark .sticky-head {
+  background-color: #343a40;
+}
 .icon {
   width: 12px;
   height: 12px;
+}
+.bootstrap-dark input {
+  background-color: #343a40;
+  color: #d3d3d3;
 }
 </style>

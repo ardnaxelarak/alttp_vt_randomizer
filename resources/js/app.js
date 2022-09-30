@@ -60,6 +60,7 @@ Vue.component(
 );
 Vue.component("vt-sprite-loader", require("./components/VTSpriteLoader.vue").default);
 Vue.component("vt-text", require("./components/VTText.vue").default);
+Vue.component("dark-mode-toggle", require("./components/DarkModeToggle.vue").default);
 //Vue.component("Streams", require("./components/Streams").default);
 
 // Views

@@ -90,4 +90,7 @@ export default {
 .nav-link {
   cursor: pointer;
 }
+.bootstrap-dark .nav-tabs-sticky {
+  background-color: #343a40;
+}
 </style>
