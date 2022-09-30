@@ -184,7 +184,7 @@ class Randomizer implements RandomizerContract
                 $world->addPreCollectedItem($item);
                 array_push($trash_items, Item::get('TwentyRupees2', $world));
             }
-            if ($world->config('equipment.boots', 'off') === 'starting'
+            if ($world->config('equipment.flute', 'off') === 'starting'
                     && ($item == Item::get('OcarinaInactive', $world)
                         || $item == Item::get('OcarinaActive', $world))) {
                 unset($advancement_items[$key]);
