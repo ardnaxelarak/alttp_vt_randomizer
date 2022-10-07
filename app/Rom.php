@@ -2085,7 +2085,9 @@ class Rom
     {
         $this->write(0x18003F, pack('C*', $enable ? 0x01 : 0x00)); // Hammer Ganon
         $this->write(0x180041, pack('C*', $enable ? 0x01 : 0x00)); // Swordless Medallions
-        $this->initial_sram->setSwordlessCurtains();
+        if ($enable) {
+            $this->initial_sram->setSwordlessCurtains();
+        }
 
         $this->setHammerTablet($enable);
         $this->setHammerBarrier(false);
@@ -2114,7 +2116,7 @@ class Rom
     public function setBombsOnlyMode(): self
     {
         $this->write(0x18002F, pack('C*', 0x01)); // Special Bombs
-        $this->write(0x180040, pack('C*', 0x01)); // Open Curtains
+        $this->initial_sram->setSwordlessCurtains();
         $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
         $this->write(0x180034, pack('C*', 0)); // max bombs
 
@@ -2172,7 +2174,7 @@ class Rom
      */
     public function setCaneOnlyMode(bool $blue, bool $red): self
     {
-        $this->write(0x180040, pack('C*', 0x01)); // Open Curtains
+        $this->initial_sram->setSwordlessCurtains();
         $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
 
         // Remove magic cost of cane
@@ -2247,7 +2249,7 @@ class Rom
     public function setBeeMode(): self
     {
         $this->write(0x18002F, pack('C*', 0x06)); // Bees
-        $this->write(0x180040, pack('C*', 0x01)); // Open Curtains
+        $this->initial_sram->setSwordlessCurtains();
         $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
 
         // Arrghus puff fixes
