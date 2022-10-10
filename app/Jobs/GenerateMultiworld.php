@@ -221,7 +221,6 @@ class GenerateMultiworld implements ShouldQueue
         foreach ($worlds as $world) {
             $rom = new Rom(config('alttp.base_rom'));
             $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
-            $world->writeToRom($rom, $save, false);
 
             // Overworld rando is responsible for verifying winnability of itself
             // and generating its own full spoiler
@@ -241,6 +240,8 @@ class GenerateMultiworld implements ShouldQueue
                 $en->randomize($world->config('branch'));
                 $en->writeToRom($rom);
             }
+
+            $world->writeToRom($rom, $save, false);
 
             if ($tournament) {
                 $rom->setTournamentType('standard');
