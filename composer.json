@@ -51,7 +51,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "9bcb72f7bc58aaf94a058b15a1e5b68f57875895"
+          "reference": "9d079dbd0f742e7b4813e56393290ef868a4d33e"
         }
       }
     },
@@ -63,7 +63,7 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "d05169d5e21725bdacd2682495d507abe44d5256"
+          "reference": "3cec56c5d8beb3856f7e774399f467c7bd65c25a"
         }
       }
     },
