@@ -78,7 +78,7 @@ function get_random_ganon_item(string $weapons)
     $combined = array_combine($keys, $keys);
 
     // can't use medallions without a pad in swordless
-    if ($weapons === 'swordless') {
+    if (in_array($weapons, ['swordless', 'swordless_hammer'])) {
       $table['bombos'] = 0;
       $table['ether'] = 0;
       $table['quake'] = 0;

@@ -14,7 +14,7 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2022-10-12', 'HASH' => '144cf31de54e068bff2631a105158e83'],
+        'base' => ['BUILD' => '2022-11-12', 'HASH' => 'c4b6030b571cf0179e8a9b6d51e02847'],
         'overworld' => ['BUILD' => '2022-10-12', 'HASH' => '62443f8204c7a042ea3923212177003f'],
     ];
     const SIZE = 2097152;
@@ -2092,6 +2092,17 @@ class Rom
         $this->setHammerTablet($enable);
         $this->setHammerBarrier(false);
 
+        return $this;
+    }
+
+    /**
+     * Enable swordless hammer mode
+     *
+     * @return $this
+     */
+    public function setSwordlessHammerMode(): self
+    {
+        $this->write(0x18002F, pack('C*', 0x07)); // Hammer on B
         return $this;
     }
 

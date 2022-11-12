@@ -477,7 +477,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
+        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -488,7 +488,7 @@ abstract class World
      */
     public function restrictedRealSwords()
     {
-        $swordless_modes = ['swordless', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
+        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -499,7 +499,7 @@ abstract class World
      */
     public function restrictedMedallions()
     {
-        $medallion_modes = ['swordless'];
+        $medallion_modes = ['swordless', 'swordless_hammer'];
         return in_array($this->config('mode.weapons'), $medallion_modes);
     }
 
@@ -1394,7 +1394,10 @@ abstract class World
         $rom->setSmithyQuickItemGive($this->config('region.swordsInPool', true));
 
         $rom->setGameState($this->config('mode.state'));
-        $rom->setSwordlessMode($this->config('mode.weapons') === 'swordless');
+        $rom->setSwordlessMode(in_array($this->config('mode.weapons'), ['swordless', 'swordless_hammer']));
+        if ($this->config('mode.weapons') == 'swordless_hammer') {
+            $rom->setSwordlessHammerMode();
+        }
         if ($this->restrictedToBombs()) {
             $rom->setBombsOnlyMode();
         }

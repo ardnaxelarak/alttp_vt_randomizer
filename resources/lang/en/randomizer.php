@@ -290,6 +290,7 @@ return [
             'assured' => 'Assured',
             'vanilla' => 'Vanilla',
             'swordless' => 'Swordless',
+            'swordless_hammer' => 'Swordless w/ Hammer on B',
             'bombs' => 'Bomb-Only',
             'assured_bombs' => 'Bomb-Only (Starting Bombs)',
             'byrna' => 'Byrna-Only',

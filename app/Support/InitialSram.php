@@ -100,7 +100,7 @@ class InitialSram
      *
      * @param ItemCollection $items items to equip Link with
      *
-     * @param array $config 
+     * @param array $config
      */
     public function setStartingEquipment(ItemCollection $items, $config)
     {
@@ -628,7 +628,7 @@ class InitialSram
         $this->setValue(0x370, $starting_arrow_capacity_upgrades);
         $this->setValue(0x371, $starting_bomb_capacity_upgrades);
 
-        if ($config['mode.weapons'] == 'swordless') {
+        if (in_array($config['mode.weapons'], ['swordless', 'swordless_hammer'])) {
             $this->initial_sram_bytes[0x359] = 0xFF;
             $this->initial_sram_bytes[0x417] = 0x00;
         }
@@ -705,7 +705,7 @@ class InitialSram
                 break;
         }
     }
-    
+
     /**
      * Gets final initial SRAM table.
      *

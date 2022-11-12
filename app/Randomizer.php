@@ -249,7 +249,7 @@ class Randomizer implements RandomizerContract
             $nice_items = array_merge($nice_items, $nice_items_armors);
         }
 
-        if (in_array($world->config('mode.weapons'), ['swordless', 'bees'])) {
+        if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_hammer', 'bees'])) {
             foreach ($nice_items_swords as $unneeded) {
                 $nice_items[] = Item::get('TwentyRupees2', $world);
             }
