@@ -67,6 +67,8 @@ class OverworldRandomizer implements RandomizerContract
         'cane' => 'cane',
         'pseudo' => 'pseudo',
         'assured_pseudo' => 'assured_pseudo',
+        'bees' => 'bees',
+        'swordless_hammer' => 'swordless_hammer',
     ];
 
     /**

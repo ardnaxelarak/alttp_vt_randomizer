@@ -226,7 +226,7 @@ return [
         ],
     ],
     "ow_mixed" => [
-        'title' => 'Overworld Tile Swap',
+        'title' => 'Overworld Tile Flip',
         'options' => [
             'off' => 'None',
             'on' => 'Mixed',
