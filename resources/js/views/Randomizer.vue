@@ -341,11 +341,6 @@
           </div>
           <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.difficulty.title') }}</h5>
           <div class="card-body">
-            <div
-              v-if="weapons.value === 'bees'"
-              class="logic-warning text-danger"
-              v-html="$t('randomizer.weapons.bees_warning')"
-            />
             <div class="row" v-if="!editable">
               <div
                 class="col-xl-4 col-lg-6 my-1"
