@@ -807,7 +807,7 @@ class Randomizer implements RandomizerContract
         }
 
         if ($world->config('region.takeAnys', false)) {
-            $shops->filter(function ($shop) {
+            $shops->filter(function ($shop) use ($world) {
                 return $shop instanceof Shop\TakeAny
                     && (!$world->config('region.malls', false)
                         || !array_key_exists("Mall - " + $shop->getName()));
