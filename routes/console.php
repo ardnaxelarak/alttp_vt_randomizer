@@ -96,6 +96,14 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
             $rom->applyPatchFile(Rom::getJsonPatchLocation($world->config('branch')));
 
             $rand->randomize();
+
+            if ($world->isEnemized()) {
+                $patch = $rom->getWriteLog();
+                $en = new Enemizer($world, $patch);
+                $en->randomize($world->config('branch'));
+                $en->writeToRom($rom);
+            }
+
             $world->writeToRom($rom, true);
 
             // Entrance rando and overworld rando are responsible for verifying winnability of themselves
@@ -111,6 +119,9 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
             $rom->setTournamentType('none');
 
             $patch = $rom->getWriteLog();
+
+            $world->updateSeedRecordPatch($patch);
+
             $spoiler = $world->getSpoiler([
                 'name' => 'Daily Challenge: ' . $date->toFormattedDateString(),
                 'entry_crystals_ganon' => $entry_crystals_ganon,
@@ -143,14 +154,6 @@ Artisan::command('alttp:dailies {days=7}', function ($days) {
                     $spoiler = Arr::except(Arr::only($spoiler, [
                         'meta',
                     ]), ['meta.seed']);
-            }
-
-            if ($world->isEnemized()) {
-                $en = new Enemizer($world, $patch);
-                $en->randomize($world->config('branch'));
-                $en->writeToRom($rom);
-                $patch = $rom->getWriteLog();
-                $world->updateSeedRecordPatch($patch);
             }
 
             $seed_record = $world->getSeedRecord();
