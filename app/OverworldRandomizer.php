@@ -51,6 +51,7 @@ class OverworldRandomizer implements RandomizerContract
         'pedestal' => 'pedestal',
         'triforce-hunt' => 'triforcehunt',
         'trinity' => 'trinity',
+        'ambroz1a' => 'z1',
     ];
     /** @var array */
     private $swords_lookup = [

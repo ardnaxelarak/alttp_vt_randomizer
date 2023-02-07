@@ -104,6 +104,7 @@ return [
             'pedestal' => 'Master Sword Pedestal',
             'triforce-hunt' => 'Triforce Pieces',
             'trinity' => 'Trinity',
+            'ambroz1a' => 'Ambroz1a',
         ],
     ],
     'tower_open' => [

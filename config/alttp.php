@@ -52,6 +52,17 @@ return [
                 ],
             ],
         ],
+        'ambroz1a' => [
+            'item' => [
+                'count' => [
+                    'TriforcePiece' => 10,
+                ],
+                'Goal' => [
+                    'Required' => 8,
+                    'Icon' => 'triforce',
+                ],
+            ],
+        ],
     ],
     'randomizer' => [
         'item' => [
@@ -600,6 +611,7 @@ return [
                 'pedestal' => 'Master Sword Pedestal',
                 'triforce-hunt' => 'Triforce Pieces',
                 'trinity' => 'Trinity',
+                'ambroz1a' => 'Ambroz1a',
             ],
             'tower_open' => [
                 '0' => 'none',
@@ -827,11 +839,12 @@ return [
             ],
             'goals' => [
                 'ganon' => 25,
-                'fast_ganon' => 35,
+                'fast_ganon' => 32,
                 'dungeons' => 10,
                 'pedestal' => 10,
                 'triforce-hunt' => 10,
                 'trinity' => 10,
+                'ambroz1a' => 3,
             ],
             'tower_open' => [
                 '0' => 5,

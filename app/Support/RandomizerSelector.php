@@ -32,6 +32,7 @@ class RandomizerSelector
                 || $world->config('potteryShuffle', 'none') !== 'none'
                 || $world->config('shopsanity', 'off') === 'on'
                 || $world->config('mode.state', 'open') === 'inverted'
+                || $world->config('goal', 'ganon') === 'ambroz1a'
                 || $world->config('entrances', 'none') !== 'none') {
             return new OverworldRandomizer([$world]);
         } else {
