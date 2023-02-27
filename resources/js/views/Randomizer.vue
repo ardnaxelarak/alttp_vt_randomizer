@@ -153,7 +153,7 @@
                 class="col-xl-6 col-lg-6 my-1"
               >{{ $t('randomizer.tower_open.title') }}: {{ $t(towerOpen.name) }}</div>
               <div
-                class="col-xl-6 col-lg-6 my-1"
+                class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal', 'ambroz1a', 'dungeons'].includes(goal.value)"
               >{{ $t('randomizer.ganon_open.title') }}: {{ $t(ganonOpen.name) }}</div>
               <div
                 class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal'].includes(goal.value)"
@@ -174,7 +174,7 @@
                   :options="optionsTowerOpen"
                 >{{ $t('randomizer.tower_open.title') }}</Select>
               </div>
-              <div class="col-xl-6 col-lg-6 my-1">
+              <div class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal', 'ambroz1a', 'dungeons'].includes(goal.value)">
                 <Select
                   :value="ganonOpen"
                   @input="setGanonOpen"
