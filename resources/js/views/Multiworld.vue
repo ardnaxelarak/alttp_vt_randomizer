@@ -242,30 +242,6 @@
                     <div
                       class="col-xl-4 col-lg-6 my-1"
                     >{{ $t('randomizer.hints.title') }}: {{ $t(worlds[world_id].hints.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.door_shuffle.title') }}: {{ $t(worlds[world_id].door_shuffle.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'"
-                    >{{ $t('randomizer.door_intensity.title') }}: {{ $t(worlds[world_id].door_intensity.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.ow_shuffle.title') }}: {{ $t(worlds[world_id].ow_shuffle.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.ow_crossed.title') }}: {{ $t(worlds[world_id].ow_crossed.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].ow_shuffle.value != 'vanilla' || worlds[world_id].ow_crossed.value == 'limited' || worlds[world_id].ow_crossed.value == 'chaos'"
-                    >{{ $t('randomizer.ow_keep_similar.title') }}: {{ $t(worlds[world_id].ow_keep_similar.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.ow_mixed.title') }}: {{ $t(worlds[world_id].ow_mixed.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.ow_flute_shuffle.title') }}: {{ $t(worlds[world_id].ow_flute_shuffle.name) }}</div>
-                    <div
-                      class="col-xl-4 col-lg-6 my-1"
-                    >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}: {{ $t(worlds[world_id].ow_whirlpool_shuffle.name) }}</div>
                   </div>
                 </div>
                 <div class="card-body" v-if="editable[world_id]">
@@ -310,6 +286,30 @@
                         :options="optionsHints"
                       >{{ $t('randomizer.hints.title') }}</Select>
                     </div>
+                  </div>
+                </div>
+                <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.door_shuffle.title') }}</h5>
+                <div class="card-body" v-if="!editable[world_id]">
+                  <div class="row">
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.door_shuffle.title') }}: {{ $t(worlds[world_id].door_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'"
+                    >{{ $t('randomizer.door_intensity.title') }}: {{ $t(worlds[world_id].door_intensity.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'"
+                    >{{ $t('randomizer.door_type_mode.title') }}: {{ $t(worlds[world_id].door_type_mode.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'"
+                    >{{ $t('randomizer.trap_door_mode.title') }}: {{ $t(worlds[world_id].trap_door_mode.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'"
+                    >{{ $t('randomizer.decouple_doors.title') }}: {{ $t(worlds[world_id].decouple_doors.name) }}</div>
+                  </div>
+                </div>
+                <div class="card-body" v-if="editable[world_id]">
+                  <div class="row">
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
@@ -326,6 +326,57 @@
                         :options="optionsDoorIntensity"
                       >{{ $t('randomizer.door_intensity.title') }}</Select>
                     </div>
+                    <div class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].door_type_mode"
+                        @input="setDoorTypeMode"
+                        :options="optionsDoorTypeMode"
+                      >{{ $t('randomizer.door_type_mode.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].trap_door_mode"
+                        @input="setTrapDoorMode"
+                        :options="optionsTrapDoorMode"
+                      >{{ $t('randomizer.trap_door_mode.title') }}</Select>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].door_shuffle.value != 'vanilla'">
+                      <Select
+                        :sid="world_id"
+                        :value="worlds[world_id].decouple_doors"
+                        @input="setDecoupleDoors"
+                        :options="optionsDecoupleDoors"
+                      >{{ $t('randomizer.decouple_doors.title') }}</Select>
+                    </div>
+                  </div>
+                </div>
+                <h5 class="card-title p-2 border-bottom">{{ $t('randomizer.overworld_shuffle.title') }}</h5>
+                <div class="card-body" v-if="!editable[world_id]">
+                  <div class="row">
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_shuffle.title') }}: {{ $t(worlds[world_id].ow_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_crossed.title') }}: {{ $t(worlds[world_id].ow_crossed.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1" v-if="worlds[world_id].ow_shuffle.value != 'vanilla' || worlds[world_id].ow_crossed.value == 'limited' || worlds[world_id].ow_crossed.value == 'chaos'"
+                    >{{ $t('randomizer.ow_keep_similar.title') }}: {{ $t(worlds[world_id].ow_keep_similar.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_mixed.title') }}: {{ $t(worlds[world_id].ow_mixed.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_flute_shuffle.title') }}: {{ $t(worlds[world_id].ow_flute_shuffle.name) }}</div>
+                    <div
+                      class="col-xl-4 col-lg-6 my-1"
+                    >{{ $t('randomizer.ow_whirlpool_shuffle.title') }}: {{ $t(worlds[world_id].ow_whirlpool_shuffle.name) }}</div>
+                  </div>
+                </div>
+                <div class="card-body" v-if="editable[world_id]">
+                  <div class="row">
                     <div class="col-xl-4 col-lg-6 my-1">
                       <Select
                         :sid="world_id"
@@ -646,6 +697,15 @@ export default {
     setDoorIntensity(value, worldId) {
       this.$store.commit("multiworld/setDoorIntensity", { value, worldId });
     },
+    setDoorTypeMode(value, worldId) {
+      this.$store.commit("multiworld/setDoorTypeMode", { value, worldId });
+    },
+    setTrapDoorMode(value, worldId) {
+      this.$store.commit("multiworld/setTrapDoorMode", { value, worldId });
+    },
+    setDecoupleDoors(value, worldId) {
+      this.$store.commit("multiworld/setDecoupleDoors", { value, worldId });
+    },
     setOverworldShuffle(value, worldId) {
       this.$store.commit("multiworld/setOverworldShuffle", { value, worldId });
     },
@@ -839,6 +899,9 @@ export default {
       optionsEntranceShuffle: state => state.options.entrance_shuffle,
       optionsDoorShuffle: state => state.options.door_shuffle,
       optionsDoorIntensity: state => state.options.door_intensity,
+      optionsDoorTypeMode: state => state.options.door_type_mode,
+      optionsTrapDoorMode: state => state.options.trap_door_mode,
+      optionsDecoupleDoors: state => state.options.decouple_doors,
       optionsOverworldShuffle: state => state.options.ow_shuffle,
       optionsOverworldCrossed: state => state.options.ow_crossed,
       optionsOverworldKeepSimilar: state => state.options.ow_keep_similar,

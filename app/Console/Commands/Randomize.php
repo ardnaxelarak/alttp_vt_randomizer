@@ -50,6 +50,9 @@ class Randomize extends Command
         . ' {--entrances=vanilla : set entrance shuffle}'
         . ' {--door_shuffle=vanilla : set door shuffle}'
         . ' {--door_intensity=1 : set door shuffle intensity}'
+        . ' {--door_type_mode=original : set door shuffle door type mode}'
+        . ' {--trap_door_mode=original : set door shuffle trap door mode}'
+        . ' {--decouple_doors=off : decouple door shuffle doors}'
         . ' {--ow_shuffle=vanilla : set overworld shuffle}'
         . ' {--ow_crossed=vanilla : set overworld crossed mode}'
         . ' {--ow_keep_similar=off : keep similar transitions together in overworld shuffle}'
@@ -199,6 +202,9 @@ class Randomize extends Command
                 'entrances' => $this->option('entrances'),
                 'doors.shuffle' => $this->option('door_shuffle'),
                 'doors.intensity' => $this->option('door_intensity'),
+                'doors.type_mode' => $this->option('door_type_mode'),
+                'doors.trap_mode' => $this->option('trap_door_mode'),
+                'doors.decoupled' => $this->option('decouple_doors'),
                 'overworld.shuffle' => $this->option('ow_shuffle'),
                 'overworld.crossed' => $this->option('ow_crossed'),
                 'overworld.keepSimilar' => $this->option('ow_keep_similar'),

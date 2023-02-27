@@ -68,6 +68,18 @@ export default {
     value: "1",
     name: "randomizer.door_intensity.options.1"
   },
+  door_type_mode: {
+    value: "original",
+    name: "randomizer.door_type_mode.options.original",
+  },
+  trap_door_mode: {
+    value: "vanilla",
+    name: "randomizer.trap_door_mode.options.vanilla",
+  },
+  decouple_doors: {
+    value: "off",
+    name: "randomizer.decouple_doors.options.off",
+  },
   ow_shuffle: {
     value: "vanilla",
     name: "randomizer.ow_shuffle.options.vanilla"

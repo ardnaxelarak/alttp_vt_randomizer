@@ -107,12 +107,14 @@ class OverworldRandomizer implements RandomizerContract
                 '--mapshuffle',
                 '--compassshuffle',
                 '--keyshuffle',
+                'wild',
             ]);
         } elseif ($world->config('dungeonItems') === 'full') {
             $flags = array_merge($flags, [
                 '--mapshuffle',
                 '--compassshuffle',
                 '--keyshuffle',
+                'wild',
                 '--bigkeyshuffle',
             ]);
         }
@@ -189,6 +191,17 @@ class OverworldRandomizer implements RandomizerContract
             ]);
         }
 
+        if ($world->config('doors.decoupled') === 'on') {
+            $flags[] = '--decoupledoors';
+        }
+
+        if ($world->config('doors.shuffle') !== 'vanilla') {
+            $flags = array_merge($flags, [
+                '--key_logic_algorithm',
+                'partial',
+            ]);
+        }
+
         if ($world->config('overworld.keepSimilar') === 'on') {
             $flags[] = '--ow_keepsimilar';
         }
@@ -221,6 +234,10 @@ class OverworldRandomizer implements RandomizerContract
 
         if ($world->config('equipment.flute') === 'starting') {
             $starting[] = 'Ocarina';
+            $flags = array_merge($flags, [
+                '--flute_mode',
+                'active',
+            ]);
         }
         if ($world->config('equipment.boots') === 'starting') {
             $starting[] = 'Pegasus_Boots';
@@ -256,6 +273,10 @@ class OverworldRandomizer implements RandomizerContract
                 $world->config('doors.shuffle'),
                 '--intensity',
                 $world->config('doors.intensity'),
+                '--door_type_mode',
+                $world->config('doors.type_mode'),
+                '--trap_door_mode',
+                $world->config('doors.trap_mode'),
                 '--ow_shuffle',
                 $world->config('overworld.shuffle'),
                 '--ow_crossed',

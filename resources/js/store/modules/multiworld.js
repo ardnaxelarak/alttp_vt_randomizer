@@ -66,6 +66,9 @@ export default {
               dispatch("load", [worldId, "entrance_shuffle", "setEntranceShuffle"]),
               dispatch("load", [worldId, "door_shuffle", "setDoorShuffle"]),
               dispatch("load", [worldId, "door_intensity", "setDoorIntensity"]),
+              dispatch("load", [worldId, "door_type_mode", "setDoorTypeMode"]),
+              dispatch("load", [worldId, "trap_door_mode", "setTrapDoorMode"]),
+              dispatch("load", [worldId, "decouple_doors", "setDecoupleDoors"]),
               dispatch("load", [worldId, "ow_shuffle", "setOverworldShuffle"]),
               dispatch("load", [worldId, "ow_crossed", "setOverworldCrossed"]),
               dispatch("load", [worldId, "ow_keep_similar", "setOverworldKeepSimilar"]),
@@ -161,6 +164,18 @@ export default {
         commit("setDoorIntensity", {
           worldId,
           value: state.preset_map[preset.value]["door_intensity"]
+        });
+        commit("setDoorTypeMode", {
+          worldId,
+          value: state.preset_map[preset.value]["door_type_mode"]
+        });
+        commit("setTrapDoorMode", {
+          worldId,
+          value: state.preset_map[preset.value]["trap_door_mode"]
+        });
+        commit("setDecoupleDoors", {
+          worldId,
+          value: state.preset_map[preset.value]["decouple_doors"]
         });
         commit("setOverworldShuffle", {
           worldId,
@@ -279,6 +294,9 @@ export default {
         entrance_shuffle,
         door_shuffle,
         door_intensity,
+        door_type_mode,
+        trap_door_mode,
+        decouple_doors,
         ow_shuffle,
         ow_crossed,
         ow_keep_similar,
@@ -315,6 +333,9 @@ export default {
       state.options.entrance_shuffle = asMulti(entrance_shuffle, "entrance_shuffle");
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
+      state.options.door_type_mode = asMulti(door_type_mode, "door_type_mode");
+      state.options.trap_door_mode = asMulti(trap_door_mode, "trap_door_mode");
+      state.options.decouple_doors = asMulti(decouple_doors, "decouple_doors");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
       state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
@@ -456,6 +477,27 @@ export default {
       }
       state.worlds[worldId].door_intensity = value;
       localforage.setItem(`multiworld.${worldId}.door_intensity`, value);
+    },
+    setDoorTypeMode(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.door_type_mode.find(o => o.value === value);
+      }
+      state.worlds[worldId].door_type_mode = value;
+      localforage.setItem(`multiworld.${worldId}.door_type_mode`, value);
+    },
+    setTrapDoorMode(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.trap_door_mode.find(o => o.value === value);
+      }
+      state.worlds[worldId].trap_door_mode = value;
+      localforage.setItem(`multiworld.${worldId}.trap_door_mode`, value);
+    },
+    setDecoupleDoors(state, { worldId, value }) {
+      if (typeof value === "string") {
+        value = state.options.decouple_doors.find(o => o.value === value);
+      }
+      state.worlds[worldId].decouple_doors = value;
+      localforage.setItem(`multiworld.${worldId}.decouple_doors`, value);
     },
     setOverworldShuffle(state, { worldId, value }) {
       if (typeof value === "string") {

@@ -82,6 +82,9 @@ export default {
       entrance_shuffle: [],
       door_shuffle: [],
       door_intensity: [],
+      door_type_mode: [],
+      trap_door_mode: [],
+      decouple_doors: [],
       ow_shuffle: [],
       ow_crossed: [],
       ow_keep_similar: [],
@@ -131,6 +134,9 @@ export default {
             dispatch("load", ["entrance_shuffle", "setEntranceShuffle"]),
             dispatch("load", ["door_shuffle", "setDoorShuffle"]),
             dispatch("load", ["door_intensity", "setDoorIntensity"]),
+            dispatch("load", ["door_type_mode", "setDoorTypeMode"]),
+            dispatch("load", ["trap_door_mode", "setTrapDoorMode"]),
+            dispatch("load", ["decouple_doors", "setDecoupleDoors"]),
             dispatch("load", ["ow_shuffle", "setOverworldShuffle"]),
             dispatch("load", ["ow_crossed", "setOverworldCrossed"]),
             dispatch("load", ["ow_keep_similar", "setOverworldKeepSimilar"]),
@@ -182,6 +188,9 @@ export default {
         commit("setEntranceShuffle", state.preset_map[preset.value]["entrance_shuffle"]);
         commit("setDoorShuffle", state.preset_map[preset.value]["door_shuffle"]);
         commit("setDoorIntensity", state.preset_map[preset.value]["door_intensity"]);
+        commit("setDoorTypeMode", state.preset_map[preset.value]["door_type_mode"]);
+        commit("setTrapDoorMode", state.preset_map[preset.value]["trap_door_mode"]);
+        commit("setDecoupleDoors", state.preset_map[preset.value]["decouple_doors"]);
         commit("setOverworldShuffle", state.preset_map[preset.value]["ow_shuffle"]);
         commit("setOverworldCrossed", state.preset_map[preset.value]["ow_crossed"]);
         commit("setOverworldKeepSimilar", state.preset_map[preset.value]["ow_keep_similar"]);
@@ -333,6 +342,9 @@ export default {
         entrance_shuffle,
         door_shuffle,
         door_intensity,
+        door_type_mode,
+        trap_door_mode,
+        decouple_doors,
         ow_shuffle,
         ow_crossed,
         ow_keep_similar,
@@ -370,12 +382,12 @@ export default {
       state.options.ganon_open = asMulti(ganon_open, "ganon_open");
       state.options.ganon_item = asMulti(ganon_item, "ganon_item");
       state.options.world_state = asMulti(world_state, "world_state");
-      state.options.entrance_shuffle = asMulti(
-        entrance_shuffle,
-        "entrance_shuffle"
-      );
+      state.options.entrance_shuffle = asMulti(entrance_shuffle, "entrance_shuffle");
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
+      state.options.door_type_mode = asMulti(door_type_mode, "door_type_mode");
+      state.options.trap_door_mode = asMulti(trap_door_mode, "trap_door_mode");
+      state.options.decouple_doors = asMulti(decouple_doors, "decouple_doors");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
       state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");
@@ -514,6 +526,27 @@ export default {
       }
       state.door_intensity = value;
       localforage.setItem("randomizer.door_intensity", value);
+    },
+    setDoorTypeMode(state, value) {
+      if (typeof value === "string") {
+        value = state.options.door_type_mode.find(o => o.value === value);
+      }
+      state.door_type_mode = value;
+      localforage.setItem("randomizer.door_type_mode", value);
+    },
+    setTrapDoorMode(state, value) {
+      if (typeof value === "string") {
+        value = state.options.trap_door_mode.find(o => o.value === value);
+      }
+      state.trap_door_mode = value;
+      localforage.setItem("randomizer.trap_door_mode", value);
+    },
+    setDecoupleDoors(state, value) {
+      if (typeof value === "string") {
+        value = state.options.decouple_doors.find(o => o.value === value);
+      }
+      state.decouple_doors = value;
+      localforage.setItem("randomizer.decouple_doors", value);
     },
     setOverworldShuffle(state, value) {
       if (typeof value === "string") {

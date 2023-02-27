@@ -30,6 +30,9 @@ export default {
       entrance_shuffle: [],
       door_shuffle: [],
       door_intensity: [],
+      door_type_mode: [],
+      trap_door_mode: [],
+      decouple_doors: [],
       ow_shuffle: [],
       ow_crossed: [],
       ow_keep_similar: [],
@@ -98,6 +101,9 @@ export default {
         entrance_shuffle,
         door_shuffle,
         door_intensity,
+        door_type_mode,
+        trap_door_mode,
+        decouple_doors,
         ow_shuffle,
         ow_crossed,
         ow_keep_similar,
@@ -134,6 +140,9 @@ export default {
       state.options.entrance_shuffle = asMulti(entrance_shuffle, "entrance_shuffle");
       state.options.door_shuffle = asMulti(door_shuffle, "door_shuffle");
       state.options.door_intensity = asMulti(door_intensity, "door_intensity");
+      state.options.door_type_mode = asMulti(door_type_mode, "door_type_mode");
+      state.options.trap_door_mode = asMulti(trap_door_mode, "trap_door_mode");
+      state.options.decouple_doors = asMulti(decouple_doors, "decouple_doors");
       state.options.ow_shuffle = asMulti(ow_shuffle, "ow_shuffle");
       state.options.ow_crossed = asMulti(ow_crossed, "ow_crossed");
       state.options.ow_keep_similar = asMulti(ow_keep_similar, "ow_keep_similar");

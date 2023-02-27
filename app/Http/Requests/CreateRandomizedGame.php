@@ -80,6 +80,15 @@ class CreateRandomizedGame extends FormRequest
             'doors.intensity' => [
                 Rule::in($valid_settings['door_intensity']),
             ],
+            'doors.type_mode' => [
+                Rule::in($valid_settings['door_type_mode']),
+            ],
+            'doors.trap_mode' => [
+                Rule::in($valid_settings['trap_door_mode']),
+            ],
+            'doors.decoupled' => [
+                Rule::in($valid_settings['decouple_doors']),
+            ],
             'overworld.shuffle' => [
                 Rule::in($valid_settings['ow_shuffle']),
             ],

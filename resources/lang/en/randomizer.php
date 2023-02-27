@@ -160,6 +160,9 @@ return [
     'gameplay' => [
         'title' => 'Gameplay',
     ],
+    'overworld_shuffle' => [
+        'title' => 'Overworld Shuffle',
+    ],
     "world_state" => [
         'title' => 'World State',
         'options' => [
@@ -189,6 +192,7 @@ return [
         'title' => 'Door Shuffle',
         'options' => [
             'vanilla' => 'None',
+            'partitioned' => 'Partitioned',
             'basic' => 'Basic',
             'crossed' => 'Crossed',
         ],
@@ -199,6 +203,31 @@ return [
             '1' => '1: Normal',
             '2' => '2: Open Edges',
             '3' => '3: Lobbies',
+        ],
+    ],
+    'door_type_mode' => [
+        'title' => 'Door Shuffle Type Mode',
+        'options' => [
+            'original' => 'Original',
+            'big' => 'Big',
+            'all' => 'All',
+            'chaos' => 'Chaos',
+        ],
+    ],
+    'trap_door_mode' => [
+        'title' => 'Trap Door Mode',
+        'options' => [
+            'vanilla' => 'Vanilla',
+            'optional' => 'Optional',
+            'boss' => 'Boss',
+            'oneway' => 'One-Way',
+        ],
+    ],
+    'decouple_doors' => [
+        'title' => 'Decouple Doors',
+        'options' => [
+            'on' => 'On',
+            'off' => 'Off',
         ],
     ],
     "ow_shuffle" => [
