@@ -3,6 +3,7 @@
 namespace ALttP\Support;
 
 use ALttp\Support\ItemCollection;
+use ALttP\World;
 
 /**
  * Wrapper class around an array holding an initial SRAM table which
@@ -98,11 +99,12 @@ class InitialSram
     /**
      * set the items passed in as Link's starting equipment
      *
+     * @param World $world the world in which this equipment is being set
      * @param ItemCollection $items items to equip Link with
      *
      * @param array $config
      */
-    public function setStartingEquipment(ItemCollection $items, $config)
+    public function setStartingEquipment(World $world, ItemCollection $items, $config)
     {
         $starting_rupees = 0;
         $starting_arrow_capacity = 0;
@@ -609,8 +611,15 @@ class InitialSram
                 case 'Crystal7':
                     $this->initial_sram_bytes[0x37A] |= 0b00001000;
                     break;
-                case 'ProgressiveBombs':
                 case 'ProgressiveCane':
+                    if ($world->restrictedToRedCane()) {
+                        $this->initial_sram_bytes[0x350] = 0x01;
+                    }
+                    if ($world->restrictedToBlueCane()) {
+                        $this->initial_sram_bytes[0x351] = 0x01;
+                    }
+                    // intentional fallthrough
+                case 'ProgressiveBombs':
                     $this->initial_sram_bytes[0x38F] = min($this->initial_sram_bytes[0x38F] + 1, 5);
                     break;
             }
