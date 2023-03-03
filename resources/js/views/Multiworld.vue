@@ -13,7 +13,7 @@
       <button type="button" class="close" aria-label="Close">
         <img class="icon" src="/i/svg/x.svg" alt="clear" @click="mw_host = false" />
       </button>
-      <span class="glyphicon glyphicon-globe aria-hidden="true""></span>
+      <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
       <span class="message">{{ this.mw_host }}</span>
     </div>
 
