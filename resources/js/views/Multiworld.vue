@@ -183,10 +183,10 @@
                       class="col-xl-6 col-lg-6 my-1"
                     >{{ $t('randomizer.tower_open.title') }}: {{ $t(worlds[world_id].tower_open.name) }}</div>
                     <div
-                      class="col-xl-6 col-lg-6 my-1"
+                      class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal', 'ambroz1a', 'dungeons'].includes(worlds[world_id].goal.value)"
                     >{{ $t('randomizer.ganon_open.title') }}: {{ $t(worlds[world_id].ganon_open.name) }}</div>
                     <div
-                      class="col-xl-6 col-lg-6 my-1"
+                      class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal'].includes(worlds[world_id].goal.value)"
                     >{{ $t('randomizer.ganon_item.title') }}: {{ $t(worlds[world_id].ganon_item.name) }}</div>
                   </div>
                   <div class="row" v-if="editable[world_id]">
@@ -206,7 +206,7 @@
                         :options="optionsTowerOpen"
                       >{{ $t('randomizer.tower_open.title') }}</Select>
                     </div>
-                    <div class="col-xl-6 col-lg-6 my-1">
+                    <div class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal', 'ambroz1a', 'dungeons'].includes(worlds[world_id].goal.value)">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].ganon_open"
@@ -214,7 +214,7 @@
                         :options="optionsGanonOpen"
                       >{{ $t('randomizer.ganon_open.title') }}</Select>
                     </div>
-                    <div class="col-xl-6 col-lg-6 my-1">
+                    <div class="col-xl-6 col-lg-6 my-1" v-if="!['triforce-hunt', 'pedestal'].includes(worlds[world_id].goal.value)">
                       <Select
                         :sid="world_id"
                         :value="worlds[world_id].ganon_item"
