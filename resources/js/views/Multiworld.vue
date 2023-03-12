@@ -14,7 +14,7 @@
         <img class="icon" src="/i/svg/x.svg" alt="clear" @click="mw_host = false" />
       </button>
       <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-      <span class="message">{{ this.mw_host }}</span>
+      <span class="message">Your game is hosted at <code>ws://mw.gwaa.kiwi:{{ this.mw_host.port }}</code> with room token <code>{{ this.mw_host.token }}</code>.</span>
     </div>
 
     <div
@@ -853,7 +853,7 @@ export default {
         )
         .then(response => {
           if (response.data.port && response.data.token) {
-            this.mw_host = `Your game is hosted at ws://mw.gwaa.kiwi:${response.data.port} with room token ${response.data.token}`;
+            this.mw_host = {port: response.data.port, token: response.data.token};
             this.error = false;
             window.open(`https://mw.gwaa.kiwi/game/${response.data.token}`, '_blank');
           } else {

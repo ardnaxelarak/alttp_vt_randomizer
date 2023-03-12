@@ -536,6 +536,8 @@ export default class ROM {
         this.allow_quickswap = data.spoiler.meta.allow_quickswap;
         this.allow_pseudoboots = data.spoiler.meta.allow_pseudoboots;
         this.special = data.spoiler.meta.special;
+        this.multi_hash = data.spoiler.meta.multi_hash;
+        this.multi_name = data.spoiler.meta.multi_name;
       }
 
       if (data.patch && data.patch.length) {

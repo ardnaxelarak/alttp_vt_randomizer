@@ -257,6 +257,9 @@ class GenerateMultiworld implements ShouldQueue
                 $world->updateSeedRecordMultiworld($multi);
             }
 
+            $spoiler['meta']['multi_hash'] = $multi->hash;
+            $spoiler['meta']['multi_name'] = $world->config('worldName');
+
             $world_payloads[] = [
                 'name' => $world->config('worldName'),
                 'logic' => $world->config('logic'),

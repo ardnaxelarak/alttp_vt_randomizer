@@ -38,6 +38,13 @@
       <a :href="permalink">{{ permalink }}</a>
     </div>
     <div v-if="rom.special">{{ $t('rom.info.special') }}: {{ rom.special }}</div>
+    <div v-if="rom.multi_hash">
+      {{ $t('rom.info.multi_permalink') }}:
+      <a :href="multi_permalink">{{ multi_permalink }}</a>
+    </div>
+    <div v-if="rom.multi_name">
+      {{ $t('rom.info.multi_name') }}: {{ rom.multi_name }}
+    </div>
     <div v-if="rom.notes">
       {{ $t('rom.info.notes') }}:
       <span v-html="rom.notes"></span>
@@ -61,7 +68,16 @@ export default {
         "/h/" +
         vm.rom.hash
       );
-    }
+    },
+    multi_permalink: vm => {
+      return (
+        window.location.origin +
+        "/" +
+        (document.documentElement.lang || "en") +
+        "/m/" +
+        vm.rom.multi_hash
+      );
+    },
   }
 };
 </script>

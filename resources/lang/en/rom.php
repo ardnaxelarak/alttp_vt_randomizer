@@ -31,6 +31,8 @@ return [
         'weapons' => __('randomizer.weapons.title'),
         'goal' => __('randomizer.goal.title'),
         'permalink' => 'Permalink',
+        'multi_permalink' => 'Multiworld Permalink',
+        'multi_name' => 'Multiworld Player Name',
         'special' => 'Special',
         'notes' => 'Notes',
         'generated' => 'Created',
