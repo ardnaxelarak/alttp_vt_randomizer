@@ -10,6 +10,7 @@ return [
     'customizer' => 'Create Custom Game',
     'multiworld' => 'Multiworld Generator',
     'multiworld_setup' => 'Multiworld Setup',
+    'mystery' => 'Mystery Generator',
 
     'calendar' => 'Events Calendar',
 

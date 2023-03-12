@@ -29,6 +29,7 @@ return [
         'entrance',
         'error',
         'multiworld',
+        'mystery',
         'randomizer',
         'rom',
         'item',

@@ -138,7 +138,7 @@ class GenerateSeed implements ShouldQueue
         ][Arr::get($request, 'glitches', 'none')];
 
         $spoilers = Arr::get($request, 'spoilers', 'off');
-        if (!Arr::get($request, 'tournament', true)) {
+        if (!Arr::get($request, 'tournament', true) && $spoilers != 'mystery') {
             $spoilers = "on";
         } else if (!in_array(Arr::get($request, 'spoilers', 'off'), ["on", "off", "generate", "mystery"])) {
             $spoilers = "off";

@@ -604,6 +604,10 @@ export default class ROM {
     this.size = size;
   }
 
+  isMystery() {
+    return this.spoilers == "mystery";
+  }
+
   downloadFilename() {
     if (this.name) {
       return "alttpr - " + this.name + "_" + this.hash;

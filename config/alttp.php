@@ -988,8 +988,8 @@ return [
                 'oneway' => 10,
             ],
             'decouple_doors' => [
-                'on' => 99,
-                'off' => 1,
+                'off' => 99,
+                'on' => 1,
             ],
             'ow_shuffle' => [
                 'vanilla' => 97,

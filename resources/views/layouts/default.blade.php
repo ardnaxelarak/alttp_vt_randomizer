@@ -17,6 +17,7 @@
                         <a class="dropdown-item{!! (in_array(request()->path(), ['daily'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/daily">{{ __('navigation.daily') }}</a>
                         <a class="dropdown-item{!! (in_array(request()->path(), ['customizer'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/customizer">{{ __('navigation.customizer') }}</a>
                         <a class="dropdown-item{!! (in_array(request()->path(), ['multiworld'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/multiworld">{{ __('navigation.multiworld') }}</a>
+                        <a class="dropdown-item{!! (in_array(request()->path(), ['mystery'])) ? ' active' : '' !!}" href="{{ app()->isLocale('en') ? '' : '/' . app()->getLocale() }}/mystery">{{ __('navigation.mystery') }}</a>
                     </div>
                 </li>
             </ul>

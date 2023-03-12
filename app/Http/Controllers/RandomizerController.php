@@ -2,23 +2,11 @@
 
 namespace ALttP\Http\Controllers;
 
-use ALttP\Enemizer;
 use ALttP\Http\Requests\CreateRandomizedGame;
-use ALttP\Jobs\SendPatchToDisk;
 use ALttP\Jobs\GenerateSeed;
-use ALttP\OverworldRandomizer;
-use ALttP\Randomizer;
-use ALttP\Rom;
 use ALttP\SeedGeneration;
-use ALttP\Support\RandomizerSelector;
-use ALttP\Support\WorldCollection;
-use ALttP\World;
 use Exception;
-use GrahamCampbell\Markdown\Facades\Markdown;
-use HTMLPurifier_Config;
-use HTMLPurifier;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
 use Log;
 
 class RandomizerController extends Controller

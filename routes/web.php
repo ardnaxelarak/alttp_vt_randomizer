@@ -114,6 +114,8 @@ Route::prefix('{lang?}')->middleware('locale')->group(function () {
 
     Route::view('randomize{r?}', 'randomizer');
 
+    Route::view('mystery', 'mystery');
+
     Route::view('resources', 'resources');
 
     Route::redirect('special', '/');

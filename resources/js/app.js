@@ -59,6 +59,7 @@ Vue.component(
   require("./components/VTSpriteSelect.vue").default
 );
 Vue.component("vt-sprite-loader", require("./components/VTSpriteLoader.vue").default);
+Vue.component("vt-mystery-loader", require("./components/VTMysteryLoader.vue").default);
 Vue.component("vt-text", require("./components/VTText.vue").default);
 Vue.component("dark-mode-toggle", require("./components/DarkModeToggle.vue").default);
 //Vue.component("Streams", require("./components/Streams").default);
@@ -69,6 +70,7 @@ Vue.component("Customizer", require("./views/Customizer.vue").default);
 Vue.component("Hashloader", require("./views/HashLoader.vue").default);
 Vue.component("Multiloader", require("./views/Multiloader.vue").default);
 Vue.component("Randomizer", require("./views/Randomizer.vue").default);
+Vue.component("Mystery", require("./views/Mystery.vue").default);
 Vue.component("Sprites", require("./views/Sprites.vue").default);
 
 // ignore adsense

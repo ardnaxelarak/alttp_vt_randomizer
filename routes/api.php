@@ -20,6 +20,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('randomizer', 'RandomizerController@generateSeed')->middleware('throttleIp:150,360');
 
+Route::post('mystery', 'MysteryController@generateSeed')->middleware('throttleIp:150,360');
+
 Route::post('multiworld', 'MultiworldController@generateMultiworld')->middleware('throttleIp:40,360');
 
 Route::post('randomizer/spoiler', 'RandomizerController@testGenerateSeed')->middleware('throttleIp:300,360');
