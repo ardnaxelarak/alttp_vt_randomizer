@@ -68,13 +68,13 @@ Route::get('h/{hash}', static function ($hash) {
 Route::get('generation/multiworld/{id}', static function ($id) {
     $multigen = ALttP\MultiworldGeneration::where('id', $id)->first();
     if ($multigen) {
-        if ($multigen->failed) {
-            return json_encode(['status' => 'failure']);
-        } else if ($multigen->multiworld) {
+        if ($multigen->multiworld) {
             return json_encode([
                 'status' => 'success',
                 'multiworld_hash' => $multigen->multiworld->hash,
             ]);
+        } else if ($multigen->failed) {
+            return json_encode(['status' => 'failure']);
         } else {
             return json_encode(['status' => 'waiting']);
         }
@@ -85,13 +85,13 @@ Route::get('generation/multiworld/{id}', static function ($id) {
 Route::get('generation/seed/{id}', static function ($id) {
     $seedgen = ALttP\SeedGeneration::where('id', $id)->first();
     if ($seedgen) {
-        if ($seedgen->failed) {
-            return json_encode(['status' => 'failure']);
-        } else if ($seedgen->seed) {
+        if ($seedgen->seed) {
             return json_encode([
                 'status' => 'success',
                 'seed_hash' => $seedgen->seed->hash,
             ]);
+        } else if ($seedgen->failed) {
+            return json_encode(['status' => 'failure']);
         } else {
             return json_encode(['status' => 'waiting']);
         }

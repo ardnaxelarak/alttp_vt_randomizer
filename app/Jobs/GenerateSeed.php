@@ -17,6 +17,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -31,7 +32,14 @@ class GenerateSeed implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 10;
+    public $tries = 0;
+
+    /**
+     * The maximum number of unhandled exceptions to allow before failing.
+     *
+     * @var int
+     */
+    public $maxExceptions = 10;
 
     protected SeedGeneration $seedgen;
     protected array $request;
@@ -43,12 +51,26 @@ class GenerateSeed implements ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [(new WithoutOverlapping($this->seedgen->id))];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
      */
     public function handle()
     {
+        if ($this->seedgen->seed_id) {
+            return;
+        }
+
         $payload = GenerateSeed::prepSeed($this->request, true);
         $payload['seed']->save();
         SendPatchToDisk::dispatch($payload['seed']);
@@ -116,8 +138,10 @@ class GenerateSeed implements ShouldQueue
      */
     public function failed(Throwable $exception)
     {
-        $this->seedgen->failed = true;
-        $this->seedgen->save();
+        if ($this->seedgen->seed_id === null) {
+            $this->seedgen->failed = true;
+            $this->seedgen->save();
+        }
     }
 
     public static function prepSeed(array $request, bool $save = true)

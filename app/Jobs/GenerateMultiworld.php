@@ -15,6 +15,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -29,7 +30,14 @@ class GenerateMultiworld implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 10;
+    public $tries = 0;
+
+    /**
+     * The maximum number of unhandled exceptions to allow before failing.
+     *
+     * @var int
+     */
+    public $maxExceptions = 8;
 
     protected MultiworldGeneration $multigen;
     protected array $request;
@@ -41,12 +49,26 @@ class GenerateMultiworld implements ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [(new WithoutOverlapping($this->multigen->id))->releaseAfter(30)];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
      */
     public function handle()
     {
+        if ($this->multigen->multi_id) {
+            return;
+        }
+
         $payload = GenerateMultiworld::prepMultiworld($this->request, true);
 
         foreach ($payload['worlds'] as $world_payload) {
@@ -114,8 +136,10 @@ class GenerateMultiworld implements ShouldQueue
      */
     public function failed(Throwable $exception)
     {
-        $this->multigen->failed = true;
-        $this->multigen->save();
+        if ($this->multigen->multi_id === null) {
+            $this->multigen->failed = true;
+            $this->multigen->save();
+        }
     }
 
     public static function prepMultiworld(array $request, bool $save = true)
