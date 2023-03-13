@@ -32,7 +32,7 @@ class GenerateSeed implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 0;
+    public $tries = 250;
 
     /**
      * The maximum number of unhandled exceptions to allow before failing.
@@ -57,7 +57,7 @@ class GenerateSeed implements ShouldQueue
      */
     public function middleware(): array
     {
-        return [(new WithoutOverlapping($this->seedgen->id))];
+        return [(new WithoutOverlapping($this->seedgen->id))->releaseAfter(60)];
     }
 
     /**

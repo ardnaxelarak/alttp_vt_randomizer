@@ -30,7 +30,7 @@ class GenerateMultiworld implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 0;
+    public $tries = 250;
 
     /**
      * The maximum number of unhandled exceptions to allow before failing.
@@ -55,7 +55,7 @@ class GenerateMultiworld implements ShouldQueue
      */
     public function middleware(): array
     {
-        return [(new WithoutOverlapping($this->multigen->id))->releaseAfter(30)];
+        return [(new WithoutOverlapping($this->multigen->id))->releaseAfter(60)];
     }
 
     /**
