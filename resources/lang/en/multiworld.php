@@ -4,7 +4,7 @@ return [
     'generate' => 'Generate Multiworld',
     'save' => 'Save Multidata',
     'host' => 'Host Multiworld',
-    'slow_warning' => 'Generation may take several minutes. Please be patient.',
+    'slow_warning' => 'Multiworld generation usually takes a long time. Please be patient.',
     'info' => [
         'title' => 'Multiworld Details',
         'generated' => 'Created',
