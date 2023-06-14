@@ -74,7 +74,7 @@ class MiseryMire extends Region
         });
 
         $this->locations["Misery Mire - Spike Chest"]->setRequirements(function ($locations, $items) {
-            return !$this->world->config('region.cantTakeDamage', false)
+            return (!$this->world->config('region.cantTakeDamage', false) && !$this->world->isSpecialTroll())
                 || $items->hasByrna($this->world) || $items->has('Cape');
         });
 

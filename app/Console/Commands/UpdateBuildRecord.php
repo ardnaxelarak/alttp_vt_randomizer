@@ -15,6 +15,7 @@ class UpdateBuildRecord extends Command
     const BRANCHES = [
         'base' => 'z3/randomizer',
         'overworld' => 'z3/randomizer_ow',
+        'troll' => 'z3/randomizer_troll',
     ];
 
     /**
@@ -81,12 +82,10 @@ class UpdateBuildRecord extends Command
             // asar --fix-checksum=off LTTP_RND_GeneralBugfixes.asm build/working.sfc
             $system = php_uname('s') == 'Darwin' ? 'macos' : 'linux';
 
-            $newText = $branch == 'overworld' ? 1 : 0;
-
             $proc = new Process([
                 base_path("bin/asar/$system/asar"),
                 '--fix-checksum=off',
-                "-DFEATURE_NEW_TEXT=$newText",
+                "-DFEATURE_NEW_TEXT=1",
                 base_path("vendor/$repo/LTTP_RND_GeneralBugfixes.asm"),
                 $romFile,
             ], base_path("vendor/$repo"));
@@ -120,7 +119,7 @@ class UpdateBuildRecord extends Command
 
                 return 301;
             }
-            
+
             $build_date = trim($git_log->getOutput());
         }
 

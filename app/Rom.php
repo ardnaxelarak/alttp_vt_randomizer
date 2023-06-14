@@ -14,8 +14,9 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2022-11-19', 'HASH' => '7cfca7a2bb6895a5a46ba1ed10e59a88'],
+        'base' => ['BUILD' => '2023-03-19', 'HASH' => '48bcfecb015d317a888de254f8ed2a5b'],
         'overworld' => ['BUILD' => '2023-02-26', 'HASH' => '2eb1a34e2f63f5d6c2c673fa3dbd3b95'],
+        'troll' => ['BUILD' => '2023-04-02', 'HASH' => '44aa37c6048a14a3b24794ce5e56e4ab'],
     ];
     const SIZE = 2097152;
 
@@ -655,6 +656,21 @@ class Rom
     public function setText(string $key, string $string, ...$flags): self
     {
         $this->text->setString($key, $string, ...$flags);
+
+        return $this;
+    }
+
+    /**
+     * Insert the specified text as a custom value
+     *
+     * @param string $key which text to insert
+     * @param string $string text to display
+     *
+     * @return $this
+     */
+    public function insertText(string $key, string $string, ...$flags): self
+    {
+        $this->text->insertString($key, $string, ...$flags);
 
         return $this;
     }
@@ -1927,8 +1943,8 @@ class Rom
         $this->text->setString('dark_sanctuary_yes', "{NOTEXT}", false);
         $this->text->setString('dark_sanctuary_no', "If you want that healing you're gonna need 20 rupees.");
 
-        $this->text->setString('menu_start_2', "{MENU}\n{SPEED0}\n≥@'s house\n Dark Chapel\n{CHOICE3}", false);
-        $this->text->setString('menu_start_3', "{MENU}\n{SPEED0}\n≥@'s house\n Dark Chapel\n Dark Mountain\n{CHOICE2}", false);
+        $this->text->setString('menu_start_2', "{MENU}\n{SPEED0}\n≥@'s House\n Dark Chapel\n{CHOICE3}", false);
+        $this->text->setString('menu_start_3', "{MENU}\n{SPEED0}\n≥@'s House\n Dark Chapel\n Dark Mountain\n{CHOICE2}", false);
 
         $this->text->setString('intro_main', "{INTRO}\n Episode  III\n{PAUSE3}\n A Link to\n   the Past\n"
             . "{PAUSE3}\nInverted\n  Randomizer\n{PAUSE3}\nAfter mostly disregarding what happened in the first two games,\n"

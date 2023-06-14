@@ -44,6 +44,25 @@ class Text
     }
 
     /**
+     * Inserts a specific string in the table, including
+     * encoding the string, at the end of the entries.
+     *
+     * @param string $id The ID of the string to update
+     * @param string $value the string to add to the table
+     *
+     * @return void
+     */
+    public function insertString(string $id, string $value, ...$flags)
+    {
+        if (array_key_exists($id, $this->text_array)) {
+            throw new Exception("Attempted to insert an extant text id ($id).");
+        }
+
+        $newEntry = $this->converter->convertDialogCompressed($value, ...$flags);
+        array_splice($this->text_array, -2, 0, [$id => $newEntry]);
+    }
+
+    /**
      * Updates a specific string in the table, given the
      * raw bytes
      *
@@ -164,7 +183,7 @@ class Text
 
             'kakariko_saharalasa_after_master_sword' => $converter->convertDialogCompressed("Cool sword!\n\n\n…\n\n\n…\n\n\nPlease save us"),
 
-            'kakariko_alert_guards' => $converter->convertDialogCompressed("GUARDS! HELP!\nThe creeper\n@ is here!"),
+            'kakariko_alert_guards' => $converter->convertDialogCompressed("Guards! Help!\nThe creeper\n@ is here!"),
             // 0x30
             'sahasrahla_quest_have_pendants' => $converter->convertDialogCompressed("{BOTTOM}\nCool beans, but I think you should mosey on over to the Lost Woods."),
 
@@ -214,7 +233,7 @@ class Text
 
             'sign_east_of_castle' => $converter->convertDialogCompressed("→ East Palace\n\n← Castle"),
 
-            'sign_north_of_lake' => $converter->convertDialogCompressed("\n Lake  Hiriah"),
+            'sign_north_of_lake' => $converter->convertDialogCompressed("\n Lake  Hylia"),
 
             'sign_desert_thief' => $converter->convertDialogCompressed("Don't talk to me or touch my sign!"),
 
@@ -860,9 +879,9 @@ class Text
 
             'kakariko_flophouse_man' => $converter->convertDialogCompressed("I sure do have a lot of beds.\n\nDid you know if you played the flute in the center of town things could happen?"),
 
-            'menu_start_2' => $converter->convertDialogCompressed("{MENU}\n{SPEED0}\n≥@'s house\n Sanctuary\n{CHOICE3}", false),
+            'menu_start_2' => $converter->convertDialogCompressed("{MENU}\n{SPEED0}\n≥@'s House\n Sanctuary\n{CHOICE3}", false),
 
-            'menu_start_3' => $converter->convertDialogCompressed("{MENU}\n{SPEED0}\n≥@'s house\n Sanctuary\n Mountain Cave\n{CHOICE2}", false),
+            'menu_start_3' => $converter->convertDialogCompressed("{MENU}\n{SPEED0}\n≥@'s House\n Sanctuary\n Mountain Cave\n{CHOICE2}", false),
 
             'menu_pause' => $converter->convertDialogCompressed("{SPEED0}\n≥Continue\n Save and Quit\n{CHOICE3}", false),
 
@@ -878,7 +897,7 @@ class Text
 
             'game_digging_no_follower' => $converter->convertDialogCompressed("Something is following you. I don't like."),
 
-            'menu_start_4' => $converter->convertDialogCompressed("{MENU}\n{SPEED0}\n≥@'s house\n Mountain Cave\n{CHOICE3}", false),
+            'menu_start_4' => $converter->convertDialogCompressed("{MENU}\n{SPEED0}\n≥@'s House\n Mountain Cave\n{CHOICE3}", false),
 
             'ganon_fall_in_alt' => $converter->convertDialogCompressed("You think you\nare ready to\nface me?\n\nI will not die\n\nunless you\ncomplete your\ngoals. Dingus!"),
 

@@ -32,7 +32,8 @@
     "z3/entrancerandomizer": "^0.6.3",
     "z3/overworldrandomizer": "^1.0.1.3",
     "z3/randomizer": "^31.0",
-    "z3/randomizer_ow": "^31.0"
+    "z3/randomizer_ow": "^31.0",
+    "z3/randomizer_troll": "^31.0"
   },
   "require-dev": {
     "spatie/laravel-ignition": "^1.0",
@@ -51,7 +52,19 @@
         "source": {
           "url": "https://github.com/ardnaxelarak/z3randomizer",
           "type": "git",
-          "reference": "ad44b610fb1ef853044c3109e28b1a84a3f24988"
+          "reference": "e1643698f073e601756d9fd3848911f61ca87975"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "z3/randomizer_troll",
+        "version": "31.0.11",
+        "source": {
+          "url": "https://github.com/ardnaxelarak/z3randomizer",
+          "type": "git",
+          "reference": "0867a32ad4cea37a3c79a8e3f80245fa69b59017"
         }
       }
     },
@@ -158,6 +171,9 @@
     },
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
 }

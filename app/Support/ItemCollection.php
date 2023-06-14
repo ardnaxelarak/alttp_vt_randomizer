@@ -695,6 +695,7 @@ class ItemCollection extends Collection
             || $this->canShootArrows($world)
             || $this->has('Hammer')
             || $this->has('FireRod')
+            || ($this->has('Shovel') && $world->isSpecialTroll())
             || $world->config('ignoreCanKillEscapeThings', false);
     }
 
@@ -720,7 +721,8 @@ class ItemCollection extends Collection
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
             || $this->canShootArrows($world)
             || $this->has('Hammer')
-            || $this->has('FireRod');
+            || $this->has('FireRod')
+            || ($this->has('Shovel') && $world->isSpecialTroll());
     }
 
     /**

@@ -87,6 +87,11 @@ class Boss
                 if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
+                if ($world->isSpecialTroll()) {
+                    if (!($items->has('Boomerang') || $items->has('Red Boomerang') || $items->has('Hookshot'))) {
+                        return false;
+                    }
+                }
                 return $items->hasRealSword($world) || $items->has('Hammer');
             }),
             new static("Agahnim", "Agahnim", function ($locations, $items) {
@@ -124,6 +129,9 @@ class Boss
                             || $items->has('CaneOfByrna'))));
             }),
             new static("Blind", "Blind", function ($locations, $items) use ($world) {
+                if ($world->isSpecialTroll()) {
+                    return $items->has('Shovel');
+                }
                 if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
@@ -156,9 +164,19 @@ class Boss
                     && ($items->has('Hammer') || $items->hasRealSword($world) || $items->canShootArrows($world));
             }),
             new static("Trinexx", "Trinexx", function ($locations, $items) use ($world) {
+                if ($world->isSpecialTroll()) {
+                    if (!($items->has('Bombos') && $items->has('Ether'))) {
+                        return false;
+                    }
+                    if (!($items->canExtendMagic($world, 2))) {
+                        return false;
+                    }
+                    return ($items->hasRealSword($world, 3) || $items->has('Hammer') || $items->has('Shovel')
+                        || ($items->canExtendMagic($world, 4) && $items->hasRealSword($world, 2)));
+                }
                 if (!($items->has('FireRod') && $items->has('IceRod'))) {
                     return false;
-                  }
+                }
                 if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 3)
                         && ($world->config('itemPlacement') !== 'basic' || $items->hasSpecialWeaponLevel($world, 4));

@@ -38,5 +38,7 @@ return [
         'item_functionality' => 'item.functionality',
         'starting_flute' => 'equipment.flute',
         'starting_boots' => 'equipment.boots',
+        'special_trolls' => 'special_trolls',
+        'spoilers' => 'spoilers',
     ],
 ];

@@ -55,7 +55,11 @@ class Randomizer implements RandomizerContract
                 ]));
             }
 
-            $world->setBranch('base');
+            if ($world->isSpecialTroll()) {
+                $world->setBranch('troll');
+            } else {
+                $world->setBranch('base');
+            }
         }
         $this->worlds = $worlds;
     }
@@ -117,6 +121,13 @@ class Randomizer implements RandomizerContract
         $advancement_items = $world->getAdvancementItems();
         $nice_items = $world->getNiceItems();
         $trash_items = $world->getItemPool();
+
+        if ($world->isSpecialTroll()) {
+            array_push($advancement_items, Item::get('HalfMagic', $world));
+            if (($key = array_search(Item::get('TwentyRupees', $world), $trash_items)) !== false) {
+                unset($trash_items[$key]);
+            }
+        }
 
         // @todo check a flag instead of logic here, as well as difficulty
         if (in_array($world->config('logic'), ['MajorGlitches', 'OverworldGlitches', 'NoLogic']) && $world->config('difficulty') !== 'custom') {
@@ -1201,6 +1212,33 @@ class Randomizer implements RandomizerContract
         }
 
         $world->setText('end_triforce', "{NOBORDER}\n" . Arr::first(fy_shuffle($strings['triforce'])));
+
+        if ($world->isSpecialTroll()) {
+            $world->setText('telepathic_tile_eastern_palace', "Health will not help you against the Armos Knights.");
+            $world->setText('telepathic_tile_desert_bonk_torch_room', "Who ever saw lanmolas fly so fast?");
+            $world->setText('telepathic_tile_tower_of_hera_entrance', "Please stop tickling my tail. It makes me freeze up and lower my defenses.\n\n          - Moldorm");
+            $world->setText('telepathic_tile_tower_of_hera_floor_4', "Hookshots and boomerangs are forbidden in my tower.\n\n          - Moldorm");
+
+            $world->setText('telepathic_tile_spectacle_rock', "With greater health and armor come shorter periods of refuge from damage.");
+            $world->setText('telepathic_tile_castle_tower', "Agahnim does not care for your foolish mortal patterns.");
+
+            $world->setText('telepathic_tile_palace_of_darkness', "Who weakened my mask?\n\n   - Helmasaur King");
+            $world->setText('telepathic_tile_swamp_entrance', "Please take your boots off before entering my room.\n\n          - Arrghus");
+            $world->setText('telepathic_tile_thieves_town_upstairs', "Secret power is said to be in the shovel.");
+            $world->setText('blind_by_the_light', "I'd really dig it if you didn't bring a shovel.");
+            $world->setText('telepathic_tile_ice_entrace', "Kholdstare's hypnotic eyes can be confusing...");
+            $world->setText('telepathic_tile_ice_stalfos_knights_room', "Bomb fuses may be shorter or longer than they appear.");
+            $world->setText('telepathic_tile_ice_large_room', "Does your sword feel heavier than usual?");
+            $world->setText('telepathic_tile_misery_mire', "Vitreous' small eyes require explosives to defeat.");
+            $world->setText('telepathic_tile_turtle_rock', "Trinexx has upped her defenses, requiring more powerful spells to defeat her. Consider whether you have enough magic reserves.");
+
+            $ganon_mock = 'Can you keep up with my changing weaknesses?';
+            $world->setText('ganon_phase_3_no_bow', $ganon_mock);
+            $world->setText('ganon_phase_3_no_silvers', $ganon_mock);
+            $world->setText('ganon_phase_3_no_silvers_alt', $ganon_mock);
+            $world->setText('ganon_phase_3_silvers', $ganon_mock);
+            $world->setText('end_triforce', "{NOBORDER}\n    Thanks for\n     playing!");
+        }
 
         return $this;
     }

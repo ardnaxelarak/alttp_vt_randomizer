@@ -591,6 +591,16 @@ abstract class World
         return in_array($this->config('mode.weapons'), $pseudo_modes);
     }
 
+    /*
+     * Get whether the world is a special troll seed
+     *
+     * @return bool
+     */
+    public function isSpecialTroll()
+    {
+        return $this->config('special_trolls', 'off') === 'on';
+    }
+
     /**
      * Get a region by Key name
      *
@@ -1246,6 +1256,25 @@ abstract class World
             }
 
             return $rom;
+        }
+
+        if ($this->isSpecialTroll()) {
+            $rom->insertText('ganon_fall_in_mushroom', "I smell a mushroom!");
+            $rom->insertText('ganon_phase_3_mushroom', "Your mushroom grants me invulnerability!");
+            $rom->insertText('ganon_phase_4_silvers',   "\n   SILVER ARROWS   ");
+            $rom->insertText('ganon_phase_4_boomerang', "\n     BOOMERANG     ");
+            $rom->insertText('ganon_phase_4_hookshot',  "\n     HOOKSHOT      ");
+            $rom->insertText('ganon_phase_4_bomb',      "\n       BOMB        ");
+            $rom->insertText('ganon_phase_4_powder',    "\n      POWDER       ");
+            $rom->insertText('ganon_phase_4_fire_rod',  "\n     FIRE ROD      ");
+            $rom->insertText('ganon_phase_4_ice_rod',   "\n      ICE ROD      ");
+            $rom->insertText('ganon_phase_4_bombos',    "\n      BOMBOS       ");
+            $rom->insertText('ganon_phase_4_ether',     "\n       ETHER       ");
+            $rom->insertText('ganon_phase_4_quake',     "\n       QUAKE       ");
+            $rom->insertText('ganon_phase_4_hammer',    "\n      HAMMER       ");
+            $rom->insertText('ganon_phase_4_bee',       "\n        BEE        ");
+            $rom->insertText('ganon_phase_4_somaria',   "\n      SOMARIA      ");
+            $rom->insertText('ganon_phase_4_byrna',     "\n       BYRNA       ");
         }
 
         foreach ($this->texts as $key => $value) {

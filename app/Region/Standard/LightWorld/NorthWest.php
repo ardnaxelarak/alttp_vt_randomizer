@@ -80,8 +80,8 @@ class NorthWest extends Region
 
         $this->shops["Mall - Snitch Lady East"]->clearInventory()
             ->addInventory(0, Item::get('Hammer', $world), 750)
-            ->addInventory(1, Item::get('Progressive Sword', $world), 450)
-            ->addInventory(2, Item::get('Progressive Bow', $world), 450);
+            ->addInventory(1, Item::get('ProgressiveSword', $world), 450)
+            ->addInventory(2, Item::get('ProgressiveBow', $world), 450);
         $this->shops["Mall - Snitch Lady West"]->clearInventory()
             ->addInventory(0, Item::get('Bombos', $world), 300)
             ->addInventory(1, Item::get('Ether', $world), 300)
