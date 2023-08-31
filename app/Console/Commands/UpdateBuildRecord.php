@@ -16,6 +16,7 @@ class UpdateBuildRecord extends Command
         'base' => 'z3/randomizer',
         'overworld' => 'z3/randomizer_ow',
         'troll' => 'z3/randomizer_troll',
+        'ow_troll' => 'z3/randomizer_ow_troll',
     ];
 
     /**
@@ -70,7 +71,7 @@ class UpdateBuildRecord extends Command
 
         $repo = static::BRANCHES[$branch];
 
-        if ($romFile === null) {
+        if ($romFile === null || trim($romFile) === '') {
             $romFile = tempnam(sys_get_temp_dir(), __CLASS__);
 
             if ($romFile === false) {

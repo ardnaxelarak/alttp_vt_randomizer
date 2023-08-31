@@ -17,6 +17,7 @@ class Rom
         'base' => ['BUILD' => '2023-03-19', 'HASH' => '48bcfecb015d317a888de254f8ed2a5b'],
         'overworld' => ['BUILD' => '2023-02-26', 'HASH' => '2eb1a34e2f63f5d6c2c673fa3dbd3b95'],
         'troll' => ['BUILD' => '2023-04-02', 'HASH' => '44aa37c6048a14a3b24794ce5e56e4ab'],
+        'ow_troll' => ['BUILD' => '2023-06-14', 'HASH' => '99a93bf4a93eea1ea7a107aa0eeef717'],
     ];
     const SIZE = 2097152;
 

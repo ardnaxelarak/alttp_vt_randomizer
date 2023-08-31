@@ -85,7 +85,11 @@ class OverworldRandomizer implements RandomizerContract
             if (!$world instanceof World) {
                 throw new \OutOfBoundsException;
             }
-            $world->setBranch(static::BRANCH);
+            if ($world->isSpecialTroll()) {
+                $world->setBranch('ow_troll');
+            } else {
+                $world->setBranch(static::BRANCH);
+            }
         }
         $this->worlds = $worlds;
     }
@@ -170,6 +174,10 @@ class OverworldRandomizer implements RandomizerContract
 
         if ($world->config('bonkShuffle') === 'on') {
             $flags[] = '--bonk_drops';
+        }
+
+        if ($world->isSpecialTroll()) {
+            $flags[] = '--trolls';
         }
 
         if ($world->config('potteryShuffle', 'none') !== 'none') {
