@@ -172,8 +172,9 @@ class NorthEast extends Region
                             || $this->world->config('canMirrorClip', false))
                         && $this->world->getRegion('West Death Mountain')->canEnter($locations, $items))
                     || ($items->has('Hammer') && $items->canLiftRocks() && $items->has('MoonPearl'))
-                    || (($items->canLiftDarkRocks() || ($this->world->config('canSuperSpeed', false) && $items->canSpinSpeed())
-                        || ($items->has('MagicMirror') && $this->world->config('canMirrorClip', false)))
+                    || (($items->canLiftDarkRocks() || ($this->world->getRegion('West Death Mountain')->canEnter($locations, $items)
+                        && ($this->world->config('canSuperSpeed', false) && $items->canSpinSpeed()
+                                || ($items->has('MagicMirror') && $this->world->config('canMirrorClip', false)))))
                         && $items->has('MoonPearl')
                         && ($items->has('Hammer') || $items->has('Flippers')
                             || ($items->has('MagicMirror') && $this->world->config('canMirrorWrap', false) && $items->canLiftRocks())
@@ -183,6 +184,13 @@ class NorthEast extends Region
         };
 
         $this->prize_location->setRequirements(function ($locations, $items) {
+            if (
+                $this->world->config('goal') == 'ganonhunt'
+                && (!$items->has('TriforcePiece', $this->world->config('item.Goal.Required')))
+            ) {
+                return false;
+            }
+
             if (
                 $this->world->config('goal') == 'dungeons'
                 && (!$items->has('PendantOfCourage')

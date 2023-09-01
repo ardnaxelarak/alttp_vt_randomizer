@@ -14,10 +14,10 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2023-03-19', 'HASH' => '48bcfecb015d317a888de254f8ed2a5b'],
+        'base' => ['BUILD' => '2023-08-31', 'HASH' => '8c06d2d86ef995990baa316d4a3d576d'],
         'overworld' => ['BUILD' => '2023-02-26', 'HASH' => '2eb1a34e2f63f5d6c2c673fa3dbd3b95'],
         'troll' => ['BUILD' => '2023-04-02', 'HASH' => '44aa37c6048a14a3b24794ce5e56e4ab'],
-        'ow_troll' => ['BUILD' => '2023-06-14', 'HASH' => '99a93bf4a93eea1ea7a107aa0eeef717'],
+        'ow_troll' => ['BUILD' => '2023-06-15', 'HASH' => '99a93bf4a93eea1ea7a107aa0eeef717'],
     ];
     const SIZE = 2097152;
 
@@ -359,6 +359,18 @@ class Rom
     }
 
     /**
+     * Enable HUD item counter
+     *
+     * @param bool  $enable  enable or disable collection count / total item count on HUD
+     *
+     * @return void
+     */
+    public function enableHudItemCounter(bool $enable = false): void
+    {
+        $this->write(0x180039, pack('C', $enable ? 0x01 : 0x00));
+    }
+
+    /**
      * Set starting time for HUD clock.
      *
      * @param int $seconds time in seconds
@@ -590,15 +602,36 @@ class Rom
             case 'yes':
                 $byte = pack('C*', 0x01);
                 break;
-            case 'custom':
+            case 'crystals_only':
                 $byte = pack('C', 0x04);
+                break;
+            case 'triforce_pieces':
+                $byte = pack('C', 0x05);
+                break;
+            case 'lightspeed':
+                // light world only, pull ped, kill aga 1
+                $byte = pack('C', 0x06);
+                break;
+            case 'crystals_bosses':
+                $byte = pack('C', 0x07);
+                break;
+            case 'bosses_only':
+                $byte = pack('C', 0x08);
+                break;
+            case 'dungeons_no_agahnim':
+                // all dungeons, aga 1 not required
+                $byte = pack('C', 0x09);
+                break;
+            case 'completionist':
+                // 100% collection rate, all dungeons
+                $byte = pack('C', 0x0B);
                 break;
             case 'no':
             default:
                 $byte = pack('C*', 0x00);
                 break;
         }
-        $this->write(0x18003E, $byte);
+        $this->write(0x1801A8, $byte);
 
         return $this;
     }
@@ -614,34 +647,19 @@ class Rom
     {
         switch ($color) {
             case 'blue':
-                $byte = 0x2C;
-                $file_byte = 0x0D;
+                $byte = 0x01;
                 break;
             case 'green':
-                $byte = 0x3C;
-                $file_byte = 0x19;
+                $byte = 0x02;
                 break;
             case 'yellow':
-                $byte = 0x28;
-                $file_byte = 0x09;
+                $byte = 0x03;
                 break;
             case 'red':
             default:
-                $byte = 0x24;
-                $file_byte = 0x05;
+                $byte = 0x00;
         }
-        $this->write(0x6FA1E, pack('C*', $byte));
-        $this->write(0x6FA20, pack('C*', $byte));
-        $this->write(0x6FA22, pack('C*', $byte));
-        $this->write(0x6FA24, pack('C*', $byte));
-        $this->write(0x6FA26, pack('C*', $byte));
-        $this->write(0x6FA28, pack('C*', $byte));
-        $this->write(0x6FA2A, pack('C*', $byte));
-        $this->write(0x6FA2C, pack('C*', $byte));
-        $this->write(0x6FA2E, pack('C*', $byte));
-        $this->write(0x6FA30, pack('C*', $byte));
-
-        $this->write(0x65561, pack('C*', $file_byte));
+        $this->write(0x187020, pack('C*', $byte));
 
         return $this;
     }
@@ -842,6 +860,7 @@ class Rom
                 $byte = 0x02;
                 break;
             case 'MajorGlitches':
+            case 'HybridMajorGlitches':
                 $byte = 0x01;
                 break;
             case 'off':
@@ -1559,8 +1578,6 @@ class Rom
     public function setOpenMode(bool $enable = true): self
     {
         $this->setSewersLampCone(!$enable);
-        $this->setLightWorldLampCone(false);
-        $this->setDarkWorldLampCone(false);
         $this->initial_sram->preOpenCastleGate();
         $this->initial_sram->setProgressIndicator(0x02);
         $this->initial_sram->setProgressFlags(0x14);
@@ -1577,8 +1594,6 @@ class Rom
     public function setStandardMode(): self
     {
         $this->setSewersLampCone(true);
-        $this->setLightWorldLampCone(false);
-        $this->setDarkWorldLampCone(false);
         $this->initial_sram->setProgressIndicator(0x00);
         $this->initial_sram->setProgressFlags(0x00);
         $this->initial_sram->setStartingEntrance(0x00);
@@ -2031,7 +2046,8 @@ class Rom
     /**
      * Enable text box to show with free roaming items
      *
-     * ---o bmcs
+     * --po bmcs
+     * p - enabled for free crystals
      * o - enabled for outside dungeon items
      * b - enabled for inside big key items
      * m - enabled for inside map items
@@ -2074,12 +2090,11 @@ class Rom
     {
         $this->write(0x18003F, pack('C*', $enable ? 0x01 : 0x00)); // Hammer Ganon
         $this->write(0x180041, pack('C*', $enable ? 0x01 : 0x00)); // Swordless Medallions
-        if ($enable) {
-            $this->initial_sram->setSwordlessCurtains();
-        }
-
         $this->setHammerTablet($enable);
         $this->setHammerBarrier(false);
+        if ($enable === true) {
+            $this->initial_sram->setSwordlessCurtains();
+        }
 
         return $this;
     }
@@ -2281,33 +2296,6 @@ class Rom
         return $this;
     }
 
-    /**
-     * Enable lampless light cone in Light World Dungeons
-     *
-     * @param bool $enable switch on or off
-     *
-     * @return $this
-     */
-    public function setLightWorldLampCone(bool $enable = true): self
-    {
-        $this->write(0x180039, pack('C*', $enable ? 0x01 : 0x00));
-
-        return $this;
-    }
-
-    /**
-     * Enable lampless light cone in Dark World Dungeons
-     *
-     * @param bool $enable switch on or off
-     *
-     * @return $this
-     */
-    public function setDarkWorldLampCone(bool $enable = true): self
-    {
-        $this->write(0x18003A, pack('C*', $enable ? 0x01 : 0x00));
-
-        return $this;
-    }
 
     /**
      * Enable/Disable the ROM Hack that doesn't leave Link stranded in DW
@@ -2337,12 +2325,12 @@ class Rom
     {
         if ($enable) {
             $this->text->setString('intro_main', "{INTRO}\n Episode  III\n{PAUSE3}\n A Link to\n   the Past\n"
-            . "{PAUSE3}\n  Randomizer\n{PAUSE3}\nAfter mostly disregarding what happened in the first two games.\n"
-            . "{PAUSE3}\nLink awakens to his uncle leaving the house.\n{PAUSE3}\nHe just runs out the door,\n"
-            . "{PAUSE3}\ninto the rainy night.\n{PAUSE3}\n{CHANGEPIC}\nGanon has moved around all the items in Hyrule.\n"
-            . "{PAUSE7}\nYou will have to find all the items necessary to beat Ganon.\n"
-            . "{PAUSE7}\nThis is your chance to be a hero.\n{PAUSE3}\n{CHANGEPIC}\n"
-            . "You must get the 7 crystals to beat Ganon.\n{PAUSE9}\n{CHANGEPIC}", false);
+                . "{PAUSE3}\n  Randomizer\n{PAUSE3}\nAfter mostly disregarding what happened in the first two games.\n"
+                . "{PAUSE3}\nLink awakens to his uncle leaving the house.\n{PAUSE3}\nHe just runs out the door,\n"
+                . "{PAUSE3}\ninto the rainy night.\n{PAUSE3}\n{CHANGEPIC}\nGanon has moved around all the items in Hyrule.\n"
+                . "{PAUSE7}\nYou will have to find all the items necessary to beat Ganon.\n"
+                . "{PAUSE7}\nThis is your chance to be a hero.\n{PAUSE3}\n{CHANGEPIC}\n"
+                . "You must get the 7 crystals to beat Ganon.\n{PAUSE9}\n{CHANGEPIC}", false);
         }
 
         return $this;
@@ -2494,7 +2482,7 @@ class Rom
      */
     public function setTowerCrystalRequirement(int $crystals = 7): self
     {
-        $this->write(0x18005E, pack('C', max(min($crystals, 7), 0)));
+        $this->write(0x18019A, pack('C', max(min($crystals, 7), 0)));
 
         return $this;
     }
@@ -2508,7 +2496,7 @@ class Rom
      */
     public function setGanonCrystalRequirement(int $crystals = 7): self
     {
-        $this->write(0x18005F, pack('C', max(min($crystals, 7), 0)));
+        $this->write(0x1801A6, pack('C', max(min($crystals, 7), 0)));
 
         return $this;
     }
@@ -2616,9 +2604,58 @@ class Rom
         return $this;
     }
 
+    /**
+     * Write the initial save data table.
+     *
+     * @return $this
+     */
     public function writeInitialSram(): self
     {
         $this->write(0x183000, pack('C*', ...$this->initial_sram->getInitialSram()));
+
+        return $this;
+    }
+
+    /**
+     * Write the total number of collectable items in the game. This applies to
+     * items with the "item get" animation but not dungeon prizes, absorbable keys,
+     * or shop items.
+     *
+     * @param int $count total number of items
+     *
+     * @return $this
+     */
+    public function setTotalItemCount(int $count): self
+    {
+        $this->write(0x180196, pack('v', $count));
+
+        return $this;
+    }
+
+    /**
+     * Set Zelda Save and Quit Mirror Fix
+     *
+     * @param bool $enable
+     *
+     * @return $this
+     */
+    public function setZeldaMirrorFix(bool $enable = true): self
+    {
+        $this->write(0x159A8, pack('C*', $enable ? 0x04 : 0x02));
+
+        return $this;
+    }
+
+    /**
+     * Set CPU speed written to MEMSEL on boot.
+     *
+     * @param bool $enable
+     *
+     * @return $this
+     */
+    public function enableFastRom(bool $enable = true): self
+    {
+        $this->write(0x187032, pack('C*', $enable ? 0x01 : 0x00));
 
         return $this;
     }

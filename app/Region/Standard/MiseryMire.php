@@ -30,6 +30,7 @@ class MiseryMire extends Region
         'KeyD6',
         'Map',
         'MapD6',
+        'Crystal6',
     ];
 
     /**
@@ -55,7 +56,7 @@ class MiseryMire extends Region
             new Location\Chest("Misery Mire - Spike Chest", [0xE9DA], null, $this),
             new Location\Drop("Misery Mire - Boss", [0x180158], null, $this),
 
-            new Location\Prize\Crystal("Misery Mire - Prize", [null, 0x120A2, 0x53F48, 0x53F49, 0x180057, 0x180075, 0xC703], null, $this),
+            new Location\Prize\Crystal("Misery Mire - Prize", [null, 0x120A2, 0x53E84, 0x53E85, 0x180057, 0x180077, 0xC703], null, $this),
         ]);
         $this->locations->setChecksForWorld($world->id);
         $this->prize_location = $this->locations["Misery Mire - Prize"];
@@ -88,13 +89,17 @@ class MiseryMire extends Region
 
         $this->locations["Misery Mire - Big Key Chest"]->setRequirements(function ($locations, $items) {
             return $items->canLightTorches()
-                && (($locations["Misery Mire - Compass Chest"]->hasItem(Item::get('BigKeyD6', $this->world)) && $items->has('KeyD6', 2))
+                && ((($locations["Misery Mire - Compass Chest"]->hasItem(Item::get('BigKeyD6', $this->world))
+                    || $locations["Misery Mire - Big Key Chest"]->hasItem(Item::get('BigKeyD6', $this->world))) 
+                        && $items->has('KeyD6', 2))
                     || $items->has('KeyD6', 3));
         });
 
         $this->locations["Misery Mire - Compass Chest"]->setRequirements(function ($locations, $items) {
             return $items->canLightTorches()
-                && (($locations["Misery Mire - Big Key Chest"]->hasItem(Item::get('BigKeyD6', $this->world)) && $items->has('KeyD6', 2))
+                && ((($locations["Misery Mire - Big Key Chest"]->hasItem(Item::get('BigKeyD6', $this->world))
+                    || $locations["Misery Mire - Compass Chest"]->hasItem(Item::get('BigKeyD6', $this->world))) 
+                        && $items->has('KeyD6', 2))
                     || $items->has('KeyD6', 3));
         });
 

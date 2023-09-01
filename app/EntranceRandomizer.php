@@ -13,7 +13,7 @@ use Symfony\Component\Process\Process;
 class EntranceRandomizer implements RandomizerContract
 {
 	const LOGIC = -1;
-	const VERSION = '0.6.3';
+	const VERSION = '31.1';
 	const BRANCH = 'base';
 	protected $world;
 	/** @var array */
@@ -29,6 +29,8 @@ class EntranceRandomizer implements RandomizerContract
 		'dungeons' => 'dungeons',
 		'pedestal' => 'pedestal',
 		'triforce-hunt' => 'triforcehunt',
+		'ganonhunt' => 'ganonhunt',
+		'completionist' => 'completionist',
 	];
 	/** @var array */
 	private $swords_lookup = [
@@ -102,9 +104,17 @@ class EntranceRandomizer implements RandomizerContract
 			$flags[] = '--hint';
 		}
 
+		if ($this->world->config('rom.hudItemCounter') === true) {
+			$flags[] = '--huditemcounter';
+		}
+
+		if ($this->world->config('fastrom', true) === false) {
+			$flags[] = '--nofastrom';
+		}
+
 		$proc = new Process(array_merge(
 			[
-				'python3',
+				'python3.10',
 				base_path('vendor/z3/entrancerandomizer/EntranceRandomizer.py'),
 				'--mode',
 				$mode,
@@ -138,8 +148,8 @@ class EntranceRandomizer implements RandomizerContract
 		$proc->run();
 
 		if (!$proc->isSuccessful()) {
-			Log::debug($proc->getOutput());
-			Log::debug($proc->getErrorOutput());
+			Log::error($proc->getOutput());
+			Log::error($proc->getErrorOutput());
 			throw new \Exception("Unable to generate");
 		}
 

@@ -82,7 +82,7 @@ return [
         'options' => [
             'items' => '100% Inventory',
             'locations' => '100% Locations',
-            'none' => 'Beatable',
+            'none' => 'Beatable Only',
         ],
     ],
     'glitches_required' => [
@@ -90,6 +90,7 @@ return [
         'options' => [
             'none' => 'None',
             'overworld_glitches' => 'Overworld Glitches',
+            'hybrid_major_glitches' => 'Hybrid Major Glitches',
             'major_glitches' => 'Major Glitches',
             'no_logic' => 'No Logic',
         ],
@@ -105,6 +106,8 @@ return [
             'triforce-hunt' => 'Triforce Pieces',
             'trinity' => 'Trinity',
             'ambroz1a' => 'Ambroz1a',
+            'ganonhunt' => 'Ganonhunt',
+            'completionist' => 'Completionist',
         ],
     ],
     'tower_open' => [

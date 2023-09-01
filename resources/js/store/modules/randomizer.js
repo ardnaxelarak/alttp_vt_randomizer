@@ -244,6 +244,9 @@ export default {
       if (state.goal.value === "dungeons") {
         commit("setGanonOpen", "7");
       }
+      if (state.goal.value === "completionist") {
+        commit("setAccessibility", "locations");
+      }
     },
     setGanonOpen({ commit, state }, value) {
       commit("setGanonOpen", value);

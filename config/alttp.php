@@ -24,6 +24,7 @@ return [
         ],
         'rom' => [
             'genericKeys' => false,
+            'hudItemCounter' => false,
         ],
         'spoil' => [
             'BootsLocation' => false,
@@ -59,6 +60,17 @@ return [
                 ],
                 'Goal' => [
                     'Required' => 8,
+                    'Icon' => 'triforce',
+                ],
+            ],
+        ],
+        'ganonhunt' => [
+            'item' => [
+                'count' => [
+                    'TriforcePiece' => 50,
+                ],
+                'Goal' => [
+                    'Required' => 40,
                     'Icon' => 'triforce',
                 ],
             ],
@@ -604,6 +616,7 @@ return [
             'glitches_required' => [
                 'none' => 'None',
                 'overworld_glitches' => 'Overworld Glitches',
+                'hybrid_major_glitches' => 'Hybrid Major Glitches',
                 'major_glitches' => 'Major Glitches',
                 'no_logic' => 'No Logic',
             ],
@@ -654,6 +667,8 @@ return [
                 'triforce-hunt' => 'Triforce Pieces',
                 'trinity' => 'Trinity',
                 'ambroz1a' => 'Ambroz1a',
+                'ganonhunt' => 'Ganonhunt',
+                'completionist' => 'Completionist',
             ],
             'tower_open' => [
                 '0' => 'none',
@@ -853,9 +868,10 @@ return [
         'daily_weights' => [
             'glitches_required' => [
                 'none' => 88,
-                'overworld_glitches' => 10,
-                'major_glitches' => 2,
-                'no_logic' => 0,
+                'overworld_glitches' => 7,
+                'hybrid_major_glitches' => 3,
+                'major_glitches' => 1,
+                'no_logic' => 1,
             ],
             'item_placement' => [
                 'basic' => 60,
@@ -904,6 +920,8 @@ return [
                 'triforce-hunt' => 10,
                 'trinity' => 10,
                 'ambroz1a' => 3,
+                'ganonhunt' => 0,
+                'completionist' => 0,
             ],
             'tower_open' => [
                 '0' => 5,

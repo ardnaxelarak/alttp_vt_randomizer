@@ -102,6 +102,10 @@ class Randomizer implements RandomizerContract
      */
     public function prepareWorld(World $world): void
     {
+        if ($world->config('goal') == 'completionist' && $world->config('accessibility') != 'locations') {
+            throw new \Exception("The Completionist goal requires 100% locations accessibility");
+        }
+
         switch ($world->config('goal')) {
             case 'pedestal':
                 $world->getLocation("Master Sword Pedestal")->setItem(Item::get('Triforce', $world));
@@ -109,6 +113,8 @@ class Randomizer implements RandomizerContract
             case 'ganon':
             case 'fast_ganon':
             case 'dungeons':
+            case 'ganonhunt':
+            case 'completionist':
                 $world->getLocation("Ganon")->setItem(Item::get('Triforce', $world));
                 break;
             case 'trinity':
@@ -130,7 +136,7 @@ class Randomizer implements RandomizerContract
         }
 
         // @todo check a flag instead of logic here, as well as difficulty
-        if (in_array($world->config('logic'), ['MajorGlitches', 'OverworldGlitches', 'NoLogic']) && $world->config('difficulty') !== 'custom') {
+        if (in_array($world->config('logic'), ['MajorGlitches', 'HybridMajorGlitches', 'OverworldGlitches', 'NoLogic']) && $world->config('difficulty') !== 'custom') {
             $world->addPreCollectedItem(Item::get('PegasusBoots', $world));
             foreach ($advancement_items as $key => $item) {
                 if ($item == Item::get('PegasusBoots', $world)) {
@@ -1157,16 +1163,16 @@ class Randomizer implements RandomizerContract
 
         switch ($world->config('goal')) {
             case 'ganon':
-                $ganon_crystals_singular = 'To beat Ganon you must collect %d crystal and defeat his minion at the top of his tower.';
-                $ganon_crystals_plural = 'To beat Ganon you must collect %d crystals and defeat his minion at the top of his tower.';
+                $ganon_crystals_singular = 'To beat Ganon you must collect %d Crystal and defeat his minion at the top of his tower.';
+                $ganon_crystals_plural = 'To beat Ganon you must collect %d Crystals and defeat his minion at the top of his tower.';
                 break;
             case 'trinity':
                 $ganon_crystals_singular = 'Three ways to victory! %d crystals to beat Ganon. Get to it!';
                 $ganon_crystals_plural = 'Three ways to victory! %d crystals to beat Ganon. Get to it!';
                 break;
             default:
-                $ganon_crystals_singular = 'You need %d crystal to beat Ganon.';
-                $ganon_crystals_plural = 'You need %d crystals to beat Ganon.';
+                $ganon_crystals_singular = 'You need %d Crystal to beat Ganon.';
+                $ganon_crystals_plural = 'You need %d Crystals to beat Ganon.';
                 break;
         }
 
@@ -1181,6 +1187,12 @@ class Randomizer implements RandomizerContract
                 break;
             case 'fast_ganon':
                 $ganon_require = sprintf($ganon_string, $world->config('crystals.ganon'));
+                $world->setText('sign_ganon', $ganon_require);
+                $world->setText('ganon_fall_in_alt', "You think you\nare ready to\nface me?\n\nI will not die\n\nunless you\ncomplete your\ngoals. Dingus!");
+
+                break;
+            case 'ganonhunt':
+                $ganon_require = sprintf('To beat Ganon you must collect %d Triforce Pieces.', $world->config('item.Goal.Required'));
                 $world->setText('sign_ganon', $ganon_require);
                 $world->setText('ganon_fall_in_alt', "You think you\nare ready to\nface me?\n\nI will not die\n\nunless you\ncomplete your\ngoals. Dingus!");
 
@@ -1205,7 +1217,11 @@ class Randomizer implements RandomizerContract
                 break;
             case 'dungeons':
                 $world->setText('sign_ganon', "You need to defeat all of Ganon's bosses.");
+                $world->setText('ganon_fall_in_alt', "You think you\nare ready to\nface me?\n\nI will not die\n\nunless you\ncomplete your\ngoals. Dingus!");
 
+                break;
+            case 'completionist':
+                $world->setText('sign_ganon', "You need to collect EVERY item and defeat EVERY boss.");
                 // no-break
             default:
                 $world->setText('ganon_fall_in_alt', "You think you\nare ready to\nface me?\n\nI will not die\n\nunless you\ncomplete your\ngoals. Dingus!");

@@ -73,6 +73,12 @@ class NorthEastTest extends TestCase
             ["Ganon", false, []],
             ["Ganon", false, [], ['MoonPearl']],
             ["Ganon", false, [], ['DefeatAgahnim2']],
+            ["Ganon", false, [], ['FireRod', 'Lamp']],
+            ["Ganon", false, [], ['AnySword']],
+
+            ["Pyramid", false, ["MoonPearl", "MagicMirror"]],
+            ["Pyramid", true, ["PegasusBoots","MoonPearl", "MagicMirror"]],
+            ["Pyramid", true, ["Lamp", "ProgressiveGlove", "MoonPearl", "MagicMirror"]],
         ];
     }
 }

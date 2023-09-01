@@ -108,7 +108,7 @@ abstract class World
             $collected_items->setChecksForWorld($this->id);
             return $collected_items->has('Triforce')
                 || ($this->regions['North East Light World']->canEnter($this->locations, $collected_items) &&
-                    $collected_items->has('TriforcePiece', $this->config('item.Goal.Required')));
+                    ($this->config('goal', 'ganon') == 'triforce-hunt' && $collected_items->has('TriforcePiece', $this->config('item.Goal.Required'))));
         };
 
         // Handle configuration options that map to switches.
@@ -141,12 +141,45 @@ abstract class World
 
         $this->config['region.bossNormalLocation'] = $this->config('bossItems', 'any') === 'any';
 
-        if (in_array($this->config('logic'), ['MajorGlitches', 'NoLogic']) || $this->config('canOneFrameClipUW', false)) {
+        $glitched_logic = (in_array($this->config('logic', 'NoGlitches'), ['HybridMajorGlitches', 'MajorGlitches', 'NoLogic'])
+            || $this->config('canOneFrameClipUW', false));
+
+        if ($glitched_logic) {
             $free_item_menu |= 0x10;
         }
 
         $this->config['rom.freeItemText'] = $free_item_text;
         $this->config['rom.freeItemMenu'] = $free_item_menu;
+
+        $wild_keys = $this->config('region.wildKeys', false);
+        $wild_big_keys = $this->config('region.wildBigKeys', false);
+        $wild_compasses = $this->config('region.wildCompasses', false);
+        $wild_maps = $this->config('region.wildMaps', false);
+
+        $this->config['rom.vanillaKeys'] = $this->config('rom.vanillaKeys', (!$wild_keys && $glitched_logic));
+        $this->config['rom.vanillaBigKeys'] = $this->config('rom.vanillaBigKeys', (!$wild_big_keys && $glitched_logic));
+        $this->config['rom.vanillaCompasses'] = $this->config('rom.vanillaCompasses', (!$wild_compasses && $glitched_logic));
+        $this->config['rom.vanillaMaps'] = $this->config('rom.vanillaMaps', (!$wild_maps && $glitched_logic));
+
+        # handle empty config values that might be sent from customizer
+        if ($this->config('item.overflow.count.Sword', null) === '') {
+            unset($this->config['item.overflow.count.Sword']);
+        }
+        if ($this->config('item.overflow.count.Armor', null) === '') {
+            unset($this->config['item.overflow.count.Armor']);
+        }
+        if ($this->config('item.overflow.count.Shield', null) === '') {
+            unset($this->config['item.overflow.count.Shield']);
+        }
+        if ($this->config('item.overflow.count.Bow', null) === '') {
+            unset($this->config['item.overflow.count.Bow']);
+        }
+        if ($this->config('item.overflow.count.BossHeartContainer', null) === '') {
+            unset($this->config['item.overflow.count.BossHeartContainer']);
+        }
+        if ($this->config('item.overflow.count.PieceOfHeart', null) === '') {
+            unset($this->config['item.overflow.count.PieceOfHeart']);
+        }
 
         switch ($this->config('item.pool')) {
             case 'superexpert':
@@ -372,15 +405,6 @@ abstract class World
         return $copy;
     }
 
-    /**
-     * Get a copy of config array for this world (for testing.)
-     *
-     * @return array
-     */
-    public function getConfig(): array {
-        $config_copy = $this->config;
-        return $config_copy;
-    }
 
     /**
      * Determine the junk fill range of Ganon's Tower for this world. This
@@ -393,7 +417,7 @@ abstract class World
         if (
             $this->config['logic'] === 'NoLogic'
             || ($this->config['mode.state'] !== 'inverted'
-                && in_array($this->config['logic'], ['OverworldGlitches', 'MajorGlitches']))
+                && in_array($this->config['logic'], ['OverworldGlitches', 'HybridMajorGlitches', 'MajorGlitches']))
         ) {
             return [0, 0];
         }
@@ -649,7 +673,7 @@ abstract class World
      * Get Locations considered collectable. I.E. can contain items that Link can have.
      * This is cached for faster retrevial
      *
-     * @return \ALttP\Support\LocationCollection
+     * @return ALttP\Support\LocationCollection
      */
     public function getCollectableLocations(): LocationCollection
     {
@@ -664,6 +688,17 @@ abstract class World
         }
 
         return $this->collectable_locations;
+    }
+
+    /**
+     * Get total item locations. This includes everything with the "item get" animmation
+     * except for dungeon prizes and shop items.
+     *
+     * @return int
+     */
+    public function getTotalItemCount(): int
+    {
+        return count($this->getCollectableLocations()) - 45;
     }
 
     /**
@@ -1382,16 +1417,24 @@ abstract class World
             case 'dungeons':
                 $rom->setGanonInvincible('dungeons');
                 break;
+            case 'ganonhunt':
+                $rom->initial_sram->preOpenPyramid();
+                $rom->setGanonInvincible('triforce_pieces');
+                break;
             case 'trinity':
                 $rom->enableTriforceTurnIn(true);
 
                 // no break
             case 'fast_ganon':
                 $rom->initial_sram->preOpenPyramid();
+                $rom->setGanonInvincible('crystals_only');
+                break;
+            case 'completionist':
+                $rom->setGanonInvincible('completionist');
+                break;
 
-                // no break
             default:
-                $rom->setGanonInvincible('custom');
+                $rom->setGanonInvincible('crystals_only');
                 break;
         }
 
@@ -1448,6 +1491,7 @@ abstract class World
         if ($this->config('mode.state') !== 'inverted') {
             switch ($this->config('rom.logicMode', $this->config['logic'])) {
                 case 'MajorGlitches':
+                case 'HybridMajorGlitches':
                 case 'NoLogic':
                 case 'OverworldGlitches':
                     $rom->setLockAgahnimDoorInEscape(false);
@@ -1487,6 +1531,7 @@ abstract class World
         $rom->initial_sram->setStartingTimer($this->config('rom.timerStart', 0) ?: 0);
 
         switch ($this->config('rom.logicMode', $this->config['logic'])) {
+            case 'HybridMajorGlitches':
             case 'MajorGlitches':
             case 'NoLogic':
                 $rom->setSwampWaterLevel(false);
@@ -1497,6 +1542,7 @@ abstract class World
                 $rom->setWarningFlags(bindec('01100000'));
                 $rom->setAllowAccidentalMajorGlitch(true);
                 $rom->setSQEGFix(false);
+                $rom->setZeldaMirrorFix(false);
                 break;
             case 'OverworldGlitches':
                 $rom->setPreAgahnimDarkWorldDeathInDungeon(false);
@@ -1506,6 +1552,7 @@ abstract class World
                 $rom->setWarningFlags(bindec('01000000'));
                 $rom->setAllowAccidentalMajorGlitch(true);
                 $rom->setSQEGFix(false);
+                $rom->setZeldaMirrorFix(false);
                 break;
             case 'NoGlitches':
             default:
@@ -1513,8 +1560,12 @@ abstract class World
                 $rom->setWorldOnAgahnimDeath(true);
                 $rom->setAllowAccidentalMajorGlitch(false);
                 $rom->setSQEGFix(true);
+                $rom->setZeldaMirrorFix(true);
                 break;
         }
+
+        $triforce_hud = in_array($this->config['goal'], ['triforce-hunt', 'ganonhunt']);
+        $rom->enableHudItemCounter($triforce_hud ? false : $this->config('rom.hudItemCounter', $this->config('goal', 'ganon') == 'completionist'));
 
         if ($this->config('crystals.tower') === 0) {
             $rom->initial_sram->preOpenGanonsTower();
@@ -1524,9 +1575,14 @@ abstract class World
 
         $rom->setMysteryMasking($this->config('spoilers', 'on') === 'mystery');
 
+        // $rom->setPseudoBoots($this->config('pseudoboots', false));
+
+        $rom->enableFastRom($this->config('fastrom', true));
+
         $rom->writeCredits();
         $rom->writeText();
         $rom->writeInitialSram();
+        $rom->setTotalItemCount($this->getTotalItemCount());
 
         if ($save) {
             $hash = $this->saveSeedRecord();
@@ -1549,7 +1605,8 @@ abstract class World
      *
      * @return void
      */
-    public function setEscapeFills(Rom $rom) {
+    public function setEscapeFills(Rom $rom)
+    {
         $uncle_items = new ItemCollection;
         $uncle_items->setChecksForWorld($this->id);
         $uncle_items = $uncle_items->addItem($this->getLocation("Link's Uncle")->getItem());
@@ -1567,9 +1624,11 @@ abstract class World
             $rom->setUncleSpawnRefills(0, 0, 0);
             $rom->setZeldaSpawnRefills(0, 0, 0);
             $rom->setMantleSpawnRefills(0, 0, 0);
-        } elseif ($uncle_items->has('FireRod')
+        } elseif (
+            $uncle_items->has('FireRod')
             || $uncle_items->has('CaneOfSomaria')
-            || ($uncle_items->has('CaneOfByrna') && $this->config('enemizer.enemyHealth', 'default') == 'default')) {
+            || ($uncle_items->has('CaneOfByrna') && $this->config('enemizer.enemyHealth', 'default') == 'default')
+        ) {
             $rom->setEscapeFills(0b00000100);
             $rom->setUncleSpawnRefills(
                 $this->config('rom.EscapeRefills.Uncle.Magic', 0x80),
@@ -1796,5 +1855,36 @@ abstract class World
             || $this->config('enemizer.enemyDamage') != 'default'
             || $this->config('enemizer.enemyHealth') != 'default'
             || $this->config('enemizer.potShuffle') != 'off';
+    }
+
+    /**
+     * Get a World config value for testing.
+     *
+     * @return string|int|bool
+     */
+    public function testGetConfig(string $config): string|int|bool
+    {
+        return $this->config[$config];
+    }
+
+    /**
+     * Get a World config clone for testing.
+     *
+     * @return array
+     */
+    public function testGetConfigClone(): array
+    {
+        $config_clone = $this->config;
+        return $config_clone;
+    }
+
+    /**
+     * Set a World config value for testing.
+     *
+     * @return void
+     */
+    public function testSetConfig(string $config, string|int|bool $value): void
+    {
+        $this->config[$config] = $value;
     }
 }

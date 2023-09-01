@@ -95,14 +95,14 @@ class RomTest extends TestCase
      */
     public function testSetStartingEquipment(array $result, array $items)
     {
-        $world = World::factory(1);
+        $world = World::factory(1, 'standard', ['difficulty' => 'test_rules', 'logic' => 'NoGlitches']);
         $object_items = array_map(function ($item_name) use ($world) {
             return Item::get($item_name, $world);
         }, $items);
 
         $item_collection = new ItemCollection($object_items);
-        $config = $world->getConfig();
-        $config['rom.rupeeBow'] = false;
+        $world->testSetConfig('rom.rupeeBow', false);
+        $config = $world->testGetConfigClone();
 
         $this->rom->initial_sram->setStartingEquipment($item_collection, $config);
         $this->rom->writeInitialSram();
@@ -377,35 +377,35 @@ class RomTest extends TestCase
                 ['TenBombs', 'TenBombs', 'TenBombs', 'TenBombs', 'TenBombs', 'TenBombs', 'TenBombs', 'TenBombs', 'TenBombs', 'TenBombs'],
             ],
             [
-                [0x18337A => 0x02, 0x183471 => 0x01],
+                [0x18337A => 0x02, 0x183476 => 0x01],
                 ['Crystal1'],
             ],
             [
-                [0x18337A => 0x10, 0x183471 => 0x01],
+                [0x18337A => 0x10, 0x183476 => 0x01],
                 ['Crystal2'],
             ],
             [
-                [0x18337A => 0x40, 0x183471 => 0x01],
+                [0x18337A => 0x40, 0x183476 => 0x01],
                 ['Crystal3'],
             ],
             [
-                [0x18337A => 0x20, 0x183471 => 0x01],
+                [0x18337A => 0x20, 0x183476 => 0x01],
                 ['Crystal4'],
             ],
             [
-                [0x18337A => 0x04, 0x183471 => 0x01],
+                [0x18337A => 0x04, 0x183476 => 0x01],
                 ['Crystal5'],
             ],
             [
-                [0x18337A => 0x01, 0x183471 => 0x01],
+                [0x18337A => 0x01, 0x183476 => 0x01],
                 ['Crystal6'],
             ],
             [
-                [0x18337A => 0x08, 0x183471 => 0x01],
+                [0x18337A => 0x08, 0x183476 => 0x01],
                 ['Crystal7'],
             ],
             [
-                [0x18337A => 0x12, 0x183471 => 0x02],
+                [0x18337A => 0x12, 0x183476 => 0x02],
                 ['Crystal1', 'Crystal2'],
             ],
         ];
@@ -479,6 +479,27 @@ class RomTest extends TestCase
         $this->rom->setByrnaCaveSpikeDamage(0x02);
 
         $this->assertEquals(0x02, $this->rom->read(0x180195));
+    }
+
+    public function testSetTotalItemCount()
+    {
+        $this->rom->setTotalItemCount(216);
+
+        $this->assertEquals([0xD8, 0x00], $this->rom->read(0x180196, 2));
+    }
+
+    public function testSetZeldaMirrorFixDefault()
+    {
+        $this->rom->setZeldaMirrorFix();
+
+        $this->assertEquals(0x04, $this->rom->read(0x159A8));
+    }
+
+    public function testSetZeldaMirrorFixOff()
+    {
+        $this->rom->setZeldaMirrorFix(false);
+
+        $this->assertEquals(0x02, $this->rom->read(0x159A8));
     }
 
     public function testSetClockModeDefault()
@@ -662,35 +683,49 @@ class RomTest extends TestCase
     {
         $this->rom->setGanonInvincible('crystals');
 
-        $this->assertEquals(0x03, $this->rom->read(0x18003E));
+        $this->assertEquals(0x03, $this->rom->read(0x1801A8));
     }
 
     public function testSetGanonInvincibleDungeons()
     {
         $this->rom->setGanonInvincible('dungeons');
 
-        $this->assertEquals(0x02, $this->rom->read(0x18003E));
+        $this->assertEquals(0x02, $this->rom->read(0x1801A8));
     }
 
     public function testSetGanonInvincibleYes()
     {
         $this->rom->setGanonInvincible('yes');
 
-        $this->assertEquals(0x01, $this->rom->read(0x18003E));
+        $this->assertEquals(0x01, $this->rom->read(0x1801A8));
     }
 
-    public function testSetGanonInvincibleCustom()
+    public function testSetGanonInvincibleTriforcePieces()
     {
-        $this->rom->setGanonInvincible('custom');
+        $this->rom->setGanonInvincible('triforce_pieces');
 
-        $this->assertEquals(0x04, $this->rom->read(0x18003E));
+        $this->assertEquals(0x05, $this->rom->read(0x1801A8));
+    }
+
+    public function testSetGanonInvincibleCrystalsOnly()
+    {
+        $this->rom->setGanonInvincible('crystals_only');
+
+        $this->assertEquals(0x04, $this->rom->read(0x1801A8));
     }
 
     public function testSetGanonInvincibleNo()
     {
         $this->rom->setGanonInvincible('no');
 
-        $this->assertEquals(0x00, $this->rom->read(0x18003E));
+        $this->assertEquals(0x00, $this->rom->read(0x1801A8));
+    }
+
+    public function testSetGanonInvincibleCompletionist()
+    {
+        $this->rom->setGanonInvincible('completionist');
+
+        $this->assertEquals(0x0B, $this->rom->read(0x1801A8));
     }
 
     public function testSetHeartColorsBlue()
@@ -732,38 +767,20 @@ class RomTest extends TestCase
     {
         switch ($expectedColor) {
             case 'blue':
-                $expectedByte = 0x2C;
-                $expectedFileByte = 0x0D;
+                $expectedByte = 0x01;
                 break;
             case 'green':
-                $expectedByte = 0x3C;
-                $expectedFileByte = 0x19;
+                $expectedByte = 0x02;
                 break;
             case 'yellow':
-                $expectedByte = 0x28;
-                $expectedFileByte = 0x09;
+                $expectedByte = 0x03;
                 break;
             case 'red':
-                $expectedByte = 0x24;
-                $expectedFileByte = 0x05;
-                break;
             default:
                 $expectedByte = 0x00;
-                $expectedFileByte = 0x00;
         }
 
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA1E));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA20));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA22));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA24));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA26));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA28));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA2A));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA2C));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA2E));
-        $this->assertEquals($expectedByte, $this->rom->read(0x6FA30));
-        
-        $this->assertEquals($expectedFileByte, $this->rom->read(0x65561));
+        $this->assertEquals($expectedByte, $this->rom->read(0x187020));
     }
 
     public function testSetText()
@@ -1173,34 +1190,6 @@ class RomTest extends TestCase
         $this->assertEquals(0x00, $this->rom->read(0x180038));
     }
 
-    public function testSetLightWorldLampConeOn()
-    {
-        $this->rom->setLightWorldLampCone(true);
-
-        $this->assertEquals(0x01, $this->rom->read(0x180039));
-    }
-
-    public function testSetLightWorldLampConeOff()
-    {
-        $this->rom->setLightWorldLampCone(false);
-
-        $this->assertEquals(0x00, $this->rom->read(0x180039));
-    }
-
-    public function testSetDarkWorldLampConeOn()
-    {
-        $this->rom->setDarkWorldLampCone(true);
-
-        $this->assertEquals(0x01, $this->rom->read(0x18003A));
-    }
-
-    public function testSetDarkWorldLampConeOff()
-    {
-        $this->rom->setDarkWorldLampCone(false);
-
-        $this->assertEquals(0x00, $this->rom->read(0x18003A));
-    }
-
     public function testSetMirrorlessSaveAndQuitToLightWorldOn()
     {
         $this->rom->setMirrorlessSaveAndQuitToLightWorld(true);
@@ -1255,5 +1244,30 @@ class RomTest extends TestCase
         $this->rom->setSeedString('aaaaaaaaaaaaaaaaaaaaaaaaa');
 
         $this->assertEquals([97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97], $this->rom->read(0x7FC0, 25));
+    }
+
+    public function testSetHudItemCounterOn()
+    {
+        $this->rom->enableHudItemCounter(true);
+        $this->assertEquals(0x01, $this->rom->read(0x180039));
+
+    }
+
+    public function testSetHudItemCounterOff()
+    {
+        $this->rom->enableHudItemCounter(false);
+        $this->assertEquals(0x00, $this->rom->read(0x180039));
+    }
+
+    public function testEnableFastRomOn()
+    {
+        $this->rom->enableFastRom(true);
+        $this->assertEquals(0x01, $this->rom->read(0x187032));
+    }
+
+    public function testEnableFastRomOff()
+    {
+        $this->rom->enableFastRom(false);
+        $this->assertEquals(0x00, $this->rom->read(0x187032));
     }
 }
