@@ -80,7 +80,18 @@
       </div>
     </div>
     <div class="row mb-3">
-      <div v-if="rom.build >= '2021-07-07' && (!rom.tournament || rom.allow_pseudoboots)" class="col">
+      <div v-if="!rom.special" class="col">
+        <Toggle
+          :value="paletteShuffle"
+          @input="setPaletteShuffle"
+        >{{ $t('rom.settings.palette_shuffle') }}</Toggle>
+      </div>
+      <div v-if="!rom.music || rom.build >= '2021-12-21'" class="col">
+        <Toggle :value="shuffleSfx" @input="setShuffleSfx">{{ $t('rom.settings.shuffle_sfx') }}</Toggle>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div v-if="rom.build >= '2021-07-07' && rom.build < '2023-09-05' && (!rom.tournament || rom.allow_pseudoboots)" class="col">
         <Toggle
           :value="fakeBoots"
           @input="setFakeBoots"
@@ -91,17 +102,6 @@
           :value="icePhysics"
           @input="setIcePhysics"
         >{{ $t('rom.settings.ice_physics') }}</Toggle>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div v-if="!rom.special" class="col">
-        <Toggle
-          :value="paletteShuffle"
-          @input="setPaletteShuffle"
-        >{{ $t('rom.settings.palette_shuffle') }}</Toggle>
-      </div>
-      <div v-if="!rom.music || rom.build >= '2021-12-21'" class="col">
-        <Toggle :value="shuffleSfx" @input="setShuffleSfx">{{ $t('rom.settings.shuffle_sfx') }}</Toggle>
       </div>
     </div>
     <div class="row mb-3">

@@ -241,6 +241,8 @@ class OverworldRandomizer implements RandomizerContract
         }
         if ($world->config('equipment.boots') === 'starting') {
             $starting[] = 'Pegasus_Boots';
+        } else if ($world->config('equipment.boots') === 'pseudo') {
+            $flags[] = '--pseudoboots';
         }
 
         if (count($starting) > 0) {

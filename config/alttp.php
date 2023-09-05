@@ -847,6 +847,7 @@ return [
             ],
             'starting_boots' => [
                 'off' => 'Off',
+                'pseudo' => 'Pseudoboots',
                 'starting' => 'Starting',
             ],
             'enemy_damage' => [
@@ -1096,7 +1097,8 @@ return [
                 'starting' => 20,
             ],
             'starting_boots' => [
-                'off' => 80,
+                'off' => 70,
+                'pseudo' => 10,
                 'starting' => 20,
             ],
             'enemy_damage' => [

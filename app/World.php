@@ -1229,7 +1229,6 @@ abstract class World
             'hints' => $this->config('spoil.Hints'),
             'spoilers' => $this->config('spoilers', 'off'),
             'allow_quickswap' => $this->config('allow_quickswap', true),
-            'allow_pseudoboots' => $this->config('allow_pseudoboots', false),
             'enemizer.boss_shuffle' => $this->config('enemizer.bossShuffle'),
             'enemizer.enemy_shuffle' => $this->config('enemizer.enemyShuffle'),
             'enemizer.enemy_damage' => $this->config('enemizer.enemyDamage'),
@@ -1575,7 +1574,9 @@ abstract class World
 
         $rom->setMysteryMasking($this->config('spoilers', 'on') === 'mystery');
 
-        // $rom->setPseudoBoots($this->config('pseudoboots', false));
+        if ($this->config('equipment.boots', 'off') === 'pseudo') {
+            $rom->setPseudoBoots(true);
+        }
 
         $rom->enableFastRom($this->config('fastrom', true));
 

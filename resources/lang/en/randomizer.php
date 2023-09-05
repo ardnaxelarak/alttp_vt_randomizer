@@ -370,6 +370,7 @@ return [
         'title' => 'Starting Boots',
         'options' => [
             'off' => 'Off',
+            'pseudo' => 'Pseudoboots',
             'starting' => 'Starting Boots',
         ],
     ],
