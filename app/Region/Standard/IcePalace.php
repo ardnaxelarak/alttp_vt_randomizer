@@ -76,7 +76,7 @@ class IcePalace extends Region
 
         $this->locations["Ice Palace - Big Key Chest"]->setRequirements(function ($locations, $items) {
             return $items->canBombThings($this->world) && $items->has('Hammer') && $items->canLiftRocks()
-                && ((!$this->world->config('region.cantTakeDamage', false) && !$this->world->isSpecialTroll())
+                && ((!$this->world->config('region.cantTakeDamage', false))
                     || $items->hasByrna($this->world) || $items->has('Cape') || $items->has('Hookshot'))
                 && ($items->has('Hookshot') || $items->has('ShopKey')
                     || ($items->has('KeyD5', 1) && (!$items->has('BigKeyD5') || $locations->itemInLocations(Item::get('BigKeyD5', $this->world), 
@@ -85,7 +85,7 @@ class IcePalace extends Region
 
         $this->locations["Ice Palace - Map Chest"]->setRequirements(function ($locations, $items) {
             return $items->canBombThings($this->world) && $items->has('Hammer') && $items->canLiftRocks()
-                && ((!$this->world->config('region.cantTakeDamage', false) && !$this->world->isSpecialTroll())
+                && ((!$this->world->config('region.cantTakeDamage', false))
                     || $items->hasByrna($this->world) || $items->has('Cape') || $items->has('Hookshot'))
                 && ($items->has('Hookshot') || $items->has('ShopKey')
                     || ($items->has('KeyD5', 1) && (!$items->has('BigKeyD5') || $locations->itemInLocations(Item::get('BigKeyD5', $this->world), 
@@ -94,7 +94,7 @@ class IcePalace extends Region
 
         $this->locations["Ice Palace - Spike Room"]->setRequirements(function ($locations, $items) {
             return $items->canBombThings($this->world)
-                && ((!$this->world->config('region.cantTakeDamage', false) && !$this->world->isSpecialTroll())
+                && ((!$this->world->config('region.cantTakeDamage', false))
                     || $items->hasByrna($this->world) || $items->has('Cape') || $items->has('Hookshot'))
                 && ($items->has('Hookshot') || $items->has('ShopKey')
                     || ($items->has('KeyD5', 1) && (!$items->has('BigKeyD5') || $locations->itemInLocations(Item::get('BigKeyD5', $this->world), 

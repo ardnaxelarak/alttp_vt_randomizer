@@ -229,7 +229,6 @@ class GenerateSeed implements ShouldQueue
             'enemizer.enemyDamage' => Arr::get($request, 'enemizer.enemy_damage', 'default'),
             'enemizer.enemyHealth' => Arr::get($request, 'enemizer.enemy_health', 'default'),
             'enemizer.potShuffle' => Arr::get($request, 'enemizer.pot_shuffle', 'off'),
-            'special_trolls' => Arr::get($request, 'special_trolls', 'off'),
         ]);
 
         $rand = RandomizerSelector::getRandomizer($world);

@@ -230,7 +230,6 @@ class GenerateMultiworld implements ShouldQueue
                 'enemizer.enemyDamage' => Arr::get($request, "worlds.{$i}.enemy_damage", 'default'),
                 'enemizer.enemyHealth' => Arr::get($request, "worlds.{$i}.enemy_health", 'default'),
                 'enemizer.potShuffle' => Arr::get($request, "worlds.{$i}.pot_shuffle", 'off'),
-                'special_trolls' => Arr::get($request, "worlds.{$i}.special_trolls", 'off'),
             ]);
         }
 
