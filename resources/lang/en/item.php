@@ -113,6 +113,7 @@ return [
     'L4Cane' => 'Golden Cane',
     'L5Cane' => 'Super Golden Cane',
     'ProgressiveCane' => 'Progressive Cane',
+    'ProgressiveNet' => 'Progressive Bug Net',
     'singleRNG' => 'Unique RNG Item',
     'multiRNG' => 'Non-Unique RNG Item',
     'ProgressiveBow' => 'Progressive Bow',

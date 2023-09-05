@@ -501,7 +501,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
+        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -512,7 +512,7 @@ abstract class World
      */
     public function restrictedRealSwords()
     {
-        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
+        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -534,7 +534,7 @@ abstract class World
      */
     public function canAlwaysMedallion()
     {
-        $medallion_modes = ['bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees'];
+        $medallion_modes = ['bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
         return in_array($this->config('mode.weapons'), $medallion_modes);
     }
 
@@ -583,6 +583,17 @@ abstract class World
     }
 
     /*
+     * Get whether the world has restricted access to weapons other than bug net
+     *
+     * @return bool
+     */
+    public function restrictedToBugNet()
+    {
+        $bugnet_modes = ['bugnet', 'assured_bugnet'];
+        return in_array($this->config('mode.weapons'), $bugnet_modes);
+    }
+
+    /*
      * Get whether the world has restricted access to weapons other than a particular type
      *
      * @return bool
@@ -590,7 +601,8 @@ abstract class World
     public function restrictedToSpecialWeapons()
     {
         return $this->restrictedToBombs() || $this->restrictedToCanes()
-            || $this->restrictedToBlueCane() || $this->restrictedToRedCane();
+            || $this->restrictedToBlueCane() || $this->restrictedToRedCane()
+            || $this->restrictedToBugNet();
     }
 
     /*
@@ -1073,6 +1085,17 @@ abstract class World
             'ProgressiveSword' => 'ProgressiveCane',
         ];
 
+        $net_mode_replacements = [
+            'L1Sword' => 'ProgressiveNet',
+            'L1SwordAndShield' => 'ProgressiveNet',
+            'L2Sword' => 'ProgressiveNet',
+            'MasterSword' => 'ProgressiveNet',
+            'L3Sword' => 'ProgressiveNet',
+            'L4Sword' => 'ProgressiveNet',
+            'ProgressiveSword' => 'ProgressiveNet',
+            'BugCatchingNet' => 'ProgressiveNet',
+        ];
+
         if ($name === 'BottleWithRandom') {
             return $this->getBottle();
         } elseif ($this->restrictedToBombs() && array_key_exists($name, $bomb_mode_replacements)) {
@@ -1080,6 +1103,8 @@ abstract class World
         } elseif (($this->restrictedToCanes() || $this->restrictedToBlueCane() || $this->restrictedToRedCane())
                 && array_key_exists($name, $cane_mode_replacements)) {
             return Item::get($cane_mode_replacements[$name], $this);
+        } elseif ($this->restrictedToBugNet() && array_key_exists($name, $net_mode_replacements)) {
+            return Item::get($net_mode_replacements[$name], $this);
         } elseif ($this->restrictedToBlueCane() && $name === 'CaneOfByrna') {
             return Item::get('TwentyRupees2', $this);
         } elseif ($this->restrictedToRedCane() && $name === 'CaneOfSomaria') {
@@ -1482,6 +1507,9 @@ abstract class World
         if ($this->restrictedToRedCane()) {
             $rom->setCaneOnlyMode(false, true);
         }
+        if ($this->restrictedToBugNet()) {
+            $rom->setBugNetOnlyMode();
+        }
         if ($this->hasPseudoSwords()) {
             $rom->setPseudoSwordMode();
         }
@@ -1564,7 +1592,8 @@ abstract class World
                 break;
         }
 
-        $triforce_hud = in_array($this->config['goal'], ['triforce-hunt', 'ganonhunt']);
+        $triforce_hud = in_array($this->config['goal'], ['triforce-hunt', 'ganonhunt', 'z1'])
+            || $this->config('item.Goal.Required', 0) > 0;
         $rom->enableHudItemCounter($triforce_hud ? false : $this->config('rom.hudItemCounter', $this->config('goal', 'ganon') == 'completionist'));
 
         if ($this->config('crystals.tower') === 0) {

@@ -193,6 +193,7 @@ class Randomizer implements RandomizerContract
         $nice_items_armors = [];
         $nice_items_bombs = [];
         $nice_items_canes = [];
+        $nice_items_nets = [];
         foreach ($advancement_items as $key => $item) {
             if ($item == Item::get('SilverArrowUpgrade', $world)) {
                 $nice_items[] = $item;
@@ -226,10 +227,17 @@ class Randomizer implements RandomizerContract
             if ($item instanceof Item\SwordBomb) {
                 $nice_items_bombs[] = $item;
                 unset($advancement_items[$key]);
+                continue;
             }
             if ($item instanceof Item\SwordCane) {
                 $nice_items_canes[] = $item;
                 unset($advancement_items[$key]);
+                continue;
+            }
+            if ($item instanceof Item\SwordNet) {
+                $nice_items_nets[] = $item;
+                unset($advancement_items[$key]);
+                continue;
             }
         }
         // and from the nice items as well
@@ -253,6 +261,10 @@ class Randomizer implements RandomizerContract
             if ($item instanceof Item\SwordCane) {
                 unset($nice_items[$key]);
                 $nice_items_canes[] = $item;
+            }
+            if ($item instanceof Item\SwordNet) {
+                unset($nice_items[$key]);
+                $nice_items_nets[] = $item;
             }
         }
         foreach ($trash_items as $key => $item) {
@@ -335,6 +347,30 @@ class Randomizer implements RandomizerContract
                 array_push($advancement_items, array_pop($nice_items_canes));
             }
             $nice_items = array_merge($nice_items, $nice_items_canes);
+        } elseif ($world->restrictedToBugNet()) {
+            // put L-1 net back
+            if (count($nice_items_nets)) {
+                $first_net = array_pop($nice_items_nets);
+                if (in_array($world->config('mode.weapons'), ['assured_bugnet'])) {
+                    $world->addPreCollectedItem($first_net);
+                    array_push($trash_items, Item::get('FiftyRupees', $world));
+                } else {
+                    array_push($advancement_items, $first_net);
+                }
+            }
+            // put L-2 net in
+            if (count($nice_items_nets)) {
+                array_push($advancement_items, array_pop($nice_items_nets));
+            }
+            // put L-3 net in
+            if (count($nice_items_nets)) {
+                array_push($advancement_items, array_pop($nice_items_nets));
+            }
+            // put L-4 net in if logically required
+            if ($world->config('region.requireBetterSword', false) && count($nice_items_nets)) {
+                array_push($advancement_items, array_pop($nice_items_nets));
+            }
+            $nice_items = array_merge($nice_items, $nice_items_nets);
         } elseif ($world->config('mode.weapons') === 'vanilla') {
             $uncle_sword = Item::get('UncleSword', $world)->setTarget(array_pop($nice_items_swords));
             $world->getLocation("Link's Uncle")->setItem($uncle_sword);

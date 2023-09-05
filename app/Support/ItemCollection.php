@@ -559,7 +559,8 @@ class ItemCollection extends Collection
             || $this->hasSword()
             || $this->has('Hammer')
             || $this->hasByrna($world)
-            || $this->has('Hookshot');
+            || $this->has('Hookshot')
+            || ($this->has('ProgressiveNet') && $world->restrictedToBugNet());
     }
 
     /**
@@ -820,6 +821,8 @@ class ItemCollection extends Collection
                 return false;
             }
             return $this->has('ProgressiveCane', $min_level);
+        } else if ($world->restrictedToBugNet()) {
+            return $this->has('ProgressiveNet', $min_level);
         } else {
             return false;
         }

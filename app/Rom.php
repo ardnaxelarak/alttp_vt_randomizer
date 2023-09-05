@@ -14,8 +14,8 @@ use Log;
 class Rom
 {
     const BUILD_INFO = [
-        'base' => ['BUILD' => '2023-08-31', 'HASH' => '8c06d2d86ef995990baa316d4a3d576d'],
-        'overworld' => ['BUILD' => '2023-02-26', 'HASH' => '2eb1a34e2f63f5d6c2c673fa3dbd3b95'],
+        'base' => ['BUILD' => '2023-09-04', 'HASH' => 'c33ac5b24edeeafce4bee17f6f8277b1'],
+        'overworld' => ['BUILD' => '2023-09-04', 'HASH' => '8db1e3c6d1724015d474216247946ecf'],
         'troll' => ['BUILD' => '2023-04-02', 'HASH' => '44aa37c6048a14a3b24794ce5e56e4ab'],
         'ow_troll' => ['BUILD' => '2023-06-15', 'HASH' => '99a93bf4a93eea1ea7a107aa0eeef717'],
     ];
@@ -2106,7 +2106,7 @@ class Rom
      */
     public function setSwordlessHammerMode(): self
     {
-        $this->write(0x18002F, pack('C*', 0x07)); // Hammer on B
+        $this->write(0x18002C, pack('C*', 0x0C)); // Allow hammer on B
         return $this;
     }
 
@@ -2130,7 +2130,7 @@ class Rom
      */
     public function setBombsOnlyMode(): self
     {
-        $this->write(0x18002F, pack('C*', 0x01)); // Special Bombs
+        $this->write(0x18002F, pack('C*', 0x81)); // Special Bombs
         $this->initial_sram->setSwordlessCurtains();
         $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
         $this->write(0x180034, pack('C*', 0)); // max bombs
@@ -2209,13 +2209,13 @@ class Rom
         }
 
         if ($blue && $red) {
-            $this->write(0x18002F, pack('C*', 0x05)); // Special Canes
+            $this->write(0x18002F, pack('C*', 0x85)); // Special Canes
             $cb = 0x28;
         } else if ($blue) {
-            $this->write(0x18002F, pack('C*', 0x03)); // Special Blue Cane
+            $this->write(0x18002F, pack('C*', 0x83)); // Special Blue Cane
             $cb = 0x2C;
         } else {
-            $this->write(0x18002F, pack('C*', 0x04)); // Special Red Cane
+            $this->write(0x18002F, pack('C*', 0x84)); // Special Red Cane
             $cb = 0x24;
         }
 
@@ -2236,7 +2236,7 @@ class Rom
         ];
         $this->write(0x6FC51, pack('C*', ...$spritedata));
 
-        // replace sword stat text with bomb stat text in credits
+        // replace sword stat text with cane stat text in credits
         $this->write(0x11803E, pack('C*', ...$this->credits->convertLargeCreditsTop("FIRST CANE ")));
         $this->write(0x11805C, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIRST CANE ")));
         $this->write(0x11807A, pack('C*', ...$this->credits->convertLargeCreditsTop("CANELESS ")));
@@ -2249,6 +2249,56 @@ class Rom
         $this->write(0x11814C, pack('C*', ...$this->credits->convertLargeCreditsBottom("TEMPERED CANE ")));
         $this->write(0x11816A, pack('C*', ...$this->credits->convertLargeCreditsTop("GOLD CANE ")));
         $this->write(0x118188, pack('C*', ...$this->credits->convertLargeCreditsBottom("GOLD CANE ")));
+
+        $this->setHammerTablet(false);
+        $this->setHammerBarrier(false);
+
+        return $this;
+    }
+
+    /**
+     * Enable bug-net-only mode
+     *
+     * @return $this
+     */
+    public function setBugNetOnlyMode(): self
+    {
+        $this->initial_sram->setSwordlessCurtains();
+        $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
+
+        $this->write(0x18002C, pack('C*', 0x0E)); // Allow bug net on B
+        $this->write(0x18002F, pack('C*', 0x88)); // Special Bug Net
+
+        // change sword icon in menu to bug net
+        $spritedata = [
+            0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20,
+            0x40, 0x3C, 0x41, 0x3C, 0x42, 0x3C, 0x17, 0x3C,
+            0x40, 0x2C, 0x41, 0x2C, 0x42, 0x2C, 0x18, 0x2C,
+            0x40, 0x24, 0x41, 0x24, 0x42, 0x24, 0x19, 0x24,
+            0x40, 0x28, 0x41, 0x28, 0x42, 0x28, 0x1A, 0x28,
+            0x40, 0x28, 0x41, 0x28, 0x42, 0x28, 0x1B, 0x28,
+            0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20, 0xF5, 0x20,
+            0x40, 0x3C, 0x41, 0x3C, 0x42, 0x3C, 0x43, 0x3C,
+            0x40, 0x2C, 0x41, 0x2C, 0x42, 0x2C, 0x43, 0x2C,
+            0x40, 0x24, 0x41, 0x24, 0x42, 0x24, 0x43, 0x24,
+            0x40, 0x28, 0x41, 0x28, 0x42, 0x28, 0x43, 0x28,
+            0x40, 0x28, 0x41, 0x28, 0x42, 0x28, 0x43, 0x28,
+        ];
+        $this->write(0x6FC51, pack('C*', ...$spritedata));
+
+        // replace sword stat text with net stat text in credits
+        $this->write(0x11803E, pack('C*', ...$this->credits->convertLargeCreditsTop("FIRST NET  ")));
+        $this->write(0x11805C, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIRST NET  ")));
+        $this->write(0x11807A, pack('C*', ...$this->credits->convertLargeCreditsTop("NETLESS  ")));
+        $this->write(0x118098, pack('C*', ...$this->credits->convertLargeCreditsBottom("NETLESS  ")));
+        $this->write(0x1180B6, pack('C*', ...$this->credits->convertLargeCreditsTop("FIGHTER'S NET  ")));
+        $this->write(0x1180D4, pack('C*', ...$this->credits->convertLargeCreditsBottom("FIGHTER'S NET  ")));
+        $this->write(0x1180F2, pack('C*', ...$this->credits->convertLargeCreditsTop("MASTER NET  ")));
+        $this->write(0x118110, pack('C*', ...$this->credits->convertLargeCreditsBottom("MASTER NET  ")));
+        $this->write(0x11812E, pack('C*', ...$this->credits->convertLargeCreditsTop("TEMPERED NET  ")));
+        $this->write(0x11814C, pack('C*', ...$this->credits->convertLargeCreditsBottom("TEMPERED NET  ")));
+        $this->write(0x11816A, pack('C*', ...$this->credits->convertLargeCreditsTop("GOLD NET  ")));
+        $this->write(0x118188, pack('C*', ...$this->credits->convertLargeCreditsBottom("GOLD NET  ")));
 
         $this->setHammerTablet(false);
         $this->setHammerBarrier(false);

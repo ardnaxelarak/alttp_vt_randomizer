@@ -827,6 +827,8 @@ return [
                 'pseudo' => 'Pseudo-Swords',
                 'assured_pseudo' => 'Assured Pseudo-Swords',
                 'bees' => 'Bee Mode',
+                'bugnet' => 'Bug-Net',
+                'assured_bugnet' => 'Assured Bug-Net',
             ],
             'item_pool' => [
                 'normal' => 'Normal',
@@ -1076,6 +1078,8 @@ return [
                 'pseudo' => 4,
                 'assured_pseudo' => 3,
                 'bees' => 0,
+                'bugnet' => 0,
+                'assured_bugnet' => 0,
             ],
             'item_pool' => [
                 'normal' => 70,

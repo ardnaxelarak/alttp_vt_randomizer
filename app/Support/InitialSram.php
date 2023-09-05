@@ -622,6 +622,10 @@ class InitialSram
                 case 'ProgressiveBombs':
                     $this->initial_sram_bytes[0x38F] = min($this->initial_sram_bytes[0x38F] + 1, 5);
                     break;
+                case 'ProgressiveNet':
+                    $this->initial_sram_bytes[0x38F] = min($this->initial_sram_bytes[0x38F] + 1, 5);
+                    $this->initial_sram_bytes[0x34D] = 0x01;
+                    break;
             }
         }
         $this->initial_sram_bytes[0x362] = $this->initial_sram_bytes[0x360] = $starting_rupees & 0xFF;

@@ -334,6 +334,8 @@ return [
             'pseudo' => 'Pseudo-Swords',
             'assured_pseudo' => 'Assured Pseudo-Swords',
             'bees' => 'Bee Mode',
+            'bugnet' => 'Bug-Net-Only',
+            'assured_bugnet' => 'Bug-Net-Only (Starting Bug Net)',
         ],
         'bees_warning' => 'Bee Mode is only partially implemented, and not compatible with entrance, door, or overworld shuffle.',
     ],
