@@ -107,6 +107,7 @@ class Witch extends Npc
             case 'MoonPearl':
                 return "shrooms for moon rock";
             case 'BugCatchingNet':
+            case 'ProgressiveNet':
                 return "fungus for butterflies";
             case 'BlueMail':
                 return "the clothing store";

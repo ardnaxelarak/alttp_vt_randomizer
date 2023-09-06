@@ -289,7 +289,7 @@ abstract class World
         }
 
         // In byrna-only mode, remove invulnerability
-        if ($this->restrictedToBlueCane() || $this->restrictedToCanes()) {
+        if ($this->blueCaneMode() || $this->bothCanesMode()) {
             $this->config['rom.CaneOfByrnaInvulnerability'] = false;
         }
 
@@ -501,7 +501,7 @@ abstract class World
      */
     public function restrictedSwords()
     {
-        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
+        $swordless_modes = ['swordless', 'swordless_b', 'bombs', 'assured_bombs', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -512,7 +512,7 @@ abstract class World
      */
     public function restrictedRealSwords()
     {
-        $swordless_modes = ['swordless', 'swordless_hammer', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
+        $swordless_modes = ['swordless', 'swordless_b', 'bombs', 'assured_bombs', 'pseudo', 'assured_pseudo', 'byrna', 'assured_byrna', 'somaria', 'assured_somaria', 'cane', 'bees', 'bugnet', 'assured_bugnet'];
         return in_array($this->config('mode.weapons'), $swordless_modes);
     }
 
@@ -523,7 +523,7 @@ abstract class World
      */
     public function restrictedMedallions()
     {
-        $medallion_modes = ['swordless', 'swordless_hammer'];
+        $medallion_modes = ['swordless', 'swordless_b'];
         return in_array($this->config('mode.weapons'), $medallion_modes);
     }
 
@@ -554,7 +554,7 @@ abstract class World
      *
      * @return bool
      */
-    public function restrictedToCanes()
+    public function bothCanesMode()
     {
         $cane_modes = ['cane'];
         return in_array($this->config('mode.weapons'), $cane_modes);
@@ -565,7 +565,7 @@ abstract class World
      *
      * @return bool
      */
-    public function restrictedToBlueCane()
+    public function blueCaneMode()
     {
         $cane_modes = ['byrna', 'assured_byrna'];
         return in_array($this->config('mode.weapons'), $cane_modes);
@@ -576,7 +576,7 @@ abstract class World
      *
      * @return bool
      */
-    public function restrictedToRedCane()
+    public function redCaneMode()
     {
         $cane_modes = ['somaria', 'assured_somaria'];
         return in_array($this->config('mode.weapons'), $cane_modes);
@@ -587,7 +587,7 @@ abstract class World
      *
      * @return bool
      */
-    public function restrictedToBugNet()
+    public function bugNetMode()
     {
         $bugnet_modes = ['bugnet', 'assured_bugnet'];
         return in_array($this->config('mode.weapons'), $bugnet_modes);
@@ -600,9 +600,7 @@ abstract class World
      */
     public function restrictedToSpecialWeapons()
     {
-        return $this->restrictedToBombs() || $this->restrictedToCanes()
-            || $this->restrictedToBlueCane() || $this->restrictedToRedCane()
-            || $this->restrictedToBugNet();
+        return $this->restrictedToBombs();
     }
 
     /*
@@ -1090,14 +1088,14 @@ abstract class World
             return $this->getBottle();
         } elseif ($this->restrictedToBombs() && array_key_exists($name, $bomb_mode_replacements)) {
             return Item::get($bomb_mode_replacements[$name], $this);
-        } elseif (($this->restrictedToCanes() || $this->restrictedToBlueCane() || $this->restrictedToRedCane())
+        } elseif (($this->bothCanesMode() || $this->blueCaneMode() || $this->redCaneMode())
                 && array_key_exists($name, $cane_mode_replacements)) {
             return Item::get($cane_mode_replacements[$name], $this);
-        } elseif ($this->restrictedToBugNet() && array_key_exists($name, $net_mode_replacements)) {
+        } elseif ($this->bugNetMode() && array_key_exists($name, $net_mode_replacements)) {
             return Item::get($net_mode_replacements[$name], $this);
-        } elseif ($this->restrictedToBlueCane() && $name === 'CaneOfByrna') {
+        } elseif ($this->blueCaneMode() && $name === 'CaneOfByrna') {
             return Item::get('TwentyRupees2', $this);
-        } elseif ($this->restrictedToRedCane() && $name === 'CaneOfSomaria') {
+        } elseif ($this->redCaneMode() && $name === 'CaneOfSomaria') {
             return Item::get('TwentyRupees2', $this);
         } else {
             return Item::get($name, $this);
@@ -1461,23 +1459,23 @@ abstract class World
         $rom->setSmithyQuickItemGive($this->config('region.swordsInPool', true));
 
         $rom->setGameState($this->config('mode.state'));
-        $rom->setSwordlessMode(in_array($this->config('mode.weapons'), ['swordless', 'swordless_hammer']));
-        if ($this->config('mode.weapons') == 'swordless_hammer') {
-            $rom->setSwordlessHammerMode();
+        $rom->setSwordlessMode(in_array($this->config('mode.weapons'), ['swordless', 'swordless_b']));
+        if ($this->config('mode.weapons') == 'swordless_b') {
+            $rom->setSwordlessWithBMode();
         }
         if ($this->restrictedToBombs()) {
             $rom->setBombsOnlyMode();
         }
-        if ($this->restrictedToCanes()) {
+        if ($this->bothCanesMode()) {
             $rom->setCaneOnlyMode(true, true);
         }
-        if ($this->restrictedToBlueCane()) {
+        if ($this->blueCaneMode()) {
             $rom->setCaneOnlyMode(true, false);
         }
-        if ($this->restrictedToRedCane()) {
+        if ($this->redCaneMode()) {
             $rom->setCaneOnlyMode(false, true);
         }
-        if ($this->restrictedToBugNet()) {
+        if ($this->bugNetMode()) {
             $rom->setBugNetOnlyMode();
         }
         if ($this->hasPseudoSwords()) {

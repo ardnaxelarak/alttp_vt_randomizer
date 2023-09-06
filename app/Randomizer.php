@@ -271,7 +271,7 @@ class Randomizer implements RandomizerContract
             $nice_items = array_merge($nice_items, $nice_items_armors);
         }
 
-        if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_hammer', 'bees'])) {
+        if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_b', 'bees'])) {
             foreach ($nice_items_swords as $unneeded) {
                 $nice_items[] = Item::get('TwentyRupees2', $world);
             }
@@ -312,7 +312,7 @@ class Randomizer implements RandomizerContract
                 array_push($advancement_items, array_pop($nice_items_bombs));
             }
             $nice_items = array_merge($nice_items, $nice_items_bombs);
-        } elseif ($world->restrictedToCanes() || $world->restrictedToBlueCane() || $world->restrictedToRedCane()) {
+        } elseif ($world->bothCanesMode() || $world->blueCaneMode() || $world->redCaneMode()) {
             // put L-1 cane back
             if (count($nice_items_canes)) {
                 $first_cane = array_pop($nice_items_canes);
@@ -336,7 +336,7 @@ class Randomizer implements RandomizerContract
                 array_push($advancement_items, array_pop($nice_items_canes));
             }
             $nice_items = array_merge($nice_items, $nice_items_canes);
-        } elseif ($world->restrictedToBugNet()) {
+        } elseif ($world->bugNetMode()) {
             // put L-1 net back
             if (count($nice_items_nets)) {
                 $first_net = array_pop($nice_items_nets);

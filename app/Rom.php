@@ -15,7 +15,7 @@ class Rom
 {
     const BUILD_INFO = [
         'base' => ['BUILD' => '2023-09-05', 'HASH' => '56c5a1f56b4f100e9c1e025b1d47a810'],
-        'overworld' => ['BUILD' => '2023-09-04', 'HASH' => '8db1e3c6d1724015d474216247946ecf'],
+        'overworld' => ['BUILD' => '2023-09-05', 'HASH' => '8db1e3c6d1724015d474216247946ecf'],
         'troll' => ['BUILD' => '2023-04-02', 'HASH' => '44aa37c6048a14a3b24794ce5e56e4ab'],
         'ow_troll' => ['BUILD' => '2023-06-15', 'HASH' => '99a93bf4a93eea1ea7a107aa0eeef717'],
     ];
@@ -2100,13 +2100,13 @@ class Rom
     }
 
     /**
-     * Enable swordless hammer mode
+     * Enable swordless w/ B mode
      *
      * @return $this
      */
-    public function setSwordlessHammerMode(): self
+    public function setSwordlessWithBMode(): self
     {
-        $this->write(0x18002C, pack('C*', 0x0C)); // Allow hammer on B
+        $this->write(0x18002C, pack('C*', 0xFF)); // Allow any item on B
         return $this;
     }
 
@@ -2191,6 +2191,7 @@ class Rom
     {
         $this->initial_sram->setSwordlessCurtains();
         $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
+        $this->write(0x18002C, pack('C*', 0xFF)); // Allow any item on B
 
         // Remove magic cost of cane
         if ($blue) {
@@ -2209,13 +2210,13 @@ class Rom
         }
 
         if ($blue && $red) {
-            $this->write(0x18002F, pack('C*', 0x85)); // Special Canes
+            $this->write(0x18002F, pack('C*', 0x05)); // Special Canes
             $cb = 0x28;
         } else if ($blue) {
-            $this->write(0x18002F, pack('C*', 0x83)); // Special Blue Cane
+            $this->write(0x18002F, pack('C*', 0x03)); // Special Blue Cane
             $cb = 0x2C;
         } else {
-            $this->write(0x18002F, pack('C*', 0x84)); // Special Red Cane
+            $this->write(0x18002F, pack('C*', 0x04)); // Special Red Cane
             $cb = 0x24;
         }
 
@@ -2267,7 +2268,7 @@ class Rom
         $this->write(0x180041, pack('C*', 0x02)); // Swordless Medallions
 
         $this->write(0x18002C, pack('C*', 0x0E)); // Allow bug net on B
-        $this->write(0x18002F, pack('C*', 0x88)); // Special Bug Net
+        $this->write(0x18002F, pack('C*', 0x08)); // Special Bug Net
 
         // change sword icon in menu to bug net
         $spritedata = [

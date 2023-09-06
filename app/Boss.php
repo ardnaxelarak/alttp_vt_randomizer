@@ -73,7 +73,8 @@ class Boss
                 return $items->hasRealSword($world) || $items->has('Hammer') || $items->canShootArrows($world)
                     || $items->has('Boomerang') || $items->has('RedBoomerang')
                     || ($items->canExtendMagic($world, 4) && ($items->has('FireRod') || $items->has('IceRod')))
-                    || ($items->canExtendMagic($world, 2) && ($items->has('CaneOfByrna') || $items->has('CaneOfSomaria')));
+                    || ($items->canExtendMagic($world, 2) && ($items->has('CaneOfByrna') || $items->has('CaneOfSomaria')))
+                    || $items->hasSpecialWeaponLevel($world, 1);
             }),
             new static("Lanmolas", "Lanmola", function ($locations, $items) use ($world) {
                 if ($world->restrictedToSpecialWeapons()) {
@@ -81,13 +82,15 @@ class Boss
                 }
                 return $items->hasRealSword($world) || $items->has('Hammer')
                     || $items->canShootArrows($world) || $items->has('FireRod') || $items->has('IceRod')
-                    || $items->has('CaneOfByrna') || $items->has('CaneOfSomaria');
+                    || $items->has('CaneOfByrna') || $items->has('CaneOfSomaria')
+                    || $items->hasSpecialWeaponLevel($world, 1);
             }),
             new static("Moldorm", "Moldorm", function ($locations, $items) use ($world) {
                 if ($world->restrictedToSpecialWeapons()) {
                     return $items->hasSpecialWeaponLevel($world, 1);
                 }
-                return $items->hasRealSword($world) || $items->has('Hammer');
+                return $items->hasRealSword($world) || $items->has('Hammer')
+                    || $items->hasSpecialWeaponLevel($world, 1);
             }),
             new static("Agahnim", "Agahnim", function ($locations, $items) {
                 return $items->hasSword() || $items->has('Hammer') || $items->has('BugCatchingNet');
@@ -99,7 +102,8 @@ class Boss
                 }
                 return ($items->canBombThings($world) || $items->has('Hammer'))
                     && ($items->hasRealSword($world, 2) || $items->canShootArrows($world)
-                        || ($world->config('itemPlacement') !== 'basic' && $items->hasRealSword($world)));
+                        || ($world->config('itemPlacement') !== 'basic' && $items->hasRealSword($world))
+                        || $items->hasSpecialWeaponLevel($world, 2));
             }),
             new static("Arrghus", "Arrghus", function ($locations, $items) use ($world) {
                 if ($world->restrictedToSpecialWeapons()) {
@@ -109,6 +113,7 @@ class Boss
                         || $world->restrictedRealSwords() || $items->hasRealSword($world, 2))
                     && $items->has('Hookshot')
                     && ($items->has('Hammer') || $items->hasRealSword($world)
+                        || $items->hasSpecialWeaponLevel($world, 2)
                         || (($items->canExtendMagic($world, 2) || $items->canShootArrows($world))
                             && ($items->has('FireRod') || $items->has('IceRod'))));
             }),
@@ -120,6 +125,7 @@ class Boss
                 return ($world->config('itemPlacement') !== 'basic' || $items->hasRealSword($world, 2)
                         || ($items->canExtendMagic($world, 2) && $items->has('FireRod')))
                     && ($items->hasRealSword($world) || $items->has('Hammer') || $items->canGetGoodBee($world)
+                        || $items->hasSpecialWeaponLevel($world, 1)
                         || ($items->canExtendMagic($world, 2) && ($items->has('FireRod') || $items->has('CaneOfSomaria')
                             || $items->has('CaneOfByrna'))));
             }),
@@ -130,6 +136,7 @@ class Boss
                 return ($world->config('itemPlacement') !== 'basic' || $world->restrictedRealSwords()
                         || ($items->hasRealSword($world) && ($items->has('Cape') || $items->has('CaneOfByrna'))))
                     && ($items->hasRealSword($world) || $items->has('Hammer')
+                        || $items->hasSpecialWeaponLevel($world, 1)
                         || $items->has('CaneOfSomaria') || $items->has('CaneOfByrna'));
             }),
             new static("Kholdstare", "Kholdstare", function ($locations, $items) use ($world) {
@@ -142,6 +149,7 @@ class Boss
                             && $items->canExtendMagic($world, 2) && $items->has('FireRod')))
                     && $items->canMeltThings($world)
                     && ($items->has('Hammer') || $items->hasRealSword($world)
+                        || $items->hasSpecialWeaponLevel($world, 2)
                         || ($items->canExtendMagic($world, 3) && $items->has('FireRod'))
                         || ($items->canExtendMagic($world, 2) && $items->has('FireRod')
                             && $items->has('Bombos') && ($world->restrictedMedallions() || $items->canUseMedallions($world))));
@@ -152,8 +160,10 @@ class Boss
                         && ($world->config('itemPlacement') !== 'basic' || $items->hasSpecialWeaponLevel($world, 3));
                 }
                 return ($world->config('itemPlacement') !== 'basic' || $items->hasRealSword($world, 2)
+                        || $items->hasSpecialWeaponLevel($world, 3)
                         || $items->canShootArrows($world))
-                    && ($items->has('Hammer') || $items->hasRealSword($world) || $items->canShootArrows($world));
+                    && ($items->has('Hammer') || $items->hasRealSword($world) || $items->canShootArrows($world)
+                        || $items->hasSpecialWeaponLevel($world, 2));
             }),
             new static("Trinexx", "Trinexx", function ($locations, $items) use ($world) {
                 if (!($items->has('FireRod') && $items->has('IceRod'))) {
@@ -167,6 +177,8 @@ class Boss
                         || $world->restrictedRealSwords() || $items->hasRealSword($world, 3)
                         || ($items->canExtendMagic($world, 2) && $items->hasRealSword($world, 2)))
                     && ($items->hasRealSword($world, 3) || $items->has('Hammer')
+                        || $items->hasSpecialWeaponLevel($world, 3)
+                        || ($items->canExtendMagic($world, 2) && $items->hasSpecialWeaponLevel($world, 2))
                         || ($items->canExtendMagic($world, 2) && $items->hasRealSword($world, 2))
                         || ($items->canExtendMagic($world, 4) && $items->hasRealSword($world)));
             }),

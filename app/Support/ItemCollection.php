@@ -414,7 +414,7 @@ class ItemCollection extends Collection
      */
     public function hasByrna(World $world)
     {
-        return $this->has('CaneOfByrna') || ($world->restrictedToBlueCane() && $this->hasSpecialWeaponLevel($world, 1));
+        return $this->has('CaneOfByrna') || ($world->blueCaneMode() && $this->hasSpecialWeaponLevel($world, 1));
     }
 
     /**
@@ -426,7 +426,7 @@ class ItemCollection extends Collection
      */
     public function hasSomaria(World $world)
     {
-        return $this->has('CaneOfSomaria') || ($world->restrictedToRedCane() && $this->hasSpecialWeaponLevel($world, 1));
+        return $this->has('CaneOfSomaria') || ($world->redCaneMode() && $this->hasSpecialWeaponLevel($world, 1));
     }
 
     /**
@@ -480,7 +480,7 @@ class ItemCollection extends Collection
      */
     public function canBunnyRevive($world = null): bool
     {
-        $canBunnyRevive = $this->hasABottle() && $this->has('BugCatchingNet');
+        $canBunnyRevive = $this->hasABottle() && ($this->has('BugCatchingNet') || $this->has('ProgressiveNet'));
 
         if ($world !== null) {
             $canBunnyRevive = $canBunnyRevive && $this->canAcquireFairy($world);
@@ -560,7 +560,7 @@ class ItemCollection extends Collection
             || $this->has('Hammer')
             || $this->hasByrna($world)
             || $this->has('Hookshot')
-            || ($this->has('ProgressiveNet') && $world->restrictedToBugNet());
+            || ($this->has('ProgressiveNet') && $world->bugNetMode());
     }
 
     /**
@@ -688,6 +688,7 @@ class ItemCollection extends Collection
         }
 
         return $this->has('UncleSword')
+            || $this->hasSpecialWeaponLevel($world, 1)
             || $this->has('CaneOfSomaria')
             || ($this->has('TenBombs')
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
@@ -714,6 +715,7 @@ class ItemCollection extends Collection
         }
 
         return $this->hasRealSword($world)
+            || $this->hasSpecialWeaponLevel($world, 1)
             || $this->has('CaneOfSomaria')
             || ($this->canBombThings($world) && $enemies < 6
                 && $world->config('enemizer.enemyHealth', 'default') == 'default')
@@ -745,7 +747,7 @@ class ItemCollection extends Collection
      */
     public function canGetGoodBee(World $world)
     {
-        return $this->has('BugCatchingNet')
+        return ($this->has('BugCatchingNet') || $this->has('ProgressiveNet'))
             && $this->hasABottle()
             && ($this->has('PegasusBoots')
                 || ($this->canUseMedallions($world) && $this->has('Quake')));
@@ -814,12 +816,12 @@ class ItemCollection extends Collection
     {
         if ($world->restrictedToBombs()) {
             return $this->has('ProgressiveBombs', $min_level);
-        } else if ($world->restrictedToBlueCane() || $world->restrictedToRedCane() || $world->restrictedToCanes()) {
-            if ($world->restrictedToCanes() && !$this->has('CaneOfByrna') && !$this->has('CaneOfSomaria')) {
+        } else if ($world->blueCaneMode() || $world->redCaneMode() || $world->bothCanesMode()) {
+            if ($world->bothCanesMode() && !$this->has('CaneOfByrna') && !$this->has('CaneOfSomaria')) {
                 return false;
             }
             return $this->has('ProgressiveCane', $min_level);
-        } else if ($world->restrictedToBugNet()) {
+        } else if ($world->bugNetMode()) {
             return $this->has('ProgressiveNet', $min_level);
         } else {
             return false;

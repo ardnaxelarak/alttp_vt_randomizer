@@ -228,7 +228,7 @@ class CustomizerController extends Controller
                 } else {
                     $place_item = Item::get(preg_replace('/:\d+$/', '', $item), $world);
                 }
-                if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_hammer']) && $place_item instanceof Item\Sword) {
+                if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_b']) && $place_item instanceof Item\Sword) {
                     $place_item = Item::get('TwentyRupees2', $world);
                 } elseif ($world->restrictedToBombs() && $place_item instanceof Item\Sword) {
                     $place_item = Item::get('ProgressiveBombs', $world);
@@ -246,7 +246,7 @@ class CustomizerController extends Controller
         foreach ($request->input('eq', []) as $item) {
             try {
                 $place_item = Item::get($item, $world);
-                if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_hammer']) && $place_item instanceof Item\Sword) {
+                if (in_array($world->config('mode.weapons'), ['swordless', 'swordless_b']) && $place_item instanceof Item\Sword) {
                     $place_item = Item::get('TwentyRupees2', $world);
                 } elseif ($world->restrictedToBombs() && $place_item instanceof Item\Sword) {
                     $place_item = Item::get('ProgressiveBombs', $world);

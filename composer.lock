@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cf0db91effcf943f5eadf418ad3c2a6",
+    "content-hash": "19a61559c4730281c2e5de255ee2449a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8463,7 +8463,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ardnaxelarak/ALttPDoorRandomizer",
-                "reference": "4459704252e81784071e939680175d8ff08ec6da"
+                "reference": "1e2caab0b3ee9562b484d2c3d019670118a92db1"
             },
             "type": "library"
         },

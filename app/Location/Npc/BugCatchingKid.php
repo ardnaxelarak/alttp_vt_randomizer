@@ -104,6 +104,7 @@ class BugCatchingKid extends Npc
             case 'MoonPearl':
                 return "fortune-telling kid";
             case 'BugCatchingNet':
+            case 'ProgressiveNet':
                 return "the bug-catching kid";
             case 'ProgressiveArmor':
             case 'BlueMail':

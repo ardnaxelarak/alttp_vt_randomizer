@@ -99,6 +99,7 @@ class Uncle extends Location
             case 'MoonPearl':
                 return "your uncle shoots marbles";
             case 'BugCatchingNet':
+            case 'ProgressiveNet':
                 return "your uncle catches bees";
             case 'BlueMail':
             case 'RedMail':

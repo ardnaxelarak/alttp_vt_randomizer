@@ -69,7 +69,9 @@ class OverworldRandomizer implements RandomizerContract
         'pseudo' => 'pseudo',
         'assured_pseudo' => 'assured_pseudo',
         'bees' => 'bees',
-        'swordless_hammer' => 'swordless_hammer',
+        'swordless_b' => 'swordless_b',
+        'bugnet' => 'bugnet',
+        'assured_bugnet' => 'bugnet',
     ];
 
     /**
@@ -230,6 +232,8 @@ class OverworldRandomizer implements RandomizerContract
             $starting[] = 'Progressive_Cane';
         } else if ($world->config('mode.weapons') === 'assured_somaria') {
             $starting[] = 'Progressive_Cane';
+        } else if ($world->config('mode.weapons') === 'assured_bugnet') {
+            $starting[] = 'Progressive_Net';
         }
 
         if ($world->config('equipment.flute') === 'starting') {

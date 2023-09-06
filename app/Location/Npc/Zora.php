@@ -109,6 +109,7 @@ class Zora extends Npc
             case 'MoonPearl':
                 return "lunar orb for sale";
             case 'BugCatchingNet':
+            case 'ProgressiveNet':
                 return "stick web for sale";
             case 'BlueMail':
                 return "banana hat for sale";

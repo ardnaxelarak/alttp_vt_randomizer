@@ -612,10 +612,10 @@ class InitialSram
                     $this->initial_sram_bytes[0x37A] |= 0b00001000;
                     break;
                 case 'ProgressiveCane':
-                    if ($world->restrictedToRedCane()) {
+                    if ($world->redCaneMode()) {
                         $this->initial_sram_bytes[0x350] = 0x01;
                     }
-                    if ($world->restrictedToBlueCane()) {
+                    if ($world->blueCaneMode()) {
                         $this->initial_sram_bytes[0x351] = 0x01;
                     }
                     // intentional fallthrough
@@ -641,7 +641,7 @@ class InitialSram
         $this->setValue(0x370, $starting_bomb_capacity);
         $this->setValue(0x371, $starting_arrow_capacity);
 
-        if (in_array($config['mode.weapons'], ['swordless', 'swordless_hammer'])) {
+        if (in_array($config['mode.weapons'], ['swordless', 'swordless_b'])) {
             $this->initial_sram_bytes[0x359] = 0xFF;
             $this->initial_sram_bytes[0x417] = 0x00;
         }

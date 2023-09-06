@@ -132,6 +132,7 @@ class Pedestal extends Location
             case 'MoonPearl':
                 return "and the jaw breaker";
             case 'BugCatchingNet':
+            case 'ProgressiveNet':
                 return "and the surprise net";
             case 'BlueMail':
                 return "and the banana hat";
@@ -380,6 +381,7 @@ class Pedestal extends Location
             case 'MoonPearl':
                 return "  Bunny Link\n      be\n     gone!";
             case 'BugCatchingNet':
+            case 'ProgressiveNet':
                 return "Let's catch\nsome bees and\nfaeries!";
             case 'BlueMail':
                 return "Now you're a\nblue elf!";
