@@ -5,6 +5,7 @@ return [
     'mw_host' => env('MW_HOST', null),
     'hostname' => env('HOSTNAME', null),
     'base_rom' => env('ENEMIZER_BASE', null),
+    'seed_name_prefix' => env('SEED_NAME_PREFIX', ''),
     'api_throttle_whitelist' => explode(',', env('API_THROTTLE_WHITELIST', '')),
     'custom' => [
         'prize' => [

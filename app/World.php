@@ -1081,7 +1081,7 @@ abstract class World
             'L3Sword' => 'ProgressiveNet',
             'L4Sword' => 'ProgressiveNet',
             'ProgressiveSword' => 'ProgressiveNet',
-            'BugCatchingNet' => 'ProgressiveNet',
+            'BugCatchingNet' => 'TwentyRupees2',
         ];
 
         if ($name === 'BottleWithRandom') {
@@ -1293,7 +1293,7 @@ abstract class World
                 $hash = $this->saveSeedRecord();
 
                 if ($writeSeedString) {
-                    $rom->setSeedString(str_pad(sprintf("VT %s", $hash), 21, ' '));
+                    $rom->setSeedString(str_pad(sprintf("%s %s", $this->config('seed_name_prefix'), $hash), 21, ' '));
                 }
 
                 $rom->setStartScreenHash($this->config('override_start_screen', false) ?: $this->seed->hashArray());
@@ -1586,7 +1586,7 @@ abstract class World
         if ($save) {
             $hash = $this->saveSeedRecord();
 
-            $rom->setSeedString(str_pad(sprintf("VT %s", $hash), 21, ' '));
+            $rom->setSeedString(str_pad(sprintf("%s %s", $this->config('seed_name_prefix'), $hash), 21, ' '));
 
             $rom->setStartScreenHash($this->config('override_start_screen', false) ?: $this->seed->hashArray());
 

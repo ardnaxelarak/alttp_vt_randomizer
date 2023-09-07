@@ -133,10 +133,12 @@ export default class ROM {
 
     this.setReduceFlashing(reduceFlashing);
 
-    if (!this.tournament || this.allow_pseudoboots) {
-      this.setPseudoBoots(fakeBoots);
-    } else {
-      this.setPseudoBoots(false);
+    if (this.build < "2023-09-05") {
+      if (!this.tournament || this.allow_pseudoboots) {
+        this.setPseudoBoots(fakeBoots);
+      } else {
+        this.setPseudoBoots(false);
+      }
     }
 
     if (!this.tournament) {
