@@ -857,6 +857,12 @@ return [
                     ],
                 ],
                 [
+                    'header' => __('randomizer.weapons.options.swordless_b'),
+                    'content' => [
+                        'Same as ' . __('randomizer.weapons.options.swordless') . ', except most Y items can be equipped to the B button by pressing B in the item menu.',
+                    ],
+                ],
+                [
                     'header' => __('randomizer.weapons.options.pseudo'),
                     'content' => [
                         'All swords have been replaced with vaguely-sharpened sticks that will only ever do 1 damage. Ganon is fought with the hammer as in swordless, and both progressive bows are always in the item pool.',
@@ -869,40 +875,42 @@ return [
                     ],
                 ],
                 [
-                    'header' => 'Item-Only Modes',
+                    'header' => 'Item Modes',
                     'content' => [
-                        'The following rules apply to all of the item-only modes listed below, which individual differences are indicated in the corresponding section.',
-                        'In these modes, the specified item is the only weapon, and all swords are replaced with upgrades for that item. Multiple changes have been made for this to work:',
+                        'The following rules apply to all of the item modes listed below, with individual differences as indicated in the corresponding section.',
+                        'In these modes, the specified item is the main weapon, and all swords are replaced with upgrades for that item. Multiple changes have been made for this to work:',
                         '<ul>'
                             . '<li>The specified item initially deals the same damage as the fighter sword; each upgrade progresses damage through master sword, tempered sword, and golden sword damage.</li>'
                             . '<li>All bosses (including Ganon) can now be damaged by the item (once at the appropriate level).</li>'
-                            . '<li>All other weapons do no damage in most cases, except for the following:'
-                                . '<ul>'
-                                    . '<li>Red eyegores and mimics must still be killed with the bow.</li>'
-                                    . '<li>Freezors must still be killed with either the fire rod or Bombos.</li>'
-                                    . '<li>Agahnim\'s energy balls must still be reflected with the hammer or bugnet.</li>'
-                                    . '<li>Helmasaur King\'s mask must still be destroyed with either bombs or the hammer.</li>'
-                                    . '<li>Kholdstare\'s initial phase still requires either the fire rod or Bombos.</li>'
-                                    . '<li>Trinexx\'s side heads still require the appropriate rod to make them vulnerable, but the rod will not damage them further.</li>'
-                                    . '<li>Hookshot and boomerang can still stun enemies that would noramlly be stunned, and will instead stun enemies that would normally be damaged.</li>'
-                                    . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
-                                    . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
-                                . '</ul>'
                             . '<li>The bat barrier outside Agahnim’s Tower can now be broken with the specified item if at least of level 2.</li>'
                             . '<li>Ether and Bombos tablets require the item to be at least level 2 and the Book of Mudora.</li>'
                             . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
-                            . '<li>Medallions can always be used instead of requiring a sword, but note that they will only affect enemies that would normally be stunned, blobbed, or frozen; enemies that would be killed will be unaffected.</li>'
+                            . '<li>Medallions can always be used instead of requiring a sword.</li>'
                         . '</ul>',
                     ],
                 ],
                 [
                     'header' => __('randomizer.weapons.options.bombs'),
                     'content' => [
-                        'This mode uses bombs as the only weapon, following all of the item-only mode changes as listed above, with the following additions:',
+                        'This mode uses bombs as the only weapon, following all of the item mode changes as listed above, with the following additions:',
                         '<ul>'
                             . '<li>Link will obtain an infinite supply of bombs once he finds his first bomb upgrade.</li>'
                             . '<li>Bombs can be detonated early with the B button.</li>'
-                            . '<li>Helmasaur King\'s mask cannot be destroyed with the hammer; you must use bombs.</li>'
+                            . '<li>All other weapons do no damage in most cases, except for the following:'
+                                . '<ul>'
+                                    . '<li>Red eyegores and mimics must still be killed with the bow.</li>'
+                                    . '<li>Freezors must still be killed with either the fire rod or Bombos.</li>'
+                                    . '<li>Terrorpins (the turtle-like enemies in Palace of Darkness) must still be flipped with the hammer, but then become vulnerable to bombs.</li>'
+                                    . '<li>Agahnim\'s energy balls must still be reflected with the hammer or bugnet.</li>'
+                                    . '<li>Helmasaur King\'s mask must still be destroyed with either bombs or the hammer.</li>'
+                                    . '<li>Kholdstare\'s initial phase still requires either the fire rod or Bombos.</li>'
+                                    . '<li>Trinexx\'s side heads still require the appropriate rod to make them vulnerable, but the rod will not damage them further.</li>'
+                                    . '<li>Hookshot and boomerang can still stun enemies that would noramlly be stunned, and will instead stun enemies that would normally be damaged.</li>'
+                                    . '<li>The magic powder can still transform enemies into blobs or fairies.</li>'
+                                    . '<li>Quake can still stun or transform certain enemies into blobs, and Ether can still freeze certain enemies.</li>'
+                                    . '<li>Bombos and the fire rod can still incinerate red baris, since otherwise they would split.</li>'
+                                    . '<li>Bees and thrown objects (including bushes, rocks, and signs, but not blocks created with the Cane of Somaria) still deal their normal damage.</li>'
+                                . '</ul>'
                             . '<li>Bomb drops from the item pool have been replaced with refill hearts. All other bomb drops have been replaced with rupees.</li>'
                         . '</ul>',
                     ],
@@ -916,7 +924,7 @@ return [
                 [
                     'header' => __('randomizer.weapons.options.byrna'),
                     'content' => [
-                        'This mode uses the Cane of Byrna as the only weapon, following all of the item-only mode changes as listed above, with the following additions:',
+                        'This mode uses the Cane of Byrna as the main weapon, following all of the item mode changes as listed above, with the following additions:',
                         '<ul>'
                             . '<li>The Cane of Byrna does not consume any magic, either over time or on initial activation.</li>'
                             . '<li>The Cane of Byrna does not grant invulnerability, except while in the following rooms:'
@@ -925,6 +933,7 @@ return [
                                     . '<li>The laser bridge in Turtle Rock</li>'
                                     . '<li>The spike cave on the west side of Death Mountain in the dark world</li>'
                                 . '</ul>'
+                            . '<li>Most Y-items can be equipped to the B button by pressing B in the item menu.</li>'
                         . '</ul>',
                     ],
                 ],
@@ -937,9 +946,10 @@ return [
                 [
                     'header' => __('randomizer.weapons.options.somaria'),
                     'content' => [
-                        'This mode uses the Cane of Somaria as the only weapon, following all of the item-only mode changes as listed above, with the following addition:',
+                        'This mode uses the Cane of Somaria as the main weapon, following all of the item mode changes as listed above, with the following additions:',
                         '<ul>'
                             . '<li>The Cane of Somaria does not consume any magic.</li>'
+                            . '<li>Most Y-items can be equipped to the B button by pressing B in the item menu.</li>'
                         . '</ul>',
                     ],
                 ],
@@ -952,7 +962,7 @@ return [
                 [
                     'header' => __('randomizer.weapons.options.cane'),
                     'content' => [
-                        'This mode uses the two canes (Cane of Byrna and Cane of Somaria) as the only weapons. All of the item-only mode changes listed above apply, with the following additions:',
+                        'This mode uses the two canes (Cane of Byrna and Cane of Somaria) as the main weapons. All of the item mode changes listed above apply, with the following additions:',
                         '<ul>'
                             . '<li>The Cane of Byrna and Cane of Somaria each exist once in the item pool, as do three Cane Upgrades. Each Cane Upgrade will increase the level of damage done with both canes, but Link cannot use either cane until he finds it.</li>'
                             . '<li>The Cane of Somaria does not consume any magic.</li>'
@@ -963,7 +973,41 @@ return [
                                     . '<li>The laser bridge in Turtle Rock</li>'
                                     . '<li>The spike cave on the west side of Death Mountain in the dark world</li>'
                                 . '</ul>'
+                            . '<li>Most Y-items can be equipped to the B button by pressing B in the item menu.</li>'
                         . '</ul>',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.bugnet'),
+                    'content' => [
+                        'This mode uses the Bug Net as the main weapon, following all of the item mode changes as listed above, with the following additions:',
+                        '<ul>'
+                            . '<li>The Bug Net can damage enemies according to its upgrade level, in addition to catching bees and fairies.</li>'
+                            . '<li>The Bug Net can be equipped to the B button by pressing B in the item menu.</li>'
+                        . '</ul>',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.assured_bugnet'),
+                    'content' => [
+                        'Same as ' . __('randomizer.weapons.options.bugnet') . ', except Link starts with the Bug Net already equipped! Perhaps he stole it from a nearby kid?',
+                    ],
+                ],
+                [
+                    'header' => __('randomizer.weapons.options.bees'),
+                    'content' => [
+                        'This mode replaces Link\'s sword with the ability to summon friendly bees to damage enemies. Multiple changes have been made for this to work:',
+                        '<ul>'
+                            . '<li>When Link has a Y-item equipped that can affect enemies, pressing B will release a special bee that will damage enemies according to the damage table for that item.</li>'
+                            . '<li>For example, pressing B with fire rod equipped will release a bee that will incinerate all enemies that the fire rod would normally incinerate.</li>'
+                            . '<li>Using items normally will not damage enemies, with the exception of hammer still being required to flip terrorpins.</li>'
+                            . '<li>Ganon can now be damaged by hammer-class bees during his normal phases, and by silver arrow bees while stunned.</li>'
+                            . '<li>The bat barrier outside Agahnim’s Tower can be broken with hammer-class bees.</li>'
+                            . '<li>Ether and Bombos tablets only require the Book of Mudora.</li>'
+                            . '<li>The curtains/vines inside Skull Woods and Agahnim’s Tower are already open.</li>'
+                            . '<li>Medallions can always be used instead of requiring a sword, but note that they will not affect enemies directly; you must use bees imbued with their powers.</li>'
+                        . '</ul>',
+                        '<ul>'
                     ],
                 ],
             ],
