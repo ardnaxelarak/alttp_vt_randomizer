@@ -27,7 +27,7 @@ class InitialSram
         $this->initial_sram_bytes[$this::ROOM_DATA + 0x20D] = 0xF0;
         $this->initial_sram_bytes[$this::ROOM_DATA + 0x20F] = 0xF0;
         $this->initial_sram_bytes[0x379] = 0b01101000;
-        $this->initial_sram_bytes[0x38F] = 0x00;
+        $this->initial_sram_bytes[0x3C3] = 0x00;
         $this->initial_sram_bytes[0x401] = 0xFF;
         $this->initial_sram_bytes[0x402] = 0xFF;
     }
@@ -620,10 +620,10 @@ class InitialSram
                     }
                     // intentional fallthrough
                 case 'ProgressiveBombs':
-                    $this->initial_sram_bytes[0x38F] = min($this->initial_sram_bytes[0x38F] + 1, 5);
+                    $this->initial_sram_bytes[0x3C3] = min($this->initial_sram_bytes[0x3C3] + 1, 5);
                     break;
                 case 'ProgressiveNet':
-                    $this->initial_sram_bytes[0x38F] = min($this->initial_sram_bytes[0x38F] + 1, 5);
+                    $this->initial_sram_bytes[0x3C3] = min($this->initial_sram_bytes[0x3C3] + 1, 5);
                     $this->initial_sram_bytes[0x34D] = 0x01;
                     break;
             }
