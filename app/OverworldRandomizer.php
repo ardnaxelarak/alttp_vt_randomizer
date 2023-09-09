@@ -37,6 +37,7 @@ class OverworldRandomizer implements RandomizerContract
         'simple' => 'simple',
         'restricted' => 'restricted',
         'crossed' => 'crossed',
+        'swapped' => 'swapped',
         'insanity' => 'insanity',
         'lite' => 'lite',
         'lean' => 'lean',
