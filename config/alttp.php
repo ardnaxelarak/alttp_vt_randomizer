@@ -1053,7 +1053,7 @@ return [
                 'simple' => 5,
                 'full' => 5,
                 'random' => 10,
-                'moldorms' => 0,
+                'moldorm' => 0,
             ],
             'enemy_shuffle' => [
                 'none' => 90,

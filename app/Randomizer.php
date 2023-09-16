@@ -555,7 +555,7 @@ class Randomizer implements RandomizerContract
                 break;
             case 'moldorm':
                 foreach ($boss_locations as $location) {
-                    $world->getRegion($location[0])->setBoss(Boss::get("Moldorm", $location[1]));
+                    $world->getRegion($location[0])->setBoss(Boss::get("Moldorm", $world));
                 }
                 break;
             case 'none':

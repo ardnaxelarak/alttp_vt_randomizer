@@ -188,6 +188,7 @@ class Enemizer
                 'simple' => 0,
                 'full' => 1,
                 'random' => 2,
+                'moldorm' => 2,
             ][$this->world->config('enemizer.bossShuffle')],
             "RandomizeBossHealth" => false,
             "RandomizeBossHealthMinAmount" => 0,
