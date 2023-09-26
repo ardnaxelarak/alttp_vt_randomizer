@@ -15,7 +15,7 @@ class Rom
 {
     const BUILD_INFO = [
         'base' => ['BUILD' => '2023-09-09', 'HASH' => 'c5dfb1bdd7c160067452d5ab04b2ee45'],
-        'overworld' => ['BUILD' => '2023-09-09', 'HASH' => 'dc862e8e97841788bffff61192372fd1'],
+        'overworld' => ['BUILD' => '2023-09-26', 'HASH' => '42e7ca15c7759ea8bc7ed411088eeac5'],
         'troll' => ['BUILD' => '2023-04-02', 'HASH' => '44aa37c6048a14a3b24794ce5e56e4ab'],
         'ow_troll' => ['BUILD' => '2023-06-15', 'HASH' => '99a93bf4a93eea1ea7a107aa0eeef717'],
     ];
