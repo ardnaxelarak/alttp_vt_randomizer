@@ -32,7 +32,7 @@ class GenerateSeed implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 250;
+    public $tries = 10;
 
     /**
      * The maximum number of unhandled exceptions to allow before failing.
