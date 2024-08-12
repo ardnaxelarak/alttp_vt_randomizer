@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Log;
 if (!function_exists('getWeighted')) {
     function getWeighted(string $category): string
     {
-        Log::info($category);
         $keys = array_keys(config("alttp.randomizer.item.$category"));
         $combined = array_combine($keys, $keys);
         $weights = config("alttp.randomizer.daily_weights.$category");
